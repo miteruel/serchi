@@ -1,5 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Shell scripts run inside the Linux container: keep LF even on Windows
+# (with CRLF the container fails with "exec /app/docker/entrypoint.sh: no such file or directory")
+*.sh text eol=lf
+
 # SQLite database is binary; never merge or normalize line endings
 *.db binary
