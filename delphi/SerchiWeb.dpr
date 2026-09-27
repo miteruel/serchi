@@ -29,7 +29,8 @@ uses
   Serchi.I18n in 'src\Serchi.I18n.pas',
   Serchi.ViewModels in 'src\Serchi.ViewModels.pas',
   Serchi.Gemini in 'src\Serchi.Gemini.pas',
-  Serchi.Radio in 'src\Serchi.Radio.pas';
+  Serchi.Radio in 'src\Serchi.Radio.pas',
+  Serchi.Courses in 'src\Serchi.Courses.pas';
 
 { Looks for the folder holding templates/ starting at the executable folder
   and walking up (the exe usually lives in Win64\Debug or similar). }

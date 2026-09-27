@@ -948,9 +948,9 @@
 </script>
 <script>
 /* 🔊 buttons for the words that have a recording (see docs/GRABACIONES.md).
-   /api/audio (Node server) lists the committed MP3 files and the recordings
-   approved in the "Grabar" page; without it (Delphi), /audio/index.json lists
-   the MP3 files. audioSlug() must match the one in server/audio.ts. */
+   /api/audio (Node and Delphi servers) lists the committed MP3 files and the
+   recordings approved in the "Grabar" page; if it is missing, /audio/index.json
+   lists the MP3 files. audioSlug() must match the one in server/audio.ts. */
 (function () {
   function audioSlug(text) {
     var x = { 'ĉ': 'cx', 'ĝ': 'gx', 'ĥ': 'hx', 'ĵ': 'jx', 'ŝ': 'sx', 'ŭ': 'ux' };
@@ -967,11 +967,13 @@
       return map;
     });
   }
+  // Link to the recorder only where it exists (Node server, not the Delphi version)
+  fetch('/api/recordings/words').then(function (r) {
+    var link = document.getElementById('grabar-link');
+    if (r.ok && link) link.hidden = false;
+  }).catch(function () {});
   fetch('/api/audio').then(function (r) {
-    if (!r.ok) return staticList();
-    var link = document.getElementById('grabar-link'); // the recorder only works with the Node server
-    if (link) link.hidden = false;
-    return r.json();
+    return r.ok ? r.json() : staticList();
   }, staticList).then(function (have) {
     if (!have || Object.keys(have).length === 0) return;
     var player = new Audio();

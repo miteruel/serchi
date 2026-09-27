@@ -43,7 +43,9 @@ delphi/
 │   ├── Serchi.ViewModels.pas  objetos que leen las plantillas vía RTTI
 │   ├── Serchi.Text.pas        x-sistemo (cx → ĉ), normalización y sinónimos
 │   ├── Serchi.I18n.pas        traducciones (@t.clave en las plantillas)
-│   └── Serchi.Gemini.pas      búsqueda en vivo (Gemini + Google Search grounding)
+│   ├── Serchi.Gemini.pas      búsqueda en vivo (Gemini + Google Search grounding)
+│   ├── Serchi.Radio.pas       episodios de pódcast de las emisoras de radio
+│   └── Serchi.Courses.pas     páginas de los cursos creados con el editor (/kursoj, /kurso/…)
 ├── templates/                 plantillas WebStencils (páginas y fragmentos _*.html)
 ├── static/                    app.js (x-sistemo, copiar enlace, modal), css, icono
 └── data/                      traducciones y sinónimos (JSON generado desde TypeScript)
@@ -86,6 +88,9 @@ delphi/
 | POST | `/forum/topic` · `/forum/reply?id=` · `/forum/like?id=` · `/forum/comment-like` · `/forum/mod?action=pin\|lock\|delete&id=` · `/forum/comment-delete` | Acciones del foro |
 | GET/POST | `/add` | Añadir enlace manualmente |
 | POST | `/live-search` · `/import` | Descubrimiento con Gemini e importación |
+| GET | `/kursoj` · `/kurso/<dirección>` | Cursos creados con el editor de la versión Node (`Serchi.Courses.pas`) |
+| GET | `/api/course-images/<id>` · `/api/audio` · `/api/recordings/<id>/audio` | Imágenes de las lecciones, lista de audios y grabaciones aprobadas |
+| GET | `/kurso.css` · `/kurso.js` · `/audio/*` · `/og-image.png` | Ficheros de `public/` que usan esas páginas |
 
 ## Diferencias con la versión React
 

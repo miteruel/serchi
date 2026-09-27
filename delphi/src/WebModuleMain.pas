@@ -49,6 +49,10 @@ type
     procedure SendStatic(const APath: string);
     procedure SendPublicPage(const AName: string);
     procedure SendPublicFile(const APath: string);
+    procedure SendBytes(const AMime: string; const AData: TBytes; const ACacheControl: string);
+    procedure SendCourseIndex(AStatus: Integer = 200);
+    procedure SendCoursePage(const ASlug: string);
+    procedure SendAudioMap;
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -107,7 +111,7 @@ implementation
 
 uses
   System.IOUtils, System.JSON, System.DateUtils, System.NetEncoding, System.Math,
-  System.Hash, Serchi.I18n, Serchi.Text, Serchi.Gemini, Serchi.Radio;
+  System.Hash, System.RegularExpressions, Serchi.I18n, Serchi.Courses, Serchi.Text, Serchi.Gemini, Serchi.Radio;
 
 const
   PageSize = 20;
@@ -315,6 +319,10 @@ begin
     FResponse.ContentType := 'application/json; charset=utf-8'
   else if Ext = '.png' then
     FResponse.ContentType := 'image/png'
+  else if Ext = '.css' then
+    FResponse.ContentType := 'text/css; charset=utf-8'
+  else if Ext = '.js' then
+    FResponse.ContentType := 'text/javascript; charset=utf-8'
   else
   begin
     SendHtml('Not found', 404);
@@ -322,6 +330,65 @@ begin
   end;
   FResponse.SetCustomHeader('Cache-Control', 'public, max-age=3600');
   FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+end;
+
+procedure TWebModuleMain.SendBytes(const AMime: string; const AData: TBytes; const ACacheControl: string);
+begin
+  FResponse.ContentType := AMime;
+  FResponse.SetCustomHeader('Cache-Control', ACacheControl);
+  FResponse.ContentStream := TBytesStream.Create(AData);
+end;
+
+{ Courses made with the course editor of the Node version (Serchi.Courses) }
+
+procedure TWebModuleMain.SendCourseIndex(AStatus: Integer);
+begin
+  SendHtml(RenderCourseIndex(Store.PublishedCourses), AStatus);
+end;
+
+procedure TWebModuleMain.SendCoursePage(const ASlug: string);
+var
+  Course: TCourseInfo;
+  Content: string;
+begin
+  // Drafts are only visible in the editor's preview (Node version)
+  if not TRegEx.IsMatch(ASlug, '^[a-z0-9-]{1,60}$') or
+    not Store.FindPublishedCourse(ASlug, Course, Content) then
+  begin
+    SendCourseIndex(404);
+    Exit;
+  end;
+  SendHtml(RenderCoursePage(Course, Content));
+end;
+
+{ What the mini-course and the courses play, as /api/audio in the Node version:
+  a JSON object from word slug to URL. MP3 files in public/audio first, then
+  the newest approved recording of each word. }
+procedure TWebModuleMain.SendAudioMap;
+var
+  Map: TJSONObject;
+  AudioDir, FileName, Slug: string;
+  Rec: TPair<string, string>;
+begin
+  Map := TJSONObject.Create;
+  try
+    AudioDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + 'audio'));
+    if TDirectory.Exists(AudioDir) then
+      for FileName in TDirectory.GetFiles(AudioDir, '*.mp3') do
+      begin
+        Slug := TPath.GetFileNameWithoutExtension(FileName);
+        if Map.GetValue(Slug) = nil then
+          Map.AddPair(Slug, '/audio/' + Slug + '.mp3');
+      end;
+    for Rec in Store.ApprovedRecordings do
+      if Map.GetValue(Rec.Key) = nil then
+        Map.AddPair(Rec.Key, '/api/recordings/' + TNetEncoding.URL.Encode(Rec.Value) + '/audio');
+    FResponse.SetCustomHeader('Cache-Control', 'no-cache');
+    FResponse.ContentType := 'application/json; charset=utf-8';
+    FResponse.ContentStream := TBytesStream.Create(TEncoding.UTF8.GetBytes(Map.ToJSON));
+  finally
+    Map.Free;
+  end;
 end;
 
 { Standalone pages shared with the React version: the kids' mini-course and
@@ -1280,6 +1347,8 @@ procedure TWebModuleMain.WebModuleBeforeDispatch(Sender: TObject; Request: TWebR
   Response: TWebResponse; var Handled: Boolean);
 var
   Path: string;
+  Id, Mime: string;
+  Data: TBytes;
   User: TForumUser;
 begin
   Handled := True;
@@ -1289,9 +1358,45 @@ begin
   if (Path.Length > 1) and Path.EndsWith('/') then
     Path := Path.Substring(0, Path.Length - 1);
 
-  if Path.StartsWith('/audio/') or (Path = '/og-image.png') then
+  if Path.StartsWith('/audio/') or (Path = '/og-image.png') or (Path = '/kurso.css') or
+    (Path = '/kurso.js') then
   begin
     SendPublicFile(Path.Substring(1));
+    Exit;
+  end;
+  // Courses, lesson pictures and recordings made in the Node version (read only)
+  if Path = '/kursoj' then
+  begin
+    SendCourseIndex;
+    Exit;
+  end;
+  if Path.StartsWith('/kurso/') then
+  begin
+    SendCoursePage(Path.Substring(Length('/kurso/')));
+    Exit;
+  end;
+  if Path = '/api/audio' then
+  begin
+    SendAudioMap;
+    Exit;
+  end;
+  if Path.StartsWith('/api/course-images/') then
+  begin
+    Id := Path.Substring(Length('/api/course-images/'));
+    if Store.CourseImage(Id, Mime, Data) then
+      SendBytes(Mime, Data, 'public, max-age=86400')
+    else
+      SendHtml('Not found', 404);
+    Exit;
+  end;
+  if Path.StartsWith('/api/recordings/') and Path.EndsWith('/audio') then
+  begin
+    Id := Path.Substring(Length('/api/recordings/'));
+    Id := Id.Substring(0, Id.Length - Length('/audio'));
+    if Store.ApprovedRecording(Id, Mime, Data) then
+      SendBytes(Mime, Data, 'public, max-age=86400')
+    else
+      SendHtml('Not found', 404);
     Exit;
   end;
   if Path.StartsWith('/static/') then
