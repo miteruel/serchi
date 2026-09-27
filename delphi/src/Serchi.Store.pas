@@ -116,6 +116,10 @@ type
     function ApprovedRecording(const AId: string; out AMime: string; out AData: TBytes): Boolean;
     { Approved recordings, newest first: Key = word slug, Value = recording id }
     function ApprovedRecordings: TArray<TPair<string, string>>;
+    { Synthetic voice of the editor courses' words (table synthetic_audio,
+      made by the Node server or npm run audio:tts): slugs and MP3 audio }
+    function SyntheticAudioSlugs: TArray<string>;
+    function SyntheticAudio(const ASlug: string; out AData: TBytes): Boolean;
 
     // Course editor and recorder (the JSON API used by public/editor.html and
     // public/grabar.html, same as server/courses.ts and server/audio.ts)
@@ -1215,6 +1219,48 @@ begin
     Result := List.ToArray;
   finally
     List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.SyntheticAudioSlugs: TArray<string>;
+var
+  Q: TFDQuery;
+  List: TList<string>;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TList<string>.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT slug FROM synthetic_audio');
+    while not Q.Eof do
+    begin
+      List.Add(Q.Fields[0].AsString);
+      Q.Next;
+    end;
+    Result := List.ToArray;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.SyntheticAudio(const ASlug: string; out AData: TBytes): Boolean;
+var
+  Q: TFDQuery;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT audio FROM synthetic_audio WHERE slug = :slug', [ASlug]);
+    Result := not Q.Eof;
+    if Result then
+      AData := Q.Fields[0].AsBytes;
+  finally
     Q.Free;
     Unlock;
   end;

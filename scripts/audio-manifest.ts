@@ -50,7 +50,12 @@ Hay dos formas de añadir grabaciones:
 
 Mientras nadie graba una palabra, suena una **voz sintética** (espeak-ng) guardada en
 \`public/audio/tts/\`. Se regenera con \`npm run audio:tts\` (hacen falta espeak-ng y
-ffmpeg) y deja de sonar en cuanto la palabra tiene una grabación de verdad.
+lame) y deja de sonar en cuanto la palabra tiene una grabación de verdad.
+
+Las palabras de los cursos del editor también tienen voz sintética, guardada en la base
+de datos: el servidor Node la crea al arrancar y al guardar un curso publicado (la
+imagen de Docker ya trae espeak-ng y lame). Con la versión Delphi, que no puede
+crearla, hay que ejecutar \`npm run audio:tts\` después de publicar un curso.
 
 ## Cómo grabar ficheros MP3
 

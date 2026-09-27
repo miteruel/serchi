@@ -11,38 +11,40 @@
  *   npm run audio:tts            (only the words without a synthetic file)
  *   npm run audio:tts -- --force (all of them again)
  *
- * Needs espeak-ng (Esperanto voice "eo") and ffmpeg. Writes
+ * Needs espeak-ng (Esperanto voice "eo") and lame. Writes
  * public/audio/tts/<slug>.mp3 and public/audio/tts/index.json, and removes
  * the files of words that are no longer in the course. These files only play
  * when a word has no human recording (see audioMap() in server/audio.ts).
+ *
+ * It also makes the voice of the published editor courses that lack one, in
+ * the database (data/serchi.db or SERCHI_DB). The Node server does that by
+ * itself; this is for the Delphi version, which cannot run espeak-ng.
  */
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
-import { execFileSync } from 'child_process';
 import { TTS_DIR, courseWords, synthesizedRecordings } from '../server/audio';
+import { publishedCourseTexts } from '../server/courses';
+import { openDatabase } from '../server/db';
+import { espeakMp3, fillVoices } from '../server/tts';
 
 const force = process.argv.includes('--force');
 const texts = courseWords(); // slug -> text
 
 fs.mkdirSync(TTS_DIR, { recursive: true });
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'serchi-tts-'));
 let made = 0;
-try {
-  for (const [slug, text] of texts) {
-    const out = path.join(TTS_DIR, `${slug}.mp3`);
-    if (!force && fs.existsSync(out)) continue;
-    const wav = path.join(tmp, `${slug}.wav`);
-    // Slow and clear, for children: 120 words per minute, short gaps between words
-    execFileSync('espeak-ng', ['-v', 'eo', '-s', '120', '-g', '4', '-w', wav, text]);
-    execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-i', wav, '-ac', '1', '-ar', '22050', '-b:a', '48k', out]);
-    made++;
-  }
-} finally {
-  fs.rmSync(tmp, { recursive: true, force: true });
+for (const [slug, text] of texts) {
+  const out = path.join(TTS_DIR, `${slug}.mp3`);
+  if (!force && fs.existsSync(out)) continue;
+  fs.writeFileSync(out, await espeakMp3(text));
+  made++;
 }
 
 const removed = synthesizedRecordings().filter((slug) => !texts.has(slug));
 for (const slug of removed) fs.rmSync(path.join(TTS_DIR, `${slug}.mp3`));
 fs.writeFileSync(path.join(TTS_DIR, 'index.json'), JSON.stringify(synthesizedRecordings()) + '\n');
 console.log(`${made} synthetic recordings made, ${removed.length} removed. Wrote public/audio/tts/index.json`);
+
+const db = openDatabase();
+const courseMade = await fillVoices(db, publishedCourseTexts(db));
+db.close();
+console.log(`${courseMade} synthetic recordings made for the editor courses (database)`);

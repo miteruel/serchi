@@ -374,9 +374,9 @@ end;
 
 { What the mini-course and the courses play, as /api/audio in the Node version:
   a JSON object from word slug to URL. MP3 files in public/audio first, then
-  the newest approved recording of each word, then the synthetic voice of
-  public/audio/tts (left out with AWithSynthetic = False, to know which words
-  still need a real voice). }
+  the newest approved recording of each word, then the synthetic voice
+  (public/audio/tts and the table synthetic_audio; left out with
+  AWithSynthetic = False, to know which words still need a real voice). }
 function TWebModuleMain.AudioMap(AWithSynthetic: Boolean): TJSONObject;
 var
   AudioDir, FileName, Slug: string;
@@ -402,6 +402,10 @@ begin
       if Result.GetValue(Slug) = nil then
         Result.AddPair(Slug, '/audio/tts/' + Slug + '.mp3');
     end;
+  if AWithSynthetic then
+    for Slug in Store.SyntheticAudioSlugs do
+      if Result.GetValue(Slug) = nil then
+        Result.AddPair(Slug, '/api/tts/' + TNetEncoding.URL.Encode(Slug) + '/audio');
 end;
 
 procedure TWebModuleMain.SendAudioMap;
@@ -1057,6 +1061,15 @@ begin
   if APath = '/api/audio' then
   begin
     SendAudioMap;
+    Exit;
+  end;
+  // Synthetic voice of the editor courses' words
+  if (Length(Seg) = 5) and (Seg[2] = 'tts') and (Seg[4] = 'audio') then
+  begin
+    if Store.SyntheticAudio(Seg[3], Data) then
+      SendBytes('audio/mpeg', Data, 'public, max-age=86400')
+    else
+      SendApiError(404, 'Not found');
     Exit;
   end;
   if (Length(Seg) = 4) and (Seg[2] = 'course-images') then
