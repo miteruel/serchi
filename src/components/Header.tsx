@@ -14,7 +14,10 @@ import {
   Search,
   ExternalLink,
   Users,
-  Plus
+  Plus,
+  BookOpen,
+  Mic,
+  Pencil
 } from 'lucide-react';
 import { Language, UserSettings } from '../types';
 import { TRANSLATIONS } from '../translations';
@@ -162,6 +165,23 @@ export const Header: React.FC<HeaderProps> = ({
               <Users className="w-3.5 h-3.5" />
               <span className="hidden md:inline">{t.communityTab}</span>
             </button>
+            {/* Standalone pages served from public/: courses, recorder and course editor */}
+            {[
+              { href: '/kursoj', label: t.coursesTab, Icon: BookOpen },
+              { href: '/grabar.html', label: t.recordTab, Icon: Mic },
+              { href: '/editor.html', label: t.editorTab, Icon: Pencil },
+            ].map(({ href, label, Icon }) => (
+              <a
+                key={href}
+                href={href}
+                title={label}
+                aria-label={label}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-1 text-xs font-semibold rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span className="hidden lg:inline">{label}</span>
+              </a>
+            ))}
           </nav>
         </div>
 
