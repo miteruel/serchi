@@ -124,15 +124,20 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
       {/* Google-style Minimalist Logo with Verda Stelo */}
       <div className="flex flex-col items-center mb-8 select-none">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-600 dark:bg-emerald-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-emerald-600/20 transform hover:scale-105 transition-transform duration-200">
-            ★
-          </div>
+          <img
+            src="/logo-liberanimo.jpg"
+            alt="Liberanimo Teruel"
+            className="w-16 h-16 rounded-2xl object-contain shadow-lg shadow-emerald-600/20 transform hover:scale-105 transition-transform duration-200"
+          />
           <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-gray-900 dark:text-white font-['Product_Sans',sans-serif]">
             Serĉ<span className="text-emerald-600 dark:text-emerald-400">ilo</span>
           </h1>
         </div>
         <p className="mt-2 text-sm sm:text-base text-gray-500 dark:text-gray-400 font-medium">
           {t.tagline}
+        </p>
+        <p className="mt-1 text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+          {t.ownerNotice}
         </p>
       </div>
 

@@ -218,6 +218,7 @@ export interface TranslationDictionary {
   clearSearchQueryAria: string;
   footerWorldwide: string;
   footerNonProfit: string;
+  ownerNotice: string;
 
   // Forum Extras
   forumTopicTitleLabel: string;
@@ -477,6 +478,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     clearSearchQueryAria: 'Vakigi tekston',
     footerWorldwide: 'Tutmonda Esperantujo (Mondo)',
     footerNonProfit: 'Senprofita & Malferma',
+    ownerNotice: 'Retejo de Liberanimo Teruel',
 
     // Forum Extras
     forumTopicTitleLabel: 'Titolo',
@@ -735,6 +737,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     clearSearchQueryAria: 'Borrar texto de búsqueda',
     footerWorldwide: 'Comunidad Mundial del Esperanto (Mundial)',
     footerNonProfit: 'Sin ánimo de lucro y de código abierto',
+    ownerNotice: 'Web de Liberanimo Teruel',
 
     // Forum Extras
     forumTopicTitleLabel: 'Título',
@@ -993,6 +996,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     clearSearchQueryAria: 'Clear search query',
     footerWorldwide: 'Worldwide Esperanto Community (Global)',
     footerNonProfit: 'Non-profit & Open Source',
+    ownerNotice: 'Website by Liberanimo Teruel',
 
     // Forum Extras
     forumTopicTitleLabel: 'Title',

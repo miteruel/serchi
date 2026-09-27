@@ -66,9 +66,11 @@ export const Header: React.FC<HeaderProps> = ({
               title={t.homeTitleTooltip}
               aria-label={t.homeTitleTooltip}
             >
-              <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:bg-emerald-500 transition-colors">
-                ★
-              </div>
+              <img
+                src="/logo-liberanimo.jpg"
+                alt="Liberanimo Teruel"
+                className="w-8 h-8 rounded-lg object-contain shadow-sm"
+              />
               <div className="flex items-baseline">
                 <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white font-['Product_Sans',sans-serif]">
                   Serĉ<span className="text-emerald-600 dark:text-emerald-400">ilo</span>
