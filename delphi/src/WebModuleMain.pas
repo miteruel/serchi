@@ -559,7 +559,7 @@ begin
       try
         Episodes := TRadioFeed.LatestEpisodes(Res.StreamUrl);
         for Ep in Episodes do
-          VM.Episodes.Add(TEpisodeVM.Create(Ep.Title, Ep.AudioUrl, Ep.Published));
+          VM.Episodes.Add(TEpisodeVM.Create(Ep.Title, Ep.AudioUrl, Ep.PubDate));
       except
         VM.EpisodesError := True;
       end;

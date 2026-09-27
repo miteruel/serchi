@@ -43,12 +43,12 @@ type
 
   TEpisodeVM = class
   private
-    FTitle, FAudioUrl, FPublished: string;
+    FTitle, FAudioUrl, FPubDate: string;
   public
-    constructor Create(const ATitle, AAudioUrl, APublished: string);
+    constructor Create(const ATitle, AAudioUrl, APubDate: string);
     property Title: string read FTitle;
     property AudioUrl: string read FAudioUrl;
-    property Published: string read FPublished;
+    property PubDate: string read FPubDate;
   end;
 
   { Global, per-request information used by the layout }
@@ -659,12 +659,12 @@ end;
 
 { TEpisodeVM }
 
-constructor TEpisodeVM.Create(const ATitle, AAudioUrl, APublished: string);
+constructor TEpisodeVM.Create(const ATitle, AAudioUrl, APubDate: string);
 begin
   inherited Create;
   FTitle := ATitle;
   FAudioUrl := AAudioUrl;
-  FPublished := APublished;
+  FPubDate := APubDate;
 end;
 
 { TKnowledgeVM }
