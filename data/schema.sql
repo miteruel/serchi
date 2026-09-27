@@ -173,6 +173,13 @@ CREATE TABLE IF NOT EXISTS recordings (
 CREATE INDEX IF NOT EXISTS idx_recordings_status ON recordings(status, slug);
 CREATE INDEX IF NOT EXISTS idx_recordings_visitor ON recordings(visitor_id, created_at);
 
+-- Speakers who asked to be thanked by name on the course pages ("Voces de este
+-- curso"). A separate table: the name in recordings is only for moderators.
+CREATE TABLE IF NOT EXISTS recording_credits (
+  recording_id TEXT PRIMARY KEY REFERENCES recordings(id) ON DELETE CASCADE,
+  name         TEXT NOT NULL
+);
+
 -- Synthetic voice (espeak-ng) of the words of the courses made with the
 -- editor, made by the server (server/tts.ts). It only plays when a word has
 -- no human recording. The mini-course words are files in public/audio/tts.

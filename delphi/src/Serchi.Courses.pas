@@ -394,7 +394,7 @@ begin
     Kurso.AddPair('days', TJSONNumber.Create(Len(Lessons)));
     Kurso.AddPair('texts', Texts);
     SB.Append('<script>window.KURSO = ').Append(Kurso.ToJSON.Replace('<', '<', [rfReplaceAll]))
-      .Append(';</script>'#10'<script src="/kurso.js"></script>'#10'</body>'#10'</html>'#10);
+      .Append(';</script>'#10'<script src="/kurso.js"></script>'#10'<script src="/kurso-extra.js"></script>'#10'</body>'#10'</html>'#10);
     Result := SB.ToString;
   finally
     Kurso.Free;

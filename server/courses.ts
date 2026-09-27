@@ -362,6 +362,7 @@ ${opts.preview ? '<p class="preview-banner">Vista previa · Preview</p>' : ''}
 </div>
 <script>window.KURSO = ${JSON.stringify({ slug: course.slug, days: lessons.length, texts }).replace(/</g, '\\u003c')};</script>
 <script src="/kurso.js"></script>
+<script src="/kurso-extra.js"></script>
 </body>
 </html>
 `;

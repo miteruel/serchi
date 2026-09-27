@@ -88,7 +88,8 @@
     <section class="card" aria-labelledby="h-consent">
       <h2 id="h-consent">Antes de grabar</h2>
       <label class="check"><input type="checkbox" id="consent"> Soy mayor de edad y acepto que mi voz se publique en el minicurso de Liberanimo Teruel.</label>
-      <label>Tu nombre o apodo (opcional, solo lo ven los moderadores)<br><input type="text" id="name" maxlength="60" autocomplete="nickname"></label>
+      <label>Tu nombre o apodo (opcional, lo ven los moderadores)<br><input type="text" id="name" maxlength="60" autocomplete="nickname"></label>
+      <label class="check"><input type="checkbox" id="credit"> Quiero que mi nombre salga en «Voces de este curso», al final de los cursos que tengan mis grabaciones.</label>
       <p class="muted">Consejos: habla despacio y claro, como se lo dirías a un niño, en un sitio sin ruido. Cada grabación dura como mucho 10 segundos.</p>
     </section>
 
@@ -253,7 +254,8 @@
     if (!$('consent').checked) { setMsg('Marca antes la casilla de consentimiento.', 'err'); return; }
     $('send').disabled = true;
     var url = '/api/recordings?consent=1&slug=' + encodeURIComponent(selected.slug) +
-      '&name=' + encodeURIComponent($('name').value.trim());
+      '&name=' + encodeURIComponent($('name').value.trim()) +
+      ($('credit').checked && $('name').value.trim() ? '&credit=1' : '');
     fetch(url, { method: 'POST', headers: { 'Content-Type': blob.type || 'audio/webm', 'X-Visitor-Id': visitorId() }, body: blob })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, data: d }; }); })
       .then(function (res) {
@@ -299,6 +301,13 @@
           title.innerHTML = '<b lang="eo"></b> <span class="muted"></span>';
           title.firstChild.textContent = rec.text;
           title.lastChild.textContent = '· ' + (rec.name || 'sin nombre') + ' · ' + new Date(rec.createdAt).toLocaleString('es-ES');
+          // Approving publishes this name on the course pages: check it is fine to show
+          var pub = null;
+          if (rec.credit) {
+            pub = document.createElement('p');
+            pub.className = 'msg';
+            pub.textContent = '🌐 Pidió que su nombre salga en «Voces de este curso»: al aprobarla, «' + rec.name + '» será público. Si el nombre no es adecuado, borra la grabación.';
+          }
           var audio = document.createElement('audio');
           audio.controls = true;
           modFetch('/api/recordings/' + encodeURIComponent(rec.id) + '/audio')
@@ -320,7 +329,9 @@
               .then(function () { item.remove(); });
           });
           row.appendChild(audio); row.appendChild(ok); row.appendChild(del);
-          item.appendChild(title); item.appendChild(row);
+          item.appendChild(title);
+          if (pub) item.appendChild(pub);
+          item.appendChild(row);
           box.appendChild(item);
         });
       });

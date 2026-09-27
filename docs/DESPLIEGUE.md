@@ -19,14 +19,16 @@ y actualizaciones. La versión Delphi tiene sus propias instrucciones en
 | `SERCHI_DB` | Ruta del fichero SQLite con enlaces, paneles y foro | `data/serchi.db` |
 | `SITE_URL` | Dirección pública del sitio, sin `/` final (p. ej. `https://serchi.ejemplo.org`). Se usa en `sitemap.xml` y en la vista previa al compartir un enlace | la de cada petición |
 | `GEMINI_API_KEY` | Activa la búsqueda en vivo de webs nuevas con Gemini | desactivada |
-| `FORUM_MODERATOR_KEY` | Si se define, el rol de moderador del foro pide esta clave | cualquiera modera |
+| `FORUM_MODERATOR_KEY` | Clave de los moderadores: el foro, el editor de cursos y la revisión de grabaciones la piden. Sin ella nadie puede publicar grabaciones sin revisión ni crear o quitar voces sintéticas | cualquiera modera el foro y edita cursos |
 | `DOMAIN` | Solo con `docker compose --profile https`: dominio para el certificado HTTPS | — |
 
 Se pueden poner en un fichero `.env.local` (ver [`.env.example`](../.env.example)), que
 nunca se sube al repositorio.
 
 > **Importante:** si la web es pública, define siempre `FORUM_MODERATOR_KEY`. Sin ella
-> cualquiera puede fijar, cerrar o borrar mensajes del foro.
+> cualquiera puede fijar, cerrar o borrar mensajes del foro, editar los cursos y aprobar
+> grabaciones. Las acciones que publican audio al momento o usan espeak-ng (grabar desde
+> el editor, crear o quitar voces) no funcionan sin clave.
 
 ## Opción 1: Docker Compose (recomendada)
 

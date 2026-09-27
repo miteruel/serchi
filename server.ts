@@ -45,6 +45,7 @@ import {
   approveRecording,
   audioMap,
   countPendingRecordings,
+  recordingCredits,
   audioSlug,
   courseWords,
   deleteRecording,
@@ -269,6 +270,20 @@ async function startServer() {
     return list;
   };
   const recordableWords = () => new Map(recordableWordList().map((w) => [w.slug, w.text]));
+  // Publishing audio without review, and running espeak-ng, need a real key:
+  // without FORUM_MODERATOR_KEY everyone would count as a moderator, so then
+  // nobody may do them (the page explains what to set).
+  const keyedModeratorOnly = (req: express.Request, res: express.Response) => {
+    if (!moderatorKey) {
+      res.status(403).json({ error: 'moderator_key_not_set' });
+      return false;
+    }
+    if (!sameKey(String(req.get('X-Moderator-Key') || ''))) {
+      res.status(403).json({ error: 'moderator_key' });
+      return false;
+    }
+    return true;
+  };
   const isModeratorRequest = (req: express.Request) =>
     !moderatorKey || sameKey(String(req.get('X-Moderator-Key') || ''));
 
@@ -296,7 +311,7 @@ async function startServer() {
       // approve=1: a moderator recording from the course editor, published at
       // once. It can be any word (text=...), also of a course not published yet.
       const trusted = req.query.approve === '1';
-      if (trusted && !isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+      if (trusted && !keyedModeratorOnly(req, res)) return;
       const slug = String(req.query.slug || '');
       const text = String(req.query.text || '').trim();
       const words = trusted
@@ -309,6 +324,7 @@ async function startServer() {
           visitorId: visitor,
           name: String(req.query.name || ''),
           trusted,
+          credit: req.query.credit === '1',
         });
         return res.status(201).json({ ...saved, url: `/api/recordings/${encodeURIComponent(saved.id)}/audio` });
       } catch (err: any) {
@@ -373,7 +389,7 @@ async function startServer() {
   // Voice of one word for the course editor: the recording or synthetic voice
   // it already has, or a synthetic one made now. { url } or 503 without espeak-ng.
   app.post('/api/tts', async (req, res) => {
-    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    if (!keyedModeratorOnly(req, res)) return;
     const text = String(req.body?.text || '').trim();
     const slug = audioSlug(text);
     if (!slug || text.length > 200) return res.status(400).json({ error: 'Bad text' });
@@ -392,7 +408,7 @@ async function startServer() {
 
   // Removes the synthetic voice of a word that sounds wrong (course editor)
   app.delete('/api/tts/:slug', (req, res) => {
-    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    if (!keyedModeratorOnly(req, res)) return;
     const slug = audioSlug(req.params.slug);
     if (!slug) return res.status(400).json({ error: 'Bad word' });
     muteVoice(db, slug);
@@ -402,6 +418,11 @@ async function startServer() {
   // Words whose synthetic voice was removed
   app.get('/api/tts/off', (_req, res) => {
     res.set('Cache-Control', 'no-cache').json(mutedVoices(db));
+  });
+
+  // Speakers to thank on the course pages (only those who asked for it)
+  app.get('/api/recordings/credits', (_req, res) => {
+    res.set('Cache-Control', 'no-cache').json(recordingCredits(db));
   });
 
   // How many recordings wait for review (the moderators see it in the menu and the editor)
