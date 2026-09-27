@@ -1,0 +1,185 @@
+{
+  "curso": [
+    "kurso",
+    "lerni",
+    "duolingo",
+    "lernu"
+  ],
+  "cursos": [
+    "kurso",
+    "kursoj",
+    "lerni",
+    "edukado"
+  ],
+  "aprender": [
+    "lerni",
+    "studado",
+    "komencanto",
+    "kurso"
+  ],
+  "principiante": [
+    "komencanto",
+    "a1",
+    "a2",
+    "elementa"
+  ],
+  "beginner": [
+    "komencanto",
+    "a1",
+    "a2",
+    "learn"
+  ],
+  "learn": [
+    "lerni",
+    "kurso",
+    "studado"
+  ],
+  "course": [
+    "kurso",
+    "lernu",
+    "instruado"
+  ],
+  "courses": [
+    "kursoj",
+    "lernu",
+    "edukado"
+  ],
+  "diccionario": [
+    "vortaro",
+    "piv",
+    "revo",
+    "tradukilo"
+  ],
+  "vocabulario": [
+    "vortprovizo",
+    "vortaro",
+    "vortoj"
+  ],
+  "dictionary": [
+    "vortaro",
+    "piv",
+    "revo",
+    "tatoeba"
+  ],
+  "vocabulary": [
+    "vortoj",
+    "vortaro",
+    "radikoj"
+  ],
+  "gramatica": [
+    "gramatiko",
+    "pmeg",
+    "akuzativo",
+    "reguloj"
+  ],
+  "grammar": [
+    "gramatiko",
+    "pmeg",
+    "rules",
+    "akuzativo"
+  ],
+  "noticias": [
+    "novajoj",
+    "revuo",
+    "gazeto",
+    "folio"
+  ],
+  "periodico": [
+    "gazeto",
+    "revuo",
+    "monato"
+  ],
+  "news": [
+    "novajoj",
+    "revuo",
+    "monato",
+    "folio"
+  ],
+  "libros": [
+    "libroj",
+    "literaturo",
+    "gutenberg",
+    "bitlibroj"
+  ],
+  "lectura": [
+    "legado",
+    "rakontoj",
+    "literaturo"
+  ],
+  "books": [
+    "libroj",
+    "literaturo",
+    "reading"
+  ],
+  "reading": [
+    "legado",
+    "libroj",
+    "rakontoj"
+  ],
+  "podcast": [
+    "podkasto",
+    "retradio",
+    "audvida",
+    "kernpunkto"
+  ],
+  "podcasts": [
+    "podkastoj",
+    "retradio",
+    "kernpunkto"
+  ],
+  "musica": [
+    "muziko",
+    "kantoj",
+    "vinilkosmo"
+  ],
+  "music": [
+    "muziko",
+    "kantoj",
+    "songs"
+  ],
+  "videos": [
+    "videoj",
+    "tubaro",
+    "youtube",
+    "filmoj"
+  ],
+  "video": [
+    "video",
+    "tubaro",
+    "youtube"
+  ],
+  "comunidad": [
+    "komunumo",
+    "kongreso",
+    "renkontigo",
+    "telegram"
+  ],
+  "community": [
+    "komunumo",
+    "events",
+    "renkontigoj",
+    "discord"
+  ],
+  "eventos": [
+    "eventoj",
+    "kongreso",
+    "renkontigo",
+    "kalendaro"
+  ],
+  "events": [
+    "eventoj",
+    "renkontigoj",
+    "calendar",
+    "pasporta"
+  ],
+  "viajar": [
+    "pasporta servo",
+    "vojaĝi",
+    "gastoj"
+  ],
+  "travel": [
+    "pasporta servo",
+    "vojagi",
+    "hosts"
+  ]
+}

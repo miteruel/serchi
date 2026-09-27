@@ -1,0 +1,31 @@
+@if Model.HasTopics {
+<ul class="divide-y divide-gray-200 dark:divide-gray-700 rounded-xl border border-gray-200 dark:border-gray-700">
+  @ForEach (var tp in Model.Topics) {
+  <li class="p-4 hover:bg-gray-50 dark:hover:bg-[#2a2b2e]">
+    <div class="flex gap-3">
+      <span class="shrink-0 inline-flex w-10 h-10 rounded-full @tp.AuthorAvatar text-white items-center justify-center font-bold">@tp.AuthorLevel</span>
+      <div class="min-w-0 flex-1">
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          @if tp.IsPinned {<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">📌 @t.pinned</span>}
+          @if tp.IsLocked {<span class="px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">🔒 @t.locked</span>}
+          <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">@tp.CategoryLabel</span>
+          <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">@tp.LevelLabel</span>
+        </div>
+        <a href="/forum/topic?id=@tp.Id" class="block mt-1 font-semibold text-lg hover:text-emerald-700 dark:hover:text-emerald-300">@tp.Title</a>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">@tp.Excerpt</p>
+        <p class="mt-2 text-xs text-gray-500">
+          <b>@tp.AuthorName</b> (@tp.AuthorRole) · @tp.Created ·
+          💬 @tp.Replies @t.replies · 👁 @tp.Views @t.views · ♥ @tp.Likes @t.likes
+        </p>
+      </div>
+    </div>
+  </li>
+  }
+</ul>
+}
+@else {
+<div class="py-12 text-center">
+  <p class="font-semibold">@t.noTopicsFound</p>
+  <p class="text-sm text-gray-500 mt-1">@t.noTopicsFoundDesc</p>
+</div>
+}

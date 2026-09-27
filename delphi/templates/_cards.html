@@ -1,0 +1,40 @@
+@* Result cards. Rendered inside #cards, and on its own for "load more" pages. *@
+@ForEach (var r in Model.Results) {
+<li class="group">
+  <div class="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-2">
+    <span class="inline-flex w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 items-center justify-center">🌐</span>
+    <span class="truncate">@r.DisplayUrl</span>
+  </div>
+  <h3 class="mt-1">
+    <a href="@r.Url" target="_blank" rel="noopener" class="text-xl text-blue-800 dark:text-blue-300 hover:underline">@r.Title</a>
+  </h3>
+  <p class="mt-1 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">@r.Description</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    @if r.HasLevel {
+    <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 font-semibold" title="@r.LevelLabel">@r.Level</span>
+    }
+    <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">@r.CategoryLabel</span>
+    <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">@r.FormatLabel</span>
+    @if r.IsFree {
+    <span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">@t.freeBadge</span>
+    }
+    @if r.Featured {
+    <span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">★ @t.featuredBadge</span>
+    }
+    <span class="flex-1"></span>
+    <button type="button" hx-get="/resource?id=@r.Id" hx-target="#modal"
+            class="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">👁 @t.quickPreview</button>
+    <button type="button" data-copy="@r.Url" data-copied="@t.linkCopied"
+            class="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">🔗 @t.copyLink</button>
+    <button type="button" hx-post="/bookmark?id=@r.Id" hx-swap="outerHTML"
+            title="@if r.Saved {@t.removeFromFavorites} @else {@t.saveToFavorites}"
+            class="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 @if r.Saved {text-amber-500} @else {text-gray-400}">@if r.Saved {★} @else {☆}</button>
+  </div>
+</li>
+}
+@if Model.HasMore {
+<li id="more" class="list-none text-center">
+  <button type="button" hx-get="@Model.NextPageUrl" hx-target="#more" hx-swap="outerHTML"
+          class="px-5 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">↓ @t.moreInfo</button>
+</li>
+}

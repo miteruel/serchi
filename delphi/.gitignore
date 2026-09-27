@@ -1,0 +1,13 @@
+# Delphi build output / IDE files
+__history/
+__recovery/
+Win32/
+Win64/
+Linux64/
+*.dcu
+*.exe
+*.res
+*.local
+*.identcache
+*.dsk
+*.stat

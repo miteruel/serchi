@@ -18,3 +18,9 @@ View your app in AI Studio: https://ai.studio/apps/1f685933-e473-4c77-9a87-e5e3f
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Delphi + WebStencils + HTMX version
+
+The [`delphi/`](delphi/README.md) folder contains a server-rendered version of the same
+site built with Delphi WebBroker, WebStencils templates and HTMX. It reads the same data,
+exported to JSON with `npm run export:delphi`.

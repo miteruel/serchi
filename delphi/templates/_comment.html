@@ -1,0 +1,18 @@
+@* A single reply, appended to #comments after hx-post="/forum/reply" *@
+<li id="c-@Model.Id" class="rounded-xl p-4 @if Model.IsModNote {bg-purple-50 dark:bg-purple-900/30 border border-purple-300} @else {bg-gray-50 dark:bg-[#303134]}">
+  <div class="flex items-center gap-2 text-sm">
+    <span class="inline-flex w-8 h-8 rounded-full @Model.AuthorAvatar text-white items-center justify-center font-bold text-xs">@Model.AuthorLevel</span>
+    <b>@Model.AuthorName</b>
+    <span class="text-xs text-gray-500">@Model.AuthorRole · @Model.Created</span>
+    @if Model.IsModNote {<span class="text-xs font-semibold text-purple-700 dark:text-purple-300">🛡 @t.forumOfficialNote</span>}
+  </div>
+  <p class="mt-2 whitespace-pre-line">@Model.Content</p>
+  <div class="mt-2 flex items-center gap-2 text-xs">
+    @Import _comment_like.html
+    @if Model.CanModerate {
+    <button type="button" hx-post="/forum/comment-delete?topic=@Model.TopicId&id=@Model.Id" hx-target="#c-@Model.Id" hx-swap="outerHTML"
+            hx-confirm="@t.forumConfirmDeleteComment" class="px-2 py-0.5 rounded-full border border-red-300 text-red-600">🗑 @t.modDeleteComment</button>
+    }
+  </div>
+</li>
+<p id="no-replies" hx-swap-oob="delete"></p>
