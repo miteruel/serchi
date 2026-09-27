@@ -229,6 +229,11 @@ export interface TranslationDictionary {
   peopleSectionTitle: string;
   peopleSectionDesc: string;
   peopleSeeAll: string;
+
+  // Events section
+  eventsSectionTitle: string;
+  eventsSectionDesc: string;
+  eventsSeeAll: string;
   listenBtn: string;
   nowPlaying: string;
   closePlayer: string;
@@ -337,9 +342,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       tools: 'Iloj & Vortaroj',
       literature: 'Literaturo',
       media: 'Aŭdvidaj & Podkastoj',
-      community: 'Komunumo & Eventoj',
+      community: 'Komunumo',
       radio: "Radio",
       people: "Personoj",
+      events: "Eventoj",
     },
     
     levels: {
@@ -504,6 +510,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     peopleSectionTitle: "Famaj esperantistoj",
     peopleSectionDesc: "Verkistoj, sciencistoj kaj aktivuloj kiuj parolis kaj uzis Esperanton.",
     peopleSeeAll: "Ĉiuj personoj",
+    eventsSectionTitle: "Esperanto-eventoj",
+    eventsSectionDesc: "Kongresoj, festivaloj kaj renkontiĝoj kie oni vivas Esperanton.",
+    eventsSeeAll: "Ĉiuj eventoj",
     listenBtn: "Aŭskulti",
     nowPlaying: "Nun ludas",
     closePlayer: "Fermi ludilon",
@@ -611,9 +620,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       tools: 'Herramientas y Diccionarios',
       literature: 'Literatura',
       media: 'Audio, Vídeo y Podcasts',
-      community: 'Comunidad y Eventos',
+      community: 'Comunidad',
       radio: "Radio",
       people: "Personas",
+      events: "Eventos",
     },
     
     levels: {
@@ -778,6 +788,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     peopleSectionTitle: "Esperantistas célebres",
     peopleSectionDesc: "Escritores, científicos y activistas que hablaron y usaron el esperanto.",
     peopleSeeAll: "Todas las personas",
+    eventsSectionTitle: "Eventos en esperanto",
+    eventsSectionDesc: "Congresos, festivales y encuentros donde se vive en esperanto.",
+    eventsSeeAll: "Todos los eventos",
     listenBtn: "Escuchar",
     nowPlaying: "Sonando",
     closePlayer: "Cerrar reproductor",
@@ -885,9 +898,10 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       tools: 'Tools & Dictionaries',
       literature: 'Literature',
       media: 'Audio, Video & Podcasts',
-      community: 'Community & Events',
+      community: 'Community',
       radio: "Radio",
       people: "People",
+      events: "Events",
     },
     
     levels: {
@@ -1052,6 +1066,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     peopleSectionTitle: "Famous Esperantists",
     peopleSectionDesc: "Writers, scientists and activists who spoke and used Esperanto.",
     peopleSeeAll: "All people",
+    eventsSectionTitle: "Esperanto events",
+    eventsSectionDesc: "Congresses, festivals and meetings where Esperanto is lived.",
+    eventsSeeAll: "All events",
     listenBtn: "Listen",
     nowPlaying: "Now playing",
     closePlayer: "Close player",

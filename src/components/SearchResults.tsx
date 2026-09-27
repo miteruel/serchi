@@ -24,7 +24,8 @@ import {
   Globe,
   Radio,
   Play,
-  UserRound
+  UserRound,
+  CalendarDays
 } from 'lucide-react';
 import { 
   EsperantoResource, 
@@ -93,6 +94,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     community: <Users className="w-3.5 h-3.5" />,
     radio: <Radio className="w-3.5 h-3.5" />,
     people: <UserRound className="w-3.5 h-3.5" />,
+    events: <CalendarDays className="w-3.5 h-3.5" />,
   };
 
   const categoriesList: Category[] = [
@@ -105,7 +107,8 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     'projects',
     'community',
     'radio',
-    'people'
+    'people',
+    'events'
   ];
 
   const levelsList: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];

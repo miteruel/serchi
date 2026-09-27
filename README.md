@@ -133,6 +133,16 @@ PR y commits correspondientes.
     Piron y Tibor Sekelj tienen además panel de conocimiento. Está también en la versión
     Delphi. La base de datos queda con 528 enlaces y 10 paneles.
 
+11. **Sección de eventos.** Nueva categoría *Eventos* (`events`, esquema v3), separada de
+    *Comunidad*, que pasa a llamarse solo así. Reúne 33 congresos, festivales y
+    encuentros: 22 nuevos (`data/imports/2026-09-eventos.json`) y 11 que ya estaban en
+    otras categorías (el Congreso Universal, SES, IJF, NASK, Eventa Servo…). Entre los
+    nuevos, el Congreso Universal de 2027 en Melbourne, el IJK, el JES, el Congreso
+    Español, el 41.º Congreso Catalán (Reus, octubre de 2026), ARKONES, KEF, los
+    congresos continentales, el Congreso Español de 2017 en Teruel y las actividades de
+    Frateco en Zaragoza. La portada muestra los 12 destacados, que enlazan a su web. La
+    base de datos queda con 550 enlaces.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

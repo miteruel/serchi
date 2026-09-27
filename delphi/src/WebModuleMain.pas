@@ -306,8 +306,8 @@ end;
 
 procedure TWebModuleMain.FillCategoryOptions(AList: TObjectList<TOptionVM>; const ASelected: string);
 const
-  Cats: array[0..9] of string = ('all', 'courses', 'news', 'projects', 'tools',
-    'literature', 'media', 'community', 'radio', 'people');
+  Cats: array[0..10] of string = ('all', 'courses', 'news', 'projects', 'tools',
+    'literature', 'media', 'community', 'radio', 'people', 'events');
 var
   C: string;
 begin
@@ -411,6 +411,13 @@ begin
     for Res in Found do
       if Res.Featured then
         VM.People.Add(ResourceVM(Res));
+    // Esperanto events: featured congresses and meetings
+    Found.Clear;
+    Filters.Category := 'events';
+    Store.Search(Filters, Found);
+    for Res in Found do
+      if Res.Featured then
+        VM.Events.Add(ResourceVM(Res));
     Render('home.html', VM);
   finally
     Found.Free;

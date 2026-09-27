@@ -11,7 +11,8 @@ import {
   SlidersHorizontal,
   Radio,
   Play,
-  UserRound
+  UserRound,
+  CalendarDays
 } from 'lucide-react';
 import { UserSettings, Level, Category, EsperantoResource } from '../types';
 import { TRANSLATIONS } from '../translations';
@@ -117,6 +118,7 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
 
   const radioStations = resources.filter((r) => r.category === 'radio' && r.stream);
   const famousPeople = resources.filter((r) => r.category === 'people' && r.featured);
+  const mainEvents = resources.filter((r) => r.category === 'events' && r.featured);
 
   const levelsList: { key: Level; label: string; badgeColor: string }[] = [
     { key: 'all', label: t.levels.all, badgeColor: 'hover:border-gray-400' },
@@ -404,6 +406,40 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
                   {person.description[settings.language] || person.description.eo}
                 </span>
               </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Esperanto events: featured congresses and meetings, linked to their websites */}
+      {mainEvents.length > 0 && (
+        <section className="mt-8 w-full max-w-2xl" aria-labelledby="events-heading">
+          <div className="flex items-center justify-between mb-2">
+            <h2 id="events-heading" className="text-sm font-semibold flex items-center gap-2 text-gray-700 dark:text-gray-300">
+              <CalendarDays className="w-4 h-4 text-emerald-600" /> {t.eventsSectionTitle}
+            </h2>
+            <button
+              onClick={() => onSearch('', undefined, 'events')}
+              className="text-xs text-emerald-700 dark:text-emerald-400 hover:underline"
+            >
+              {t.eventsSeeAll} →
+            </button>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{t.eventsSectionDesc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {mainEvents.map((event) => (
+              <a
+                key={event.id}
+                href={event.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 transition-colors"
+              >
+                <span className="block text-sm font-semibold truncate">{event.title}</span>
+                <span className="block text-xs text-gray-500 truncate">
+                  {event.description[settings.language] || event.description.eo}
+                </span>
+              </a>
             ))}
           </div>
         </section>
