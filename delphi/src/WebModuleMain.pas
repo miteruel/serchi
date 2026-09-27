@@ -965,7 +965,7 @@ end;
 function TWebModuleMain.RequestBody: TBytes;
 begin
   FRequest.ReadTotalContent; // big uploads may arrive in several parts
-  Result := BytesOf(FRequest.RawContent);
+  Result := FRequest.RawContent; // already TBytes in Delphi 12
 end;
 
 function TWebModuleMain.RequestJson: TJSONValue;

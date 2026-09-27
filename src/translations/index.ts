@@ -107,6 +107,9 @@ export interface TranslationDictionary {
 
   // Forum & Community
   communityTab: string;
+  coursesTab: string;
+  recordTab: string;
+  editorTab: string;
   searchTab: string;
   forumTitle: string;
   forumTagline: string;
@@ -408,6 +411,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     freeBadge: 'Senpaga',
 
     communityTab: 'Komunumo & Forumo',
+    coursesTab: 'Kursoj',
+    recordTab: 'Registri',
+    editorTab: 'Redaktilo',
     searchTab: 'Serĉilo',
     forumTitle: 'Esperanto-Forumo',
     forumTagline: 'Diskutejo, demandoj, gramatika helpo kaj amikeco por ĉiuj lernniveloj',
@@ -699,6 +705,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     freeBadge: 'Gratis',
 
     communityTab: 'Comunidad y Foro',
+    coursesTab: 'Cursos',
+    recordTab: 'Grabar',
+    editorTab: 'Editor',
     searchTab: 'Buscador',
     forumTitle: 'Foro de Esperanto',
     forumTagline: 'Punto de encuentro, resolución de dudas, práctica y apoyo para todos los niveles',
@@ -990,6 +999,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     freeBadge: 'Free',
 
     communityTab: 'Community & Forum',
+    coursesTab: 'Courses',
+    recordTab: 'Record',
+    editorTab: 'Editor',
     searchTab: 'Search Engine',
     forumTitle: 'Esperanto Forum',
     forumTagline: 'Discussion, Q&A, grammar help, and friendships for all learning levels',
