@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Esperanto en Aragono</title>
+<meta name="description" content="Historia del esperanto en Aragón, de los pioneros de 1905 a Liberanimo Teruel, con las fuentes de cada hito.">
+</head>
+<body>
+<style>
+  /* Styles live in <body> so the page keeps them when htmx (hx-boost in the Delphi
+     version) swaps only the body in. */
+  @import url("https://fonts.googleapis.com/css2?family=Bitter:wght@600;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap");
+  :root {
+    --bg: #f2f5f3;
+    --surface: #ffffff;
+    --ink: #1c2421;
+    --muted: #5a6662;
+    --line: #d6dfda;
+    --glaze: #1f7a5c;
+    --glaze-soft: #dcefe7;
+    --ochre: #a8740f;
+    --brick: #9c4a2a;
+    --tile: #ffffff;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121614;
+      --surface: #1a201d;
+      --ink: #e6ece9;
+      --muted: #9faea8;
+      --line: #2b3531;
+      --glaze: #4fb38d;
+      --glaze-soft: #1c3129;
+      --ochre: #e0b04a;
+      --brick: #d98363;
+      --tile: #e6ece9;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121614;
+    --surface: #1a201d;
+    --ink: #e6ece9;
+    --muted: #9faea8;
+    --line: #2b3531;
+    --glaze: #4fb38d;
+    --glaze-soft: #1c3129;
+    --ochre: #e0b04a;
+    --brick: #d98363;
+    --tile: #e6ece9;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 18px/1.6 "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  }
+  .page { max-width: 920px; margin: 0 auto; padding: max(16px, env(safe-area-inset-top)) 16px max(40px, env(safe-area-inset-bottom)); display: grid; gap: 40px; }
+  h1, h2, h3 { font-family: "Bitter", Georgia, serif; line-height: 1.15; margin: 0; text-wrap: balance; }
+  a { color: var(--glaze); }
+  a:focus-visible { outline: 3px solid var(--ochre); outline-offset: 2px; border-radius: 4px; }
+  p { margin: 0; }
+  .eo { font-style: italic; }
+
+  .top { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; }
+  .top a { font-weight: 700; text-decoration: none; }
+
+  /* Mudéjar tile band: green and white glazed tiles like Teruel's towers */
+  .tiles { display: block; width: 100%; height: 44px; border-radius: 6px; }
+
+  .hero { display: grid; gap: 14px; }
+  .kicker { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--ochre); font-weight: 700; }
+  .hero h1 { font-size: clamp(38px, 7.5vw, 64px); font-weight: 800; }
+  .hero h1 span { color: var(--glaze); }
+  .hero p { max-width: 62ch; color: var(--muted); font-size: 19px; }
+
+  .cities { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .city { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+  .city h3 { font-size: 20px; }
+  .city .eo { color: var(--muted); font-size: 15px; }
+  .city p { font-size: 16px; }
+
+  .era { display: grid; gap: 18px; }
+  .era-head { display: grid; gap: 4px; border-bottom: 2px solid var(--glaze); padding-bottom: 8px; }
+  .era-head h2 { font-size: clamp(26px, 4.5vw, 34px); }
+  .era-head .span { font: 700 15px/1 "Bitter", serif; color: var(--ochre); font-variant-numeric: tabular-nums; }
+
+  .events { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .event { display: grid; grid-template-columns: 8.5rem 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .event:last-child { border-bottom: 0; }
+  .year { font: 800 22px/1.2 "Bitter", serif; color: var(--brick); font-variant-numeric: tabular-nums; }
+  .year small { display: block; font: 600 14px/1.3 "Source Sans 3", sans-serif; color: var(--muted); margin-top: 2px; }
+  .body { display: grid; gap: 6px; max-width: 64ch; }
+  .body h3 { font-size: 20px; }
+  .place { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--glaze); }
+  .src { font-size: 15px; color: var(--muted); }
+  .src a { font-weight: 600; }
+  @media (max-width: 600px) {
+    .event { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  blockquote {
+    margin: 4px 0 0; padding: 10px 16px; border-left: 4px solid var(--ochre);
+    background: var(--surface); border-radius: 0 8px 8px 0; font-family: "Bitter", serif; font-weight: 600;
+  }
+
+  .places { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .spot { background: var(--glaze-soft); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+  .spot b { font-family: "Bitter", serif; font-size: 18px; }
+  .spot span { font-size: 15px; color: var(--muted); }
+
+  .sources ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 16px; }
+  footer { text-align: center; color: var(--muted); font-size: 15px; }
+</style>
+
+<div class="page">
+  <nav class="top" aria-label="Navegación">
+    <a href="/">← Serĉilo</a>
+    <span>Liberanimo Teruel</span>
+  </nav>
+
+  <svg class="tiles" aria-hidden="true">
+    <defs>
+      <pattern id="mudejar" width="44" height="44" patternUnits="userSpaceOnUse">
+        <rect width="44" height="44" fill="var(--glaze)"/>
+        <polygon points="22,4 40,22 22,40 4,22" fill="var(--tile)"/>
+        <polygon points="22,13 31,22 22,31 13,22" fill="var(--glaze)"/>
+        <circle cx="22" cy="22" r="3" fill="var(--ochre)"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="44" fill="url(#mudejar)"/>
+  </svg>
+
+  <header class="hero">
+    <span class="kicker">Historio · Historia</span>
+    <h1>Esperanto en <span>Aragono</span></h1>
+    <p>Más de un siglo de esperanto en Zaragoza, Huesca y Teruel: de la farmacia del Coso donde nació Frateco en 1908 a la glorieta junto al ascensor de San Julián. Cada hito lleva el enlace a la fuente de donde sale.</p>
+  </header>
+
+  <section class="cities" aria-label="Las tres capitales">
+    <div class="city">
+      <h3>Zaragoza <span class="eo">· Zaragozo</span></h3>
+      <p>Frateco, fundada en 1908, sigue activa: una de las sociedades esperantistas más antiguas de España.</p>
+    </div>
+    <div class="city">
+      <h3>Huesca <span class="eo">· Oska</span></h3>
+      <p>Clases muy tempranas y, en los años veinte, el Grupo de Esperanto Osca.</p>
+    </div>
+    <div class="city">
+      <h3>Teruel <span class="eo">· Teruelo</span></h3>
+      <p>El pionero Julio Belenguer y, desde 2016, Liberanimo.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 1905–1927 ===================== -->
+  <section class="era" aria-labelledby="era-1">
+    <div class="era-head">
+      <span class="span">1905 – 1927</span>
+      <h2 id="era-1">Los pioneros</h2>
+    </div>
+    <ol class="events">
+      <li class="event">
+        <div class="year">1905–1906</div>
+        <div class="body">
+          <span class="place">Teruel</span>
+          <h3>Julio Belenguer trae el esperanto a Teruel</h3>
+          <p>El alcorisano Julio Belenguer (1868–1927) aprende la lengua y crea en Teruel un grupo estable que se reúne en un piso de la calle San Juan, número 1. No solo da clases: consigue que el esperanto entre en los planes de enseñanza reglada de la ciudad.</p>
+          <p class="src">Fuente: <a href="https://www.diariodeteruel.es/cultura/los-esperantistas-turolenses-homenajean-al-pionero-alcorisano-julio-belenguer" target="_blank" rel="noopener noreferrer">Diario de Teruel, homenaje a Julio Belenguer</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">Primeros años</div>
+        <div class="body">
+          <span class="place">Huesca</span>
+          <h3>Clases en el Círculo Católico</h3>
+          <p>En el Alto Aragón el esperanto se enseña muy pronto: un redactor de <i>El Diario de Huesca</i> da clases en el Círculo Católico de la ciudad.</p>
+          <p class="src">Fuente: <a href="https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1903---1919" target="_blank" rel="noopener noreferrer">A. Marco Botella, <i>Un siglo de esperanto en Aragón</i>, años 1903–1919</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1908<small>3 de julio</small></div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>Nace Frateco</h3>
+          <p>En la farmacia de Constantino Ros, en el Coso, 43, Emilio Gastón, Rafael Benítez y Agustín de Montagud fundan <span class="eo">Frateco</span> («fraternidad»), la primera sociedad esperantista aragonesa. Montagud es su primer presidente. Entre los primeros socios están Pedro Ramón y Cajal, hermano del Nobel, y dos mujeres, Justina Arbunis y Dolores Asensio. La ciudad vive entonces la Exposición Hispano-Francesa.</p>
+          <p>Emilia e Inés Gastón, de la misma familia, fueron muy activas en el movimiento y a veces se las cuenta entre las primeras personas con el esperanto como lengua materna.</p>
+          <p class="src">Fuentes: <a href="http://www.enciclopedia-aragonesa.com/voz.asp?voz_id=5877" target="_blank" rel="noopener noreferrer">Gran Enciclopedia Aragonesa, «Frateco»</a> · <a href="https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html" target="_blank" rel="noopener noreferrer">HoyAragón</a> · <a href="https://es.wikipedia.org/wiki/Emilio_Gast%C3%B3n_Sanz" target="_blank" rel="noopener noreferrer">Wikipedia, «Emilio Gastón Sanz»</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1914</div>
+        <div class="body">
+          <span class="place">Teruel</span>
+          <h3>Rumbo a París</h3>
+          <p>Belenguer viaja al X Congreso Universal de Esperanto, en París, que el estallido de la Primera Guerra Mundial dejó frustrado.</p>
+          <p class="src">Fuente: <a href="https://diariodeteruel.es/movil/noticia.asp?notid=1028621&amp;secid=7" target="_blank" rel="noopener noreferrer">Diario de Teruel, Semana Modernista</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1921</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>II Congreso Español de Esperanto</h3>
+          <p>Frateco organiza en Zaragoza el segundo congreso nacional, el primero de los cuatro que ha acogido la ciudad.</p>
+          <p class="src">Fuentes: <a href="https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html" target="_blank" rel="noopener noreferrer">HoyAragón</a> · <a href="https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1920---1927" target="_blank" rel="noopener noreferrer">Marco Botella, años 1920–1927</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">Años veinte</div>
+        <div class="body">
+          <span class="place">Huesca</span>
+          <h3>Renace el grupo oscense</h3>
+          <p>El grupo de Huesca, que había desaparecido al empezar la Gran Guerra, vuelve como «Grupo de Esperanto Osca» con ayuda de los zaragozanos. José Artigas da conferencias y organiza un curso en la Cámara de Comercio, y el doctor Roberto Maraury escribe sobre esperanto en <i>El Porvenir</i> y el <i>Diario de Huesca</i>.</p>
+          <p class="src">Fuente: <a href="https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1920---1927" target="_blank" rel="noopener noreferrer">Marco Botella, años 1920–1927</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1927</div>
+        <div class="body">
+          <span class="place">Zaragoza · Huesca · Teruel</span>
+          <h3>Campaña de Manuel Maynar</h3>
+          <p>El jurista Manuel Maynar lanza una intensa campaña a favor del esperanto, con un curso en Zaragoza y un mitin en Huesca. Ese mismo año muere en Teruel Julio Belenguer.</p>
+          <p class="src">Fuentes: <a href="https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1920---1927" target="_blank" rel="noopener noreferrer">Marco Botella, años 1920–1927</a> · <a href="https://www.diariodeteruel.es/cultura/los-esperantistas-turolenses-homenajean-al-pionero-alcorisano-julio-belenguer" target="_blank" rel="noopener noreferrer">Diario de Teruel</a></p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===================== 1936–1960 ===================== -->
+  <section class="era" aria-labelledby="era-2">
+    <div class="era-head">
+      <span class="span">1936 – 1960</span>
+      <h2 id="era-2">Guerra y resistencia</h2>
+    </div>
+    <ol class="events">
+      <li class="event">
+        <div class="year">1936–1939</div>
+        <div class="body">
+          <span class="place">Todo Aragón</span>
+          <h3>La guerra paraliza el movimiento</h3>
+          <p>Con la Guerra Civil se suspenden revistas, congresos y asociaciones, y muchos esperantistas sufren la represión. Frateco es, posiblemente, una de las pocas sociedades esperantistas de España que han funcionado sin interrupción desde su fundación.</p>
+          <p class="src">Fuentes: <a href="https://delbarrio.eu/guerracivil.htm" target="_blank" rel="noopener noreferrer">J. A. del Barrio, «Esperantistas en la guerra civil española»</a> · <a href="http://www.enciclopedia-aragonesa.com/voz.asp?voz_id=5877" target="_blank" rel="noopener noreferrer">Gran Enciclopedia Aragonesa</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1954</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>XV Congreso Español de Esperanto</h3>
+          <p>Frateco vuelve a reunir en Zaragoza al esperantismo español.</p>
+          <p class="src">Fuentes: <a href="https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html" target="_blank" rel="noopener noreferrer">HoyAragón</a> · <a href="https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1954---1962" target="_blank" rel="noopener noreferrer">Marco Botella, años 1954–1962</a></p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===================== 1961–2008 ===================== -->
+  <section class="era" aria-labelledby="era-3">
+    <div class="era-head">
+      <span class="span">1961 – 2008</span>
+      <h2 id="era-3">Calles, libros y congresos</h2>
+    </div>
+    <ol class="events">
+      <li class="event">
+        <div class="year">1961</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>Calle del Doctor Zamenhof</h3>
+          <p>Zaragoza dedica una calle al creador del esperanto.</p>
+          <p class="src">Fuente: <a href="https://sites.google.com/site/fratecoes/esperanto/monumento" target="_blank" rel="noopener noreferrer">Frateco, «Monumento»</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1967</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>XXVIII Congreso Español de Esperanto</h3>
+          <p>Tercer congreso nacional organizado por Frateco.</p>
+          <p class="src">Fuente: <a href="https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html" target="_blank" rel="noopener noreferrer">HoyAragón</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1977</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>El Quijote completo, en esperanto</h3>
+          <p>Se publica en Zaragoza <span class="eo">La inĝenia hidalgo Don Quijote de La Mancha</span>, la traducción completa de Fernando de Diego, fruto de veinte años de trabajo: más de ochocientas páginas con los grabados de Gustave Doré.</p>
+          <p class="src">Fuentes: <a href="https://blog.cervantesvirtual.com/don-quijote-de-la-mancha-en-esperanto/" target="_blank" rel="noopener noreferrer">Biblioteca Virtual Miguel de Cervantes</a> · <a href="https://sites.google.com/site/fratecoes/la-asociacion/biografias/fernando-de-diego" target="_blank" rel="noopener noreferrer">Frateco, «Fernando de Diego»</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1983</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>Cuarto congreso nacional en la ciudad</h3>
+          <p>Zaragoza acoge por cuarta vez el Congreso Español de Esperanto.</p>
+          <p class="src">Fuente: <a href="https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html" target="_blank" rel="noopener noreferrer">HoyAragón</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1987–1993</div>
+        <div class="body">
+          <span class="place">Aragón</span>
+          <h3>Un esperantista, primer Justicia de Aragón</h3>
+          <p>Emilio Gastón Sanz, nieto del fundador de Frateco, abogado y esperantista, es el primer Justicia de Aragón tras el Estatuto de Autonomía.</p>
+          <p class="src">Fuente: <a href="https://es.wikipedia.org/wiki/Emilio_Gast%C3%B3n_Sanz" target="_blank" rel="noopener noreferrer">Wikipedia, «Emilio Gastón Sanz»</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">1995</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>Glorieta del Esperanto</h3>
+          <p>El Ayuntamiento dedica al esperanto una glorieta céntrica de la ciudad.</p>
+          <p class="src">Fuente: <a href="https://sites.google.com/site/fratecoes/esperanto/monumento" target="_blank" rel="noopener noreferrer">Frateco, «Monumento»</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">2000</div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>Un siglo de esperanto en Aragón</h3>
+          <p>Antonio Marco Botella publica la monografía que recorre el movimiento aragonés desde sus comienzos, y que hoy puede leerse en línea por capítulos.</p>
+          <p class="src">Fuente: <a href="https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon" target="_blank" rel="noopener noreferrer">A. Marco Botella, <i>Un siglo de esperanto en Aragón</i></a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">2008<small>13 de diciembre</small></div>
+        <div class="body">
+          <span class="place">Zaragoza</span>
+          <h3>Monumento al Esperanto</h3>
+          <p>Por el centenario de Frateco se inaugura un monumento diseñado por el esperantista Jaime Benito Cedo y pagado con aportaciones de socios y simpatizantes: un globo terrestre de hierro sobre un pedestal con esta placa:</p>
+          <blockquote>Al mundo vino un nuevo sentimiento… ESPERANTO: lengua para una comunicación internacional</blockquote>
+          <p class="src">Fuentes: <a href="https://www.zaragoza.es/sede/servicio/arte-publico/436" target="_blank" rel="noopener noreferrer">Ayuntamiento de Zaragoza, Arte Público</a> · <a href="https://sites.google.com/site/fratecoes/esperanto/monumento" target="_blank" rel="noopener noreferrer">Frateco</a></p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===================== 2016–hoy ===================== -->
+  <section class="era" aria-labelledby="era-4">
+    <div class="era-head">
+      <span class="span">2016 – hoy</span>
+      <h2 id="era-4">Teruel vuelve a hablar esperanto</h2>
+    </div>
+    <ol class="events">
+      <li class="event">
+        <div class="year">2016</div>
+        <div class="body">
+          <span class="place">Teruel</span>
+          <h3>Nace Liberanimo</h3>
+          <p>Gracias a los cursos que empezaron en la asociación vecinal de San Julián, nace el grupo esperantista de Teruel. El 25 de mayo se presenta a la alcaldesa, a la que su presidente, Alberto Granados, propone dedicar una plaza al esperanto y presentar a Teruel como sede del congreso de 2017. En septiembre empieza su primer curso.</p>
+          <p class="src">Fuentes: <a href="https://es.wikipedia.org/wiki/Liberanimo" target="_blank" rel="noopener noreferrer">Wikipedia, «Liberanimo»</a> · <a href="https://www.diariodeteruel.es/historico/teruel-ya-tiene-su-glorieta-del-esperanto-junto-al-ascensor-del-barrio-de-san-julian" target="_blank" rel="noopener noreferrer">Diario de Teruel</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">2017<small>23–25 de junio</small></div>
+        <div class="body">
+          <span class="place">Teruel</span>
+          <h3>76.º Congreso Español y Glorieta del Esperanto</h3>
+          <p>Liberanimo organiza el congreso nacional, que reúne a más de 150 personas. Durante el congreso se inaugura la Glorieta del Esperanto junto al ascensor del barrio de San Julián, donde nació el grupo. El concejal de Cultura lo explicó así: Zamenhof pensaba en la unidad y en romper barreras, y el ascensor unió un barrio que estaba separado del resto de la ciudad.</p>
+          <p class="src">Fuentes: <a href="https://www.esperanto.es/hef/index.php/42-noticias-espanol/articulo/323-el-congreso-espanol-de-esperanto-2017-tendra-lugar-en-junio-en-teruel" target="_blank" rel="noopener noreferrer">Federación Española de Esperanto</a> · <a href="https://www.diariodeteruel.es/historico/teruel-ya-tiene-su-glorieta-del-esperanto-junto-al-ascensor-del-barrio-de-san-julian" target="_blank" rel="noopener noreferrer">Diario de Teruel</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">2019<small>febrero</small></div>
+        <div class="body">
+          <span class="place">Teruel</span>
+          <h3>Esperanto y anarquismo</h3>
+          <p>Liberanimo organiza una exposición sobre el esperanto y el anarquismo y pide al historiador Serafín Aldecoa una charla sobre los comienzos del esperanto en la provincia. De ahí nace una investigación mucho más amplia.</p>
+          <p class="src">Fuente: <a href="https://www.diariodeteruel.es/cultura/los-origenes-del-esperanto-en-teruel-en-una-obra-bilingue-de-serafin-aldecoa" target="_blank" rel="noopener noreferrer">Diario de Teruel, «Los orígenes del esperanto en Teruel»</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">2021</div>
+        <div class="body">
+          <span class="place">Teruel</span>
+          <h3><i>Esperanto y esperantistas de Teruel</i></h3>
+          <p>Liberanimo publica el libro bilingüe de Serafín Aldecoa, traducido por Alejandro Pareja, sobre la llegada del esperanto a la provincia en las primeras décadas del siglo XX. Se imprimen 300 ejemplares, con apoyo del Gobierno de Aragón.</p>
+          <p class="src">Fuentes: <a href="https://www.diariodeteruel.es/cultura/los-origenes-del-esperanto-en-teruel-en-una-obra-bilingue-de-serafin-aldecoa" target="_blank" rel="noopener noreferrer">Diario de Teruel</a> · <a href="https://www.todostuslibros.com/libros/esperanto-y-esperantistas-de-teruel_978-84-09-35165-7" target="_blank" rel="noopener noreferrer">ficha del libro</a></p>
+        </div>
+      </li>
+      <li class="event">
+        <div class="year">Hoy</div>
+        <div class="body">
+          <span class="place">Teruel · Zaragoza</span>
+          <h3>La historia sigue</h3>
+          <p>En la Semana Modernista de Teruel, Alberto Granados da vida a Julio Belenguer a punto de partir hacia París. Liberanimo ha presentado Voludi, una app para aprender esperanto jugando. En Zaragoza, Frateco sigue reuniéndose los martes en la calle Cadena y guarda una biblioteca de más de 3.000 volúmenes, una de las más ricas de España en esperanto.</p>
+          <p class="src">Fuentes: <a href="https://diariodeteruel.es/movil/noticia.asp?notid=1028621&amp;secid=7" target="_blank" rel="noopener noreferrer">Diario de Teruel, Semana Modernista</a> · <a href="https://www.diariodeteruel.es/cultura/la-asociacion-de-esperantistas-de-teruel-presenta-una-app-para-aprender-este-idioma" target="_blank" rel="noopener noreferrer">Diario de Teruel, Voludi</a> · <a href="https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html" target="_blank" rel="noopener noreferrer">HoyAragón</a></p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="era" aria-labelledby="places-h">
+    <div class="era-head">
+      <span class="span">Por visitar</span>
+      <h2 id="places-h">Lugares del esperanto en Aragón</h2>
+    </div>
+    <div class="places">
+      <div class="spot"><b>Glorieta del Esperanto</b><span>Zaragoza · dedicada en 1995</span></div>
+      <div class="spot"><b>Monumento al Esperanto</b><span>Zaragoza · inaugurado en 2008</span></div>
+      <div class="spot"><b>Calle Doctor Zamenhof</b><span>Zaragoza · desde 1961</span></div>
+      <div class="spot"><b>Sede de Frateco</b><span>Zaragoza · calle Cadena, 20</span></div>
+      <div class="spot"><b>Glorieta del Esperanto</b><span>Teruel · junto al ascensor de San Julián, 2017</span></div>
+    </div>
+  </section>
+
+  <section class="sources era" aria-labelledby="src-h">
+    <div class="era-head">
+      <span class="span">Para saber más</span>
+      <h2 id="src-h">Fuentes</h2>
+    </div>
+    <ul>
+      <li><a href="https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon" target="_blank" rel="noopener noreferrer">Antonio Marco Botella, <i>Un siglo de esperanto en Aragón</i> (2000), en línea</a></li>
+      <li><a href="http://www.enciclopedia-aragonesa.com/voz.asp?voz_id=5225" target="_blank" rel="noopener noreferrer">Gran Enciclopedia Aragonesa, «Esperanto»</a> y <a href="http://www.enciclopedia-aragonesa.com/voz.asp?voz_id=5877" target="_blank" rel="noopener noreferrer">«Frateco»</a></li>
+      <li><a href="https://es.wikipedia.org/wiki/Frateco" target="_blank" rel="noopener noreferrer">Wikipedia, «Frateco»</a> y <a href="https://es.wikipedia.org/wiki/Liberanimo" target="_blank" rel="noopener noreferrer">«Liberanimo»</a></li>
+      <li><a href="https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html" target="_blank" rel="noopener noreferrer">HoyAragón, «Frateco: la histórica asociación de Esperanto que sigue viva en Zaragoza desde 1908»</a></li>
+      <li><a href="https://bitoteko.esperanto.es/xmlui/handle/11013/5547" target="_blank" rel="noopener noreferrer">Serafín Aldecoa, <i>Julio Belenguer, el adalid del esperanto</i> (Bitoteko)</a></li>
+      <li><a href="https://delbarrio.eu/guerracivil.htm" target="_blank" rel="noopener noreferrer">José Antonio del Barrio, «Esperantistas en la guerra civil española»</a></li>
+    </ul>
+  </section>
+
+  <footer>Preparado para <b>Liberanimo Teruel</b> · <span class="eo">Ĝis revido!</span></footer>
+</div>
+</body>
+</html>
