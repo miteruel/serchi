@@ -52,7 +52,11 @@
   button.rec.on { background: var(--red); color: var(--surface); }
   button:disabled { opacity: .45; cursor: not-allowed; }
   button:focus-visible, input:focus-visible { outline: 3px solid #3a86c8; outline-offset: 2px; }
-  .words { display: flex; flex-wrap: wrap; gap: 8px; }
+  .words { display: grid; gap: 16px; }
+  .group { display: grid; gap: 8px; }
+  .group h3 { margin: 0; font-size: 17px; }
+  .group h3 small { color: var(--muted); font-weight: 600; font-size: 14px; }
+  .group-words { display: flex; flex-wrap: wrap; gap: 8px; }
   .words button { border-width: 2px; border-color: var(--line); color: var(--ink); font-weight: 700; padding: 6px 14px; }
   .words button.done { border-color: var(--green); color: var(--green); }
   .words button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: var(--surface); }
@@ -75,7 +79,7 @@
 
   <header>
     <h1>Graba el minicurso</h1>
-    <p class="muted" style="margin-top:8px">Ayúdanos a que los niños oigan cómo suena el esperanto. Elige una palabra del minicurso <i>Esperanto en 7 tagoj</i>, grábala con el micrófono y envíala. Un moderador la escucha antes de publicarla.</p>
+    <p class="muted" style="margin-top:8px">Ayúdanos a que los niños oigan cómo suena el esperanto. Elige una palabra de los cursos o del minicurso <i>Esperanto en 7 tagoj</i>, grábala con el micrófono y envíala. Un moderador la escucha antes de publicarla.</p>
   </header>
 
   <p id="unavailable" class="card msg err" hidden>La grabadora no está disponible en este servidor.</p>
@@ -141,22 +145,46 @@
   function setMsg(text, kind) { var m = $('msg'); m.textContent = text; m.className = 'msg ' + (kind || ''); }
 
   // ---- Words ----
+  // Words grouped by course, in the server's order (published courses first)
   function renderWords() {
     var onlyMissing = $('only-missing').checked;
     var list = $('words');
     list.innerHTML = '';
     var missing = words.filter(function (w) { return !w.recorded; }).length;
     $('count').textContent = 'Tienen grabación ' + (words.length - missing) + ' de ' + words.length + '.';
+    var groups = [], byName = {};
     words.forEach(function (w) {
-      if (onlyMissing && w.recorded) return;
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.lang = 'eo';
-      b.textContent = w.text;
-      b.className = w.recorded ? 'done' : '';
-      b.setAttribute('aria-pressed', selected && selected.slug === w.slug ? 'true' : 'false');
-      b.addEventListener('click', function () { select(w); });
-      list.appendChild(b);
+      var name = w.group || '';
+      if (!byName[name]) { byName[name] = { name: name, words: [] }; groups.push(byName[name]); }
+      byName[name].words.push(w);
+    });
+    groups.forEach(function (g) {
+      var done = g.words.filter(function (w) { return w.recorded; }).length;
+      var box = document.createElement('div');
+      box.className = 'group';
+      if (g.name) {
+        var h = document.createElement('h3');
+        h.textContent = g.name + ' ';
+        var small = document.createElement('small');
+        small.textContent = done === g.words.length ? '✓ todas grabadas' : done + ' de ' + g.words.length + ' grabadas';
+        h.appendChild(small);
+        box.appendChild(h);
+      }
+      var row = document.createElement('div');
+      row.className = 'group-words';
+      g.words.forEach(function (w) {
+        if (onlyMissing && w.recorded) return;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.lang = 'eo';
+        b.textContent = w.text;
+        b.className = w.recorded ? 'done' : '';
+        b.setAttribute('aria-pressed', selected && selected.slug === w.slug ? 'true' : 'false');
+        b.addEventListener('click', function () { select(w); });
+        row.appendChild(b);
+      });
+      if (row.children.length) box.appendChild(row);
+      list.appendChild(box);
     });
   }
 

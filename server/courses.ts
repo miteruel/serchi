@@ -241,10 +241,15 @@ export function courseEsperantoTexts(content: CourseContent): string[] {
   return out.filter(Boolean);
 }
 
+/** Esperanto texts of each published course, by title. */
+export function publishedCourseTextGroups(db: DatabaseSync): { title: string; texts: string[] }[] {
+  const rows = db.prepare('SELECT title, content FROM courses WHERE published = 1 ORDER BY title').all() as Row[];
+  return rows.map((r) => ({ title: r.title, texts: courseEsperantoTexts(JSON.parse(r.content)) }));
+}
+
 /** Esperanto texts of every published course. */
 export function publishedCourseTexts(db: DatabaseSync): string[] {
-  const rows = db.prepare('SELECT content FROM courses WHERE published = 1 ORDER BY title').all() as Row[];
-  return rows.flatMap((r) => courseEsperantoTexts(JSON.parse(r.content)));
+  return publishedCourseTextGroups(db).flatMap((g) => g.texts);
 }
 
 // ---- HTML page -------------------------------------------------------------

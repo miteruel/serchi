@@ -17,8 +17,8 @@
  * when a word has no human recording (see audioMap() in server/audio.ts).
  *
  * It also makes the voice of the published editor courses that lack one, in
- * the database (data/serchi.db or SERCHI_DB). The Node server does that by
- * itself; this is for the Delphi version, which cannot run espeak-ng.
+ * the database (data/serchi.db or SERCHI_DB). The Node and Delphi servers do
+ * that by themselves when they find espeak-ng and lame.
  */
 import fs from 'fs';
 import path from 'path';

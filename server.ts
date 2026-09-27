@@ -31,6 +31,7 @@ import {
   getCourseBySlug,
   getCourseImage,
   listCourses,
+  publishedCourseTextGroups,
   publishedCourseTexts,
   renderCourseIndex,
   renderCoursePage,
@@ -49,7 +50,7 @@ import {
   getRecordingAudio,
   listPendingRecordings,
 } from './server/audio';
-import { fillVoices, getSyntheticAudio } from './server/tts';
+import { fillVoices, getSyntheticAudio, mutedVoices, muteVoice, unmuteVoice } from './server/tts';
 import fs from 'fs';
 import {
   addComment,
@@ -250,14 +251,23 @@ async function startServer() {
   // key as the forum: X-Moderator-Key) approves them. The audio is stored in
   // the database; see server/audio.ts.
   // Words that can be recorded: the mini-course and the published courses
-  const recordableWords = () => {
-    const words = courseWords();
-    for (const text of publishedCourseTexts(db)) {
+  // Words that can be recorded, grouped by course: the published courses first
+  // (the newest material) and then the mini-course. A word shared by several
+  // courses is listed once, in the first one.
+  const recordableWordList = () => {
+    const list: { slug: string; text: string; group: string }[] = [];
+    const seen = new Set<string>();
+    const add = (text: string, group: string) => {
       const slug = audioSlug(text);
-      if (slug && !words.has(slug)) words.set(slug, text);
-    }
-    return words;
+      if (!slug || seen.has(slug)) return;
+      seen.add(slug);
+      list.push({ slug, text, group });
+    };
+    for (const g of publishedCourseTextGroups(db)) g.texts.forEach((t) => add(t, g.title));
+    for (const text of courseWords().values()) add(text, 'Esperanto en 7 tagoj');
+    return list;
   };
+  const recordableWords = () => new Map(recordableWordList().map((w) => [w.slug, w.text]));
   const isModeratorRequest = (req: express.Request) =>
     !moderatorKey || sameKey(String(req.get('X-Moderator-Key') || ''));
 
@@ -269,7 +279,7 @@ async function startServer() {
   app.get('/api/recordings/words', (_req, res) => {
     const recorded = audioMap(db, false); // the synthetic voice still asks for a real one
     res.json({
-      words: [...recordableWords()].map(([slug, text]) => ({ slug, text, recorded: !!recorded[slug] })),
+      words: recordableWordList().map((w) => ({ ...w, recorded: !!recorded[w.slug] })),
       maxSeconds: 10,
       moderatorKeyRequired: !!moderatorKey,
     });
@@ -356,6 +366,7 @@ async function startServer() {
     const text = String(req.body?.text || '').trim();
     const slug = audioSlug(text);
     if (!slug || text.length > 200) return res.status(400).json({ error: 'Bad text' });
+    unmuteVoice(db, slug); // asking for it again brings back a removed voice
     const have = audioMap(db)[slug];
     if (have) return res.json({ url: have });
     if (voicesUnavailable) return res.status(503).json({ error: 'tts_unavailable' });
@@ -366,6 +377,20 @@ async function startServer() {
       return res.status(503).json({ error: 'tts_unavailable' });
     }
     return res.json({ url: `/api/tts/${encodeURIComponent(slug)}/audio` });
+  });
+
+  // Removes the synthetic voice of a word that sounds wrong (course editor)
+  app.delete('/api/tts/:slug', (req, res) => {
+    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    const slug = audioSlug(req.params.slug);
+    if (!slug) return res.status(400).json({ error: 'Bad word' });
+    muteVoice(db, slug);
+    return res.status(204).end();
+  });
+
+  // Words whose synthetic voice was removed
+  app.get('/api/tts/off', (_req, res) => {
+    res.set('Cache-Control', 'no-cache').json(mutedVoices(db));
   });
 
   app.get('/api/recordings/pending', (req, res) => {

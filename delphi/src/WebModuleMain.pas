@@ -63,7 +63,7 @@ type
     function RequestBody: TBytes;
     function RequestJson: TJSONValue;
     function IsModeratorApi: Boolean;
-    function RecordableWords: TArray<TPair<string, string>>;
+    function RecordableWords(AGroups: TDictionary<string, string> = nil): TArray<TPair<string, string>>;
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -113,6 +113,8 @@ var
 function TemplatesDir: string;
 function StaticDir: string;
 function DataDir: string;
+{ public/audio/tts: synthetic voice of the mini-course words (Serchi.Tts) }
+function TtsDir: string;
 
 implementation
 
@@ -122,7 +124,8 @@ implementation
 
 uses
   System.IOUtils, System.DateUtils, System.NetEncoding, System.Math,
-  System.Hash, System.RegularExpressions, Serchi.I18n, Serchi.Courses, Serchi.Text, Serchi.Gemini, Serchi.Radio;
+  System.Hash, System.RegularExpressions, Serchi.I18n, Serchi.Courses, Serchi.Text, Serchi.Gemini, Serchi.Radio,
+  Serchi.Tts;
 
 const
   PageSize = 20;
@@ -138,6 +141,12 @@ const
 function TemplatesDir: string;
 begin
   Result := TPath.Combine(AppHome, 'templates');
+end;
+
+function TtsDir: string;
+begin
+  Result := TPath.GetFullPath(TPath.Combine(AppHome,
+    '..' + PathDelim + 'public' + PathDelim + 'audio' + PathDelim + 'tts'));
 end;
 
 function StaticDir: string;
@@ -375,14 +384,25 @@ end;
 { What the mini-course and the courses play, as /api/audio in the Node version:
   a JSON object from word slug to URL. MP3 files in public/audio first, then
   the newest approved recording of each word, then the synthetic voice
-  (public/audio/tts and the table synthetic_audio; left out with
-  AWithSynthetic = False, to know which words still need a real voice). }
+  (public/audio/tts and the table synthetic_audio) unless a teacher removed
+  it (left out with AWithSynthetic = False, to know which words still need a
+  real voice). }
 function TWebModuleMain.AudioMap(AWithSynthetic: Boolean): TJSONObject;
 var
   AudioDir, FileName, Slug: string;
   Rec: TPair<string, string>;
+  Map: TJSONObject;
+  Muted: TDictionary<string, Boolean>;
+
+  procedure AddSynthetic(const ASlug, AUrl: string);
+  begin
+    if (Map.GetValue(ASlug) = nil) and not Muted.ContainsKey(ASlug) then
+      Map.AddPair(ASlug, AUrl);
+  end;
+
 begin
   Result := TJSONObject.Create;
+  Map := Result;
   AudioDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + 'audio'));
   if TDirectory.Exists(AudioDir) then
     for FileName in TDirectory.GetFiles(AudioDir, '*.mp3') do
@@ -394,18 +414,24 @@ begin
   for Rec in Store.ApprovedRecordings do
     if Result.GetValue(Rec.Key) = nil then
       Result.AddPair(Rec.Key, '/api/recordings/' + TNetEncoding.URL.Encode(Rec.Value) + '/audio');
-  AudioDir := TPath.Combine(AudioDir, 'tts');
-  if AWithSynthetic and TDirectory.Exists(AudioDir) then
-    for FileName in TDirectory.GetFiles(AudioDir, '*.mp3') do
-    begin
-      Slug := TPath.GetFileNameWithoutExtension(FileName);
-      if Result.GetValue(Slug) = nil then
-        Result.AddPair(Slug, '/audio/tts/' + Slug + '.mp3');
-    end;
-  if AWithSynthetic then
+  if not AWithSynthetic then
+    Exit;
+  // Voices a teacher removed from the course editor are not played
+  Muted := TDictionary<string, Boolean>.Create;
+  try
+    for Slug in Store.MutedVoices do
+      Muted.AddOrSetValue(Slug, True);
+    if TDirectory.Exists(TtsDir) then
+      for FileName in TDirectory.GetFiles(TtsDir, '*.mp3') do
+      begin
+        Slug := TPath.GetFileNameWithoutExtension(FileName);
+        AddSynthetic(Slug, '/audio/tts/' + Slug + '.mp3');
+      end;
     for Slug in Store.SyntheticAudioSlugs do
-      if Result.GetValue(Slug) = nil then
-        Result.AddPair(Slug, '/api/tts/' + TNetEncoding.URL.Encode(Slug) + '/audio');
+      AddSynthetic(Slug, '/api/tts/' + TNetEncoding.URL.Encode(Slug) + '/audio');
+  finally
+    Muted.Free;
+  end;
 end;
 
 procedure TWebModuleMain.SendAudioMap;
@@ -992,23 +1018,29 @@ begin
   Result := (ModeratorKey = '') or (FRequest.GetFieldByName('X-Moderator-Key') = ModeratorKey);
 end;
 
-{ Words that can be recorded (slug, text), in course order: the mini-course
-  pages, then the published courses }
-function TWebModuleMain.RecordableWords: TArray<TPair<string, string>>;
+{ Words that can be recorded (slug, text), grouped by course as in server.ts:
+  the published courses first (the newest material), then the mini-course
+  pages. A word shared by several courses is listed once, in the first one.
+  AGroups, when given, gets the course title of each slug. }
+function TWebModuleMain.RecordableWords(AGroups: TDictionary<string, string>): TArray<TPair<string, string>>;
 const
   CoursePages: array[0..1] of string = ('minikurso.html', 'minikurso-en.html');
+  MiniCourse = 'Esperanto en 7 tagoj';
 var
   List: TList<TPair<string, string>>;
   Seen: TDictionary<string, Boolean>;
-  PublicDir, Page, Text, Content, Slug: string;
+  PublicDir, Page, Text, Slug: string;
+  Course: TPair<string, string>;
 
-  procedure Add(const AText: string);
+  procedure Add(const AText, AGroup: string);
   begin
     Slug := AudioSlug(AText);
     if (Slug <> '') and not Seen.ContainsKey(Slug) then
     begin
       Seen.Add(Slug, True);
       List.Add(TPair<string, string>.Create(Slug, AText));
+      if AGroups <> nil then
+        AGroups.AddOrSetValue(Slug, AGroup);
     end;
   end;
 
@@ -1016,14 +1048,14 @@ begin
   List := TList<TPair<string, string>>.Create;
   Seen := TDictionary<string, Boolean>.Create;
   try
+    for Course in Store.PublishedCourseTitledContents do
+      for Text in CourseEsperantoTexts(Course.Value) do
+        Add(Text, Course.Key);
     PublicDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public'));
     for Page in CoursePages do
       if TFile.Exists(TPath.Combine(PublicDir, Page)) then
         for Text in PageEsperantoTexts(TFile.ReadAllText(TPath.Combine(PublicDir, Page), TEncoding.UTF8)) do
-          Add(Text);
-    for Content in Store.PublishedCourseContents do
-      for Text in CourseEsperantoTexts(Content) do
-        Add(Text);
+          Add(Text, MiniCourse);
     Result := List.ToArray;
   finally
     Seen.Free;
@@ -1041,6 +1073,7 @@ var
   Word: TPair<string, string>;
   Words: TJSONArray;
   Map: TJSONObject;
+  Groups: TDictionary<string, string>;
   Course: TCourseInfo;
   ImageIds: TArray<string>;
   Found: Boolean;
@@ -1064,13 +1097,13 @@ begin
     Exit;
   end;
   // Voice of one word for the course editor: the recording or synthetic voice
-  // it already has. The Delphi version cannot make new ones (npm run audio:tts)
+  // it already has, or a synthetic one made now. { url } or 503 without espeak-ng
   if (APath = '/api/tts') and (Method = 'POST') then
   begin
     if ModeratorOnly then
     begin
       Body := RequestJson;
-      Map := AudioMap;
+      Map := nil;
       try
         Text := '';
         if Body is TJSONObject then
@@ -1078,21 +1111,64 @@ begin
         Slug := AudioSlug(Text);
         if (Slug = '') or (Length(Text) > 200) then
           SendApiError(400, 'Bad text')
-        else if Map.GetValue(Slug) <> nil then
-        begin
-          Obj := TJSONObject.Create;
-          try
-            Obj.AddPair('url', Map.GetValue<string>(Slug));
-            SendJson(Obj.ToJSON);
-          finally
-            Obj.Free;
-          end;
-        end
         else
-          SendApiError(503, 'tts_unavailable');
+        begin
+          Store.UnmuteVoice(Slug); // asking for it again brings back a removed voice
+          Map := AudioMap;
+          if Map.GetValue(Slug) <> nil then
+            Json := Map.GetValue<string>(Slug)
+          else if SynthesizeMp3(Text, Data, Mime) then
+          begin
+            Store.SaveSyntheticAudio(Slug, Text, Data);
+            Json := '/api/tts/' + TNetEncoding.URL.Encode(Slug) + '/audio';
+          end
+          else
+            Json := '';
+          if Json = '' then
+            SendApiError(503, 'tts_unavailable')
+          else
+          begin
+            Obj := TJSONObject.Create;
+            try
+              Obj.AddPair('url', Json);
+              SendJson(Obj.ToJSON);
+            finally
+              Obj.Free;
+            end;
+          end;
+        end;
       finally
         Map.Free;
         Body.Free;
+      end;
+    end;
+    Exit;
+  end;
+  // Words whose synthetic voice was removed
+  if (APath = '/api/tts/off') and (Method = 'GET') then
+  begin
+    Words := TJSONArray.Create;
+    try
+      for Slug in Store.MutedVoices do
+        Words.Add(Slug);
+      SendJson(Words.ToJSON);
+    finally
+      Words.Free;
+    end;
+    Exit;
+  end;
+  // Removes the synthetic voice of a word that sounds wrong (course editor)
+  if (Length(Seg) = 4) and (Seg[2] = 'tts') and (Method = 'DELETE') then
+  begin
+    if ModeratorOnly then
+    begin
+      Slug := AudioSlug(TNetEncoding.URL.Decode(Seg[3]));
+      if Slug = '' then
+        SendApiError(400, 'Bad word')
+      else
+      begin
+        Store.MuteVoice(Slug);
+        SendHtml('', 204);
       end;
     end;
     Exit;
@@ -1121,20 +1197,23 @@ begin
     if (Length(Seg) = 4) and (Seg[3] = 'words') and (Method = 'GET') then
     begin
       Map := AudioMap(False); // the synthetic voice still asks for a real one
+      Groups := TDictionary<string, string>.Create;
       Obj := TJSONObject.Create;
       try
         Words := TJSONArray.Create;
         Obj.AddPair('words', Words);
-        for Word in RecordableWords do
+        for Word in RecordableWords(Groups) do
           Words.AddElement(TJSONObject.Create
             .AddPair('slug', Word.Key)
             .AddPair('text', Word.Value)
+            .AddPair('group', Groups[Word.Key])
             .AddPair('recorded', TJSONBool.Create(Map.GetValue(Word.Key) <> nil)));
         Obj.AddPair('maxSeconds', TJSONNumber.Create(10));
         Obj.AddPair('moderatorKeyRequired', TJSONBool.Create(ModeratorKey <> ''));
         SendJson(Obj.ToJSON);
       finally
         Obj.Free;
+        Groups.Free;
         Map.Free;
       end;
     end
@@ -1276,7 +1355,10 @@ begin
         if not (Body is TJSONObject) then
           SendApiError(400, 'Expected a course')
         else if Store.UpdateCourse(Id, TJSONObject(Body)) then
-          SendJson(Store.CourseJson(Id))
+        begin
+          SendJson(Store.CourseJson(Id));
+          UpdateCourseVoices(Store, TtsDir); // in the background
+        end
         else
           SendApiError(404, 'Not found');
       finally

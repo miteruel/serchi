@@ -12,7 +12,9 @@ program SerchiWeb;
          SERCHI_HOME              folder containing data/, templates/, static/
          SERCHI_DB                SQLite database (default: ../data/serchi.db,
                                   shared with the Node/React version)
-         FORUM_MODERATOR_KEY      if set, the forum's moderator role asks for it }
+         FORUM_MODERATOR_KEY      if set, the forum's moderator role asks for it
+         ESPEAK_NG, LAME          paths of espeak-ng and lame, for the synthetic
+                                  voice of the courses (default: in the PATH) }
 
 {$APPTYPE CONSOLE}
 
@@ -30,7 +32,8 @@ uses
   Serchi.ViewModels in 'src\Serchi.ViewModels.pas',
   Serchi.Gemini in 'src\Serchi.Gemini.pas',
   Serchi.Radio in 'src\Serchi.Radio.pas',
-  Serchi.Courses in 'src\Serchi.Courses.pas';
+  Serchi.Courses in 'src\Serchi.Courses.pas',
+  Serchi.Tts in 'src\Serchi.Tts.pas';
 
 { Looks for the folder holding templates/ starting at the executable folder
   and walking up (the exe usually lives in Win64\Debug or similar). }
@@ -101,8 +104,10 @@ begin
       if WebRequestHandler <> nil then
         WebRequestHandler.WebModuleClass := WebModuleClass;
       Port := StrToIntDef(ParamStr(1), StrToIntDef(GetEnvironmentVariable('PORT'), 8080));
+      UpdateCourseVoices(Store, TtsDir); // voices of the published courses that lack one
       RunServer(Port);
     finally
+      WaitForCourseVoices;
       Store.Free;
       I18n.Free;
     end;

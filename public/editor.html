@@ -66,6 +66,8 @@
   .voices { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; }
   .voices button { padding: 2px 10px; font-size: 13px; font-weight: 600; border-color: var(--line); color: var(--ink); }
   .voices button.none { border-style: dashed; color: var(--muted); }
+  .voices button.off { padding: 2px 6px; margin-left: -4px; color: var(--muted); border-color: transparent; }
+  .voices button.off:hover { color: var(--red); }
   code { background: var(--green-soft); padding: 0 4px; border-radius: 4px; }
   [hidden] { display: none !important; }
 </style>
@@ -112,7 +114,7 @@
       </div>
       <label>Presentación<textarea id="c-intro" maxlength="3000"></textarea></label>
       <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="c-published" style="width:20px;height:20px"> Publicado (visible en <span id="c-url"></span>)</label>
-      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊. Debajo de cada bloque puedes escuchar sus palabras: 🔊 es una grabación, 🔊🤖 la voz automática que suena mientras nadie la graba, y las de borde discontinuo aún no tienen voz (púlsalas para crearla). Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
+      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊. Debajo de cada bloque puedes escuchar sus palabras: 🔊 es una grabación, 🔊🤖 la voz automática que suena mientras nadie la graba (con ✕ la quitas si suena mal) y las de borde discontinuo no tienen voz (púlsalas para crearla). Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
     </section>
 
     <div id="lessons" style="display:grid;gap:12px;margin-top:12px"></div>
@@ -149,9 +151,14 @@
   }
 
   // ---- Voices of the words (same rules as courseEsperantoTexts() and audioSlug() on the server) ----
-  var voiceMap = {}, player = new Audio();
+  var voiceMap = {}, mutedVoices = {}, player = new Audio();
   function loadVoices() {
-    return fetch('/api/audio').then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) { voiceMap = m || {}; }, function () {});
+    var get = function (url, empty) { return fetch(url).then(function (r) { return r.ok ? r.json() : empty; }, function () { return empty; }); };
+    return Promise.all([get('/api/audio', {}), get('/api/tts/off', [])]).then(function (res) {
+      voiceMap = res[0] || {};
+      mutedVoices = {};
+      (res[1] || []).forEach(function (slug) { mutedVoices[slug] = true; });
+    });
   }
   function audioSlug(text) {
     var x = { 'ĉ': 'cx', 'ĝ': 'gx', 'ĥ': 'hx', 'ĵ': 'jx', 'ŝ': 'sx', 'ŭ': 'ux' };
@@ -185,11 +192,12 @@
       label.textContent = 'Escuchar:';
       row.appendChild(label);
       texts.forEach(function (text) {
-        var slug = audioSlug(text), url = voiceMap[slug];
+        var slug = audioSlug(text), url = voiceMap[slug], muted = !url && mutedVoices[slug];
         var bt = document.createElement('button');
         bt.type = 'button';
-        bt.textContent = '🔊' + (url && isSynthetic(url) ? '🤖' : '') + ' ' + text;
-        bt.title = !url ? 'Sin voz todavía: pulsa para crear la voz automática'
+        bt.textContent = (muted ? '🔇' : '🔊') + (url && isSynthetic(url) ? '🤖' : '') + ' ' + text;
+        bt.title = muted ? 'Voz automática quitada: pulsa para volver a crearla'
+          : !url ? 'Sin voz todavía: pulsa para crear la voz automática'
           : isSynthetic(url) ? 'Voz automática (nadie la ha grabado todavía)' : 'Grabación';
         if (!url) bt.className = 'none';
         bt.addEventListener('click', function () {
@@ -197,16 +205,38 @@
           bt.disabled = true;
           api('POST', '/api/tts', { text: text }).then(function (r) {
             voiceMap[slug] = r.url;
+            delete mutedVoices[slug];
             play(r.url);
             draw();
           }).catch(function (e) {
             bt.disabled = false;
             setStatus(e.status === 503
-              ? 'Este servidor no puede crear voces automáticas (falta espeak-ng; con la versión Delphi, ejecuta npm run audio:tts)'
+              ? 'Este servidor no puede crear voces automáticas: falta espeak-ng o lame (con Delphi en Windows, indica sus rutas en ESPEAK_NG y LAME)'
               : 'No se pudo crear la voz: ' + e.message, 'err');
           });
         });
         row.appendChild(bt);
+        // A synthetic voice that sounds wrong can be removed: nothing plays until someone records it
+        if (url && isSynthetic(url)) {
+          var off = document.createElement('button');
+          off.type = 'button';
+          off.className = 'off';
+          off.textContent = '✕';
+          off.title = 'Quitar la voz automática de «' + text + '» (si suena mal)';
+          off.setAttribute('aria-label', off.title);
+          off.addEventListener('click', function () {
+            off.disabled = true;
+            api('DELETE', '/api/tts/' + encodeURIComponent(slug)).then(function () {
+              delete voiceMap[slug];
+              mutedVoices[slug] = true;
+              draw();
+            }).catch(function (e) {
+              off.disabled = false;
+              setStatus('No se pudo quitar la voz: ' + e.message, 'err');
+            });
+          });
+          row.appendChild(off);
+        }
       });
     };
     var timer = null;
