@@ -103,17 +103,30 @@ PR y commits correspondientes.
    - 67 con la dirección corregida;
    - 73 eliminados: no existían, estaban duplicados o sus dominios ya no son de
      esperanto (spam, un gimnasio, una web de apuestas…);
-   - 46 pendientes de revisar.
+   - 46 pendientes de revisar, que se revisaron después (paso 9).
 
    El detalle está en [`data/audits/2026-09-revision-enlaces-originales.md`](data/audits/2026-09-revision-enlaces-originales.md).
    De paso se añadieron 35 enlaces reales encontrados durante la revisión
    (`data/imports/2026-09-enlaces-5.json`), entre ellos dos noticias sobre la app de
    Liberanimo. La base de datos queda con 489 enlaces.
 
+9. **Fin de la revisión y sección de juegos.** Se revisaron los 46 enlaces pendientes:
+   5 correctos, 25 con la dirección corregida y 16 eliminados. En los corregidos
+   también se reescribieron el título y la descripción con los datos de las fuentes. El
+   balance final de los 299 enlaces originales es de 118 correctos, 92 corregidos y 89
+   eliminados. Además se añadieron 24 enlaces sobre juegos en esperanto
+   (`data/imports/2026-09-juegos.json`): catálogos de videojuegos (itch.io, Steam,
+   Videoludoj.com), juegos de palabras (Wordle, Vortludo Rapida, los juegos de hVortaro),
+   juegos de tablero (Skrablo, LinguaPolis, Vetveturistoj, Tabuo), traducciones de
+   aficionados (Super Mario Bros., Wesnoth, el manual de *Keep Talking and Nobody
+   Explodes*) y el club de ajedrez esperantista de Chess.com. La base de datos queda con
+   497 enlaces.
+
 ### Pendiente y limitaciones conocidas
 
-- **Enlaces por revisar:** quedan 46 enlaces originales por comprobar; la lista está en
-  el informe de revisión.
+- **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir
+  las webs, así que cada enlace se dio por bueno cuando aparecía en resultados reales de
+  búsqueda. Conviene abrirlos de vez en cuando por si alguno deja de funcionar.
 - **Versión Delphi sin compilar:** no se ha compilado todavía con RAD Studio (ver
   [`delphi/README.md`](delphi/README.md)).
 - **Foro sin base de datos:** el foro sigue sin guardarse en la base de datos (en el
