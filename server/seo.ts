@@ -21,6 +21,9 @@ export const SITE_URL_PLACEHOLDER = /__SITE_URL__/g;
 /** Pages listed in sitemap.xml, besides the search engine itself ("/"). */
 export const STANDALONE_PAGES = ['/minikurso.html', '/minikurso-en.html', '/historia-aragon.html'];
 
+/** Pages that also answer at their short address (/grabar -> /grabar.html), as in the Delphi version. */
+export const SHORT_ADDRESS_PAGES = [...STANDALONE_PAGES, '/grabar.html', '/editor.html'];
+
 export function siteOrigin(req: express.Request): string {
   const configured = (process.env.SITE_URL || '').trim().replace(/\/+$/, '');
   return configured || `${req.protocol}://${req.get('host')}`;
@@ -57,6 +60,14 @@ export function mountSeo(app: express.Express, pagesDir: string, extraPages: () 
     const lastmod = new Date(newest || Date.now()).toISOString().slice(0, 10);
     res.type('application/xml').send(sitemapXml(siteOrigin(req), lastmod, extraPages()));
   });
+
+  for (const page of SHORT_ADDRESS_PAGES) {
+    const short = page.slice(0, -'.html'.length);
+    app.get(short, (req, res) => {
+      const query = req.originalUrl.slice(req.path.length);
+      res.redirect(301, page + query);
+    });
+  }
 
   for (const page of STANDALONE_PAGES) {
     app.get(page, (req, res, next) => {
