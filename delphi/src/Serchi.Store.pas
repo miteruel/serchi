@@ -17,7 +17,7 @@ unit Serchi.Store;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Generics.Collections,
+  System.SysUtils, System.Classes, System.Generics.Collections, System.JSON,
   FireDAC.Comp.Client, Serchi.Models;
 
 type
@@ -117,6 +117,34 @@ type
     { Approved recordings, newest first: Key = word slug, Value = recording id }
     function ApprovedRecordings: TArray<TPair<string, string>>;
 
+    // Course editor and recorder (the JSON API used by public/editor.html and
+    // public/grabar.html, same as server/courses.ts and server/audio.ts)
+    function NewId(const APrefix: string): string;
+    { JSON array of courses (without their content) }
+    function CoursesJson(AOnlyPublished: Boolean): string;
+    { JSON of one course with its content; '' if it does not exist }
+    function CourseJson(const AId: string): string;
+    { Returns the new course id }
+    function CreateCourse(const ATitle, ALang: string): string;
+    { Saves the whole course as sent by the editor; False if it does not exist }
+    function UpdateCourse(const AId: string; AInput: TJSONObject): Boolean;
+    function DeleteCourse(const AId: string): Boolean;
+    function CourseForPreview(const AId: string; out ACourse: TCourseInfo;
+      out AImageIds: TArray<string>): Boolean;
+    { Returns the new picture id; '' if the course does not exist }
+    function AddCourseImage(const ACourseId, AMime: string; const AData: TBytes): string;
+    function PublishedCourseContents: TArray<string>;
+    function RecordingsByVisitorToday(const AVisitor: string): Integer;
+    function PendingRecordingCount: Integer;
+    { Stores a pending recording; returns its id }
+    function AddRecording(const ASlug, AText, AMime: string; const AData: TBytes;
+      const AVisitor, AName: string): string;
+    function PendingRecordingsJson: string;
+    function RecordingAudio(const AId: string; AIncludePending: Boolean; out AMime: string;
+      out AData: TBytes): Boolean;
+    function ApproveRecording(const AId: string): Boolean;
+    function DeleteRecording(const AId: string): Boolean;
+
     property Knowledge: TObjectList<TKnowledgePanel> read FKnowledge;
   end;
 
@@ -129,13 +157,13 @@ var
 implementation
 
 uses
-  System.IOUtils, System.JSON, System.DateUtils, System.Generics.Defaults,
+  System.IOUtils, System.DateUtils, System.Generics.Defaults,
   System.Math, System.Variants, Data.DB,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys.Intf, FireDAC.Phys,
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.DApt, FireDAC.ConsoleUI.Wait,
-  Serchi.Text;
+  Serchi.Text, Serchi.Courses;
 
 type
   TScored = record
@@ -1162,25 +1190,9 @@ begin
 end;
 
 function TSerchiStore.ApprovedRecording(const AId: string; out AMime: string; out AData: TBytes): Boolean;
-var
-  Q: TFDQuery;
 begin
-  Lock;
-  Q := TFDQuery.Create(nil);
-  try
-    Q.Connection := FDB;
-    // Pending recordings are only for moderators (Node version)
-    Q.Open('SELECT mime, audio FROM recordings WHERE id = :id AND status = ''approved''', [AId]);
-    Result := not Q.Eof;
-    if Result then
-    begin
-      AMime := Q.Fields[0].AsString;
-      AData := Q.Fields[1].AsBytes;
-    end;
-  finally
-    Q.Free;
-    Unlock;
-  end;
+  // Pending recordings are only for moderators
+  Result := RecordingAudio(AId, False, AMime, AData);
 end;
 
 function TSerchiStore.ApprovedRecordings: TArray<TPair<string, string>>;
@@ -1204,6 +1216,429 @@ begin
   finally
     List.Free;
     Q.Free;
+    Unlock;
+  end;
+end;
+
+{ Course editor and recorder }
+
+function TSerchiStore.NewId(const APrefix: string): string;
+begin
+  Result := APrefix + '-' + TGUID.NewGuid.ToString.Replace('{', '').Replace('}', '')
+    .Replace('-', '').ToLower;
+end;
+
+function InputStr(AObj: TJSONObject; const AName: string; AMax: Integer): string;
+var
+  V: TJSONValue;
+begin
+  Result := '';
+  if AObj = nil then
+    Exit;
+  V := AObj.GetValue(AName);
+  if V is TJSONString then
+    Result := Copy(TJSONString(V).Value.Trim, 1, AMax);
+end;
+
+function CourseRowJson(Q: TFDQuery; AWithContent: Boolean): TJSONObject;
+var
+  Content: TJSONValue;
+begin
+  Result := TJSONObject.Create;
+  Result.AddPair('id', Q.FieldByName('id').AsString);
+  Result.AddPair('slug', Q.FieldByName('slug').AsString);
+  Result.AddPair('lang', Q.FieldByName('lang').AsString);
+  Result.AddPair('title', Q.FieldByName('title').AsString);
+  Result.AddPair('published', TJSONBool.Create(Q.FieldByName('published').AsInteger <> 0));
+  if AWithContent then
+  begin
+    Content := TJSONObject.ParseJSONValue(Q.FieldByName('content').AsString);
+    if Content = nil then
+      Content := TJSONObject.Create;
+    Result.AddPair('content', Content);
+  end;
+  Result.AddPair('updatedAt', Q.FieldByName('updated_at').AsString);
+end;
+
+function TSerchiStore.CoursesJson(AOnlyPublished: Boolean): string;
+var
+  Q: TFDQuery;
+  List: TJSONArray;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TJSONArray.Create;
+  try
+    Q.Connection := FDB;
+    if AOnlyPublished then
+      Q.Open('SELECT id, slug, lang, title, published, updated_at FROM courses WHERE published = 1 ORDER BY title')
+    else
+      Q.Open('SELECT id, slug, lang, title, published, updated_at FROM courses ORDER BY title');
+    while not Q.Eof do
+    begin
+      List.AddElement(CourseRowJson(Q, False));
+      Q.Next;
+    end;
+    Result := List.ToJSON;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.CourseJson(const AId: string): string;
+var
+  Q: TFDQuery;
+  Obj: TJSONObject;
+begin
+  Result := '';
+  Lock;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT * FROM courses WHERE id = :id', [AId]);
+    if not Q.Eof then
+    begin
+      Obj := CourseRowJson(Q, True);
+      try
+        Result := Obj.ToJSON;
+      finally
+        Obj.Free;
+      end;
+    end;
+  finally
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+{ A free address for the course: base, base-2, base-3... }
+function UniqueCourseSlug(ADB: TFDConnection; const AWanted, AExceptId: string): string;
+var
+  Base, Owner: string;
+  N: Integer;
+begin
+  Base := CourseSlug(AWanted);
+  if Base = '' then
+    Base := 'kurso';
+  Result := Base;
+  N := 2;
+  while True do
+  begin
+    Owner := VarToStr(ADB.ExecSQLScalar('SELECT id FROM courses WHERE slug = :slug', [Result]));
+    if (Owner = '') or (Owner = AExceptId) then
+      Exit;
+    Result := Base + '-' + IntToStr(N);
+    Inc(N);
+  end;
+end;
+
+function TSerchiStore.CreateCourse(const ATitle, ALang: string): string;
+var
+  Lang: string;
+begin
+  Lang := 'es';
+  if ALang = 'en' then
+    Lang := 'en';
+  Lock;
+  try
+    Result := NewId('course');
+    FDB.ExecSQL('INSERT INTO courses (id, slug, lang, title, content) VALUES (:id, :slug, :lang, :title, :content)',
+      [Result, UniqueCourseSlug(FDB, ATitle, ''), Lang, Copy(ATitle.Trim, 1, CourseTitleMax),
+       '{"intro":"","lessons":[]}']);
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.UpdateCourse(const AId: string; AInput: TJSONObject): Boolean;
+var
+  Q: TFDQuery;
+  Title, Slug, Lang, Img: string;
+  Published: Boolean;
+  Images: TList<string>;
+  Content: TJSONObject;
+  Lessons: TJSONArray;
+  V: TJSONValue;
+  Used: TList<string>;
+  I: Integer;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  Images := TList<string>.Create;
+  Used := TList<string>.Create;
+  Content := nil;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT slug, lang, title, published FROM courses WHERE id = :id', [AId]);
+    Result := not Q.Eof;
+    if not Result then
+      Exit;
+    Title := InputStr(AInput, 'title', CourseTitleMax);
+    if Title = '' then
+      Title := Q.FieldByName('title').AsString;
+    Slug := InputStr(AInput, 'slug', 60);
+    if Slug = '' then
+      Slug := Q.FieldByName('slug').AsString;
+    Lang := InputStr(AInput, 'lang', 2);
+    if (Lang <> 'es') and (Lang <> 'en') then
+      Lang := Q.FieldByName('lang').AsString;
+    Published := Q.FieldByName('published').AsInteger <> 0;
+    V := AInput.GetValue('published');
+    if V is TJSONBool then
+      Published := TJSONBool(V).AsBoolean;
+    Q.Close;
+
+    Q.Open('SELECT id FROM course_images WHERE course_id = :id', [AId]);
+    while not Q.Eof do
+    begin
+      Images.Add(Q.Fields[0].AsString);
+      Q.Next;
+    end;
+    Q.Close;
+
+    Content := SanitizeCourseContent(AInput.GetValue('content'), Images.ToArray);
+    FDB.ExecSQL('UPDATE courses SET slug = :slug, lang = :lang, title = :title, content = :content, ' +
+      'published = :published, updated_at = strftime(''%Y-%m-%dT%H:%M:%fZ'',''now'') WHERE id = :id',
+      [UniqueCourseSlug(FDB, Slug, AId), Lang, Title, Content.ToJSON, Ord(Published), AId]);
+
+    // Pictures no lesson uses any more are deleted
+    Lessons := Content.GetValue('lessons') as TJSONArray;
+    for I := 0 to Lessons.Count - 1 do
+    begin
+      V := TJSONObject(Lessons.Items[I]).GetValue('image');
+      if V is TJSONString then
+        Used.Add(TJSONString(V).Value);
+    end;
+    for Img in Images do
+      if not Used.Contains(Img) then
+        FDB.ExecSQL('DELETE FROM course_images WHERE id = :id', [Img]);
+  finally
+    Content.Free;
+    Used.Free;
+    Images.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.DeleteCourse(const AId: string): Boolean;
+begin
+  Lock;
+  try
+    // Its pictures go with it (ON DELETE CASCADE)
+    Result := FDB.ExecSQL('DELETE FROM courses WHERE id = :id', [AId]) > 0;
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.CourseForPreview(const AId: string; out ACourse: TCourseInfo;
+  out AImageIds: TArray<string>): Boolean;
+var
+  Q: TFDQuery;
+  Images: TList<string>;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  Images := TList<string>.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT slug, lang, title FROM courses WHERE id = :id', [AId]);
+    Result := not Q.Eof;
+    if Result then
+    begin
+      ACourse.Slug := Q.Fields[0].AsString;
+      ACourse.Lang := Q.Fields[1].AsString;
+      ACourse.Title := Q.Fields[2].AsString;
+    end;
+    Q.Close;
+    Q.Open('SELECT id FROM course_images WHERE course_id = :id', [AId]);
+    while not Q.Eof do
+    begin
+      Images.Add(Q.Fields[0].AsString);
+      Q.Next;
+    end;
+    AImageIds := Images.ToArray;
+  finally
+    Images.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+{ Runs an INSERT whose parameter :data is binary (BLOB) }
+procedure InsertWithBlob(ADB: TFDConnection; const ASQL: string; const ANames: array of string;
+  const AValues: array of string; const AData: TBytes);
+var
+  Q: TFDQuery;
+  Stream: TBytesStream;
+  I: Integer;
+begin
+  Q := TFDQuery.Create(nil);
+  Stream := TBytesStream.Create(AData);
+  try
+    Q.Connection := ADB;
+    Q.SQL.Text := ASQL;
+    for I := 0 to High(ANames) do
+      Q.ParamByName(ANames[I]).AsString := AValues[I];
+    Q.ParamByName('data').LoadFromStream(Stream, ftBlob);
+    Q.ExecSQL;
+  finally
+    Stream.Free;
+    Q.Free;
+  end;
+end;
+
+function TSerchiStore.AddCourseImage(const ACourseId, AMime: string; const AData: TBytes): string;
+begin
+  Lock;
+  try
+    Result := '';
+    if VarToStr(FDB.ExecSQLScalar('SELECT id FROM courses WHERE id = :id', [ACourseId])) = '' then
+      Exit;
+    Result := NewId('img');
+    InsertWithBlob(FDB, 'INSERT INTO course_images (id, course_id, mime, data) VALUES (:id, :course, :mime, :data)',
+      ['id', 'course', 'mime'], [Result, ACourseId, AMime], AData);
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.PublishedCourseContents: TArray<string>;
+var
+  Q: TFDQuery;
+  List: TList<string>;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TList<string>.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT content FROM courses WHERE published = 1 ORDER BY title');
+    while not Q.Eof do
+    begin
+      List.Add(Q.Fields[0].AsString);
+      Q.Next;
+    end;
+    Result := List.ToArray;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.RecordingsByVisitorToday(const AVisitor: string): Integer;
+begin
+  Lock;
+  try
+    Result := FDB.ExecSQLScalar('SELECT COUNT(*) FROM recordings WHERE visitor_id = :v AND ' +
+      'created_at > strftime(''%Y-%m-%dT%H:%M:%fZ'', ''now'', ''-1 day'')', [AVisitor]);
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.PendingRecordingCount: Integer;
+begin
+  Lock;
+  try
+    Result := FDB.ExecSQLScalar('SELECT COUNT(*) FROM recordings WHERE status = ''pending''');
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.AddRecording(const ASlug, AText, AMime: string; const AData: TBytes;
+  const AVisitor, AName: string): string;
+begin
+  Lock;
+  try
+    Result := NewId('rec');
+    InsertWithBlob(FDB, 'INSERT INTO recordings (id, slug, text, mime, audio, visitor_id, name) ' +
+      'VALUES (:id, :slug, :text, :mime, :data, :visitor, NULLIF(:name, ''''))',
+      ['id', 'slug', 'text', 'mime', 'visitor', 'name'],
+      [Result, ASlug, AText, AMime, AVisitor, Copy(AName.Trim, 1, 60)], AData);
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.PendingRecordingsJson: string;
+var
+  Q: TFDQuery;
+  List: TJSONArray;
+  Item: TJSONObject;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TJSONArray.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT id, slug, text, name, created_at FROM recordings WHERE status = ''pending'' ORDER BY created_at');
+    while not Q.Eof do
+    begin
+      Item := TJSONObject.Create;
+      Item.AddPair('id', Q.Fields[0].AsString);
+      Item.AddPair('slug', Q.Fields[1].AsString);
+      Item.AddPair('text', Q.Fields[2].AsString);
+      if Q.Fields[3].IsNull then
+        Item.AddPair('name', TJSONNull.Create)
+      else
+        Item.AddPair('name', Q.Fields[3].AsString);
+      Item.AddPair('createdAt', Q.Fields[4].AsString);
+      List.AddElement(Item);
+      Q.Next;
+    end;
+    Result := List.ToJSON;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.RecordingAudio(const AId: string; AIncludePending: Boolean; out AMime: string;
+  out AData: TBytes): Boolean;
+var
+  Q: TFDQuery;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT mime, audio, status FROM recordings WHERE id = :id', [AId]);
+    Result := not Q.Eof and (AIncludePending or (Q.Fields[2].AsString = 'approved'));
+    if Result then
+    begin
+      AMime := Q.Fields[0].AsString;
+      AData := Q.Fields[1].AsBytes;
+    end;
+  finally
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.ApproveRecording(const AId: string): Boolean;
+begin
+  Lock;
+  try
+    Result := FDB.ExecSQL('UPDATE recordings SET status = ''approved'', ' +
+      'reviewed_at = strftime(''%Y-%m-%dT%H:%M:%fZ'',''now'') WHERE id = :id AND status = ''pending''', [AId]) > 0;
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.DeleteRecording(const AId: string): Boolean;
+begin
+  Lock;
+  try
+    Result := FDB.ExecSQL('DELETE FROM recordings WHERE id = :id', [AId]) > 0;
+  finally
     Unlock;
   end;
 end;

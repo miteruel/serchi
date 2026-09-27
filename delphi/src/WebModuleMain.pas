@@ -11,7 +11,7 @@ unit WebModuleMain;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Generics.Collections,
+  System.SysUtils, System.Classes, System.Generics.Collections, System.JSON,
   Web.HTTPApp, Web.Stencils,
   Serchi.Models, Serchi.Store, Serchi.ViewModels;
 
@@ -53,6 +53,17 @@ type
     procedure SendCourseIndex(AStatus: Integer = 200);
     procedure SendCoursePage(const ASlug: string);
     procedure SendAudioMap;
+    function AudioMap: TJSONObject;
+
+    // JSON API of the course editor and the recorder (public/editor.html,
+    // public/grabar.html), as in server.ts. True when APath was handled.
+    function HandleApi(const APath: string): Boolean;
+    procedure SendJson(const AJson: string; AStatus: Integer = 200);
+    procedure SendApiError(AStatus: Integer; const AError: string);
+    function RequestBody: TBytes;
+    function RequestJson: TJSONValue;
+    function IsModeratorApi: Boolean;
+    function RecordableWords: TArray<TPair<string, string>>;
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -110,7 +121,7 @@ implementation
 {$R *.dfm}
 
 uses
-  System.IOUtils, System.JSON, System.DateUtils, System.NetEncoding, System.Math,
+  System.IOUtils, System.DateUtils, System.NetEncoding, System.Math,
   System.Hash, System.RegularExpressions, Serchi.I18n, Serchi.Courses, Serchi.Text, Serchi.Gemini, Serchi.Radio;
 
 const
@@ -364,28 +375,33 @@ end;
 { What the mini-course and the courses play, as /api/audio in the Node version:
   a JSON object from word slug to URL. MP3 files in public/audio first, then
   the newest approved recording of each word. }
-procedure TWebModuleMain.SendAudioMap;
+function TWebModuleMain.AudioMap: TJSONObject;
 var
-  Map: TJSONObject;
   AudioDir, FileName, Slug: string;
   Rec: TPair<string, string>;
 begin
-  Map := TJSONObject.Create;
+  Result := TJSONObject.Create;
+  AudioDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + 'audio'));
+  if TDirectory.Exists(AudioDir) then
+    for FileName in TDirectory.GetFiles(AudioDir, '*.mp3') do
+    begin
+      Slug := TPath.GetFileNameWithoutExtension(FileName);
+      if Result.GetValue(Slug) = nil then
+        Result.AddPair(Slug, '/audio/' + Slug + '.mp3');
+    end;
+  for Rec in Store.ApprovedRecordings do
+    if Result.GetValue(Rec.Key) = nil then
+      Result.AddPair(Rec.Key, '/api/recordings/' + TNetEncoding.URL.Encode(Rec.Value) + '/audio');
+end;
+
+procedure TWebModuleMain.SendAudioMap;
+var
+  Map: TJSONObject;
+begin
+  Map := AudioMap;
   try
-    AudioDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + 'audio'));
-    if TDirectory.Exists(AudioDir) then
-      for FileName in TDirectory.GetFiles(AudioDir, '*.mp3') do
-      begin
-        Slug := TPath.GetFileNameWithoutExtension(FileName);
-        if Map.GetValue(Slug) = nil then
-          Map.AddPair(Slug, '/audio/' + Slug + '.mp3');
-      end;
-    for Rec in Store.ApprovedRecordings do
-      if Map.GetValue(Rec.Key) = nil then
-        Map.AddPair(Rec.Key, '/api/recordings/' + TNetEncoding.URL.Encode(Rec.Value) + '/audio');
     FResponse.SetCustomHeader('Cache-Control', 'no-cache');
-    FResponse.ContentType := 'application/json; charset=utf-8';
-    FResponse.ContentStream := TBytesStream.Create(TEncoding.UTF8.GetBytes(Map.ToJSON));
+    SendJson(Map.ToJSON);
   finally
     Map.Free;
   end;
@@ -920,6 +936,367 @@ begin
 end;
 
 { ---------------------------------------------------------------------------
+  JSON API of the course editor and the recorder
+  (public/editor.html and public/grabar.html, same routes and answers as
+  server.ts in the Node version). Editing and reviewing need the moderator
+  key in the X-Moderator-Key header when FORUM_MODERATOR_KEY is set.
+  --------------------------------------------------------------------------- }
+
+procedure TWebModuleMain.SendJson(const AJson: string; AStatus: Integer);
+begin
+  FResponse.StatusCode := AStatus;
+  FResponse.ContentType := 'application/json; charset=utf-8';
+  FResponse.ContentStream := TBytesStream.Create(TEncoding.UTF8.GetBytes(AJson));
+end;
+
+procedure TWebModuleMain.SendApiError(AStatus: Integer; const AError: string);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject.Create;
+  try
+    Obj.AddPair('error', AError);
+    SendJson(Obj.ToJSON, AStatus);
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TWebModuleMain.RequestBody: TBytes;
+begin
+  FRequest.ReadTotalContent; // big uploads may arrive in several parts
+  Result := BytesOf(FRequest.RawContent);
+end;
+
+function TWebModuleMain.RequestJson: TJSONValue;
+begin
+  Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetString(RequestBody));
+end;
+
+function TWebModuleMain.IsModeratorApi: Boolean;
+begin
+  Result := (ModeratorKey = '') or (FRequest.GetFieldByName('X-Moderator-Key') = ModeratorKey);
+end;
+
+{ Words that can be recorded (slug, text), in course order: the mini-course
+  pages, then the published courses }
+function TWebModuleMain.RecordableWords: TArray<TPair<string, string>>;
+const
+  CoursePages: array[0..1] of string = ('minikurso.html', 'minikurso-en.html');
+var
+  List: TList<TPair<string, string>>;
+  Seen: TDictionary<string, Boolean>;
+  PublicDir, Page, Text, Content, Slug: string;
+
+  procedure Add(const AText: string);
+  begin
+    Slug := AudioSlug(AText);
+    if (Slug <> '') and not Seen.ContainsKey(Slug) then
+    begin
+      Seen.Add(Slug, True);
+      List.Add(TPair<string, string>.Create(Slug, AText));
+    end;
+  end;
+
+begin
+  List := TList<TPair<string, string>>.Create;
+  Seen := TDictionary<string, Boolean>.Create;
+  try
+    PublicDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public'));
+    for Page in CoursePages do
+      if TFile.Exists(TPath.Combine(PublicDir, Page)) then
+        for Text in PageEsperantoTexts(TFile.ReadAllText(TPath.Combine(PublicDir, Page), TEncoding.UTF8)) do
+          Add(Text);
+    for Content in Store.PublishedCourseContents do
+      for Text in CourseEsperantoTexts(Content) do
+        Add(Text);
+    Result := List.ToArray;
+  finally
+    Seen.Free;
+    List.Free;
+  end;
+end;
+
+function TWebModuleMain.HandleApi(const APath: string): Boolean;
+var
+  Seg: TArray<string>;
+  Method, Id, Json, Mime, Slug, Text, Visitor, Lang, Title: string;
+  Body: TJSONValue;
+  Obj, Content: TJSONObject;
+  Data: TBytes;
+  Word: TPair<string, string>;
+  Words: TJSONArray;
+  Map: TJSONObject;
+  Course: TCourseInfo;
+  ImageIds: TArray<string>;
+  Found: Boolean;
+
+  function ModeratorOnly: Boolean;
+  begin
+    Result := IsModeratorApi;
+    if not Result then
+      SendApiError(403, 'moderator_key');
+  end;
+
+begin
+  Result := True;
+  Method := FRequest.Method.ToUpper;
+  Seg := APath.Split(['/']); // '', 'api', 'courses', <id>, 'images'
+
+  // ---- Audio ----
+  if APath = '/api/audio' then
+  begin
+    SendAudioMap;
+    Exit;
+  end;
+  if (Length(Seg) = 4) and (Seg[2] = 'course-images') then
+  begin
+    if Store.CourseImage(Seg[3], Mime, Data) then
+      SendBytes(Mime, Data, 'public, max-age=86400')
+    else
+      SendApiError(404, 'Not found');
+    Exit;
+  end;
+
+  // ---- Recordings ----
+  if (Length(Seg) >= 3) and (Seg[2] = 'recordings') then
+  begin
+    if (Length(Seg) = 4) and (Seg[3] = 'words') and (Method = 'GET') then
+    begin
+      Map := AudioMap;
+      Obj := TJSONObject.Create;
+      try
+        Words := TJSONArray.Create;
+        Obj.AddPair('words', Words);
+        for Word in RecordableWords do
+          Words.AddElement(TJSONObject.Create
+            .AddPair('slug', Word.Key)
+            .AddPair('text', Word.Value)
+            .AddPair('recorded', TJSONBool.Create(Map.GetValue(Word.Key) <> nil)));
+        Obj.AddPair('maxSeconds', TJSONNumber.Create(10));
+        Obj.AddPair('moderatorKeyRequired', TJSONBool.Create(ModeratorKey <> ''));
+        SendJson(Obj.ToJSON);
+      finally
+        Obj.Free;
+        Map.Free;
+      end;
+    end
+    else if (Length(Seg) = 3) and (Method = 'POST') then
+    begin
+      Visitor := FRequest.GetFieldByName('X-Visitor-Id');
+      if not TRegEx.IsMatch(Visitor, '^[A-Za-z0-9-]{8,64}$') then
+        SendApiError(400, 'Missing visitor id')
+      else if FRequest.QueryFields.Values['consent'] <> '1' then
+        SendApiError(400, 'consent')
+      else
+      begin
+        Slug := FRequest.QueryFields.Values['slug'];
+        Text := '';
+        for Word in RecordableWords do
+          if Word.Key = Slug then
+            Text := Word.Value;
+        Data := RequestBody;
+        Mime := DetectAudioType(Data);
+        if Text = '' then
+          SendApiError(400, 'Unknown word')
+        else if Length(Data) > RecordingMaxBytes then
+          SendApiError(413, 'Recording too long')
+        else if Mime = '' then
+          SendApiError(415, 'Not an audio recording')
+        else if Store.RecordingsByVisitorToday(Visitor) >= RecordingsPerVisitorPerDay then
+          SendApiError(429, 'daily_limit')
+        else if Store.PendingRecordingCount >= RecordingsMaxPending then
+          SendApiError(503, 'too_many_pending')
+        else
+        begin
+          Id := Store.AddRecording(Slug, Text, Mime, Data, Visitor, FRequest.QueryFields.Values['name']);
+          Obj := TJSONObject.Create;
+          try
+            Obj.AddPair('id', Id).AddPair('slug', Slug).AddPair('text', Text);
+            SendJson(Obj.ToJSON, 201);
+          finally
+            Obj.Free;
+          end;
+        end;
+      end;
+    end
+    else if (Length(Seg) = 4) and (Seg[3] = 'pending') and (Method = 'GET') then
+    begin
+      if ModeratorOnly then
+        SendJson(Store.PendingRecordingsJson);
+    end
+    else if (Length(Seg) = 5) and (Seg[4] = 'audio') and (Method = 'GET') then
+    begin
+      // Approved recordings are public; pending ones only for moderators
+      if Store.RecordingAudio(Seg[3], IsModeratorApi, Mime, Data) then
+      begin
+        if IsModeratorApi and (ModeratorKey <> '') then
+          SendBytes(Mime, Data, 'no-store')
+        else
+          SendBytes(Mime, Data, 'public, max-age=86400');
+      end
+      else
+        SendApiError(404, 'Not found');
+    end
+    else if (Length(Seg) = 5) and (Seg[4] = 'approve') and (Method = 'POST') then
+    begin
+      if ModeratorOnly then
+        if Store.ApproveRecording(Seg[3]) then
+          SendHtml('', 204)
+        else
+          SendApiError(404, 'Not found');
+    end
+    else if (Length(Seg) = 4) and (Method = 'DELETE') then
+    begin
+      if ModeratorOnly then
+        if Store.DeleteRecording(Seg[3]) then
+          SendHtml('', 204)
+        else
+          SendApiError(404, 'Not found');
+    end
+    else
+      SendApiError(404, 'Not found');
+    Exit;
+  end;
+
+  // ---- Courses ----
+  if (Length(Seg) >= 3) and (Seg[2] = 'courses') then
+  begin
+    if Length(Seg) = 3 then
+    begin
+      if Method = 'GET' then
+      begin
+        if FRequest.QueryFields.Values['all'] = '1' then
+        begin
+          if ModeratorOnly then
+            SendJson(Store.CoursesJson(False));
+        end
+        else
+          SendJson(Store.CoursesJson(True));
+      end
+      else if Method = 'POST' then
+      begin
+        if ModeratorOnly then
+        begin
+          Body := RequestJson;
+          try
+            Title := '';
+            Lang := 'es';
+            if Body is TJSONObject then
+            begin
+              Title := TJSONObject(Body).GetValue<string>('title', '').Trim;
+              Lang := TJSONObject(Body).GetValue<string>('lang', 'es');
+            end;
+            if Title = '' then
+              SendApiError(400, 'Title is required')
+            else
+              SendJson(Store.CourseJson(Store.CreateCourse(Title, Lang)), 201);
+          finally
+            Body.Free;
+          end;
+        end;
+      end
+      else
+        SendApiError(404, 'Not found');
+      Exit;
+    end;
+
+    if not ModeratorOnly then
+      Exit;
+    Id := Seg[3];
+    if (Length(Seg) = 4) and (Method = 'GET') then
+    begin
+      Json := Store.CourseJson(Id);
+      if Json = '' then
+        SendApiError(404, 'Not found')
+      else
+        SendJson(Json);
+    end
+    else if (Length(Seg) = 4) and (Method = 'PUT') then
+    begin
+      Body := RequestJson;
+      try
+        if not (Body is TJSONObject) then
+          SendApiError(400, 'Expected a course')
+        else if Store.UpdateCourse(Id, TJSONObject(Body)) then
+          SendJson(Store.CourseJson(Id))
+        else
+          SendApiError(404, 'Not found');
+      finally
+        Body.Free;
+      end;
+    end
+    else if (Length(Seg) = 4) and (Method = 'DELETE') then
+    begin
+      if Store.DeleteCourse(Id) then
+        SendHtml('', 204)
+      else
+        SendApiError(404, 'Not found');
+    end
+    else if (Length(Seg) = 5) and (Seg[4] = 'images') and (Method = 'POST') then
+    begin
+      Data := RequestBody;
+      Mime := DetectImageType(Data);
+      if Length(Data) > CourseImageMaxBytes then
+        SendApiError(413, 'Image too large')
+      else if Mime = '' then
+        SendApiError(415, 'Use a PNG, JPEG, WebP or GIF picture')
+      else
+      begin
+        Id := Store.AddCourseImage(Seg[3], Mime, Data);
+        if Id = '' then
+          SendApiError(404, 'Not found')
+        else
+        begin
+          Obj := TJSONObject.Create;
+          try
+            Obj.AddPair('id', Id).AddPair('url', '/api/course-images/' + TNetEncoding.URL.Encode(Id));
+            SendJson(Obj.ToJSON, 201);
+          finally
+            Obj.Free;
+          end;
+        end;
+      end;
+    end
+    else if (Length(Seg) = 5) and (Seg[4] = 'preview') and (Method = 'POST') then
+    begin
+      // Preview of the course as it is in the editor, before saving or publishing
+      Found := Store.CourseForPreview(Id, Course, ImageIds);
+      if not Found then
+      begin
+        SendApiError(404, 'Not found');
+        Exit;
+      end;
+      Body := RequestJson;
+      Content := nil;
+      try
+        if Body is TJSONObject then
+        begin
+          Lang := TJSONObject(Body).GetValue<string>('lang', '');
+          if (Lang = 'es') or (Lang = 'en') then
+            Course.Lang := Lang;
+          Title := TJSONObject(Body).GetValue<string>('title', '').Trim;
+          if Title <> '' then
+            Course.Title := Copy(Title, 1, CourseTitleMax);
+          Content := SanitizeCourseContent(TJSONObject(Body).GetValue('content'), ImageIds);
+        end
+        else
+          Content := SanitizeCourseContent(nil, ImageIds);
+        SendHtml(RenderCoursePage(Course, Content.ToJSON, True));
+      finally
+        Content.Free;
+        Body.Free;
+      end;
+    end
+    else
+      SendApiError(404, 'Not found');
+    Exit;
+  end;
+
+  Result := False;
+end;
+
+{ ---------------------------------------------------------------------------
   Forum
   --------------------------------------------------------------------------- }
 
@@ -1347,8 +1724,6 @@ procedure TWebModuleMain.WebModuleBeforeDispatch(Sender: TObject; Request: TWebR
   Response: TWebResponse; var Handled: Boolean);
 var
   Path: string;
-  Id, Mime: string;
-  Data: TBytes;
   User: TForumUser;
 begin
   Handled := True;
@@ -1375,28 +1750,26 @@ begin
     SendCoursePage(Path.Substring(Length('/kurso/')));
     Exit;
   end;
-  if Path = '/api/audio' then
+  // Course editor and recorder: pages and JSON API
+  if (Path = '/editor') or (Path = '/editor.html') then
   begin
-    SendAudioMap;
+    SendPublicPage('editor');
     Exit;
   end;
-  if Path.StartsWith('/api/course-images/') then
+  if (Path = '/grabar') or (Path = '/grabar.html') then
   begin
-    Id := Path.Substring(Length('/api/course-images/'));
-    if Store.CourseImage(Id, Mime, Data) then
-      SendBytes(Mime, Data, 'public, max-age=86400')
-    else
-      SendHtml('Not found', 404);
+    SendPublicPage('grabar');
     Exit;
   end;
-  if Path.StartsWith('/api/recordings/') and Path.EndsWith('/audio') then
+  if Path.StartsWith('/api/') then
   begin
-    Id := Path.Substring(Length('/api/recordings/'));
-    Id := Id.Substring(0, Id.Length - Length('/audio'));
-    if Store.ApprovedRecording(Id, Mime, Data) then
-      SendBytes(Mime, Data, 'public, max-age=86400')
-    else
-      SendHtml('Not found', 404);
+    try
+      if not HandleApi(Path) then
+        SendApiError(404, 'Not found');
+    except
+      on E: Exception do
+        SendApiError(500, E.Message);
+    end;
     Exit;
   end;
   if Path.StartsWith('/static/') then

@@ -41,8 +41,8 @@ tienen grabación, así que se pueden ir añadiendo poco a poco.
 
 Hay dos formas de añadir grabaciones:
 
-- **Desde la web**, en la página *Graba el minicurso* (\`/grabar.html\` en la web,
-  solo con el servidor Node): cualquiera puede grabar con el micrófono y un moderador
+- **Desde la web**, en la página *Graba el minicurso* (\`/grabar.html\` en la web):
+  cualquiera puede grabar con el micrófono y un moderador
   aprueba cada grabación antes de que suene en el curso. Se guardan en la base de
   datos, no en esta carpeta, y no aparecen en la tabla de abajo.
 - **Como ficheros MP3** en el repositorio, siguiendo los pasos siguientes. Si una

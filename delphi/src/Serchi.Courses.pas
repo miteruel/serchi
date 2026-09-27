@@ -16,20 +16,49 @@ unit Serchi.Courses;
 interface
 
 uses
-  Serchi.Store;
+  System.SysUtils, System.JSON, Serchi.Store;
 
-{ AContentJson: the "content" column of the courses table }
-function RenderCoursePage(const ACourse: TCourseInfo; const AContentJson: string): string;
+const
+  // Same limits as server/courses.ts and server/audio.ts
+  CourseTitleMax = 120;
+  CourseTextMax = 3000;
+  CourseShortMax = 200;
+  CourseLessonsMax = 40;
+  CourseBlocksMax = 30;
+  CourseItemsMax = 60;
+  CourseImageMaxBytes = 2 * 1024 * 1024;
+  RecordingMaxBytes = 1024 * 1024;
+  RecordingsPerVisitorPerDay = 20;
+  RecordingsMaxPending = 500;
+
+{ AContentJson: the "content" column of the courses table. APreview adds the
+  "preview" banner and noindex, as in the editor's preview. }
+function RenderCoursePage(const ACourse: TCourseInfo; const AContentJson: string;
+  APreview: Boolean = False): string;
 function RenderCourseIndex(const ACourses: TArray<TCourseInfo>): string;
 function HtmlEscape(const S: string): string;
 // Plain text -> HTML: escapes it, then **bold**, Esperanto in double braces and line breaks
 function RichText(const S: string): string;
 
+{ Names, as audioSlug and courseSlug in the Node version:
+  "Ĝis revido!" -> gxis-revido (recordings), "Ĉu vi ŝatas?" -> cu-vi-satas (courses) }
+function AudioSlug(const S: string): string;
+function CourseSlug(const S: string): string;
+
+{ Cleans a course content sent by the editor (sanitizeContent in server/courses.ts).
+  AImageIds: the pictures of this course. The caller frees the result. }
+function SanitizeCourseContent(AInput: TJSONValue; const AImageIds: TArray<string>): TJSONObject;
+{ Esperanto texts that can be recorded: of a course content and of a mini-course page }
+function CourseEsperantoTexts(const AContentJson: string): TArray<string>;
+function PageEsperantoTexts(const AHtml: string): TArray<string>;
+{ MIME type from the first bytes, or '' if it is not an accepted format }
+function DetectAudioType(const AData: TBytes): string;
+function DetectImageType(const AData: TBytes): string;
+
 implementation
 
 uses
-  System.SysUtils, System.Classes, System.JSON, System.NetEncoding,
-  System.RegularExpressions;
+  System.Classes, System.NetEncoding, System.RegularExpressions, System.Generics.Collections;
 
 type
   TCourseUi = record
@@ -243,7 +272,8 @@ const
   StarDiploma = '<svg class="star" viewBox="0 0 100 100" aria-hidden="true">' +
     '<polygon class="f-green" points="50,6 61,36 93,37 68,57 77,88 50,70 23,88 32,57 7,37 39,36"/></svg>';
 
-function RenderCoursePage(const ACourse: TCourseInfo; const AContentJson: string): string;
+function RenderCoursePage(const ACourse: TCourseInfo; const AContentJson: string;
+  APreview: Boolean): string;
 var
   Ui: TCourseUi;
   Parsed: TJSONValue;
@@ -278,8 +308,13 @@ begin
       SB.Append(HtmlEscape(Copy(Intro, 1, 160)))
     else
       SB.Append(HtmlEscape(ACourse.Title));
-    SB.Append('">'#10'<link rel="stylesheet" href="/kurso.css">'#10'</head>'#10'<body>'#10)
-      .Append('<div class="wrap">'#10)
+    SB.Append('">'#10);
+    if APreview then
+      SB.Append('<meta name="robots" content="noindex">'#10);
+    SB.Append('<link rel="stylesheet" href="/kurso.css">'#10'</head>'#10'<body>'#10);
+    if APreview then
+      SB.Append('<p class="preview-banner">Vista previa · Preview</p>'#10);
+    SB.Append('<div class="wrap">'#10)
       .Append('  <nav class="top" aria-label="Navigation"><a href="/">← Serĉilo</a><a href="/kursoj">')
       .Append(Ui.Courses).Append('</a></nav>'#10)
       .Append('  <header class="hero">').Append(StarHero).Append('<div><h1>')
@@ -399,6 +434,324 @@ begin
   finally
     SB.Free;
   end;
+end;
+
+// ---- Names ----
+
+{ Removes the accents of the letters used in Spanish, French, Catalan... (the
+  Node version uses Unicode NFD; this covers the same letters in practice) }
+function Unaccent(C: Char): Char;
+const
+  From = 'áàâäãåéèêëíìîïóòôöõúùûüñçýÿ';
+  Into = 'aaaaaaeeeeiiiiooooouuuuncyy';
+var
+  P: Integer;
+begin
+  P := Pos(C, From);
+  if P > 0 then
+    Result := Into[P]
+  else
+    Result := C;
+end;
+
+function MakeSlug(const S: string; AXSystem: Boolean): string;
+var
+  C: Char;
+  SB: TStringBuilder;
+begin
+  SB := TStringBuilder.Create;
+  try
+    for C in S.ToLower do
+      case C of
+        'ĉ': if AXSystem then SB.Append('cx') else SB.Append('c');
+        'ĝ': if AXSystem then SB.Append('gx') else SB.Append('g');
+        'ĥ': if AXSystem then SB.Append('hx') else SB.Append('h');
+        'ĵ': if AXSystem then SB.Append('jx') else SB.Append('j');
+        'ŝ': if AXSystem then SB.Append('sx') else SB.Append('s');
+        'ŭ': if AXSystem then SB.Append('ux') else SB.Append('u');
+      else
+        SB.Append(Unaccent(C));
+      end;
+    Result := TRegEx.Replace(SB.ToString, '[^a-z0-9]+', '-');
+    while Result.StartsWith('-') do
+      Result := Result.Substring(1);
+    while Result.EndsWith('-') do
+      Result := Result.Substring(0, Result.Length - 1);
+  finally
+    SB.Free;
+  end;
+end;
+
+function AudioSlug(const S: string): string;
+begin
+  Result := MakeSlug(S, True);
+end;
+
+function CourseSlug(const S: string): string;
+begin
+  Result := Copy(MakeSlug(S, False), 1, 60);
+end;
+
+// ---- Validation of the editor's content ----
+
+function Clean(AObj: TJSONObject; const AName: string; AMax: Integer): string;
+begin
+  Result := Copy(JStr(AObj, AName).Trim, 1, AMax);
+end;
+
+function CleanItem(A: TJSONArray; I, AMax: Integer): string;
+begin
+  Result := Copy(ItemStr(A, I).Trim, 1, AMax);
+end;
+
+function Min(A, B: Integer): Integer;
+begin
+  if A < B then
+    Result := A
+  else
+    Result := B;
+end;
+
+// List of eo/tr pairs, keeping only the items with Esperanto text
+function CleanPairs(AList: TJSONArray): TJSONArray;
+var
+  I: Integer;
+  Eo: string;
+  W: TJSONObject;
+begin
+  Result := TJSONArray.Create;
+  for I := 0 to Min(Len(AList), CourseItemsMax) - 1 do
+  begin
+    W := ItemObj(AList, I);
+    Eo := Clean(W, 'eo', CourseShortMax);
+    if Eo <> '' then
+      Result.AddElement(TJSONObject.Create
+        .AddPair('eo', Eo)
+        .AddPair('tr', Clean(W, 'tr', CourseShortMax)));
+  end;
+end;
+
+function CleanStrings(AList: TJSONArray; ADropEmpty: Boolean): TJSONArray;
+var
+  I: Integer;
+  S: string;
+begin
+  Result := TJSONArray.Create;
+  for I := 0 to Min(Len(AList), CourseItemsMax) - 1 do
+  begin
+    S := CleanItem(AList, I, CourseShortMax);
+    if (S <> '') or not ADropEmpty then
+      Result.Add(S);
+  end;
+end;
+
+function CleanBlock(B: TJSONObject): TJSONObject;
+var
+  Kind, Title: string;
+begin
+  Result := nil;
+  if B = nil then
+    Exit;
+  Kind := JStr(B, 'type');
+  Title := Clean(B, 'title', CourseShortMax);
+  if Kind = 'words' then
+    Result := TJSONObject.Create.AddPair('type', Kind).AddPair('title', Title)
+      .AddPair('items', CleanPairs(JArr(B, 'items')))
+  else if Kind = 'text' then
+    Result := TJSONObject.Create.AddPair('type', Kind).AddPair('title', Title)
+      .AddPair('text', Clean(B, 'text', CourseTextMax))
+  else if Kind = 'rule' then
+    Result := TJSONObject.Create.AddPair('type', Kind).AddPair('text', Clean(B, 'text', CourseTextMax))
+  else if Kind = 'exercise' then
+    Result := TJSONObject.Create.AddPair('type', Kind).AddPair('title', Title)
+      .AddPair('items', CleanStrings(JArr(B, 'items'), True))
+      .AddPair('answers', CleanStrings(JArr(B, 'answers'), False))
+  else if Kind = 'dialog' then
+    Result := TJSONObject.Create.AddPair('type', Kind).AddPair('title', Title)
+      .AddPair('lines', CleanPairs(JArr(B, 'lines')));
+end;
+
+function SanitizeCourseContent(AInput: TJSONValue; const AImageIds: TArray<string>): TJSONObject;
+var
+  Input, L, Lesson, Block: TJSONObject;
+  Lessons, Blocks, OutLessons, OutBlocks: TJSONArray;
+  I, J: Integer;
+  Img, Id: string;
+  Known: Boolean;
+begin
+  if AInput is TJSONObject then
+    Input := TJSONObject(AInput)
+  else
+    Input := nil;
+  Result := TJSONObject.Create;
+  Result.AddPair('intro', Clean(Input, 'intro', CourseTextMax));
+  OutLessons := TJSONArray.Create;
+  Result.AddPair('lessons', OutLessons);
+  Lessons := JArr(Input, 'lessons');
+  for I := 0 to Min(Len(Lessons), CourseLessonsMax) - 1 do
+  begin
+    L := ItemObj(Lessons, I);
+    Lesson := TJSONObject.Create;
+    OutLessons.AddElement(Lesson);
+    Lesson.AddPair('title', Clean(L, 'title', CourseShortMax));
+    Lesson.AddPair('subtitle', Clean(L, 'subtitle', CourseShortMax));
+    // Only pictures uploaded to this course
+    Img := JStr(L, 'image');
+    Known := False;
+    for Id in AImageIds do
+      if Id = Img then
+        Known := True;
+    if (Img <> '') and Known then
+      Lesson.AddPair('image', Img)
+    else
+      Lesson.AddPair('image', TJSONNull.Create);
+    Lesson.AddPair('imageAlt', Clean(L, 'imageAlt', CourseShortMax));
+    OutBlocks := TJSONArray.Create;
+    Lesson.AddPair('blocks', OutBlocks);
+    Blocks := JArr(L, 'blocks');
+    for J := 0 to Min(Len(Blocks), CourseBlocksMax) - 1 do
+    begin
+      Block := CleanBlock(ItemObj(Blocks, J));
+      if Block <> nil then
+        OutBlocks.AddElement(Block);
+    end;
+    Lesson.AddPair('challenge', Clean(L, 'challenge', CourseTextMax));
+  end;
+end;
+
+// ---- Words that can be recorded ----
+
+procedure AddMarked(AList: TList<string>; const AText: string);
+var
+  M: TMatch;
+begin
+  for M in TRegEx.Matches(AText, '\{\{(.+?)\}\}') do
+    if M.Groups[1].Value.Trim <> '' then
+      AList.Add(M.Groups[1].Value.Trim);
+end;
+
+function CourseEsperantoTexts(const AContentJson: string): TArray<string>;
+var
+  Parsed: TJSONValue;
+  Content, Lesson, B: TJSONObject;
+  Lessons, Blocks, Items: TJSONArray;
+  I, J, K: Integer;
+  Kind: string;
+  List: TList<string>;
+begin
+  List := TList<string>.Create;
+  Parsed := TJSONObject.ParseJSONValue(AContentJson);
+  try
+    if Parsed is TJSONObject then
+      Content := TJSONObject(Parsed)
+    else
+      Content := nil;
+    Lessons := JArr(Content, 'lessons');
+    for I := 0 to Len(Lessons) - 1 do
+    begin
+      Lesson := ItemObj(Lessons, I);
+      Blocks := JArr(Lesson, 'blocks');
+      for J := 0 to Len(Blocks) - 1 do
+      begin
+        B := ItemObj(Blocks, J);
+        Kind := JStr(B, 'type');
+        if (Kind = 'words') or (Kind = 'dialog') then
+        begin
+          if Kind = 'words' then
+            Items := JArr(B, 'items')
+          else
+            Items := JArr(B, 'lines');
+          for K := 0 to Len(Items) - 1 do
+            if JStr(ItemObj(Items, K), 'eo') <> '' then
+              List.Add(JStr(ItemObj(Items, K), 'eo'));
+        end
+        else if (Kind = 'text') or (Kind = 'rule') then
+          AddMarked(List, JStr(B, 'text'))
+        else if Kind = 'exercise' then
+        begin
+          Items := JArr(B, 'items');
+          for K := 0 to Len(Items) - 1 do
+            AddMarked(List, ItemStr(Items, K));
+          Items := JArr(B, 'answers');
+          for K := 0 to Len(Items) - 1 do
+            AddMarked(List, ItemStr(Items, K));
+        end;
+      end;
+      AddMarked(List, JStr(Lesson, 'challenge'));
+    end;
+    Result := List.ToArray;
+  finally
+    Parsed.Free;
+    List.Free;
+  end;
+end;
+
+function PageEsperantoTexts(const AHtml: string): TArray<string>;
+var
+  M: TMatch;
+  Text: string;
+  List: TList<string>;
+  G: Integer;
+begin
+  List := TList<string>.Create;
+  try
+    for M in TRegEx.Matches(AHtml,
+      '<div class="word"><b>([^<]+)</b>|<p class="say [ab]"><b>([^<]+)</b>|<span class="eo">([^<]+)</span>') do
+    begin
+      Text := '';
+      for G := 1 to 3 do
+        if (G < M.Groups.Count) and M.Groups[G].Success and (M.Groups[G].Value <> '') then
+          Text := M.Groups[G].Value.Trim;
+      // "kato → katoj" shows a rule, not something to say out loud
+      if (Text <> '') and not Text.Contains('→') then
+        List.Add(Text);
+    end;
+    Result := List.ToArray;
+  finally
+    List.Free;
+  end;
+end;
+
+// ---- File types ----
+
+function StartsWithText(const AData: TBytes; AOffset: Integer; const AText: AnsiString): Boolean;
+var
+  I: Integer;
+begin
+  Result := Length(AData) >= AOffset + Length(AText);
+  if Result then
+    for I := 1 to Length(AText) do
+      if AData[AOffset + I - 1] <> Byte(AText[I]) then
+        Exit(False);
+end;
+
+function DetectAudioType(const AData: TBytes): string;
+begin
+  Result := '';
+  if Length(AData) < 12 then
+    Exit;
+  if (AData[0] = $1A) and (AData[1] = $45) and (AData[2] = $DF) and (AData[3] = $A3) then
+    Result := 'audio/webm'
+  else if StartsWithText(AData, 0, 'OggS') then
+    Result := 'audio/ogg'
+  else if StartsWithText(AData, 4, 'ftyp') then
+    Result := 'audio/mp4';
+end;
+
+function DetectImageType(const AData: TBytes): string;
+begin
+  Result := '';
+  if Length(AData) < 12 then
+    Exit;
+  if (AData[0] = $89) and StartsWithText(AData, 1, 'PNG') then
+    Result := 'image/png'
+  else if (AData[0] = $FF) and (AData[1] = $D8) and (AData[2] = $FF) then
+    Result := 'image/jpeg'
+  else if StartsWithText(AData, 0, 'RIFF') and StartsWithText(AData, 8, 'WEBP') then
+    Result := 'image/webp'
+  else if StartsWithText(AData, 0, 'GIF8') then
+    Result := 'image/gif';
+  // SVG is not accepted: it can carry scripts
 end;
 
 end.
