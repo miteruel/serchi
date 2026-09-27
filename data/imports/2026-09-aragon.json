@@ -1,0 +1,294 @@
+[
+  {
+    "title": "Gran Enciclopedia Aragonesa: Esperanto",
+    "url": "http://www.enciclopedia-aragonesa.com/voz.asp?voz_id=5225",
+    "description": {
+      "eo": "Artikolo de la Granda Aragona Enciklopedio pri Esperanto kaj ĝia historio en Aragono.",
+      "es": "Voz de la Gran Enciclopedia Aragonesa sobre el esperanto y su historia en Aragón.",
+      "en": "Gran Enciclopedia Aragonesa entry on Esperanto and its history in Aragon."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "enciklopedio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Gran Enciclopedia Aragonesa: Frateco",
+    "url": "http://www.enciclopedia-aragonesa.com/voz.asp?voz_id=5877",
+    "description": {
+      "eo": "La fondiĝo de Frateco en 1908 en la apoteko de Constantino Ros, ĝiaj unuaj membroj kaj agadoj.",
+      "es": "La fundación de Frateco en 1908 en la farmacia de Constantino Ros, sus primeros socios y su actividad.",
+      "en": "The founding of Frateco in 1908 at Constantino Ros's pharmacy, its first members and activities."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "frateco",
+      "zaragozo",
+      "enciklopedio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Frateco (Wikipedia)",
+    "url": "https://es.wikipedia.org/wiki/Frateco",
+    "description": {
+      "eo": "Artikolo pri la zaragoza esperanto-asocio Frateco, fondita en 1908.",
+      "es": "Artículo sobre la asociación esperantista zaragozana Frateco, fundada en 1908.",
+      "en": "Article about Zaragoza's Esperanto association Frateco, founded in 1908."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "frateco",
+      "zaragozo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "HoyAragón: Frateco, viva en Zaragoza desde 1908",
+    "url": "https://www.hoyaragon.es/zaragoza/desconocida-tradicion-esperanto-aragon-todavia-sigue-viva-zaragoza/20250929131026110447.html",
+    "description": {
+      "eo": "Raporto pri la historio kaj nuna agado de Frateco: kongresoj en Zaragozo, semajnaj kunvenoj kaj biblioteko de pli ol 3.000 volumoj.",
+      "es": "Reportaje sobre la historia y la actividad actual de Frateco: congresos en Zaragoza, reuniones semanales y una biblioteca de más de 3.000 volúmenes.",
+      "en": "Feature on Frateco's history and current activity: congresses in Zaragoza, weekly meetings and a library of over 3,000 volumes."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "frateco",
+      "zaragozo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Un siglo de esperanto en Aragón (índice)",
+    "url": "https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon",
+    "description": {
+      "eo": "Indekso de la monografio de Antonio Marco Botella (2000) pri la esperanto-movado en Aragono, legebla rete laŭ ĉapitroj.",
+      "es": "Índice de la monografía de Antonio Marco Botella (2000) sobre el movimiento esperantista en Aragón, legible en línea por capítulos.",
+      "en": "Contents of Antonio Marco Botella's 2000 monograph on the Esperanto movement in Aragon, readable online chapter by chapter."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "aragono",
+      "historio",
+      "marco botella",
+      "libro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Un siglo de esperanto en Aragón: 1920–1927",
+    "url": "https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1920---1927",
+    "description": {
+      "eo": "Ĉapitro pri la jaroj 1920–1927: la 2-a Hispana Kongreso en Zaragozo kaj la renaskiĝo de la grupo en Oska.",
+      "es": "Capítulo sobre los años 1920–1927: el II Congreso Español en Zaragoza y el renacer del grupo de Huesca.",
+      "en": "Chapter on 1920–1927: the 2nd Spanish Congress in Zaragoza and the revival of the Huesca group."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "aragono",
+      "historio",
+      "marco botella",
+      "oska",
+      "zaragozo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Un siglo de esperanto en Aragón: 1954–1962",
+    "url": "https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1954---1962",
+    "description": {
+      "eo": "Ĉapitro pri la jaroj 1954–1962, kun la 15-a Hispana Kongreso en Zaragozo.",
+      "es": "Capítulo sobre los años 1954–1962, con el XV Congreso Español en Zaragoza.",
+      "en": "Chapter on 1954–1962, including the 15th Spanish Congress in Zaragoza."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "aragono",
+      "historio",
+      "marco botella",
+      "zaragozo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Monumento al Esperanto (Zaragoza)",
+    "url": "https://www.zaragoza.es/sede/servicio/arte-publico/436",
+    "description": {
+      "eo": "La monumento al Esperanto en Zaragozo, inaŭgurita en 2008 okaze de la centjariĝo de Frateco, laŭ projekto de Jaime Benito Cedo.",
+      "es": "El Monumento al Esperanto de Zaragoza, inaugurado en 2008 por el centenario de Frateco, obra de Jaime Benito Cedo.",
+      "en": "Zaragoza's Esperanto Monument, unveiled in 2008 for Frateco's centenary, designed by Jaime Benito Cedo."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "monumento",
+      "zaragozo",
+      "frateco"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Frateco: el Monumento al Esperanto",
+    "url": "https://sites.google.com/site/fratecoes/esperanto/monumento",
+    "description": {
+      "eo": "Frateco rakontas la historion de la monumento, de la Glorieto de Esperanto (1995) kaj de la strato Doktoro Zamenhof (1961) en Zaragozo.",
+      "es": "Frateco cuenta la historia del monumento, de la Glorieta del Esperanto (1995) y de la calle Doctor Zamenhof (1961) en Zaragoza.",
+      "en": "Frateco tells the story of the monument, the Esperanto roundabout (1995) and Doctor Zamenhof street (1961) in Zaragoza."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "monumento",
+      "zaragozo",
+      "frateco"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Diario de Teruel: la Glorieta del Esperanto",
+    "url": "https://www.diariodeteruel.es/historico/teruel-ya-tiene-su-glorieta-del-esperanto-junto-al-ascensor-del-barrio-de-san-julian",
+    "description": {
+      "eo": "Teruelo dediĉas glorieton al Esperanto apud la lifto de la kvartalo San Julián, dum la Hispana Kongreso 2017.",
+      "es": "Teruel dedica una glorieta al esperanto junto al ascensor del barrio de San Julián, durante el Congreso Español de 2017.",
+      "en": "Teruel names a roundabout after Esperanto next to the San Julián lift, during the 2017 Spanish Congress."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "teruelo",
+      "liberanimo",
+      "glorieto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Diario de Teruel: Julio Belenguer en la Semana Modernista",
+    "url": "https://diariodeteruel.es/movil/noticia.asp?notid=1028621&secid=7",
+    "description": {
+      "eo": "Alberto Granados, prezidanto de Liberanimo, rolas Julio Belenguer antaŭ lia vojaĝo al la Universala Kongreso de Parizo 1914.",
+      "es": "Alberto Granados, presidente de Liberanimo, da vida a Julio Belenguer antes de su viaje al Congreso Universal de París de 1914.",
+      "en": "Alberto Granados, Liberanimo's president, plays Julio Belenguer before his trip to the 1914 World Congress in Paris."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "teruelo",
+      "belenguer",
+      "liberanimo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto y esperantistas de Teruel (Serafín Aldecoa)",
+    "url": "https://www.todostuslibros.com/libros/esperanto-y-esperantistas-de-teruel_978-84-09-35165-7",
+    "description": {
+      "eo": "Dulingva libro (2021) de la historiisto Serafín Aldecoa pri la komencoj de Esperanto en la provinco Teruelo, eldonita de Liberanimo.",
+      "es": "Libro bilingüe (2021) del historiador Serafín Aldecoa sobre los comienzos del esperanto en la provincia de Teruel, editado por Liberanimo.",
+      "en": "Bilingual book (2021) by historian Serafín Aldecoa on the beginnings of Esperanto in the province of Teruel, published by Liberanimo."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "aragono",
+      "historio",
+      "teruelo",
+      "aldecoa",
+      "libro"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "Don Quijote de La Mancha, en esperanto",
+    "url": "https://blog.cervantesvirtual.com/don-quijote-de-la-mancha-en-esperanto/",
+    "description": {
+      "eo": "La kompleta traduko de Don Kiĥoto de Fernando de Diego, eldonita en Zaragozo en 1977.",
+      "es": "La traducción completa del Quijote de Fernando de Diego, publicada en Zaragoza en 1977.",
+      "en": "Fernando de Diego's complete translation of Don Quixote, published in Zaragoza in 1977."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "kiĥoto",
+      "fernando de diego",
+      "zaragozo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperantistas en la guerra civil española",
+    "url": "https://delbarrio.eu/guerracivil.htm",
+    "description": {
+      "eo": "Artikolo de José Antonio del Barrio pri la esperantistoj dum la hispana enlanda milito kaj la subpremo poste.",
+      "es": "Artículo de José Antonio del Barrio sobre los esperantistas durante la Guerra Civil y la represión posterior.",
+      "en": "José Antonio del Barrio's article on Esperanto speakers during the Spanish Civil War and the repression that followed."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aragono",
+      "historio",
+      "enlanda milito",
+      "hispanio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Aprende esperanto en Teruel (Fundación Ibercaja)",
+    "url": "https://www.fundacionibercaja.es/actividades/cursos-y-talleres/aprende-esperanto-teruel/",
+    "description": {
+      "eo": "Kurso de Esperanto en Teruelo en la programo de Fundación Ibercaja.",
+      "es": "Curso de esperanto en Teruel dentro del programa de la Fundación Ibercaja.",
+      "en": "Esperanto course in Teruel in the Fundación Ibercaja programme."
+    },
+    "category": "courses",
+    "level": "all",
+    "format": "course",
+    "tags": [
+      "aragono",
+      "historio",
+      "teruelo",
+      "kurso"
+    ],
+    "isFree": true
+  }
+]

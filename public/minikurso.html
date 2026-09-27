@@ -5,10 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Esperanto en 7 tagoj</title>
 <meta name="description" content="Minicurso de esperanto para niños y familias en siete lecciones, con dibujos y ejercicios. Liberanimo Teruel.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&display=swap">
+
+</head>
+<body>
 <style>
+  /* Styles live in <body> so the page keeps them when htmx (hx-boost in the Delphi
+     version) swaps only the body in. */
+  @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&display=swap");
   :root {
     --bg: #f5f9f4;
     --surface: #ffffff;
@@ -185,8 +188,6 @@
   .f-soft { fill: var(--green-soft); } .f-line { fill: var(--line); }
   .s-ink { stroke: var(--ink); } .s-sun { stroke: var(--sun); } .s-muted { stroke: var(--muted); }
 </style>
-</head>
-<body>
 <div class="wrap">
 
   <nav class="top" aria-label="Navegación">

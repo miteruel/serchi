@@ -13,7 +13,8 @@ import {
   Play,
   UserRound,
   CalendarDays,
-  Baby
+  Baby,
+  Landmark
 } from 'lucide-react';
 import { UserSettings, Level, Category, EsperantoResource } from '../types';
 import { TRANSLATIONS } from '../translations';
@@ -342,6 +343,18 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
           </button>
         ))}
       </div>
+
+      {/* History of Esperanto in Aragon: standalone page in public/ */}
+      <a
+        href="/historia-aragon.html"
+        className="mt-8 w-full max-w-2xl flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 transition-colors"
+      >
+        <Landmark className="w-5 h-5 text-emerald-600 shrink-0" />
+        <span className="min-w-0">
+          <span className="block text-sm font-semibold">{t.aragonHistoryTitle}</span>
+          <span className="block text-xs text-gray-500 dark:text-gray-400">{t.aragonHistoryDesc}</span>
+        </span>
+      </a>
 
       {/* Esperanto radio: stations with an online player */}
       {radioStations.length > 0 && (

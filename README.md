@@ -161,6 +161,19 @@ PR y commits correspondientes.
     de la portada: la versión React la sirve en `/minikurso.html` y la Delphi en
     `/minikurso`.
 
+14. **Historia del esperanto en Aragón.** Página [`public/historia-aragon.html`](public/historia-aragon.html)
+    con una línea de tiempo desde 1905 hasta hoy. Recorre los pioneros (Julio Belenguer
+    en Teruel, la fundación de Frateco en Zaragoza en 1908 y los grupos de Huesca), la
+    guerra, los cuatro congresos españoles en Zaragoza, el Quijote en esperanto de 1977,
+    el monumento de 2008 y la vuelta del esperanto a Teruel con Liberanimo. Cada hito
+    enlaza a su fuente. Se añadieron 15 fuentes a la base de datos
+    (`data/imports/2026-09-aragon.json`, etiqueta `aragono`) y un panel de conocimiento
+    que aparece al buscar Aragón, Zaragoza, Huesca, Teruel o Frateco. La base de datos
+    queda con 583 enlaces y 11 paneles. De paso se corrigió que en la versión Delphi el
+    minicurso se viera sin estilos: la navegación con `hx-boost` de HTMX solo cargaba el
+    `<body>` de la página. Ahora esos enlaces cargan la página completa y los estilos de
+    ambas páginas están dentro del `<body>`.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

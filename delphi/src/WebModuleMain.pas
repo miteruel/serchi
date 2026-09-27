@@ -43,7 +43,7 @@ type
     procedure Render(const ATemplate: string; AModel: TObject);
     procedure Redirect(const AUrl: string);
     procedure SendStatic(const APath: string);
-    procedure SendMiniCourse;
+    procedure SendPublicPage(const AName: string);
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -285,13 +285,14 @@ begin
   FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
 end;
 
-{ The kids' mini-course is a standalone page shared with the React version
-  (public/minikurso.html in the repository, next to the delphi folder). }
-procedure TWebModuleMain.SendMiniCourse;
+{ Standalone pages shared with the React version: the kids' mini-course and
+  the history of Esperanto in Aragon (public/<name>.html in the repository,
+  next to the delphi folder). }
+procedure TWebModuleMain.SendPublicPage(const AName: string);
 var
   FileName: string;
 begin
-  FileName := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + 'minikurso.html'));
+  FileName := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + AName + '.html'));
   if not TFile.Exists(FileName) then
   begin
     SendHtml('Not found', 404);
@@ -1181,7 +1182,12 @@ begin
   end;
   if (Path = '/minikurso') or (Path = '/minikurso.html') then
   begin
-    SendMiniCourse;
+    SendPublicPage('minikurso');
+    Exit;
+  end;
+  if (Path = '/historia-aragon') or (Path = '/historia-aragon.html') then
+  begin
+    SendPublicPage('historia-aragon');
     Exit;
   end;
 

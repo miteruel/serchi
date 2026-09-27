@@ -241,6 +241,8 @@ export interface TranslationDictionary {
   kidsSeeAll: string;
   miniCourseTitle: string;
   miniCourseDesc: string;
+  aragonHistoryTitle: string;
+  aragonHistoryDesc: string;
   listenBtn: string;
   nowPlaying: string;
   closePlayer: string;
@@ -526,6 +528,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSeeAll: "Ĉio por infanoj",
     miniCourseTitle: "Minikurso: Esperanto en 7 tagoj",
     miniCourseDesc: "Sep lecionoj kun desegnaĵoj por infanoj kaj familioj (klarigoj en la hispana).",
+    aragonHistoryTitle: "Esperanto en Aragono",
+    aragonHistoryDesc: "Pli ol jarcento da historio en Zaragozo, Oska kaj Teruelo, de Frateco (1908) ĝis Liberanimo.",
     listenBtn: "Aŭskulti",
     nowPlaying: "Nun ludas",
     closePlayer: "Fermi ludilon",
@@ -810,6 +814,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSeeAll: "Todo para niños",
     miniCourseTitle: "Minicurso: esperanto en 7 días",
     miniCourseDesc: "Siete lecciones con dibujos para niños y familias.",
+    aragonHistoryTitle: "Historia del esperanto en Aragón",
+    aragonHistoryDesc: "Más de un siglo en Zaragoza, Huesca y Teruel, de Frateco (1908) a Liberanimo.",
     listenBtn: "Escuchar",
     nowPlaying: "Sonando",
     closePlayer: "Cerrar reproductor",
@@ -1094,6 +1100,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSeeAll: "Everything for kids",
     miniCourseTitle: "Mini-course: Esperanto in 7 days",
     miniCourseDesc: "Seven lessons with drawings for children and families (explained in Spanish).",
+    aragonHistoryTitle: "Esperanto in Aragon",
+    aragonHistoryDesc: "Over a century of history in Zaragoza, Huesca and Teruel, from Frateco (1908) to Liberanimo (in Spanish).",
     listenBtn: "Listen",
     nowPlaying: "Now playing",
     closePlayer: "Close player",
