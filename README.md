@@ -239,6 +239,15 @@ PR y commits correspondientes.
     la versión React, si se define `FORUM_MODERATOR_KEY`, el rol de moderador pide esa
     clave, ya que ahora sus acciones afectan a todos.
 
+21. **Minicurso en inglés.** El minicurso «Esperanto en 7 tagoj» tiene ahora una versión
+    con las explicaciones en inglés, [`public/minikurso-en.html`](public/minikurso-en.html),
+    con los mismos dibujos y ejercicios. La tabla de pronunciación está rehecha para
+    angloparlantes (vocales, `j`, `r`, `ĥ`…), y las lecciones explican lo que al inglés le
+    cuesta: que el verbo no cambia con la persona y que el acusativo `-n` permite cambiar
+    el orden de las palabras. Las dos versiones se enlazan entre sí, y la portada lleva a
+    la inglesa cuando la web está en inglés (React en `/minikurso-en.html`, Delphi en
+    `/minikurso-en`). El progreso y el diploma se comparten entre las dos versiones.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

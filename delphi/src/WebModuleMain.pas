@@ -1185,6 +1185,11 @@ begin
     SendPublicPage('minikurso');
     Exit;
   end;
+  if (Path = '/minikurso-en') or (Path = '/minikurso-en.html') then
+  begin
+    SendPublicPage('minikurso-en');
+    Exit;
+  end;
   if (Path = '/historia-aragon') or (Path = '/historia-aragon.html') then
   begin
     SendPublicPage('historia-aragon');
