@@ -75,6 +75,8 @@ Scripts:
 - `npm run forum:import -- [--file forum.json]`: replaces the whole forum with the
   content of a JSON file (default: the demo forum in
   [`data/imports/2026-09-foro-inicial.json`](data/imports/2026-09-foro-inicial.json)).
+- `npm run audio:manifest`: after adding recordings to `public/audio/`, updates the
+  list the mini-course reads and [`docs/GRABACIONES.md`](docs/GRABACIONES.md).
 - `npm run links:check -- [--category radio] [--out report.md]`: opens every URL in
   the database (links, knowledge panel links and radio feeds) and writes a report of
   the broken, blocked and redirected ones (default
@@ -309,6 +311,14 @@ PR y commits correspondientes.
       cómo buscar dentro del sitio.
     - **URLs absolutas:** se escriben con `__SITE_URL__`, que el servidor (también el
       Delphi) cambia por `SITE_URL` o por la dirección de la petición.
+
+29. **Audio en el minicurso.** Las palabras y frases en esperanto del minicurso pueden
+    llevar un botón 🔊 para oírlas. El botón solo aparece cuando existe la grabación, así
+    que se pueden ir añadiendo poco a poco en `public/audio/`, en MP3. La lista de las 134
+    grabaciones posibles, con el nombre que debe tener cada fichero y cómo grabarlas, está
+    en [`docs/GRABACIONES.md`](docs/GRABACIONES.md). Tras añadir grabaciones hay que
+    ejecutar `npm run audio:manifest`; el CI avisa si se olvida. Las grabaciones sirven
+    para las dos versiones del curso y también para la versión Delphi.
 
 ### Pendiente y limitaciones conocidas
 

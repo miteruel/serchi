@@ -235,6 +235,12 @@
   .nav-lib { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
   .nav-lib img { width: 24px; height: 24px; border-radius: 5px; background: #fff; }
   footer { color: var(--muted); font-size: 14px; text-align: center; }
+  .listen {
+    border: 0; background: transparent; cursor: pointer; padding: 0 4px;
+    font-size: 15px; line-height: 1; vertical-align: middle;
+  }
+  .listen:hover { transform: scale(1.15); }
+  .word .listen { margin-right: auto; } /* next to the word, not in the middle of the card */
 
   /* Drawing palette */
   .f-green { fill: var(--green); } .f-sky { fill: var(--sky); } .f-sun { fill: var(--sun); }
@@ -937,6 +943,42 @@
   });
   input.addEventListener('input', function () { save(KEY_NAME, input.value); render(); });
   render();
+})();
+</script>
+<script>
+/* 🔊 buttons for the words that have a recording in /audio (see docs/GRABACIONES.md).
+   audioSlug() must match the one in scripts/audio-manifest.ts. */
+(function () {
+  function audioSlug(text) {
+    var x = { 'ĉ': 'cx', 'ĝ': 'gx', 'ĥ': 'hx', 'ĵ': 'jx', 'ŝ': 'sx', 'ŭ': 'ux' };
+    return text.toLowerCase()
+      .replace(/[ĉĝĥĵŝŭ]/g, function (c) { return x[c]; })
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  var label = document.documentElement.lang === 'en' ? 'Listen: ' : 'Escuchar: ';
+  fetch('/audio/index.json').then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+    if (!Array.isArray(list) || list.length === 0) return;
+    var have = {};
+    list.forEach(function (s) { have[s] = true; });
+    var player = new Audio();
+    document.querySelectorAll('.word b, .say b, .eo').forEach(function (el) {
+      var text = el.textContent.trim();
+      var slug = audioSlug(text);
+      if (text.indexOf('→') !== -1 || !have[slug]) return;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'listen';
+      b.textContent = '🔊';
+      b.setAttribute('aria-label', label + text);
+      b.addEventListener('click', function () {
+        player.pause();
+        player.src = '/audio/' + slug + '.mp3';
+        player.play().catch(function () {});
+      });
+      el.insertAdjacentElement('afterend', b);
+    });
+  }).catch(function () {});
 })();
 </script>
 </body>

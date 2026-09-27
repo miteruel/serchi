@@ -18,7 +18,8 @@
     "db:export": "tsx scripts/db-export.ts",
     "db:backup": "tsx scripts/db-backup.ts",
     "forum:import": "tsx scripts/forum-import.ts",
-    "links:check": "tsx scripts/check-links.ts"
+    "links:check": "tsx scripts/check-links.ts",
+    "audio:manifest": "tsx scripts/audio-manifest.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

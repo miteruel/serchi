@@ -48,6 +48,7 @@ type
     procedure Redirect(const AUrl: string);
     procedure SendStatic(const APath: string);
     procedure SendPublicPage(const AName: string);
+    procedure SendPublicFile(const APath: string);
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -289,6 +290,36 @@ begin
     FResponse.ContentType := 'image/png'
   else
     FResponse.ContentType := 'application/octet-stream';
+  FResponse.SetCustomHeader('Cache-Control', 'public, max-age=3600');
+  FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+end;
+
+{ Files of the public folder used by the standalone pages: the mini-course
+  recordings (/audio/*.mp3 and /audio/index.json) and the preview image
+  shown when a page is shared (/og-image.png). }
+procedure TWebModuleMain.SendPublicFile(const APath: string);
+var
+  PublicDir, FileName, Ext: string;
+begin
+  PublicDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public'));
+  FileName := TPath.GetFullPath(TPath.Combine(PublicDir, APath.Replace('/', PathDelim)));
+  if not FileName.StartsWith(PublicDir + PathDelim) or not TFile.Exists(FileName) then
+  begin
+    SendHtml('Not found', 404);
+    Exit;
+  end;
+  Ext := TPath.GetExtension(FileName).ToLower;
+  if Ext = '.mp3' then
+    FResponse.ContentType := 'audio/mpeg'
+  else if Ext = '.json' then
+    FResponse.ContentType := 'application/json; charset=utf-8'
+  else if Ext = '.png' then
+    FResponse.ContentType := 'image/png'
+  else
+  begin
+    SendHtml('Not found', 404);
+    Exit;
+  end;
   FResponse.SetCustomHeader('Cache-Control', 'public, max-age=3600');
   FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
 end;
@@ -1258,6 +1289,11 @@ begin
   if (Path.Length > 1) and Path.EndsWith('/') then
     Path := Path.Substring(0, Path.Length - 1);
 
+  if Path.StartsWith('/audio/') or (Path = '/og-image.png') then
+  begin
+    SendPublicFile(Path.Substring(1));
+    Exit;
+  end;
   if Path.StartsWith('/static/') then
   begin
     SendStatic(Path.Substring(Length('/static/')));
