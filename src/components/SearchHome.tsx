@@ -19,6 +19,7 @@ import {
 import { UserSettings, Level, Category, EsperantoResource } from '../types';
 import { TRANSLATIONS } from '../translations';
 import { convertXSystem } from '../utils/esperanto';
+import { TeruelSkyline } from './TeruelSkyline';
 
 interface SearchHomeProps {
   query: string;
@@ -133,7 +134,7 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
   ];
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center px-4 -mt-10 sm:-mt-14 max-w-4xl mx-auto w-full">
+    <div className="flex-1 flex flex-col items-center justify-start px-4 pt-8 sm:pt-12 pb-10 max-w-4xl mx-auto w-full">
       
       {/* Google-style Minimalist Logo with Verda Stelo */}
       <div className="flex flex-col items-center mb-8 select-none">
@@ -153,6 +154,14 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
         <p className="mt-1 text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400">
           {t.ownerNotice}
         </p>
+        {/* View of Teruel; opens the history of Esperanto in Aragon */}
+        <a
+          href="/historia-aragon.html"
+          title={t.aragonHistoryTitle}
+          className="mt-4 block w-72 sm:w-96 max-w-full opacity-95 hover:opacity-100 transition-opacity"
+        >
+          <TeruelSkyline label={t.aragonHistoryTitle} className="w-full h-auto" />
+        </a>
       </div>
 
       {/* Main Search Box */}

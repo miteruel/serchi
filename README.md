@@ -181,6 +181,20 @@ PR y commits correspondientes.
     Liberanimo (*libera animo*, «alma libre»). El logotipo va incrustado en las páginas
     para que se vea igual en las versiones React y Delphi.
 
+16. **Teruel en la portada.** El dibujo de Teruel aparece también en la portada, bajo el
+    nombre del sitio, y al pulsarlo se abre la historia del esperanto en Aragón. Está
+    hecho con clases de Tailwind para seguir el modo claro u oscuro de la web
+    (`src/components/TeruelSkyline.tsx` y, en Delphi, `delphi/templates/_teruel.html`).
+    De paso, la columna de la portada se alinea arriba: al crecer con las nuevas
+    secciones, el logotipo y el título quedaban tapados bajo la barra superior.
+
+17. **Barra superior en móvil.** La barra superior de la versión React ya cabe en
+    cualquier pantalla, de 320 a 1280 px de ancho, en la portada, los resultados y el
+    foro. En móvil, las pestañas muestran solo su icono (con el nombre como texto
+    accesible) y los enlaces externos y el texto de «Añadir enlace» aparecen solo en
+    pantallas anchas. La fila de acciones de cada resultado también puede partirse en
+    dos líneas.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

@@ -55,14 +55,14 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="w-full bg-white dark:bg-[#202124] border-b border-gray-100 dark:border-gray-800 transition-colors sticky top-0 z-30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
         
         {/* Left Side: Logo (In results view or forum) or minimalist title */}
-        <div className="flex items-center gap-4 sm:gap-6 min-w-max">
+        <div className="flex items-center gap-2 sm:gap-6 shrink-0">
           {currentView !== 'home' ? (
             <button
               onClick={onGoHome}
-              className="flex items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg p-1"
+              className="flex items-center gap-2 shrink-0 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg p-1"
               title={t.homeTitleTooltip}
               aria-label={t.homeTitleTooltip}
             >
@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
                 alt="Liberanimo Teruel"
                 className="w-8 h-8 rounded-lg object-contain shadow-sm"
               />
-              <div className="flex items-baseline">
+              <div className="hidden md:flex items-baseline">
                 <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white font-['Product_Sans',sans-serif]">
                   Serĉ<span className="text-emerald-600 dark:text-emerald-400">ilo</span>
                 </span>
@@ -83,7 +83,7 @@ export const Header: React.FC<HeaderProps> = ({
                 href="https://eventaservo.org" 
                 target="_blank" 
                 rel="noreferrer" 
-                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors hidden md:flex items-center gap-1"
+                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors hidden lg:flex items-center gap-1"
               >
                 Eventa Servo <ExternalLink className="w-3 h-3 opacity-60" />
               </a>
@@ -91,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({
                 href="https://vortaro.net" 
                 target="_blank" 
                 rel="noreferrer" 
-                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors hidden md:flex items-center gap-1"
+                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors hidden lg:flex items-center gap-1"
               >
                 PIV Vortaro <ExternalLink className="w-3 h-3 opacity-60" />
               </a>
@@ -99,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
                 href="https://lernu.net" 
                 target="_blank" 
                 rel="noreferrer" 
-                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors hidden sm:flex items-center gap-1"
+                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors hidden md:flex items-center gap-1"
               >
                 Lernu.net <ExternalLink className="w-3 h-3 opacity-60" />
               </a>
@@ -110,32 +110,36 @@ export const Header: React.FC<HeaderProps> = ({
           <nav className="flex items-center bg-gray-100 dark:bg-[#303134] p-1 rounded-xl border border-gray-200/60 dark:border-gray-700">
             <button
               onClick={() => onSelectView('home')}
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              title={t.searchTab}
+              aria-label={t.searchTab}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                 currentView === 'home' || currentView === 'results'
                   ? 'bg-white dark:bg-[#202124] text-emerald-700 dark:text-emerald-300 shadow-xs'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
               }`}
             >
               <Search className="w-3.5 h-3.5" />
-              <span>{t.searchTab}</span>
+              <span className="hidden md:inline">{t.searchTab}</span>
             </button>
             <button
               onClick={() => onSelectView('forum')}
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              title={t.communityTab}
+              aria-label={t.communityTab}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-1 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                 currentView === 'forum'
                   ? 'bg-white dark:bg-[#202124] text-emerald-700 dark:text-emerald-300 shadow-xs'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
               }`}
             >
               <Users className="w-3.5 h-3.5" />
-              <span>{t.communityTab}</span>
+              <span className="hidden md:inline">{t.communityTab}</span>
             </button>
           </nav>
         </div>
 
         {/* Center: Search input in Results View */}
         {currentView === 'results' && (
-          <div className="flex-1 max-w-2xl hidden sm:block">
+          <div className="flex-1 min-w-0 max-w-2xl hidden sm:block">
             <form onSubmit={onSearchSubmit} className="relative">
               <input
                 type="text"
@@ -159,25 +163,26 @@ export const Header: React.FC<HeaderProps> = ({
         )}
 
         {/* Right Side: Add Link button, Language, Theme, Saved, Settings */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1 sm:gap-3 shrink-0">
           
           {/* Add Link / Web Crawler Button */}
           <button
             onClick={onOpenAddResource}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors shadow-2xs cursor-pointer"
+            className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 text-xs font-bold rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-colors shadow-2xs cursor-pointer"
             title={t.addLinkNavTitle}
+            aria-label={t.addLinkNavTitle}
           >
             <Plus className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">{t.addLinkNavBtn}</span>
+            <span className="hidden lg:inline">{t.addLinkNavBtn}</span>
           </button>
 
           {/* Language Selector Dropdown */}
           <div className="relative group">
             <button
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer"
+              className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 text-xs font-semibold rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer"
               aria-label={t.changeLanguageAria}
             >
-              <Globe className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <Globe className="hidden sm:block w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span className="uppercase">{settings.language}</span>
             </button>
             <div className="absolute right-0 mt-1 w-32 py-1 bg-white dark:bg-[#303134] border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all z-50">
@@ -214,7 +219,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="p-1.5 sm:p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
             title={settings.theme === 'dark' ? t.lightMode : t.darkMode}
             aria-label={settings.theme === 'dark' ? t.lightMode : t.darkMode}
           >
@@ -228,7 +233,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Saved Resources Button */}
           <button
             onClick={onOpenSaved}
-            className="relative p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="relative p-1.5 sm:p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
             title={t.savedResources}
             aria-label={t.savedResources}
           >
@@ -243,7 +248,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Settings Modal Button */}
           <button
             onClick={onOpenSettings}
-            className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="p-1.5 sm:p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
             title={t.settings}
             aria-label={t.settings}
           >
