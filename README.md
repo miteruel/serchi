@@ -357,18 +357,29 @@ PR y commits correspondientes.
       código).
     - **Grabación:** las palabras de los cursos publicados se pueden grabar en
       `/grabar.html`.
-    - **Versión Delphi:** el editor solo funciona con la versión Node. Los cursos
-      publicados se ven también en la versión Delphi (paso 32).
+    - **Versión Delphi:** también tiene el editor y los cursos (pasos 32 y 33).
 
 32. **Cursos y grabaciones en la versión Delphi (fase 1).** La versión Delphi muestra
     los cursos creados con el editor. `/kursoj` y `/kurso/<dirección>` se generan en la
     unidad nueva `Serchi.Courses.pas`, una traducción del código de la versión Node, así
     que las páginas son iguales y usan los mismos `kurso.css` y `kurso.js`. También sirve
     las imágenes de las lecciones y `/api/audio` con las grabaciones aprobadas, así que
-    los botones 🔊 del minicurso y de los cursos suenan igual que en Node. Solo lee: el
-    editor y la grabadora siguen siendo de la versión Node (fase 2, pendiente). El
-    enlace a la grabadora del minicurso ya no aparece en la versión Delphi. No se ha
-    compilado todavía.
+    los botones 🔊 del minicurso y de los cursos suenan igual que en Node. El enlace a
+    la grabadora del minicurso aparece solo donde está la grabadora.
+
+33. **Editor y grabadora en la versión Delphi (fase 2).** La versión Delphi responde a
+    la misma API JSON que Node, así que sirve las mismas páginas `editor.html` y
+    `grabar.html` sin cambiarlas:
+    - **Editor:** crear, guardar, borrar, subir imágenes y vista previa.
+    - **Grabadora:** lista de palabras, envío, grabaciones pendientes, aprobar y borrar.
+    - **Mismas reglas que Node:** la clave de moderador, los límites (20 grabaciones al
+      día, 500 pendientes, 1 MB por grabación, 2 MB por imagen), la comprobación del
+      formato por los primeros bytes y la limpieza del contenido de los cursos.
+    - **Nombres de las grabaciones:** Delphi los calcula igual que Node; se comprobó con
+      las 134 palabras del minicurso y otros casos. Así, una grabación hecha en una
+      versión suena en la otra.
+    - **Código:** la lógica está en `Serchi.Courses.pas` y `Serchi.Store.pas`, y las rutas
+      en `WebModuleMain.pas`. No se ha compilado todavía.
 
 ### Pendiente y limitaciones conocidas
 

@@ -202,17 +202,15 @@ La página `/grabar.html` permite grabar con el micrófono las palabras del mini
 - **HTTPS:** los navegadores solo dejan usar el micrófono en páginas con `https://`
   (o en `localhost`), así que en un servidor hace falta HTTPS, por ejemplo con el
   perfil `https` de Docker Compose.
-- **Versión Delphi:** no tiene grabadora, pero reproduce los ficheros MP3 de
-  `public/audio/` y las grabaciones aprobadas en la versión Node, si las dos comparten
-  la base de datos.
+- **Versión Delphi:** también tiene la grabadora, con las mismas rutas y límites. Si
+  las dos versiones comparten la base de datos, comparten también las grabaciones.
 
 ## Editor de cursos
 
 `/editor.html` permite a los moderadores crear cursos (guía en [EDITOR.md](EDITOR.md)).
 Los cursos y sus imágenes se guardan en las tablas `courses` y `course_images`, así que
 las copias de seguridad los incluyen. Los cursos publicados se ven en `/kurso/<dirección>`
-y en `/kursoj`, también en la versión Delphi. El editor, como la grabadora, solo
-funciona con la versión Node.
+y en `/kursoj`. El editor y los cursos funcionan en las dos versiones, Node y Delphi.
 
 ## Versión Node y versión Delphi a la vez
 

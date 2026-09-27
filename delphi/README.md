@@ -88,8 +88,10 @@ delphi/
 | POST | `/forum/topic` · `/forum/reply?id=` · `/forum/like?id=` · `/forum/comment-like` · `/forum/mod?action=pin\|lock\|delete&id=` · `/forum/comment-delete` | Acciones del foro |
 | GET/POST | `/add` | Añadir enlace manualmente |
 | POST | `/live-search` · `/import` | Descubrimiento con Gemini e importación |
-| GET | `/kursoj` · `/kurso/<dirección>` | Cursos creados con el editor de la versión Node (`Serchi.Courses.pas`) |
-| GET | `/api/course-images/<id>` · `/api/audio` · `/api/recordings/<id>/audio` | Imágenes de las lecciones, lista de audios y grabaciones aprobadas |
+| GET | `/kursoj` · `/kurso/<dirección>` | Cursos publicados (`Serchi.Courses.pas`) |
+| GET | `/editor.html` · `/grabar.html` | Editor de cursos y grabadora (las mismas páginas que la versión Node) |
+| GET · POST · PUT · DELETE | `/api/courses…` · `/api/course-images/<id>` | API del editor (moderadores, `X-Moderator-Key`) e imágenes |
+| GET · POST · DELETE | `/api/recordings…` · `/api/audio` | API de la grabadora y lista de audios del minicurso y los cursos |
 | GET | `/kurso.css` · `/kurso.js` · `/audio/*` · `/og-image.png` | Ficheros de `public/` que usan esas páginas |
 
 ## Diferencias con la versión React
