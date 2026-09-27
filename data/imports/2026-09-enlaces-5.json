@@ -1,0 +1,661 @@
+[
+  {
+    "title": "Diario de Teruel: Liberánimo crea una app para aprender esperanto",
+    "url": "https://www.diariodeteruel.es/teruel/liberanimo-trabaja-en-la-creacion-de-una-app-para-aprender-esperanto",
+    "description": {
+      "eo": "Artikolo pri la apo kiun Liberanimo, la Esperanto-grupo de Teruelo, kreas por lerni Esperanton kun voĉa vortaro.",
+      "es": "Artículo sobre la app que Liberanimo, el grupo esperantista de Teruel, está creando para aprender esperanto, con diccionario de voz.",
+      "en": "Article about the app Liberanimo, Teruel's Esperanto group, is building to learn Esperanto, with a voice dictionary."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "liberanimo",
+      "teruel",
+      "apo",
+      "voludi",
+      "teruel"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Diario de Teruel: los esperantistas de Teruel presentan una app",
+    "url": "https://www.diariodeteruel.es/cultura/la-asociacion-de-esperantistas-de-teruel-presenta-una-app-para-aprender-este-idioma",
+    "description": {
+      "eo": "Liberanimo prezentas Voludi, apon por lerni Esperanton per ludoj kaj tuja tradukado per artefarita inteligenteco.",
+      "es": "Liberanimo presenta Voludi, una app para aprender esperanto con juegos y traducción instantánea mediante inteligencia artificial.",
+      "en": "Liberanimo presents Voludi, an app for learning Esperanto through games and instant AI translation."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "liberanimo",
+      "teruel",
+      "voludi",
+      "apo",
+      "teruel"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "A Complete Grammar of Esperanto (Ivy Kellerman Reed)",
+    "url": "https://www.gutenberg.org/ebooks/7787",
+    "description": {
+      "eo": "Klasika kaj ampleksa lernolibro de la Esperanta gramatiko, senpage ĉe Project Gutenberg.",
+      "es": "Manual clásico y completo de gramática del esperanto, gratis en Project Gutenberg.",
+      "en": "Classic, comprehensive Esperanto grammar textbook, free on Project Gutenberg."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "book",
+    "tags": [
+      "gramatiko",
+      "gutenberg",
+      "klasika",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Self-Taught with Phonetic Pronunciation (W. W. Mann)",
+    "url": "https://www.gutenberg.org/ebooks/23984",
+    "description": {
+      "eo": "Malnova memlernilo kun vortlistoj, konversaciaj frazoj kaj fonetika prononco.",
+      "es": "Antiguo manual autodidacta con listas de vocabulario, frases de conversación y pronunciación fonética.",
+      "en": "Old self-study guide with vocabulary lists, conversational phrases and phonetic pronunciation."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "book",
+    "tags": [
+      "memlernado",
+      "prononco",
+      "frazaro",
+      "gutenberg"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "English-Esperanto Dictionary (O'Connor & Hayes)",
+    "url": "https://www.gutenberg.org/ebooks/16967",
+    "description": {
+      "eo": "Klasika angla-Esperanta vortaro, senpage elŝutebla.",
+      "es": "Diccionario clásico inglés-esperanto, de descarga gratuita.",
+      "en": "Classic English-Esperanto dictionary, free to download."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "vortaro",
+      "angla",
+      "gutenberg",
+      "klasika"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "UEA facila",
+    "url": "https://uea.facila.org/",
+    "description": {
+      "eo": "Retejo de UEA kun novaĵoj kaj artikoloj en facila Esperanto, taŭga por lernantoj.",
+      "es": "Web de la UEA con noticias y artículos en esperanto fácil, ideal para estudiantes.",
+      "en": "UEA site with news and articles in easy Esperanto, ideal for learners."
+    },
+    "category": "news",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "facila",
+      "novaĵoj",
+      "komencantoj",
+      "uea",
+      "legado"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "UEA: elŝuteblaj libroj",
+    "url": "https://uea.org/teko/libroj",
+    "description": {
+      "eo": "Libroj eldonitaj de UEA, senpage elŝuteblaj.",
+      "es": "Libros publicados por la UEA que se pueden descargar gratis.",
+      "en": "Books published by UEA, free to download."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "libroj",
+      "elŝuto",
+      "uea",
+      "senpaga"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "UEA: Esperanto vialande",
+    "url": "https://uea.org/landoj",
+    "description": {
+      "eo": "Gvidilo de UEA por trovi la Esperanto-movadon en ĉiu lando.",
+      "es": "Guía de la UEA para encontrar el movimiento esperantista de cada país.",
+      "en": "UEA guide to finding the Esperanto movement in each country."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "landoj",
+      "asocioj",
+      "kontaktoj",
+      "uea"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "HEF: aprender esperanto para autodidactas",
+    "url": "https://www.esperanto.es/autodidactas/",
+    "description": {
+      "eo": "Gvidilo de Hispana Esperanto-Federacio kun metodoj kaj rimedoj por memlerni Esperanton.",
+      "es": "Guía de la Federación Española de Esperanto con métodos y recursos para aprender esperanto por tu cuenta.",
+      "en": "Spanish Esperanto Federation guide with methods and resources for self-study."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "memlernado",
+      "hispana",
+      "metodoj",
+      "español"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ILEI España",
+    "url": "https://ilei.esperanto.es/",
+    "description": {
+      "eo": "Hispana sekcio de la Internacia Ligo de Esperantistaj Instruistoj, kun kursoj.",
+      "es": "Sección española de la Liga Internacional de Profesores de Esperanto, con cursos.",
+      "en": "Spanish section of the International League of Esperanto Teachers, with courses."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "instruistoj",
+      "hispanio",
+      "ilei",
+      "kursoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Asociación Cántabra de Esperanto",
+    "url": "https://kantea.esperanto.es/",
+    "description": {
+      "eo": "Esperanto-asocio de Kantabrio (Hispanio).",
+      "es": "Asociación de esperanto de Cantabria.",
+      "en": "Esperanto association of Cantabria (Spain)."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "kantabrio",
+      "hispanio",
+      "asocio",
+      "cantabria"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Fuenlabrada Esperanto-Ligo",
+    "url": "https://fel.esperanto.es/",
+    "description": {
+      "eo": "Esperanto-asocio de Fuenlabrada (Madrido).",
+      "es": "Asociación de esperanto de Fuenlabrada (Madrid).",
+      "en": "Esperanto association of Fuenlabrada (Madrid)."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "fuenlabrada",
+      "madrido",
+      "hispanio",
+      "klubo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Akademia Vortaro",
+    "url": "https://www.akademio-de-esperanto.org/akademia_vortaro/",
+    "description": {
+      "eo": "La oficiala vortaro de la Akademio de Esperanto kun ĉiuj fundamentaj kaj oficialaj elementoj.",
+      "es": "El diccionario oficial de la Academia de Esperanto con todos los elementos fundamentales y oficiales.",
+      "en": "The Academy of Esperanto's official dictionary with all fundamental and official elements."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "akademio",
+      "oficiala",
+      "vortaro",
+      "radikoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ektajpu (Firefox)",
+    "url": "https://addons.mozilla.org/en-US/firefox/addon/ektajpu-esperanto-converter/",
+    "description": {
+      "eo": "Etendaĵo por Firefox kiu konvertas la x-sistemon (cx, gx…) al Esperantaj literoj.",
+      "es": "Extensión de Firefox que convierte el sistema x (cx, gx…) en letras del esperanto.",
+      "en": "Firefox extension that converts the x-system (cx, gx…) into Esperanto letters."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "firefox",
+      "x-sistemo",
+      "tajpi",
+      "etendaĵo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Eklegu! (Firefox)",
+    "url": "https://addons.mozilla.org/en-US/firefox/addon/eklegu/",
+    "description": {
+      "eo": "Etendaĵo por Firefox: elektu Esperantan vorton kaj vidu tuj ĝian anglan tradukon.",
+      "es": "Extensión de Firefox: selecciona una palabra en esperanto y ve al instante su traducción al inglés.",
+      "en": "Firefox extension: select an Esperanto word and instantly see its English translation."
+    },
+    "category": "tools",
+    "level": "A1",
+    "format": "tool",
+    "tags": [
+      "firefox",
+      "tradukado",
+      "vortaro",
+      "etendaĵo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanta Vortaro (literumilo por Firefox)",
+    "url": "https://addons.mozilla.org/en-US/firefox/addon/esperanta-vortaro/",
+    "description": {
+      "eo": "Esperanta literumila vortaro por Firefox.",
+      "es": "Diccionario ortográfico de esperanto para Firefox.",
+      "en": "Esperanto spell-check dictionary for Firefox."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "firefox",
+      "literumilo",
+      "vortaro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Spellchecker (LibreOffice)",
+    "url": "https://extensions.libreoffice.org/en/extensions/show/esperanto-spellchecker-thesaurus-and-hyphenizer",
+    "description": {
+      "eo": "Etendaĵo por LibreOffice kun literumilo, tezaŭro kaj vortdividado por Esperanto.",
+      "es": "Extensión de LibreOffice con corrector ortográfico, tesauro y separación silábica para esperanto.",
+      "en": "LibreOffice extension with Esperanto spell checker, thesaurus and hyphenation."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "libreoffice",
+      "literumilo",
+      "tezaŭro",
+      "dividado"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanta klavaro x/h-sistemo (Android)",
+    "url": "https://play.google.com/store/apps/details?id=net.pnhdroid.ime.eo",
+    "description": {
+      "eo": "Klavaro por Android kun x- kaj h-sistemo, kombinebla kun QWERTY, AZERTY, Dvorak kaj aliaj.",
+      "es": "Teclado para Android con sistema x y h, combinable con QWERTY, AZERTY, Dvorak y otros.",
+      "en": "Android keyboard with x- and h-system input, usable with QWERTY, AZERTY, Dvorak and more."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "klavaro",
+      "android",
+      "x-sistemo",
+      "h-sistemo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "AnySoftKeyboard: Esperanto Language Pack",
+    "url": "https://play.google.com/store/apps/details?id=com.anysoftkeyboard.languagepack.esperanto",
+    "description": {
+      "eo": "Esperanta lingvopako por la malfermitkoda klavaro AnySoftKeyboard.",
+      "es": "Paquete de idioma esperanto para el teclado de código abierto AnySoftKeyboard.",
+      "en": "Esperanto language pack for the open-source AnySoftKeyboard."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "klavaro",
+      "android",
+      "anysoftkeyboard"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "/r/Esperanto Discord",
+    "url": "https://discord.com/invite/WDVkkBR",
+    "description": {
+      "eo": "Discord-servilo de la komunumo /r/Esperanto, unu el la plej grandaj Esperanto-babilejoj.",
+      "es": "Servidor de Discord de la comunidad /r/Esperanto, uno de los mayores chats de esperanto.",
+      "en": "Discord server of the /r/Esperanto community, one of the largest Esperanto chats."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "forum",
+    "tags": [
+      "discord",
+      "reddit",
+      "babilejo",
+      "voĉa"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "BabiBEJO – la podkasto de BEJO",
+    "url": "https://anchor.fm/babibejo",
+    "description": {
+      "eo": "Podkasto de la Brazila Esperantista Junulara Organizo kun intervjuoj.",
+      "es": "Pódcast de la Organización Juvenil Esperantista Brasileña, con entrevistas.",
+      "en": "Podcast of the Brazilian Esperanto Youth Organisation, with interviews."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "podcast",
+    "tags": [
+      "podkasto",
+      "brazilo",
+      "junularo",
+      "bejo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Meetup: Esperanto-grupoj en Usono",
+    "url": "https://www.meetup.com/topics/esperanto/us/",
+    "description": {
+      "eo": "Listo de Esperanto-grupoj ĉe Meetup en Usono.",
+      "es": "Lista de grupos de esperanto en Meetup en EE. UU.",
+      "en": "List of Esperanto groups on Meetup in the US."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "meetup",
+      "usono",
+      "renkontiĝoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Komputeko-pliejo",
+    "url": "https://pliejo.komputeko.net/",
+    "description": {
+      "eo": "Aldonaj rimedoj de Komputeko: konsiloj pri tradukado kaj listo de esperantigataj programoj.",
+      "es": "Recursos adicionales de Komputeko: consejos de traducción y lista de programas en traducción al esperanto.",
+      "en": "Extra Komputeko resources: translation tips and a list of software being translated into Esperanto."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "komputeko",
+      "tradukado",
+      "programoj",
+      "terminoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Slovaka-Esperanta vortaro",
+    "url": "https://slovnik.esperanto.sk/",
+    "description": {
+      "eo": "Reta vortaro slovaka–Esperanta.",
+      "es": "Diccionario en línea eslovaco–esperanto.",
+      "en": "Online Slovak–Esperanto dictionary."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "slovaka",
+      "slovakio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Korea-Esperanta vortaro (Lee Jae-hyun)",
+    "url": "https://vortaro.esperanto.or.kr/ek/",
+    "description": {
+      "eo": "Reta vortaro Esperanto–korea de Lee Jae-hyun.",
+      "es": "Diccionario en línea esperanto–coreano de Lee Jae-hyun.",
+      "en": "Online Esperanto–Korean dictionary by Lee Jae-hyun."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "korea",
+      "koreio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ordbok Esperanto–Svenska",
+    "url": "https://ordboken.esperanto.se/",
+    "description": {
+      "eo": "Reta vortaro Esperanto–sveda.",
+      "es": "Diccionario en línea esperanto–sueco.",
+      "en": "Online Esperanto–Swedish dictionary."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "sveda",
+      "svedio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Sveda Esperanto-Biblioteko (cifereca)",
+    "url": "https://biblioteko.esperanto.se/",
+    "description": {
+      "eo": "Cifereca biblioteko kun malnovaj gazetoj kaj dokumentoj de la sveda Esperanto-movado, ekz. Lingvo Internacia.",
+      "es": "Biblioteca digital con revistas y documentos antiguos del movimiento esperantista sueco, como Lingvo Internacia.",
+      "en": "Digital library of old periodicals and documents from the Swedish Esperanto movement, such as Lingvo Internacia."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "biblioteko",
+      "svedio",
+      "gazetoj",
+      "arkivo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperantisto Slovaka",
+    "url": "https://esperantistoslovaka.esperanto.sk/",
+    "description": {
+      "eo": "Societa-kultura revuo de la slovakaj esperantistoj.",
+      "es": "Revista sociocultural de los esperantistas eslovacos.",
+      "en": "Social and cultural magazine of Slovak Esperanto speakers."
+    },
+    "category": "news",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "revuo",
+      "slovakio",
+      "kulturo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Svisa Espero",
+    "url": "https://esperanto.ch/svisa-espero/",
+    "description": {
+      "eo": "Revuo de la Svisa Esperanto-Societo.",
+      "es": "Revista de la Sociedad Suiza de Esperanto.",
+      "en": "Magazine of the Swiss Esperanto Society."
+    },
+    "category": "news",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "revuo",
+      "svislando",
+      "svisa"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ÖNB Labs: Esperanto-gazeteltondaĵoj",
+    "url": "https://labs.onb.ac.at/de/topic/esperanto-excerpts/",
+    "description": {
+      "eo": "Malfermitaj datumoj de la Aŭstria Nacia Biblioteko: ciferecigitaj gazeteltondaĵoj pri Esperanto.",
+      "es": "Datos abiertos de la Biblioteca Nacional de Austria: recortes de prensa digitalizados sobre el esperanto.",
+      "en": "Austrian National Library open data: digitised press clippings about Esperanto."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "arkivo",
+      "gazetoj",
+      "datumoj",
+      "vieno"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "/r/Esperanto (YouTube)",
+    "url": "https://www.youtube.com/channel/UCiFwx7POdd_UrI13Q6utqBg",
+    "description": {
+      "eo": "Jutuba kanalo de la komunumo /r/Esperanto.",
+      "es": "Canal de YouTube de la comunidad /r/Esperanto.",
+      "en": "YouTube channel of the /r/Esperanto community."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "video",
+    "tags": [
+      "youtube",
+      "reddit",
+      "komunumo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Landoj kaj lingvoj de la mondo (Bertilo Wennergren)",
+    "url": "https://bertilow.com/lanlin/enkonduk.html",
+    "description": {
+      "eo": "Rekomendoj pri la Esperantaj nomoj de landoj kaj lingvoj de la mondo.",
+      "es": "Recomendaciones sobre los nombres en esperanto de los países e idiomas del mundo.",
+      "en": "Recommendations for the Esperanto names of the world's countries and languages."
+    },
+    "category": "tools",
+    "level": "B2",
+    "format": "website",
+    "tags": [
+      "landonomoj",
+      "lingvonomoj",
+      "terminoj",
+      "bertilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Vortlisto (3 000 bazaj vortoj)",
+    "url": "https://github.com/paulmakepeace/vortlisto",
+    "description": {
+      "eo": "Listo de ĉirkaŭ 3 000 Esperantaj-anglaj vortoj kiuj formas bazan konversacian vortprovizon.",
+      "es": "Lista de unas 3 000 palabras esperanto-inglés que forman un vocabulario básico de conversación.",
+      "en": "List of about 3,000 Esperanto-English words forming a core conversational vocabulary."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "tool",
+    "tags": [
+      "vortlisto",
+      "vortprovizo",
+      "github",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "eoparser",
+    "url": "https://github.com/marty1885/eoparser",
+    "description": {
+      "eo": "Programa analizilo kiu malkomponas Esperantajn vortojn en radikojn kaj afiksojn.",
+      "es": "Analizador que descompone las palabras del esperanto en raíces y afijos.",
+      "en": "Parser that breaks Esperanto words down into roots and affixes."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "analizilo",
+      "programado",
+      "github",
+      "morfologio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "vortaro (inspirita de Tuja Vortaro)",
+    "url": "https://github.com/wildeyedskies/vortaro",
+    "description": {
+      "eo": "Simpla malfermitkoda vortaro Esperanto–angla inspirita de Tuja Vortaro.",
+      "es": "Sencillo diccionario de código abierto esperanto–inglés inspirado en Tuja Vortaro.",
+      "en": "Simple open-source Esperanto–English dictionary inspired by Tuja Vortaro."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "malfermitkoda",
+      "github",
+      "angla"
+    ],
+    "isFree": true
+  }
+]

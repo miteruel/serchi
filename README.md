@@ -89,7 +89,7 @@ PR y commits correspondientes.
    historia del esperanto en Teruel y Aragón. Cada URL se tomó de resultados reales de
    búsqueda web; ninguna se escribió de memoria.
 7. **Sección de radio con reproductor en línea** (`17a84c9`). Nueva categoría *Radio*
-   con 36 emisoras y programas (Muzaiko, Pola Retradio, Radio Vaticano, 3ZZZ, Radio
+   con 36 emisoras y programas (hoy 34, tras la revisión del paso 8: Muzaiko, Pola Retradio, Radio Vaticano, 3ZZZ, Radio
    Havano Kubo, China Radio International, Radio Brazila Esperanto…). Las que tienen
    una fuente verificada se pueden escuchar sin salir de la web:
    - reproductores oficiales de Spotify y Zeno.FM;
@@ -97,11 +97,23 @@ PR y commits correspondientes.
 
    La barra del reproductor sigue sonando mientras se navega.
 
+8. **Revisión de los enlaces originales.** Los 299 enlaces heredados de AI Studio se
+   comprobaron uno a uno con búsquedas restringidas a su dominio. Resultado:
+   - 113 correctos;
+   - 67 con la dirección corregida;
+   - 73 eliminados: no existían, estaban duplicados o sus dominios ya no son de
+     esperanto (spam, un gimnasio, una web de apuestas…);
+   - 46 pendientes de revisar.
+
+   El detalle está en [`data/audits/2026-09-revision-enlaces-originales.md`](data/audits/2026-09-revision-enlaces-originales.md).
+   De paso se añadieron 35 enlaces reales encontrados durante la revisión
+   (`data/imports/2026-09-enlaces-5.json`), entre ellos dos noticias sobre la app de
+   Liberanimo. La base de datos queda con 489 enlaces.
+
 ### Pendiente y limitaciones conocidas
 
-- **Enlaces originales sin revisar:** los 300 enlaces originales se generaron en AI
-  Studio y no se han revisado uno a uno; algunas direcciones pueden no existir. Los
-  añadidos a partir del paso 6 sí están verificados.
+- **Enlaces por revisar:** quedan 46 enlaces originales por comprobar; la lista está en
+  el informe de revisión.
 - **Versión Delphi sin compilar:** no se ha compilado todavía con RAD Studio (ver
   [`delphi/README.md`](delphi/README.md)).
 - **Foro sin base de datos:** el foro sigue sin guardarse en la base de datos (en el
