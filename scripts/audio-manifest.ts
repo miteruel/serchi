@@ -15,52 +15,17 @@
  *   mini-course, the file name its recording must have, and whether it exists.
  *
  * File names use the x-system and dashes: "Ĝis revido!" -> gxis-revido.mp3.
- * The same rule is in audioSlug() inside public/minikurso*.html.
+ * The rule is audioSlug() in server/audio.ts (and a copy in public/minikurso*.html).
  */
 import fs from 'fs';
 import path from 'path';
 import { ROOT_DIR } from '../server/db';
+import { AUDIO_DIR, committedRecordings, courseWords } from '../server/audio';
 
-const PAGES = ['public/minikurso.html', 'public/minikurso-en.html'];
-const AUDIO_DIR = path.join(ROOT_DIR, 'public', 'audio');
-
-export function audioSlug(text: string): string {
-  const x: Record<string, string> = { ĉ: 'cx', ĝ: 'gx', ĥ: 'hx', ĵ: 'jx', ŝ: 'sx', ŭ: 'ux' };
-  return text
-    .toLowerCase()
-    .replace(/[ĉĝĥĵŝŭ]/g, (c) => x[c])
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-/** Text of the elements that get a 🔊 button: .word b, .say b and .eo */
-function esperantoTexts(html: string): string[] {
-  const found: string[] = [];
-  const re = /<div class="word"><b>([^<]+)<\/b>|<p class="say [ab]"><b>([^<]+)<\/b>|<span class="eo">([^<]+)<\/span>/g;
-  for (const m of html.matchAll(re)) {
-    const text = (m[1] || m[2] || m[3]).trim();
-    // "kato → katoj" shows a rule, not something to say out loud
-    if (!text.includes('→')) found.push(text);
-  }
-  return found;
-}
-
-const texts = new Map<string, string>(); // slug -> first text seen
-for (const page of PAGES) {
-  for (const t of esperantoTexts(fs.readFileSync(path.join(ROOT_DIR, page), 'utf8'))) {
-    const slug = audioSlug(t);
-    if (slug && !texts.has(slug)) texts.set(slug, t);
-  }
-}
+const texts = courseWords(); // slug -> text
 
 fs.mkdirSync(AUDIO_DIR, { recursive: true });
-const recorded = fs
-  .readdirSync(AUDIO_DIR)
-  .filter((f) => f.endsWith('.mp3'))
-  .map((f) => f.slice(0, -4))
-  .sort();
+const recorded = committedRecordings();
 fs.writeFileSync(path.join(AUDIO_DIR, 'index.json'), JSON.stringify(recorded) + '\n');
 
 const rows = [...texts.entries()].map(
@@ -74,7 +39,16 @@ del minicurso «Esperanto en 7 tagoj» y el nombre que debe tener cada grabació
 Las que ya existen llevan ✅. En la página solo aparece el botón 🔊 junto a las que
 tienen grabación, así que se pueden ir añadiendo poco a poco.
 
-## Cómo grabar
+Hay dos formas de añadir grabaciones:
+
+- **Desde la web**, en la página *Graba el minicurso* (\`/grabar.html\` en la web,
+  solo con el servidor Node): cualquiera puede grabar con el micrófono y un moderador
+  aprueba cada grabación antes de que suene en el curso. Se guardan en la base de
+  datos, no en esta carpeta, y no aparecen en la tabla de abajo.
+- **Como ficheros MP3** en el repositorio, siguiendo los pasos siguientes. Si una
+  palabra tiene las dos, suena el fichero MP3.
+
+## Cómo grabar ficheros MP3
 
 1. Graba cada palabra o frase por separado, despacio y con claridad, como se la dirías
    a un niño. Deja medio segundo de silencio al principio y al final. Sirve el móvil
@@ -85,7 +59,7 @@ tienen grabación, así que se pueden ir añadiendo poco a poco.
 3. Ejecuta \`npm run audio:manifest\` para actualizar la lista de grabaciones de la
    página y esta tabla, y súbelo todo al repositorio.
 
-Grabaciones: **${recorded.filter((s) => texts.has(s)).length} de ${texts.size}**.
+Ficheros MP3: **${recorded.filter((s) => texts.has(s)).length} de ${texts.size}**.
 ${unused.length ? `\nFicheros de \`public/audio/\` que no corresponden a ninguna palabra del curso: ${unused.map((u) => `\`${u}.mp3\``).join(', ')}.\n` : ''}
 | | Esperanto | Fichero |
 |---|---|---|

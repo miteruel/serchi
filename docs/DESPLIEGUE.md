@@ -192,6 +192,19 @@ docker compose exec serchi npx tsx scripts/db-import.ts --db /data/serchi.db --r
 docker exec serchi npx tsx scripts/db-import.ts --db /data/serchi.db --resources /data/nuevos.json
 ```
 
+## Grabadora del minicurso
+
+La página `/grabar.html` permite grabar con el micrófono las palabras del minicurso.
+- **Dónde se guardan:** en la tabla `recordings` de la base de datos, así que las
+  copias de seguridad ya las incluyen. Cada grabación ocupa entre 20 y 60 KB.
+- **Moderación:** se publican solo cuando las aprueba un moderador, con la clave
+  `FORUM_MODERATOR_KEY` (defínela siempre en producción).
+- **HTTPS:** los navegadores solo dejan usar el micrófono en páginas con `https://`
+  (o en `localhost`), así que en un servidor hace falta HTTPS, por ejemplo con el
+  perfil `https` de Docker Compose.
+- **Versión Delphi:** no tiene grabadora, y en ella el minicurso solo reproduce los
+  ficheros MP3 de `public/audio/`.
+
 ## Versión Node y versión Delphi a la vez
 
 Las dos versiones pueden usar el mismo fichero SQLite. Node lo lee en cada petición,

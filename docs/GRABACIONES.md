@@ -5,7 +5,16 @@ del minicurso «Esperanto en 7 tagoj» y el nombre que debe tener cada grabació
 Las que ya existen llevan ✅. En la página solo aparece el botón 🔊 junto a las que
 tienen grabación, así que se pueden ir añadiendo poco a poco.
 
-## Cómo grabar
+Hay dos formas de añadir grabaciones:
+
+- **Desde la web**, en la página *Graba el minicurso* (`/grabar.html` en la web,
+  solo con el servidor Node): cualquiera puede grabar con el micrófono y un moderador
+  aprueba cada grabación antes de que suene en el curso. Se guardan en la base de
+  datos, no en esta carpeta, y no aparecen en la tabla de abajo.
+- **Como ficheros MP3** en el repositorio, siguiendo los pasos siguientes. Si una
+  palabra tiene las dos, suena el fichero MP3.
+
+## Cómo grabar ficheros MP3
 
 1. Graba cada palabra o frase por separado, despacio y con claridad, como se la dirías
    a un niño. Deja medio segundo de silencio al principio y al final. Sirve el móvil
@@ -16,7 +25,7 @@ tienen grabación, así que se pueden ir añadiendo poco a poco.
 3. Ejecuta `npm run audio:manifest` para actualizar la lista de grabaciones de la
    página y esta tabla, y súbelo todo al repositorio.
 
-Grabaciones: **0 de 134**.
+Ficheros MP3: **0 de 134**.
 
 | | Esperanto | Fichero |
 |---|---|---|

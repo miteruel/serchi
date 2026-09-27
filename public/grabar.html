@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Graba el minicurso</title>
+<meta name="description" content="Graba las palabras en esperanto del minicurso «Esperanto en 7 tagoj» para que los niños puedan oírlas. Liberanimo Teruel.">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<style>
+  :root {
+    --bg: #f5f9f4; --surface: #ffffff; --ink: #1f2a33; --muted: #55646b; --line: #d9e5dc;
+    --green: #1e8c4e; --green-soft: #e3f3e8; --red: #c8372d; --violet: #7a4bb5;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111813; --surface: #1a231c; --ink: #e7efe9; --muted: #a5b4aa; --line: #2c3a30;
+      --green: #4cc27f; --green-soft: #1d3325; --red: #f0806e; --violet: #b08be0;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.55 "Nunito", "Segoe UI", system-ui, sans-serif;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  }
+  .wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 22px; }
+  h1, h2 { line-height: 1.15; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(28px, 6vw, 40px); }
+  h2 { font-size: 22px; }
+  p { margin: 0; }
+  a { color: var(--green); font-weight: 700; }
+  .top { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+  .top a { text-decoration: none; }
+  .muted { color: var(--muted); }
+  .card { background: var(--surface); border: 2px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 12px; }
+  label.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; }
+  label.check input { width: 20px; height: 20px; margin-top: 3px; flex-shrink: 0; accent-color: var(--green); }
+  input[type="text"], input[type="password"] {
+    font: inherit; padding: 8px 12px; border-radius: 10px; border: 2px solid var(--line);
+    background: var(--bg); color: var(--ink); width: min(340px, 100%);
+  }
+  button {
+    font: 800 16px "Nunito", system-ui, sans-serif; cursor: pointer; border-radius: 999px;
+    padding: 9px 18px; border: 2px solid var(--green); background: transparent; color: var(--green);
+  }
+  button.primary { background: var(--green); color: var(--surface); }
+  button.rec { border-color: var(--red); color: var(--red); }
+  button.rec.on { background: var(--red); color: var(--surface); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button:focus-visible, input:focus-visible { outline: 3px solid #3a86c8; outline-offset: 2px; }
+  .words { display: flex; flex-wrap: wrap; gap: 8px; }
+  .words button { border-width: 2px; border-color: var(--line); color: var(--ink); font-weight: 700; padding: 6px 14px; }
+  .words button.done { border-color: var(--green); color: var(--green); }
+  .words button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: var(--surface); }
+  .current { font: 800 clamp(30px, 8vw, 46px)/1.1 "Nunito", system-ui, sans-serif; color: var(--green); }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .timer { font-variant-numeric: tabular-nums; font-weight: 800; }
+  audio { width: min(340px, 100%); }
+  .msg { font-weight: 700; }
+  .msg.ok { color: var(--green); }
+  .msg.err { color: var(--red); }
+  .pending { display: grid; gap: 10px; }
+  .item { border-top: 1px solid var(--line); padding-top: 10px; display: grid; gap: 8px; }
+  [hidden] { display: none !important; }
+</style>
+<div class="wrap">
+  <nav class="top" aria-label="Navegación">
+    <a href="/minikurso.html">← Minicurso</a>
+    <a href="/">Serĉilo</a>
+  </nav>
+
+  <header>
+    <h1>Graba el minicurso</h1>
+    <p class="muted" style="margin-top:8px">Ayúdanos a que los niños oigan cómo suena el esperanto. Elige una palabra del minicurso <i>Esperanto en 7 tagoj</i>, grábala con el micrófono y envíala. Un moderador la escucha antes de publicarla.</p>
+  </header>
+
+  <p id="unavailable" class="card msg err" hidden>La grabadora no está disponible en este servidor.</p>
+
+  <main id="app" class="wrap" style="gap:22px">
+    <section class="card" aria-labelledby="h-consent">
+      <h2 id="h-consent">Antes de grabar</h2>
+      <label class="check"><input type="checkbox" id="consent"> Soy mayor de edad y acepto que mi voz se publique en el minicurso de Liberanimo Teruel.</label>
+      <label>Tu nombre o apodo (opcional, solo lo ven los moderadores)<br><input type="text" id="name" maxlength="60" autocomplete="nickname"></label>
+      <p class="muted">Consejos: habla despacio y claro, como se lo dirías a un niño, en un sitio sin ruido. Cada grabación dura como mucho 10 segundos.</p>
+    </section>
+
+    <section class="card" aria-labelledby="h-words">
+      <div class="row" style="justify-content:space-between">
+        <h2 id="h-words">Elige una palabra</h2>
+        <label class="check" style="font-weight:600"><input type="checkbox" id="only-missing" checked> Solo las que faltan</label>
+      </div>
+      <p class="muted" id="count"></p>
+      <div class="words" id="words"></div>
+    </section>
+
+    <section class="card" id="recorder" aria-labelledby="h-rec" hidden>
+      <h2 id="h-rec">Graba</h2>
+      <p class="current" id="current" lang="eo"></p>
+      <div class="row">
+        <button type="button" class="rec" id="rec">⏺ Grabar</button>
+        <span class="timer" id="timer" aria-live="polite"></span>
+      </div>
+      <div class="row" id="preview" hidden>
+        <audio id="player" controls></audio>
+        <button type="button" class="primary" id="send">Enviar</button>
+      </div>
+      <p class="msg" id="msg" role="status"></p>
+    </section>
+
+    <section class="card" aria-labelledby="h-mod">
+      <h2 id="h-mod">Moderación</h2>
+      <p class="muted">Para quien revisa las grabaciones antes de publicarlas.</p>
+      <div class="row">
+        <button type="button" id="mod-open">Ver grabaciones pendientes</button>
+      </div>
+      <div class="pending" id="pending"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  var MAX_SECONDS = 10;
+  var KEY_STORE = 'sercilo_moderator_key'; // same key as the forum in the React app
+  var $ = function (id) { return document.getElementById(id); };
+  var words = [], selected = null, recorder = null, chunks = [], blob = null, stopTimer = null;
+  var moderatorKeyRequired = false;
+
+  function visitorId() {
+    try {
+      var id = localStorage.getItem('sercilo_visitor_id');
+      if (!id) { id = crypto.randomUUID(); localStorage.setItem('sercilo_visitor_id', id); }
+      return id;
+    } catch (e) { return 'anonymous-visitor'; }
+  }
+  function modKey() { try { return sessionStorage.getItem(KEY_STORE) || ''; } catch (e) { return ''; } }
+  function setMsg(text, kind) { var m = $('msg'); m.textContent = text; m.className = 'msg ' + (kind || ''); }
+
+  // ---- Words ----
+  function renderWords() {
+    var onlyMissing = $('only-missing').checked;
+    var list = $('words');
+    list.innerHTML = '';
+    var missing = words.filter(function (w) { return !w.recorded; }).length;
+    $('count').textContent = 'Tienen grabación ' + (words.length - missing) + ' de ' + words.length + '.';
+    words.forEach(function (w) {
+      if (onlyMissing && w.recorded) return;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.lang = 'eo';
+      b.textContent = w.text;
+      b.className = w.recorded ? 'done' : '';
+      b.setAttribute('aria-pressed', selected && selected.slug === w.slug ? 'true' : 'false');
+      b.addEventListener('click', function () { select(w); });
+      list.appendChild(b);
+    });
+  }
+
+  function select(w) {
+    selected = w;
+    blob = null;
+    $('current').textContent = w.text;
+    $('recorder').hidden = false;
+    $('preview').hidden = true;
+    setMsg('');
+    renderWords();
+    $('recorder').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ---- Recording ----
+  function pickMime() {
+    var types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+    for (var i = 0; i < types.length; i++) if (window.MediaRecorder && MediaRecorder.isTypeSupported(types[i])) return types[i];
+    return '';
+  }
+
+  function stop() { if (recorder && recorder.state === 'recording') recorder.stop(); }
+
+  $('rec').addEventListener('click', function () {
+    if (recorder && recorder.state === 'recording') { stop(); return; }
+    if (!$('consent').checked) { setMsg('Marca antes la casilla de consentimiento.', 'err'); $('consent').focus(); return; }
+    if (!navigator.mediaDevices || !window.MediaRecorder) {
+      setMsg('Este navegador no permite grabar aquí. Prueba con otro navegador; la web tiene que abrirse con https://.', 'err');
+      return;
+    }
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+      var mime = pickMime();
+      recorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+      chunks = [];
+      recorder.ondataavailable = function (e) { if (e.data.size) chunks.push(e.data); };
+      recorder.onstop = function () {
+        stream.getTracks().forEach(function (t) { t.stop(); });
+        clearInterval(stopTimer);
+        $('rec').classList.remove('on');
+        $('rec').textContent = '⏺ Grabar otra vez';
+        $('timer').textContent = '';
+        blob = new Blob(chunks, { type: recorder.mimeType || mime || 'audio/webm' });
+        $('player').src = URL.createObjectURL(blob);
+        $('preview').hidden = false;
+        setMsg('Escúchala. Si te gusta, envíala; si no, grábala otra vez.');
+      };
+      recorder.start();
+      $('rec').classList.add('on');
+      $('rec').textContent = '⏹ Parar';
+      $('preview').hidden = true;
+      setMsg('');
+      var left = MAX_SECONDS;
+      $('timer').textContent = left + ' s';
+      stopTimer = setInterval(function () {
+        left--;
+        $('timer').textContent = left + ' s';
+        if (left <= 0) stop();
+      }, 1000);
+    }).catch(function () {
+      setMsg('No se pudo usar el micrófono. Revisa el permiso del navegador.', 'err');
+    });
+  });
+
+  $('send').addEventListener('click', function () {
+    if (!blob || !selected) return;
+    if (!$('consent').checked) { setMsg('Marca antes la casilla de consentimiento.', 'err'); return; }
+    $('send').disabled = true;
+    var url = '/api/recordings?consent=1&slug=' + encodeURIComponent(selected.slug) +
+      '&name=' + encodeURIComponent($('name').value.trim());
+    fetch(url, { method: 'POST', headers: { 'Content-Type': blob.type || 'audio/webm', 'X-Visitor-Id': visitorId() }, body: blob })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, data: d }; }); })
+      .then(function (res) {
+        if (res.ok) {
+          setMsg('¡Dankon! Tu grabación de «' + selected.text + '» está enviada. Un moderador la revisará.', 'ok');
+          $('preview').hidden = true;
+          blob = null;
+        } else if (res.status === 429) {
+          setMsg('Has llegado al máximo de grabaciones por hoy. ¡Gracias! Vuelve mañana.', 'err');
+        } else if (res.status === 413) {
+          setMsg('La grabación es demasiado larga.', 'err');
+        } else {
+          setMsg('No se pudo enviar la grabación. Inténtalo de nuevo.', 'err');
+        }
+      })
+      .catch(function () { setMsg('No se pudo enviar la grabación. Revisa la conexión.', 'err'); })
+      .then(function () { $('send').disabled = false; });
+  });
+
+  // ---- Moderation ----
+  function modFetch(url, options) {
+    options = options || {};
+    options.headers = options.headers || {};
+    options.headers['X-Moderator-Key'] = modKey();
+    return fetch(url, options);
+  }
+
+  function loadPending() {
+    var box = $('pending');
+    modFetch('/api/recordings/pending').then(function (r) {
+      if (r.status === 403) {
+        try { sessionStorage.removeItem(KEY_STORE); } catch (e) {}
+        box.innerHTML = '<p class="msg err">La clave de moderador no es correcta.</p>';
+        return;
+      }
+      return r.json().then(function (list) {
+        box.innerHTML = '';
+        if (!list.length) { box.innerHTML = '<p class="muted">No hay grabaciones pendientes.</p>'; return; }
+        list.forEach(function (rec) {
+          var item = document.createElement('div');
+          item.className = 'item';
+          var title = document.createElement('p');
+          title.innerHTML = '<b lang="eo"></b> <span class="muted"></span>';
+          title.firstChild.textContent = rec.text;
+          title.lastChild.textContent = '· ' + (rec.name || 'sin nombre') + ' · ' + new Date(rec.createdAt).toLocaleString('es-ES');
+          var audio = document.createElement('audio');
+          audio.controls = true;
+          modFetch('/api/recordings/' + encodeURIComponent(rec.id) + '/audio')
+            .then(function (r) { return r.blob(); })
+            .then(function (b) { audio.src = URL.createObjectURL(b); });
+          var row = document.createElement('div');
+          row.className = 'row';
+          var ok = document.createElement('button');
+          ok.type = 'button'; ok.className = 'primary'; ok.textContent = 'Aprobar';
+          var del = document.createElement('button');
+          del.type = 'button'; del.className = 'rec'; del.textContent = 'Borrar';
+          ok.addEventListener('click', function () {
+            modFetch('/api/recordings/' + encodeURIComponent(rec.id) + '/approve', { method: 'POST' })
+              .then(function () { item.remove(); init(); });
+          });
+          del.addEventListener('click', function () {
+            if (!confirm('¿Borrar esta grabación?')) return;
+            modFetch('/api/recordings/' + encodeURIComponent(rec.id), { method: 'DELETE' })
+              .then(function () { item.remove(); });
+          });
+          row.appendChild(audio); row.appendChild(ok); row.appendChild(del);
+          item.appendChild(title); item.appendChild(row);
+          box.appendChild(item);
+        });
+      });
+    }).catch(function () { box.innerHTML = '<p class="msg err">No se pudieron cargar las grabaciones.</p>'; });
+  }
+
+  $('mod-open').addEventListener('click', function () {
+    if (moderatorKeyRequired && !modKey()) {
+      var key = prompt('Escribe la clave de moderador:');
+      if (!key) return;
+      try { sessionStorage.setItem(KEY_STORE, key); } catch (e) {}
+    }
+    loadPending();
+  });
+
+  $('only-missing').addEventListener('change', renderWords);
+
+  function init() {
+    return fetch('/api/recordings/words').then(function (r) {
+      if (!r.ok) throw new Error('unavailable');
+      return r.json();
+    }).then(function (data) {
+      words = data.words;
+      moderatorKeyRequired = data.moderatorKeyRequired;
+      MAX_SECONDS = data.maxSeconds || MAX_SECONDS;
+      renderWords();
+    }).catch(function () {
+      $('app').hidden = true;
+      $('unavailable').hidden = false;
+    });
+  }
+  init();
+})();
+</script>
+</body>
+</html>

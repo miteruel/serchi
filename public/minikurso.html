@@ -822,6 +822,7 @@
       <li>Sigue aprendiendo con <a href="https://es.duolingo.com/course/eo/es/Aprender-esperanto" target="_blank" rel="noopener noreferrer">Duolingo en español</a> o en <a href="https://lernu.net" target="_blank" rel="noopener noreferrer">lernu.net</a>.</li>
       <li>Lee cuentos: <a href="https://onlinebooks.library.upenn.edu/webbin/gutbook/lookup?num=48900" target="_blank" rel="noopener noreferrer">Tiel do: Rakontoj por malgrandaj infanoj</a>.</li>
       <li>Busca más recursos para niños en <a href="/">Serĉilo</a>, en la sección <i>Rincón infantil</i>.</li>
+      <li id="grabar-link" hidden>¿Hablas esperanto? <a href="/grabar.html">Ayúdanos a grabar las palabras del curso</a> para que los niños puedan oírlas.</li>
     </ul>
   </section>
 
@@ -946,8 +947,10 @@
 })();
 </script>
 <script>
-/* 🔊 buttons for the words that have a recording in /audio (see docs/GRABACIONES.md).
-   audioSlug() must match the one in scripts/audio-manifest.ts. */
+/* 🔊 buttons for the words that have a recording (see docs/GRABACIONES.md).
+   /api/audio (Node server) lists the committed MP3 files and the recordings
+   approved in the "Grabar" page; without it (Delphi), /audio/index.json lists
+   the MP3 files. audioSlug() must match the one in server/audio.ts. */
 (function () {
   function audioSlug(text) {
     var x = { 'ĉ': 'cx', 'ĝ': 'gx', 'ĥ': 'hx', 'ĵ': 'jx', 'ŝ': 'sx', 'ŭ': 'ux' };
@@ -957,15 +960,26 @@
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
   var label = document.documentElement.lang === 'en' ? 'Listen: ' : 'Escuchar: ';
-  fetch('/audio/index.json').then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
-    if (!Array.isArray(list) || list.length === 0) return;
-    var have = {};
-    list.forEach(function (s) { have[s] = true; });
+  function staticList() {
+    return fetch('/audio/index.json').then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+      var map = {};
+      if (Array.isArray(list)) list.forEach(function (s) { map[s] = '/audio/' + s + '.mp3'; });
+      return map;
+    });
+  }
+  fetch('/api/audio').then(function (r) {
+    if (!r.ok) return staticList();
+    var link = document.getElementById('grabar-link'); // the recorder only works with the Node server
+    if (link) link.hidden = false;
+    return r.json();
+  }, staticList).then(function (have) {
+    if (!have || Object.keys(have).length === 0) return;
     var player = new Audio();
     document.querySelectorAll('.word b, .say b, .eo').forEach(function (el) {
       var text = el.textContent.trim();
       var slug = audioSlug(text);
       if (text.indexOf('→') !== -1 || !have[slug]) return;
+      var src = have[slug];
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'listen';
@@ -973,7 +987,7 @@
       b.setAttribute('aria-label', label + text);
       b.addEventListener('click', function () {
         player.pause();
-        player.src = '/audio/' + slug + '.mp3';
+        player.src = src;
         player.play().catch(function () {});
       });
       el.insertAdjacentElement('afterend', b);

@@ -154,3 +154,21 @@ CREATE TABLE IF NOT EXISTS forum_comment_likes (
   visitor_id TEXT NOT NULL,
   PRIMARY KEY (comment_id, visitor_id)
 );
+
+-- Recordings of the mini-course words sent by visitors (the "Grabar" page).
+-- They wait as 'pending' until a moderator approves them; approved ones play
+-- in the mini-course. The audio itself is stored here (a few seconds, 20-60 KB).
+CREATE TABLE IF NOT EXISTS recordings (
+  id          TEXT PRIMARY KEY,
+  slug        TEXT NOT NULL,           -- word, as named in docs/GRABACIONES.md (e.g. gxis-revido)
+  text        TEXT NOT NULL,           -- the word or sentence as written in the course
+  mime        TEXT NOT NULL CHECK (mime IN ('audio/webm','audio/ogg','audio/mp4')),
+  audio       BLOB NOT NULL,
+  visitor_id  TEXT NOT NULL,           -- random id of the browser that sent it
+  name        TEXT,                    -- optional name or nickname of the speaker
+  status      TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','approved')),
+  created_at  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  reviewed_at TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_recordings_status ON recordings(status, slug);
+CREATE INDEX IF NOT EXISTS idx_recordings_visitor ON recordings(visitor_id, created_at);

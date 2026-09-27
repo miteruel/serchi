@@ -50,6 +50,10 @@ shared by every visitor.
 | POST | `/api/forum/topics/:id/like` · `/api/forum/comments/:id/like` | like / unlike |
 | POST | `/api/forum/topics/:id/pin` · `/api/forum/topics/:id/lock` | moderators: pin, lock |
 | DELETE | `/api/forum/topics/:id` · `/api/forum/comments/:id` | moderators: delete |
+| GET | `/api/audio` | recordings the mini-course plays (`{ word: url }`) |
+| GET · POST | `/api/recordings/words` · `/api/recordings?slug=&consent=1` | words to record · send a recording (raw audio body) |
+| GET | `/api/recordings/:id/audio` | an approved recording (pending ones: moderators only) |
+| GET · POST · DELETE | `/api/recordings/pending` · `/api/recordings/:id/approve` · `/api/recordings/:id` | moderators: review recordings |
 
 Visitors post as one of the forum's demo users (learner, teacher or moderator). Set
 `FORUM_MODERATOR_KEY` in `.env.local` so that the moderator role asks for that key;
@@ -319,6 +323,20 @@ PR y commits correspondientes.
     en [`docs/GRABACIONES.md`](docs/GRABACIONES.md). Tras añadir grabaciones hay que
     ejecutar `npm run audio:manifest`; el CI avisa si se olvida. Las grabaciones sirven
     para las dos versiones del curso y también para la versión Delphi.
+
+30. **Grabadora del minicurso.** La página [`/grabar.html`](public/grabar.html) permite
+    grabar con el micrófono las palabras y frases del minicurso.
+    - **Uso:** quien graba marca una casilla de consentimiento (pensada para adultos),
+      elige una palabra, graba hasta 10 segundos, la escucha y la envía.
+    - **Moderación:** las grabaciones quedan pendientes hasta que un moderador, con la
+      clave del foro, las escucha y las aprueba o las borra. Al aprobarlas, el botón 🔊
+      aparece en el minicurso (en español y en inglés) sin subir nada al repositorio.
+    - **Almacenamiento:** el audio se guarda en la base de datos (tabla `recordings`) en
+      el formato del navegador (WebM, Ogg o MP4). El servidor comprueba que de verdad es
+      audio.
+    - **Límites:** 20 grabaciones al día por navegador y 500 pendientes como máximo.
+    - **Enlace:** el minicurso enlaza a la grabadora solo cuando el servidor la ofrece
+      (versión Node).
 
 ### Pendiente y limitaciones conocidas
 
