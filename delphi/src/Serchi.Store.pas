@@ -152,7 +152,8 @@ type
       const AVisitor, AName: string): string;
     function PendingRecordingsJson: string;
     { Speakers to thank on the course pages, as GET /api/recordings/credits:
-      [{name, slugs}], only those who asked for it, most words first }
+      an array of objects with name and slugs, only those who asked for it,
+      most words first }
     procedure AddRecordingCredit(const AId, AName: string);
     function RecordingCreditsJson: string;
     function RecordingAudio(const AId: string; AIncludePending: Boolean; out AMime: string;
