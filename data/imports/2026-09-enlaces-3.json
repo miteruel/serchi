@@ -1,0 +1,965 @@
+[
+  {
+    "title": "Esperanto 101 (Anki)",
+    "url": "https://ankiweb.net/shared/info/1586327721",
+    "description": {
+      "eo": "Senpaga Anki-kartaro kun bazaj radikoj, sono, ekzemplaj frazoj kaj vortoj el la sama radiko.",
+      "es": "Mazo gratuito de Anki con raíces básicas, sonido, frases de ejemplo y palabras de la misma raíz.",
+      "en": "Free Anki deck with basic roots, audio, example sentences and related words."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "tool",
+    "tags": [
+      "anki",
+      "kartoj",
+      "vortprovizo",
+      "sono",
+      "flashcards"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Anki: Esperanto cards for English speakers",
+    "url": "https://anki-decks.com/anki-decks/english/esperanto-cards-for-english-speaker/",
+    "description": {
+      "eo": "Anki-kartaro kun ĉirkaŭ 2 500 kartoj de Esperanto por anglalingvanoj.",
+      "es": "Mazo de Anki con unas 2 500 tarjetas de esperanto para angloparlantes.",
+      "en": "Anki deck with about 2,500 Esperanto flashcards for English speakers."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "tool",
+    "tags": [
+      "anki",
+      "kartoj",
+      "vortprovizo",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto.Cards",
+    "url": "https://esperanto.cards/",
+    "description": {
+      "eo": "Kompleta kaj senpaga kartaro de Esperanto por anglalingvanoj, importebla en Anki.",
+      "es": "Mazo completo y gratuito de tarjetas de esperanto para angloparlantes, importable en Anki.",
+      "en": "Complete free Esperanto flashcard deck for English speakers that can be loaded into Anki."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "tool",
+    "tags": [
+      "kartoj",
+      "anki",
+      "vortprovizo",
+      "senpaga"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "101 Languages: Esperanto flashcards",
+    "url": "https://www.101languages.net/esperanto/esperanto-flashcards/",
+    "description": {
+      "eo": "Lernokartoj kun la plej oftaj Esperantaj vortoj, rete kaj presigeblaj.",
+      "es": "Tarjetas con las palabras más frecuentes del esperanto, en línea e imprimibles.",
+      "en": "Flashcards with the most common Esperanto words, online and printable."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "tool",
+    "tags": [
+      "kartoj",
+      "vortprovizo",
+      "presi"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto 101 Anki deck with sound extras",
+    "url": "https://payhip.com/b/12sE",
+    "description": {
+      "eo": "Plibonigita versio de la kartaro Esperanto 101 kun aldonaj sondosieroj (pagenda).",
+      "es": "Versión ampliada del mazo Esperanto 101 con audios adicionales (de pago).",
+      "en": "Extended version of the Esperanto 101 deck with extra audio (paid)."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "tool",
+    "tags": [
+      "anki",
+      "sono",
+      "kartoj",
+      "pagenda"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "Easy Esperanto Reader (Myrtis Smith)",
+    "url": "https://www.goodreads.com/book/show/35002278-easy-esperanto-reader",
+    "description": {
+      "eo": "Kvin mallongaj rakontoj en facila Esperanto kun tradukoj al la angla kaj hispana.",
+      "es": "Cinco relatos cortos en esperanto fácil con traducción al inglés y al español.",
+      "en": "Five short stories in easy Esperanto with English and Spanish translations."
+    },
+    "category": "literature",
+    "level": "A2",
+    "format": "book",
+    "tags": [
+      "legolibro",
+      "rakontoj",
+      "facila",
+      "tradukoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Learn Esperanto with Mystery Stories",
+    "url": "https://www.amazon.com/Learn-Esperanto-Mystery-Stories-Reader/dp/B0CYCPW5HN",
+    "description": {
+      "eo": "Legolibro kun krimrakontoj verkitaj por lernantoj de nivelo A2.",
+      "es": "Libro de lectura con relatos de misterio escritos para estudiantes de nivel A2.",
+      "en": "Reader of mystery stories written for A2-level learners."
+    },
+    "category": "literature",
+    "level": "A2",
+    "format": "book",
+    "tags": [
+      "legolibro",
+      "krimrakontoj",
+      "a2",
+      "facila"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "Facila Vento: facila legado",
+    "url": "https://blogs.transparent.com/esperanto/facila-vento-easy-reading-in-esperanto/",
+    "description": {
+      "eo": "Prezento de Facila Vento, projekto de facilaj tekstoj verkitaj nur per la 700 plej oftaj radikoj.",
+      "es": "Presentación de Facila Vento, proyecto de textos fáciles escritos solo con las 700 raíces más frecuentes.",
+      "en": "Introduction to Facila Vento, a project of easy texts written using only the 700 most frequent roots."
+    },
+    "category": "literature",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "facila legado",
+      "700 radikoj",
+      "rakontoj",
+      "komencanto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "MyLanguages: Esperanto Reading",
+    "url": "https://www.mylanguages.org/esperanto_reading.php",
+    "description": {
+      "eo": "Mallongaj legaĵoj en Esperanto kun tradukoj por ekzerci la komprenon.",
+      "es": "Lecturas cortas en esperanto con traducción para practicar la comprensión.",
+      "en": "Short Esperanto readings with translations for comprehension practice."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "legado",
+      "tekstoj",
+      "tradukoj",
+      "komencanto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto: Learning and Using the International Language (Richardson)",
+    "url": "https://www.goodreads.com/book/show/1005837.Esperanto",
+    "description": {
+      "eo": "Populara lernolibro de David Richardson kun gramatiko kaj gradigitaj legaĵoj (historio, leteroj, rakontoj, poezio).",
+      "es": "Popular manual de David Richardson con gramática y lecturas graduadas (historia, cartas, relatos, poesía).",
+      "en": "David Richardson's popular textbook with grammar and a graded reader (history, letters, stories, poetry)."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "book",
+    "tags": [
+      "lernolibro",
+      "richardson",
+      "legaĵoj",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "EAB: ekzamenoj de Esperanto",
+    "url": "https://legacy.esperanto.org.uk/education/exams.html",
+    "description": {
+      "eo": "Informoj de Esperanto-Asocio de Britio pri ekzamenoj kaj atestiloj de Esperanto.",
+      "es": "Información de la Asociación Británica de Esperanto sobre exámenes y certificados de esperanto.",
+      "en": "Esperanto Association of Britain information on Esperanto exams and certificates."
+    },
+    "category": "courses",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "ekzamenoj",
+      "ker",
+      "atestilo",
+      "britio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kurso de Esperanto (Free Software Directory)",
+    "url": "https://directory.fsf.org/wiki/Kurso_de_Esperanto",
+    "description": {
+      "eo": "Libera kursprogramo kun 12 lecionoj, aŭdaĵoj kaj voĉregistrado, por Windows, macOS, Linux kaj Android.",
+      "es": "Programa de curso libre con 12 lecciones, audios y grabación de voz, para Windows, macOS, Linux y Android.",
+      "en": "Free-software course with 12 lessons, audio and voice recording, for Windows, macOS, Linux and Android."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "app",
+    "tags": [
+      "kurso",
+      "programo",
+      "libera programaro",
+      "linux",
+      "windows"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Internacia Junulara Kongreso (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/International_Youth_Congress_of_Esperanto",
+    "description": {
+      "eo": "Pri la Internacia Junulara Kongreso, la plej granda ĉiujara renkontiĝo de junaj esperantistoj, organizata de TEJO.",
+      "es": "Sobre el Congreso Internacional de la Juventud, el mayor encuentro anual de jóvenes esperantistas, organizado por TEJO.",
+      "en": "About the International Youth Congress, the largest annual gathering of young Esperanto speakers, run by TEJO."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ijk",
+      "junularo",
+      "tejo",
+      "kongreso"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-Asocio de Skotlando: lernu kun aliuloj",
+    "url": "https://skotlando.org/learnwithothers",
+    "description": {
+      "eo": "Informoj de la Skota Esperanto-Asocio pri kursoj kaj grupoj por lerni kune kun aliaj.",
+      "es": "Información de la Asociación Escocesa de Esperanto sobre cursos y grupos para aprender con otros.",
+      "en": "Scottish Esperanto Association information on courses and groups for learning with others."
+    },
+    "category": "community",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "skotlando",
+      "kursoj",
+      "klubo",
+      "lerni"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "NASK: Nord-Amerika Somera Kursaro",
+    "url": "https://nask.esperanto-usa.org/",
+    "description": {
+      "eo": "Ĉiujara intensa somera kursaro de Esperanto en Usono aŭ Kanado, fondita en 1970.",
+      "es": "Curso intensivo anual de verano de esperanto en EE. UU. o Canadá, fundado en 1970.",
+      "en": "Annual intensive Esperanto summer school in the US or Canada, founded in 1970."
+    },
+    "category": "courses",
+    "level": "B1",
+    "format": "course",
+    "tags": [
+      "somera kurso",
+      "usono",
+      "intensa",
+      "nask"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kursaro",
+    "url": "https://www.kursaro.net/en/other-courses.html",
+    "description": {
+      "eo": "Retaj kursoj de Esperanto kun instruistoj por diversaj niveloj.",
+      "es": "Cursos de esperanto en línea con profesores para distintos niveles.",
+      "en": "Online Esperanto courses with teachers for different levels."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "course",
+    "tags": [
+      "kursoj",
+      "retaj kursoj",
+      "instruistoj",
+      "niveloj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "AAIE: Amerika Asocio de Instruistoj de Esperanto",
+    "url": "https://www.aaie.us/",
+    "description": {
+      "eo": "Asocio de instruistoj de Esperanto en Usono, kun rimedoj por instruado.",
+      "es": "Asociación de profesores de esperanto de EE. UU., con recursos didácticos.",
+      "en": "Association of Esperanto teachers in the United States, with teaching resources."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "instruistoj",
+      "usono",
+      "edukado",
+      "asocio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-USA: Learn Esperanto",
+    "url": "https://esperanto-usa.org/en/learn-esperanto/",
+    "description": {
+      "eo": "Paĝo de Esperanto-USA kun la plej bonaj kursoj kaj rimedoj por eklerni Esperanton.",
+      "es": "Página de Esperanto-USA con los mejores cursos y recursos para empezar a aprender esperanto.",
+      "en": "Esperanto-USA page with the best courses and resources for starting to learn Esperanto."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "lerni",
+      "usono",
+      "kursoj",
+      "rimedoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "MachineTranslation.com: angla–Esperanto",
+    "url": "https://www.machinetranslation.com/translation/english-esperanto",
+    "description": {
+      "eo": "Maŝintradukilo kiu komparas 22 AI-modelojn kaj elektas la plej konsentitan tradukon al Esperanto.",
+      "es": "Traductor automático que compara 22 modelos de IA y elige la traducción al esperanto en la que más coinciden.",
+      "en": "Machine translator that compares 22 AI models and picks the Esperanto translation most of them agree on."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "tradukilo",
+      "maŝintradukado",
+      "ai"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "OpenL Translate: Esperanto",
+    "url": "https://openl.io/translate/esperanto",
+    "description": {
+      "eo": "Reta AI-tradukilo por tekstoj, bildoj kaj dokumentoj al kaj el Esperanto, kun senpaga ĉiutaga uzo.",
+      "es": "Traductor en línea con IA para textos, imágenes y documentos desde y hacia el esperanto, con uso gratuito diario.",
+      "en": "Online AI translator for text, images and documents to and from Esperanto, with free daily use."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "tradukilo",
+      "ai",
+      "dokumentoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Translate.com: English–Esperanto",
+    "url": "https://www.translate.com/english-esperanto",
+    "description": {
+      "eo": "Reta tradukilo inter la angla kaj Esperanto.",
+      "es": "Traductor en línea entre inglés y esperanto.",
+      "en": "Online translator between English and Esperanto."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "tradukilo",
+      "angla",
+      "reta"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ESPDIC (Esperanto-English Dictionary)",
+    "url": "http://www.denisowski.org/Esperanto/ESPDIC/espdic_readme.html",
+    "description": {
+      "eo": "Priskriba Esperanto-angla vortaro de Paul Denisowski kun pli ol 63 000 kapvortoj, libere elŝutebla (CC BY).",
+      "es": "Diccionario descriptivo esperanto-inglés de Paul Denisowski con más de 63 000 entradas, descargable libremente (CC BY).",
+      "en": "Paul Denisowski's descriptive Esperanto-English dictionary with 63,000+ entries, freely downloadable (CC BY)."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "angla",
+      "espdic",
+      "malferma"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ESPDIC: Esperanta-Angla Vortaro (Evertype)",
+    "url": "https://www.evertype.com/books/espdic.html",
+    "description": {
+      "eo": "Presita eldono de la vortaro ESPDIC ĉe la eldonejo Evertype.",
+      "es": "Edición impresa del diccionario ESPDIC de la editorial Evertype.",
+      "en": "Printed edition of the ESPDIC dictionary from publisher Evertype."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "vortaro",
+      "libro",
+      "espdic",
+      "evertype"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "bab.la: Esperanto-English dictionary",
+    "url": "https://en.bab.la/dictionary/esperanto-english/",
+    "description": {
+      "eo": "Reta vortaro Esperanto–angla, parte bazita sur ESPDIC.",
+      "es": "Diccionario en línea esperanto–inglés, basado en parte en ESPDIC.",
+      "en": "Online Esperanto–English dictionary, partly based on ESPDIC."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "angla",
+      "babla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "DictionaryQ: Esperanto–English",
+    "url": "https://dictionaryq.com/esperanto/",
+    "description": {
+      "eo": "Poŝtelefon-amika spegulo de la vortaro ESPDIC kun pli ol 63 000 kapvortoj.",
+      "es": "Espejo del diccionario ESPDIC adaptado al móvil, con más de 63 000 entradas.",
+      "en": "Mobile-friendly mirror of the ESPDIC dictionary with 63,000+ entries."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "espdic",
+      "poŝtelefono"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Telegram en Esperanto (tradukado)",
+    "url": "https://translations.telegram.org/eo/tdesktop/",
+    "description": {
+      "eo": "Komunuma tradukado de la interfaco de Telegram al Esperanto; ĉiu povas kontribui.",
+      "es": "Traducción comunitaria de la interfaz de Telegram al esperanto; cualquiera puede colaborar.",
+      "en": "Community translation of the Telegram interface into Esperanto; anyone can contribute."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "telegram",
+      "tradukado",
+      "lokaligo",
+      "volontuloj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Listo de Esperanto-organizoj (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/List_of_Esperanto_organizations",
+    "description": {
+      "eo": "Listo de naciaj kaj fakaj Esperanto-organizoj en la angla Vikipedio.",
+      "es": "Lista de organizaciones esperantistas nacionales y temáticas en la Wikipedia en inglés.",
+      "en": "List of national and specialist Esperanto organisations on English Wikipedia."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "organizoj",
+      "listo",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Plej oftaj vortoj en Esperanto el retbabilejoj",
+    "url": "https://vanege.medium.com/most-common-esperanto-words-plej-oftaj-vortoj-en-esperanto-b56422d13a7f",
+    "description": {
+      "eo": "Listo de la plej oftaj Esperantaj vortoj kalkulita el mesaĝoj en retbabilejoj.",
+      "es": "Lista de las palabras más frecuentes del esperanto calculada a partir de mensajes en chats.",
+      "en": "List of the most common Esperanto words, computed from chat-room messages."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "vortofteco",
+      "vortprovizo",
+      "listo",
+      "babilejoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "La blogo de Del Barrio",
+    "url": "http://www.delbarrio.eu/blog.htm",
+    "description": {
+      "eo": "Blogo en Esperanto pri lingvoj, komunikado kaj junularo.",
+      "es": "Blog en esperanto sobre idiomas, comunicación y juventud.",
+      "en": "Esperanto blog about languages, communication and youth."
+    },
+    "category": "news",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "blogo",
+      "lingvoj",
+      "junularo",
+      "komunikado"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Transparent Language: Esperanto Blog",
+    "url": "https://blogs.transparent.com/esperanto/",
+    "description": {
+      "eo": "Blogo kun lecionetoj, vortprovizo kaj kulturaj artikoloj pri Esperanto.",
+      "es": "Blog con minilecciones, vocabulario y artículos culturales sobre el esperanto.",
+      "en": "Blog with mini-lessons, vocabulary and cultural articles about Esperanto."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "blogo",
+      "lerni",
+      "kulturo",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto en la popola kulturo (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperanto_in_popular_culture",
+    "description": {
+      "eo": "Aperoj de Esperanto en filmoj, televido, muziko, libroj kaj videoludoj.",
+      "es": "Apariciones del esperanto en películas, televisión, música, libros y videojuegos.",
+      "en": "Appearances of Esperanto in films, TV, music, books and video games."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "kulturo",
+      "filmoj",
+      "ludoj",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Enciklopedioj en Esperanto (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Encyclopedias_in_Esperanto",
+    "description": {
+      "eo": "Superrigardo de la enciklopedioj verkitaj en Esperanto, de Enciklopedio de Esperanto ĝis Vikipedio.",
+      "es": "Panorama de las enciclopedias escritas en esperanto, desde la Enciklopedio de Esperanto hasta Vikipedio.",
+      "en": "Overview of encyclopedias written in Esperanto, from the Enciklopedio de Esperanto to Vikipedio."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "enciklopedioj",
+      "historio",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Fundamenta Krestomatio (Project Gutenberg)",
+    "url": "https://www.gutenberg.org/ebooks/8224",
+    "description": {
+      "eo": "La klasika legolibro de Zamenhof (1903) kun ekzercoj, fabeloj, rakontoj, sciencaj artikoloj kaj poemoj, inkluzive de La Espero.",
+      "es": "La antología clásica de Zamenhof (1903) con ejercicios, fábulas, cuentos, artículos científicos y poemas, incluido La Espero.",
+      "en": "Zamenhof's classic 1903 reader with exercises, fables, stories, scientific articles and poems, including La Espero."
+    },
+    "category": "literature",
+    "level": "B1",
+    "format": "book",
+    "tags": [
+      "zamenhof",
+      "krestomatio",
+      "fundamento",
+      "klasika",
+      "gutenberg"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Fundamenta Krestomatio (Internet Archive, korektita eldono)",
+    "url": "https://archive.org/details/Fundamenta_Krestomatio",
+    "description": {
+      "eo": "Korektita eldono de Fundamenta Krestomatio sen pli ol 70 preseraroj de la Gutenberg-versio, en EPUB, PDF kaj teksto.",
+      "es": "Edición corregida de la Fundamenta Krestomatio sin más de 70 erratas de la versión de Gutenberg, en EPUB, PDF y texto.",
+      "en": "Corrected edition of Fundamenta Krestomatio fixing 70+ typos from the Gutenberg version, in EPUB, PDF and text."
+    },
+    "category": "literature",
+    "level": "B1",
+    "format": "book",
+    "tags": [
+      "zamenhof",
+      "krestomatio",
+      "epub",
+      "pdf"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Project Gutenberg: Esperanto readers",
+    "url": "https://www.gutenberg.org/ebooks/subject/4679",
+    "description": {
+      "eo": "Senpagaj malnovaj legolibroj kaj lernolibroj de Esperanto ĉe Project Gutenberg.",
+      "es": "Libros de lectura y manuales antiguos de esperanto gratuitos en Project Gutenberg.",
+      "en": "Free classic Esperanto readers and textbooks on Project Gutenberg."
+    },
+    "category": "literature",
+    "level": "A2",
+    "format": "book",
+    "tags": [
+      "gutenberg",
+      "legolibroj",
+      "lernolibroj",
+      "senpaga"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The International Auxiliary Language Esperanto: Grammar & Commentary",
+    "url": "https://www.gutenberg.org/files/35815/35815-h/35815-h.htm",
+    "description": {
+      "eo": "Klasika kompleta gramatiko de Esperanto kun komentoj (George Cox), senpage legebla rete.",
+      "es": "Gramática clásica completa del esperanto con comentarios (George Cox), de lectura gratuita en línea.",
+      "en": "Classic complete Esperanto grammar with commentary (George Cox), free to read online."
+    },
+    "category": "courses",
+    "level": "B1",
+    "format": "book",
+    "tags": [
+      "gramatiko",
+      "klasika",
+      "gutenberg",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Project Gutenberg: Books in Esperanto",
+    "url": "https://www.gutenberg.org/ebooks/bookshelf/34",
+    "description": {
+      "eo": "La breto de Project Gutenberg kun ĉiuj senpagaj libroj en Esperanto, ekz. Alicio en Mirlando kaj Doktoro Jekyll.",
+      "es": "La estantería de Project Gutenberg con todos los libros gratuitos en esperanto, como Alicia en el país de las maravillas o Dr. Jekyll.",
+      "en": "Project Gutenberg's bookshelf of free Esperanto books, such as Alice in Wonderland and Dr Jekyll and Mr Hyde."
+    },
+    "category": "literature",
+    "level": "B1",
+    "format": "book",
+    "tags": [
+      "gutenberg",
+      "libroj",
+      "tradukoj",
+      "klasikaĵoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Internacia Televido (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Internacia_Televido",
+    "description": {
+      "eo": "Historio de Internacia Televido (2005–2006), la unua televidkanalo tute en Esperanto.",
+      "es": "Historia de Internacia Televido (2005–2006), el primer canal de televisión íntegramente en esperanto.",
+      "en": "History of Internacia Televido (2005–2006), the first television channel entirely in Esperanto."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "televido",
+      "historio",
+      "ĝangalo",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-TV (Facebook)",
+    "url": "https://www.facebook.com/EsperantoTV/",
+    "description": {
+      "eo": "Facebook-paĝo de Esperanto-TV, kun videaj programoj en Esperanto.",
+      "es": "Página de Facebook de Esperanto-TV, con programas de vídeo en esperanto.",
+      "en": "Esperanto-TV Facebook page with video programmes in Esperanto."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "video",
+    "tags": [
+      "televido",
+      "videoj",
+      "facebook",
+      "elsendoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "AEA: Esperanto-TV launched",
+    "url": "https://esperanto.org.au/esperanto-tv-launched/",
+    "description": {
+      "eo": "Novaĵo de Aŭstralia Esperanto-Asocio pri la lanĉo de Esperanto-TV.",
+      "es": "Noticia de la Asociación Australiana de Esperanto sobre el lanzamiento de Esperanto-TV.",
+      "en": "News from the Australian Esperanto Association about the launch of Esperanto-TV."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "televido",
+      "aŭstralio",
+      "novaĵo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Minecraft en Esperanto (Crowdin)",
+    "url": "https://crowdin.com/project/minecraft/eo",
+    "description": {
+      "eo": "Komunuma tradukado de Minecraft al Esperanto ĉe Crowdin; ĉiu povas helpi.",
+      "es": "Traducción comunitaria de Minecraft al esperanto en Crowdin; cualquiera puede ayudar.",
+      "en": "Community translation of Minecraft into Esperanto on Crowdin; anyone can help."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "minecraft",
+      "ludoj",
+      "tradukado",
+      "crowdin"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The Expression Amrilato",
+    "url": "https://en.wikipedia.org/wiki/The_Expression_Amrilato",
+    "description": {
+      "eo": "Japana vida romano en kiu la ludanto lernas Esperanton (nomata Juliamo) dum la rakonto.",
+      "es": "Novela visual japonesa en la que el jugador aprende esperanto (llamado juliamo) durante la historia.",
+      "en": "Japanese visual novel in which the player learns Esperanto (called Juliamo) through the story."
+    },
+    "category": "media",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "videoludo",
+      "vida romano",
+      "japanio",
+      "ludoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "KDE: Esperanto-tradukteamo",
+    "url": "https://l10n.kde.org/team-infos.php?teamcode=eo",
+    "description": {
+      "eo": "La oficiala Esperanto-teamo kiu tradukas la programojn de KDE.",
+      "es": "El equipo oficial de esperanto que traduce los programas de KDE.",
+      "en": "The official Esperanto team translating KDE software."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "kde",
+      "linux",
+      "tradukado",
+      "lokaligo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kiel tajpi en Esperanto: Linux (NZ)",
+    "url": "https://www.esperanto.org.nz/learn-and-use-esperanto/kiel-tajpi-en-esperanto/linux/",
+    "description": {
+      "eo": "Gvidilo pri tajpado de Esperantaj literoj en Linux.",
+      "es": "Guía para escribir las letras del esperanto en Linux.",
+      "en": "Guide to typing Esperanto letters on Linux."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "linux",
+      "klavaro",
+      "tajpi",
+      "gvidilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto and Multilingual Support on Linux",
+    "url": "https://linuxjunkies.org/guides/esperanto-language-support",
+    "description": {
+      "eo": "Gvidilo pri Esperanto en Linux: lokaĵaroj, klavararanĝoj kaj enigmetodoj en GNOME kaj KDE.",
+      "es": "Guía sobre el esperanto en Linux: locales, distribuciones de teclado y métodos de entrada en GNOME y KDE.",
+      "en": "Guide to Esperanto on Linux: locales, keyboard layouts and input methods in GNOME and KDE."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "linux",
+      "lokaĵaro",
+      "klavaro",
+      "gnome"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ESF: Esperanto Today",
+    "url": "https://www.esperantic.org/en/esperanto-today/",
+    "description": {
+      "eo": "Informoj de Esperantic Studies Foundation pri la nuna stato de Esperanto en la mondo.",
+      "es": "Información de la Esperantic Studies Foundation sobre la situación actual del esperanto en el mundo.",
+      "en": "Information from the Esperantic Studies Foundation on the current state of Esperanto worldwide."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "esf",
+      "esploro",
+      "hodiaŭ",
+      "informoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto en Ĉinio (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperanto_in_China",
+    "description": {
+      "eo": "Historio kaj nuna stato de Esperanto en Ĉinio.",
+      "es": "Historia y situación actual del esperanto en China.",
+      "en": "History and current state of Esperanto in China."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ĉinio",
+      "historio",
+      "azio",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto en Koreio (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperanto_in_Korea",
+    "description": {
+      "eo": "Historio de Esperanto en Koreio kaj de la Korea Esperanto-Asocio.",
+      "es": "Historia del esperanto en Corea y de la Asociación Coreana de Esperanto.",
+      "en": "History of Esperanto in Korea and of the Korean Esperanto Association."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "koreio",
+      "historio",
+      "azio",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto en Afriko",
+    "url": "https://www.esperanto-afriko.org/",
+    "description": {
+      "eo": "Oficiala retejo de la Afrika Komisiono de UEA pri la Esperanto-movado en Afriko.",
+      "es": "Web oficial de la Comisión Africana de la UEA sobre el movimiento esperantista en África.",
+      "en": "Official site of UEA's African Commission about the Esperanto movement in Africa."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "afriko",
+      "afrika komisiono",
+      "uea",
+      "kongresoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto en Afriko: afrikaj landoj",
+    "url": "https://www.esperanto-afriko.org/afrikaj-landoj/",
+    "description": {
+      "eo": "Kontaktoj de la Esperanto-asocioj kaj kluboj en afrikaj landoj.",
+      "es": "Contactos de las asociaciones y clubes de esperanto en los países africanos.",
+      "en": "Contacts for Esperanto associations and clubs in African countries."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "afriko",
+      "landoj",
+      "asocioj",
+      "kontaktoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Associations pour l'espéranto en Afrique",
+    "url": "http://hades-presse.com/langues/associations-Afrique.shtml",
+    "description": {
+      "eo": "Franclingva listo de Esperanto-asocioj en Afriko.",
+      "es": "Lista en francés de asociaciones de esperanto en África.",
+      "en": "French-language list of Esperanto associations in Africa."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "afriko",
+      "asocioj",
+      "franca",
+      "listo"
+    ],
+    "isFree": true
+  }
+]

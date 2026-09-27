@@ -58,6 +58,7 @@ type
     procedure HandleSearch;
     procedure HandleResource;
     procedure HandleLucky;
+    procedure HandlePlayer;
     procedure HandleToggleBookmark;
     procedure HandleBookmarks;
     procedure HandleBookmarksCount;
@@ -97,7 +98,7 @@ implementation
 
 uses
   System.IOUtils, System.JSON, System.DateUtils, System.NetEncoding, System.Math,
-  Serchi.I18n, Serchi.Text, Serchi.Gemini;
+  Serchi.I18n, Serchi.Text, Serchi.Gemini, Serchi.Radio;
 
 const
   PageSize = 20;
@@ -305,8 +306,8 @@ end;
 
 procedure TWebModuleMain.FillCategoryOptions(AList: TObjectList<TOptionVM>; const ASelected: string);
 const
-  Cats: array[0..7] of string = ('all', 'courses', 'news', 'projects', 'tools',
-    'literature', 'media', 'community');
+  Cats: array[0..8] of string = ('all', 'courses', 'news', 'projects', 'tools',
+    'literature', 'media', 'community', 'radio');
 var
   C: string;
 begin
@@ -384,16 +385,28 @@ procedure TWebModuleMain.HandleHome;
 var
   VM: TSearchVM;
   S: string;
+  Filters: TSearchFilters;
+  Found: TList<TResource>;
+  Res: TResource;
 begin
   FApp.Section := 'home';
   VM := TSearchVM.Create;
+  Found := TList<TResource>.Create;
   try
     FillLevelOptions(VM.LevelOptions, Param('level', 'all'));
     FillCategoryOptions(VM.CategoryOptions, 'all');
     for S in PopularSearches do
       VM.Popular.Add(TTextVM.Create(S));
+    // Radio section: stations that can be played online
+    Filters := TSearchFilters.Default;
+    Filters.Category := 'radio';
+    Store.Search(Filters, Found);
+    for Res in Found do
+      if Res.StreamType <> '' then
+        VM.Results.Add(ResourceVM(Res));
     Render('home.html', VM);
   finally
+    Found.Free;
     VM.Free;
   end;
 end;
@@ -506,6 +519,37 @@ begin
   VM := ResourceVM(Res);
   try
     Render('_detail.html', VM);
+  finally
+    VM.Free;
+  end;
+end;
+
+{ Online radio player, loaded into the #player bar (hx-preserve keeps it
+  playing while the visitor navigates with hx-boost). }
+procedure TWebModuleMain.HandlePlayer;
+var
+  Res: TResource;
+  VM: TResourceVM;
+  Episodes: TArray<TRadioEpisode>;
+  Ep: TRadioEpisode;
+begin
+  Res := Store.FindResource(Param('id'));
+  if (Res = nil) or (Res.StreamType = '') then
+  begin
+    SendHtml('', 404);
+    Exit;
+  end;
+  VM := ResourceVM(Res);
+  try
+    if Res.StreamType = 'rss' then
+      try
+        Episodes := TRadioFeed.LatestEpisodes(Res.StreamUrl);
+        for Ep in Episodes do
+          VM.Episodes.Add(TEpisodeVM.Create(Ep.Title, Ep.AudioUrl, Ep.Published));
+      except
+        VM.EpisodesError := True;
+      end;
+    Render('_player.html', VM);
   finally
     VM.Free;
   end;
@@ -1129,6 +1173,7 @@ begin
       else if Path = '/search' then HandleSearch
       else if Path = '/resource' then HandleResource
       else if Path = '/lucky' then HandleLucky
+      else if Path = '/player' then HandlePlayer
       else if (Path = '/bookmark') and IsPost then HandleToggleBookmark
       else if Path = '/bookmarks' then HandleBookmarks
       else if Path = '/bookmarks/count' then HandleBookmarksCount

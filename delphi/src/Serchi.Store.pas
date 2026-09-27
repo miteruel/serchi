@@ -268,6 +268,8 @@ begin
       Res.Author := Q.FieldByName('author').AsString;
       Res.Featured := Q.FieldByName('featured').AsInteger <> 0;
       Res.Year := Q.FieldByName('year').AsString;
+      Res.StreamType := Q.FieldByName('stream_type').AsString;
+      Res.StreamUrl := Q.FieldByName('stream_url').AsString;
       FResources.Add(Res);
       ById.Add(Res.Id, Res);
       Q.Next;

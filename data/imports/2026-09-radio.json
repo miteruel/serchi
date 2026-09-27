@@ -1,0 +1,941 @@
+[
+  {
+    "title": "Esperanto Retradio",
+    "url": "https://esperantoretradio.blogspot.com",
+    "displayUrl": "esperantoretradio.blogspot.com",
+    "description": {
+      "eo": "Ĉiutaga podkasto kun 3-minutaj artikoloj pri scienco, socio, historio kaj kulturo, legataj per klara voĉo kune kun la kompleta skribita teksto.",
+      "es": "Pódcast diario con artículos de 3 minutos sobre ciencia, sociedad e historia, leídos con voz pausada y acompañados del texto completo transcrito.",
+      "en": "Daily podcast featuring 3-minute articles on science, society, and history, spoken in clear, measured audio accompanied by the complete written transcript."
+    },
+    "category": "radio",
+    "level": "A2",
+    "tags": [
+      "podkasto",
+      "retradio",
+      "aŭskultado",
+      "prononco",
+      "ĉiutaga",
+      "teksto kun sono",
+      "podcast",
+      "audio"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "author": "Anton Oberndorfer & Kunlaborantoj",
+    "featured": true,
+    "year": "Ĉiutaga",
+    "languages": [
+      "eo"
+    ],
+    "features": {
+      "eo": [
+        "Ĉiutage nova epizodo",
+        "Klara kaj facila prononco",
+        "Teksto sinkronigita kun la sonregistraĵo",
+        "Ideala por mezgradaj lernantoj"
+      ],
+      "es": [
+        "Nuevo episodio cada día",
+        "Pronunciación clara y comprensible",
+        "Texto completo para leer mientras escuchas",
+        "Ideal para estudiantes de nivel A2/B1"
+      ],
+      "en": [
+        "Fresh episode every single day",
+        "Clear, articulated spoken delivery",
+        "Full text transcript to read along",
+        "Perfect for A2/B1 learners"
+      ]
+    },
+    "stream": {
+      "type": "spotify",
+      "url": "https://open.spotify.com/show/4zC3O0qcOGc4XARGqM6W50"
+    }
+  },
+  {
+    "title": "Muzaiko - Tutdiurna Reta Radio",
+    "url": "https://muzaiko.info",
+    "displayUrl": "muzaiko.info",
+    "description": {
+      "eo": "24-hora seninterrompa reta radiostacio tute en Esperanto, ludanta modernan esperantlingvan muzikon, novaĵojn, intervjuojn kaj podkastojn.",
+      "es": "Emisora de radio online continua 24 horas al día íntegramente en esperanto, emitiendo música moderna, noticias, entrevistas y programas culturales.",
+      "en": "24/7 non-stop internet radio station broadcasting entirely in Esperanto, featuring modern Esperanto songs, international news, and cultural interviews."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "radio",
+      "muzaiko",
+      "muziko",
+      "24 horoj",
+      "kantoj",
+      "rekta elsendo",
+      "radio station",
+      "musica"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "author": "Muzaiko Asocio",
+    "languages": [
+      "eo"
+    ],
+    "features": {
+      "eo": [
+        "24 horoj da muziko kaj novaĵoj senhalte",
+        "Rikega kolekto de esperanto-kantoj",
+        "Elsendoj pri mondaj eventoj",
+        "Aŭskultebla en ajna retumilo aŭ sonludilo"
+      ],
+      "es": [
+        "Música y noticias ininterrumpidas las 24 horas",
+        "Inmenso repertorio musical en esperanto",
+        "Programas sobre actualidad internacional",
+        "Compatible con navegadores y apps de radio"
+      ],
+      "en": [
+        "24-hour continuous stream of music & news",
+        "Vast catalog of contemporary Esperanto tracks",
+        "Interviews and international news clips",
+        "Plays in any browser or media player"
+      ]
+    },
+    "stream": {
+      "type": "zeno",
+      "url": "https://zeno.fm/radio/muzaiko/"
+    }
+  },
+  {
+    "title": "Pola Retradio en Esperanto",
+    "url": "https://pola-retradio.org",
+    "displayUrl": "pola-retradio.org",
+    "description": {
+      "eo": "Regulaj duonhoraj elsendoj dufoje semajne kun kulturaj novaĵoj, intervjuoj, felietonoj pri historio kaj scienco, kaj lingva klareco.",
+      "es": "Emisiones periódicas de 30 minutos dos veces por semana con actualidad cultural, entrevistas, crónicas de historia y ciencia con dicción impecable.",
+      "en": "Regular half-hour broadcasts twice a week featuring cultural news, interviews, essays on history and science, spoken with pristine pronunciation."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "pola retradio",
+      "varsovio",
+      "radielsendoj",
+      "kulturo",
+      "klara voĉo",
+      "podcast",
+      "radio"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "author": "Barbara Pietrzak & Redakcio",
+    "languages": [
+      "eo"
+    ],
+    "features": {
+      "eo": [
+        "Du novaj elsendoj ĉiun semajnon",
+        "Klara kaj modela prononco de Barbara Pietrzak",
+        "Plenaj tekstoj akompanantaj la sonon",
+        "Podkasto elŝutebla por lernantoj"
+      ],
+      "es": [
+        "Dos nuevas emisiones cada semana",
+        "Pronunciación modelo y clara, idónea para estudiantes",
+        "Transcripciones textuales que acompañan al audio",
+        "Disponible como podcast descargable"
+      ],
+      "en": [
+        "Two new broadcasts every single week",
+        "Exemplary diction ideal for listening practice",
+        "Full transcripts accompanying each episode",
+        "Downloadable podcast feed"
+      ]
+    },
+    "stream": {
+      "type": "spotify",
+      "url": "https://open.spotify.com/show/206x6I8n80mBZhYOHOwyuu"
+    }
+  },
+  {
+    "title": "Radio Havano Kubo en Esperanto",
+    "url": "https://www.radiohc.cu/eo",
+    "displayUrl": "radiohc.cu/eo",
+    "description": {
+      "eo": "Oficialaj elsendoj el Kubo en Esperanto ekde 1962, proponantaj semajnajn novaĵojn pri Latin-Ameriko, kuban muzikon kaj intervjuojn.",
+      "es": "Históricas emisiones desde Cuba en esperanto desde 1962, ofreciendo actualidad latinoamericana, música caribeña y entrevistas.",
+      "en": "Official broadcasts from Cuba in Esperanto since 1962, broadcasting Latin American news, Caribbean music, and interviews."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "kubo",
+      "havano",
+      "radio",
+      "latinameriko",
+      "kurtondo",
+      "radio havana",
+      "cuba"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "author": "Radio Havano Kubo",
+    "year": "1962-2024",
+    "languages": [
+      "eo",
+      "es"
+    ],
+    "features": {
+      "eo": [
+        "Elsendoj elsendataj per kurtondo kaj interreto",
+        "Latina kaj kariba muziko en Esperanto",
+        "Perspektivo el Latin-Ameriko",
+        "Tekstaj artikoloj kaj sondosieroj"
+      ],
+      "es": [
+        "Emisiones tanto en onda corta como por internet",
+        "Música cubana y latinoamericana en esperanto",
+        "Perspectiva informativa desde el Caribe",
+        "Artículos escritos y audios descargables"
+      ],
+      "en": [
+        "Broadcasts over shortwave and online streaming",
+        "Cuban and Latin rhythms in Esperanto",
+        "Latin American regional perspective",
+        "Text articles and audio downloads"
+      ]
+    }
+  },
+  {
+    "title": "Radio Vatikana en Esperanto",
+    "url": "https://www.vaticannews.va/eo.html",
+    "displayUrl": "vaticannews.va/eo",
+    "description": {
+      "eo": "La oficiala esperantlingva sekcio de Vatikana Novaĵservo kun semajnaj elsendoj pri paco, internaciaj humanitaraj aferoj kaj kulturo.",
+      "es": "La sección oficial en esperanto de Vatican News con emisiones semanales sobre paz, derechos humanos, acción humanitaria y cultura.",
+      "en": "The official Esperanto section of Vatican News broadcasting weekly programs on peace, humanitarian efforts, and international affairs."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "vatikano",
+      "radio",
+      "humanitara",
+      "paco",
+      "novaĵoj",
+      "noticias",
+      "podcast"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "author": "Vatican Media",
+    "year": "1977-2024",
+    "languages": [
+      "eo"
+    ],
+    "features": {
+      "eo": [
+        "Semajnaj sondosieroj kaj podkastoj",
+        "Artikoloj pri humanitaraj iniciatoj kaj paco",
+        "Tre klara lingvaĵo kaj dikcio",
+        "Atingebla tutmonde senkoste"
+      ],
+      "es": [
+        "Programas semanales en audio y podcast",
+        "Cobertura de iniciativas humanitarias y de paz",
+        "Pronunciación neutra y clara",
+        "Acceso libre en todo el mundo"
+      ],
+      "en": [
+        "Weekly audio programs and podcast feed",
+        "Coverage of humanitarian initiatives and peace efforts",
+        "Very clear and accessible diction",
+        "Free global access"
+      ]
+    },
+    "stream": {
+      "type": "spotify",
+      "url": "https://open.spotify.com/show/0k8lh0MBbYQyYGFhbMukYI"
+    }
+  },
+  {
+    "title": "Radio Aktiva (Urugvajo)",
+    "url": "https://esperanto.uy/radioaktiva/",
+    "displayUrl": "esperanto.uy/radioaktiva",
+    "description": {
+      "eo": "Sudamerika reta radioprogramo el Montevideo kun muziko, novaĵoj pri la movado en Sudameriko kaj intervjuoj kun latinamerikaj esperantistoj.",
+      "es": "Espacio radiofónico online desde Montevideo con música, novedades del movimiento en América del Sur y entrevistas a hablantes latinoamericanos.",
+      "en": "South American online radio broadcast from Montevideo featuring music, regional news from across Latin America, and interviews."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "urugvajo",
+      "montevideo",
+      "radio",
+      "latinameriko",
+      "muziko",
+      "uruguay",
+      "podcast"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "author": "Urugvaja Esperanto-Societo",
+    "languages": [
+      "eo",
+      "es"
+    ],
+    "features": {
+      "eo": [
+        "Elsendoj el Sudameriko kun latina muziko",
+        "Intervjuoj kun lokaj aktivuloj",
+        "Dulingvaj klarigoj por hispanlingvanoj",
+        "Atingebla enrete senpage"
+      ],
+      "es": [
+        "Emisiones con música y perspectiva del Río de la Plata",
+        "Entrevistas a figuras del esperanto latinoamericano",
+        "Apuntes bilingües de apoyo",
+        "Escucha gratuita en la web"
+      ],
+      "en": [
+        "Broadcasts with South American music and cultural focus",
+        "Spotlights on Latin American Esperanto activists",
+        "Bilingual notes for Spanish speakers",
+        "Streamed free online"
+      ]
+    }
+  },
+  {
+    "title": "Verda Stacio (Radio-Dramoj kaj Aŭd-Teatro)",
+    "url": "https://verda-stacio.com",
+    "displayUrl": "verda-stacio.com",
+    "description": {
+      "eo": "La historia heredaĵo de la praga kaj brna radio-elsendejoj, kiuj ekde la 1930-aj jaroj elsendis profesiajn teatraĵojn kaj operojn en Esperanto.",
+      "es": "El archivo histórico de las emisoras checas de Praga y Brno, que emitieron radioteatro y óperas en esperanto con actores profesionales.",
+      "en": "The historical heritage of Prague and Brno radio stations, broadcasting professional audio-dramas and operas in Esperanto since the 1930s."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "verda stacio",
+      "radioteatro",
+      "teatro",
+      "prago",
+      "dramoj",
+      "teatro",
+      "radio"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "author": "Historia Ĉeĥa Radio & Moderna Arkivo",
+    "languages": [
+      "eo"
+    ],
+    "features": {
+      "eo": [
+        "Profesiaj aktoroj el naciaj teatroj ludantaj en Esperanto",
+        "Dramoj de Karel Čapek, Shakespeare kaj Molière",
+        "Registraĵoj ciferecigitaj por senpaga aŭskultado",
+        "Unika kultura trezoro"
+      ],
+      "es": [
+        "Actores consagrados interpretando obras maestras en esperanto",
+        "Dramas de Karel Čapek, Shakespeare y Molière",
+        "Grabaciones digitalizadas para escucha gratuita",
+        "Tesoro cultural del teatro sonoro"
+      ],
+      "en": [
+        "Distinguished stage actors performing in fluent Esperanto",
+        "Plays by Karel Čapek, Shakespeare, and Molière",
+        "Digitized recordings available for free streaming",
+        "Unique gem of audio-drama history"
+      ]
+    }
+  },
+  {
+    "title": "Radio Esperanto (Kaliningrado)",
+    "url": "https://podtail.com/en/podcast/radio-esperanto/",
+    "displayUrl": "podtail.com/en/podcast/radio-esperanto/",
+    "description": {
+      "eo": "Sonprogramo en Esperanto el Kaliningrado (Rusio), kun lokaj novaĵoj kaj temoj, gvidata de Aleksander kaj Halina.",
+      "es": "Programa sonoro en esperanto desde Kaliningrado (Rusia), con noticias y temas locales, presentado por Aleksander y Halina.",
+      "en": "Esperanto audio programme from Kaliningrad (Russia) with local news and topics, hosted by Aleksander and Halina."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "radio",
+      "kaliningrado",
+      "rusio",
+      "podkasto",
+      "elsendoj"
+    ],
+    "isFree": true,
+    "format": "podcast"
+  },
+  {
+    "title": "3ZZZ Radio: programo en Esperanto",
+    "url": "https://www.3zzz.com.au/shows/esperanto/",
+    "displayUrl": "3zzz.com.au/shows/esperanto/",
+    "description": {
+      "eo": "Semajna horlonga radioprogramo en Esperanto de Melburno (92.3 FM) kun novaĵoj, intervjuoj kaj kantoj, aŭskultebla ankaŭ rete.",
+      "es": "Programa de radio semanal de una hora en esperanto desde Melbourne (92.3 FM) con noticias, entrevistas y canciones, también en línea.",
+      "en": "Weekly one-hour Esperanto radio programme from Melbourne (92.3 FM) with news, interviews and songs, also streamed online."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "radio",
+      "aŭstralio",
+      "melburno",
+      "elsendo",
+      "3zzz"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "stream": {
+      "type": "rss",
+      "url": "http://melburno.org.au/3ZZZradio/feed/"
+    }
+  },
+  {
+    "title": "Arkivo de 3ZZZ Radio en Esperanto",
+    "url": "https://podcasts.apple.com/us/podcast/arkivo-de-3zzz-radio-en-esperanto/id409799836",
+    "displayUrl": "podcasts.apple.com/us/podcast/arkivo-de-3zzz-radio-en-esperanto/id409799836",
+    "description": {
+      "eo": "La tuta arkivo de la Esperanto-elsendoj de 3ZZZ kiel podkasto en Apple Podcasts.",
+      "es": "Todo el archivo de las emisiones en esperanto de 3ZZZ como pódcast en Apple Podcasts.",
+      "en": "The full archive of 3ZZZ's Esperanto broadcasts as a podcast on Apple Podcasts."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "3zzz",
+      "arkivo",
+      "podkasto",
+      "apple",
+      "aŭstralio"
+    ],
+    "isFree": true,
+    "format": "podcast"
+  },
+  {
+    "title": "Esperanto-radio Muzaiko (Android)",
+    "url": "https://play.google.com/store/apps/details?id=dk.nordfalk.esperanto.radio",
+    "displayUrl": "play.google.com/store/apps/details",
+    "description": {
+      "eo": "Apo por aŭskulti Muzaikon kaj aliajn Esperanto-elsendojn (Pola Retradio, 3ZZZ, Radio Havano Kubo…).",
+      "es": "App para escuchar Muzaiko y otras emisiones en esperanto (Pola Retradio, 3ZZZ, Radio Habana Cuba…).",
+      "en": "App for listening to Muzaiko and other Esperanto broadcasts (Pola Retradio, 3ZZZ, Radio Havana Cuba…)."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "radio",
+      "apo",
+      "muzaiko",
+      "pola retradio"
+    ],
+    "isFree": true,
+    "format": "app"
+  },
+  {
+    "title": "Muzaiko ĉe Zeno.FM",
+    "url": "https://zeno.fm/radio/muzaiko/",
+    "displayUrl": "zeno.fm/radio/muzaiko/",
+    "description": {
+      "eo": "Aŭskultu rekte Muzaikon, la tuttagan Esperanto-radion kun muziko, intervjuoj kaj novaĵoj.",
+      "es": "Escucha en directo Muzaiko, la radio en esperanto 24 horas con música, entrevistas y noticias.",
+      "en": "Listen live to Muzaiko, the round-the-clock Esperanto radio with music, interviews and news."
+    },
+    "category": "radio",
+    "level": "B1",
+    "tags": [
+      "radio",
+      "muzaiko",
+      "rekta elsendo",
+      "muziko"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "stream": {
+      "type": "zeno",
+      "url": "https://zeno.fm/radio/muzaiko/"
+    }
+  },
+  {
+    "title": "La Kompanio: podkastoj en Esperanto",
+    "url": "https://open.spotify.com/show/4W0jHDRIc9351I60ptQjmJ",
+    "displayUrl": "open.spotify.com/show/4W0jHDRIc9351I60ptQjmJ",
+    "description": {
+      "eo": "Kolekto de podkastoj en Esperanto: La Famuloj, La Malfamuloj, Mondaj Sekretoj Ne Tiom Sekretaj, Ludi ol Labori kaj aliaj.",
+      "es": "Colección de pódcasts en esperanto: La Famuloj, La Malfamuloj, Mondaj Sekretoj Ne Tiom Sekretaj, Ludi ol Labori y otros.",
+      "en": "A collection of Esperanto podcasts: La Famuloj, La Malfamuloj, Mondaj Sekretoj Ne Tiom Sekretaj, Ludi ol Labori and more."
+    },
+    "category": "media",
+    "level": "B1",
+    "tags": [
+      "podkasto",
+      "spotify",
+      "famuloj",
+      "sekretoj",
+      "podcast"
+    ],
+    "isFree": true,
+    "format": "podcast",
+    "stream": {
+      "type": "spotify",
+      "url": "https://open.spotify.com/show/4W0jHDRIc9351I60ptQjmJ"
+    }
+  },
+  {
+    "title": "China Radio International: Hodiaŭa Ĉinio",
+    "url": "https://esperanto.cri.cn/radio/china.htm",
+    "category": "radio",
+    "level": "B1",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "radio",
+      "ĉinio",
+      "cri",
+      "elsendoj"
+    ],
+    "description": {
+      "eo": "Interreta radio de la Esperanto-redakcio de China Radio International, kiu elsendas en Esperanto ekde 1964.",
+      "es": "Radio en internet de la redacción en esperanto de China Radio International, que emite en esperanto desde 1964.",
+      "en": "Internet radio from the Esperanto desk of China Radio International, broadcasting in Esperanto since 1964."
+    }
+  },
+  {
+    "title": "Radio Verda (arkivo)",
+    "url": "https://podimo.com/en/shows/radio-verda",
+    "category": "radio",
+    "level": "B1",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "radio verda",
+      "kanado",
+      "arkivo",
+      "revuo"
+    ],
+    "description": {
+      "eo": "Arkivo de Radio Verda (1998–), pionira sonrevuo el Vankuvero kun ĉirkaŭ 200 programoj pri novaĵoj, kuriozaĵoj kaj legaĵoj.",
+      "es": "Archivo de Radio Verda (1998–), revista sonora pionera de Vancouver con unos 200 programas de noticias, curiosidades y lecturas.",
+      "en": "Archive of Radio Verda (1998–), a pioneering audio magazine from Vancouver with about 200 programmes of news, curiosities and readings."
+    }
+  },
+  {
+    "title": "Radio Verda en LingQ",
+    "url": "https://www.lingq.com/en/learn-esperanto-online/courses/142496/",
+    "category": "radio",
+    "level": "A2",
+    "format": "course",
+    "isFree": true,
+    "tags": [
+      "radio verda",
+      "lingq",
+      "transskribo",
+      "lerni"
+    ],
+    "description": {
+      "eo": "Programoj de Radio Verda kun transskribo en LingQ, por lerni aŭskultante kaj legante samtempe.",
+      "es": "Programas de Radio Verda con transcripción en LingQ, para aprender escuchando y leyendo a la vez.",
+      "en": "Radio Verda programmes with transcripts on LingQ, for learning by listening and reading at the same time."
+    }
+  },
+  {
+    "title": "Radios en esperanto (Enric Baltasar)",
+    "url": "https://enricbaltasar.com/radios-esperanto/",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "radio",
+      "listo",
+      "hispana",
+      "stacioj"
+    ],
+    "description": {
+      "eo": "Hispanlingva listo de radiostacioj kaj elsendoj en Esperanto, kun priskriboj.",
+      "es": "Lista en español de emisoras y programas de radio en esperanto, con descripciones.",
+      "en": "Spanish-language list of Esperanto radio stations and programmes, with descriptions."
+    }
+  },
+  {
+    "title": "Zeno.FM: radiostacioj en Esperanto",
+    "url": "https://zeno.fm/radio/languages/esperanto/",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "zeno",
+      "stacioj",
+      "rekta",
+      "katalogo"
+    ],
+    "description": {
+      "eo": "Katalogo de retaj radiostacioj en Esperanto aŭskulteblaj rekte ĉe Zeno.FM.",
+      "es": "Catálogo de emisoras en esperanto que se pueden escuchar en directo en Zeno.FM.",
+      "en": "Directory of Esperanto internet radio stations to listen to live on Zeno.FM."
+    }
+  },
+  {
+    "title": "Listen Esperanto on Internet (Esperanto Panorama)",
+    "url": "https://www.esperanto-panorama.net/angla/radio.htm",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "radio",
+      "ligiloj",
+      "panoramo"
+    ],
+    "description": {
+      "eo": "Ligiloj al radiostacioj kaj elsendoj en Esperanto aŭskulteblaj per interreto.",
+      "es": "Enlaces a emisoras y programas de radio en esperanto que se pueden escuchar por internet.",
+      "en": "Links to Esperanto radio stations and programmes you can listen to online."
+    }
+  },
+  {
+    "title": "AllRadio.net: Esperanto",
+    "url": "https://www.allradio.net/language/181",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "radio",
+      "katalogo",
+      "rekta"
+    ],
+    "description": {
+      "eo": "Katalogo de radiostacioj en Esperanto aŭskulteblaj rete.",
+      "es": "Catálogo de emisoras en esperanto para escuchar en línea.",
+      "en": "Directory of Esperanto radio stations to listen to online."
+    }
+  },
+  {
+    "title": "Radio Esperanto ĉe Radio Libertaire (Parizo)",
+    "url": "https://www.radio-libertaire.org/podcast/z_commun/emission_aff.php?id_e=50&id_c=41&bout=alpha",
+    "category": "radio",
+    "level": "B1",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "francio",
+      "parizo",
+      "sat-amikaro",
+      "fm"
+    ],
+    "description": {
+      "eo": "Semajna Esperanto-elsendo de SAT-Amikaro ĉe Radio Libertaire (89.4 FM, Parizo), kun podkastaj registraĵoj.",
+      "es": "Programa semanal en esperanto de SAT-Amikaro en Radio Libertaire (89.4 FM, París), con grabaciones en pódcast.",
+      "en": "Weekly Esperanto programme by SAT-Amikaro on Radio Libertaire (89.4 FM, Paris), with podcast recordings."
+    }
+  },
+  {
+    "title": "Radio Esperanto (Radio Libertaire): arkivo",
+    "url": "https://www.anarchiste.info/radio/libertaire/emission/radio-esperanto/",
+    "category": "radio",
+    "level": "B1",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "arkivo",
+      "francio",
+      "radio libertaire"
+    ],
+    "description": {
+      "eo": "Arkivo de la elsendoj de Radio Esperanto ĉe Radio Libertaire.",
+      "es": "Archivo de las emisiones de Radio Esperanto en Radio Libertaire.",
+      "en": "Archive of the Radio Esperanto broadcasts on Radio Libertaire."
+    }
+  },
+  {
+    "title": "Esperanto-Provence: radio-elsendoj",
+    "url": "https://esperanto-provence.org/Emissions-de-radio-en-espe%CC%81ranto",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "provenco",
+      "francio",
+      "radio",
+      "listo"
+    ],
+    "description": {
+      "eo": "Informoj de Esperanto-Provence pri radio-elsendoj en kaj pri Esperanto.",
+      "es": "Información de Esperanto-Provence sobre emisiones de radio en y sobre el esperanto.",
+      "en": "Esperanto-Provence information on radio broadcasts in and about Esperanto."
+    }
+  },
+  {
+    "title": "Pola Radio (Vikipedio)",
+    "url": "https://eo.wikipedia.org/wiki/Pola_Radio",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "pola radio",
+      "historio",
+      "vikipedio"
+    ],
+    "description": {
+      "eo": "Historio de la Esperanto-elsendoj de Pola Radio kaj de ĝia daŭrigo Pola Retradio.",
+      "es": "Historia de las emisiones en esperanto de la Radio Polaca y de su continuación, Pola Retradio.",
+      "en": "History of Polish Radio's Esperanto broadcasts and their successor, Pola Retradio."
+    }
+  },
+  {
+    "title": "Esperanto-ligoj: radio-elsendoj kaj podkastoj",
+    "url": "http://www.esperanto-nb.de/ligoj/elinks6.html",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "radio",
+      "podkastoj",
+      "ligiloj"
+    ],
+    "description": {
+      "eo": "Listo de ligiloj al radio-elsendoj kaj podkastoj en Esperanto.",
+      "es": "Lista de enlaces a programas de radio y pódcasts en esperanto.",
+      "en": "List of links to Esperanto radio programmes and podcasts."
+    }
+  },
+  {
+    "title": "Podkastaro",
+    "url": "https://github.com/Wilfred/podkastaro",
+    "category": "radio",
+    "level": "all",
+    "format": "tool",
+    "isFree": true,
+    "tags": [
+      "agregilo",
+      "podkastoj",
+      "radio",
+      "malfermitkoda"
+    ],
+    "description": {
+      "eo": "Malfermitkoda agregilo kiu kolektas la elsendojn de Esperanto-radioj (Radio Aktiva, Radio Havano Kubo, ĈRI…) en unu loko.",
+      "es": "Agregador de código abierto que reúne en un solo sitio las emisiones de radios en esperanto (Radio Aktiva, Radio Habana Cuba, CRI…).",
+      "en": "Open-source aggregator that gathers Esperanto radio broadcasts (Radio Aktiva, Radio Havana Cuba, CRI…) in one place."
+    }
+  },
+  {
+    "title": "Esperanto-TV: radio",
+    "url": "https://esperanto-tv.com/radio",
+    "category": "radio",
+    "level": "B1",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "esperanto-tv",
+      "radio",
+      "elsendoj"
+    ],
+    "description": {
+      "eo": "Radio-sekcio de Esperanto-TV kun aŭdaj elsendoj en Esperanto.",
+      "es": "Sección de radio de Esperanto-TV con emisiones de audio en esperanto.",
+      "en": "Radio section of Esperanto-TV with audio broadcasts in Esperanto."
+    }
+  },
+  {
+    "title": "HEF: la radio",
+    "url": "https://www.esperanto.es/la-radio/",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "hispanio",
+      "hef",
+      "radio",
+      "historio"
+    ],
+    "description": {
+      "eo": "Paĝo de Hispana Esperanto-Federacio pri Esperanto en la radio.",
+      "es": "Página de la Federación Española de Esperanto sobre el esperanto en la radio.",
+      "en": "Spanish Esperanto Federation page on Esperanto on the radio."
+    }
+  },
+  {
+    "title": "Radio FM Esperanto",
+    "url": "https://podcasts.apple.com/gb/podcast/radio-fm-esperanto/id1827932650",
+    "category": "radio",
+    "level": "B1",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "radio",
+      "24 horoj",
+      "hispana",
+      "kulturo"
+    ],
+    "description": {
+      "eo": "Kultura radio kun programoj en Esperanto kaj por la hispanlingva komunumo, ankaŭ kiel podkasto.",
+      "es": "Radio cultural con programas en esperanto y para la comunidad hispanohablante, también como pódcast.",
+      "en": "Cultural radio with Esperanto programmes aimed at Spanish speakers, also available as a podcast."
+    }
+  },
+  {
+    "title": "Muzaiko (Wikipedia en español)",
+    "url": "https://es.wikipedia.org/wiki/Muzaiko",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "muzaiko",
+      "historio",
+      "wikipedia"
+    ],
+    "description": {
+      "eo": "Artikolo pri Muzaiko, la tuttaga interreta radio en Esperanto fondita en 2011.",
+      "es": "Artículo sobre Muzaiko, la radio en internet 24 horas en esperanto fundada en 2011.",
+      "en": "Article about Muzaiko, the 24-hour Esperanto internet radio founded in 2011."
+    }
+  },
+  {
+    "title": "Esperanto – A Língua da Fraternidade (Rádio Rio de Janeiro)",
+    "url": "https://radioriodejaneiro.digital/programa/esperanto/",
+    "category": "radio",
+    "level": "all",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "brazilo",
+      "rio",
+      "am",
+      "portugala"
+    ],
+    "description": {
+      "eo": "Programo pri Esperanto en Rádio Rio de Janeiro (AM 1400) ekde 1986, kun novaĵoj kaj intervjuoj.",
+      "es": "Programa sobre el esperanto en Rádio Rio de Janeiro (AM 1400) desde 1986, con noticias y entrevistas.",
+      "en": "Programme about Esperanto on Rádio Rio de Janeiro (AM 1400) since 1986, with news and interviews."
+    }
+  },
+  {
+    "title": "Esperanto La Konsolanto (Rádio Rio de Janeiro)",
+    "url": "https://radioriodejaneiro.digital/programa/esperanto-la-konsolanto/",
+    "category": "radio",
+    "level": "all",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "brazilo",
+      "rio",
+      "reta programo"
+    ],
+    "description": {
+      "eo": "Reta programo de Rádio Rio de Janeiro dediĉita al Esperanto.",
+      "es": "Programa en línea de Rádio Rio de Janeiro dedicado al esperanto.",
+      "en": "Online programme on Rádio Rio de Janeiro devoted to Esperanto."
+    }
+  },
+  {
+    "title": "Radio Brazila Esperanto",
+    "url": "https://zeno.fm/radio/radio-brazila-esperanto/",
+    "category": "radio",
+    "level": "B1",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "brazilo",
+      "rekta",
+      "24 horoj",
+      "zeno"
+    ],
+    "description": {
+      "eo": "Tuttaga reta radio kun la plej bona enhavo de la Esperanto-movado, aŭskultebla rekte.",
+      "es": "Radio en internet 24 horas con lo mejor del movimiento esperantista, para escuchar en directo.",
+      "en": "Round-the-clock internet radio with the best of the Esperanto movement, streamed live."
+    },
+    "stream": {
+      "type": "zeno",
+      "url": "https://zeno.fm/radio/radio-brazila-esperanto/"
+    }
+  },
+  {
+    "title": "Curso de Esperanto (TuneIn)",
+    "url": "https://tunein.com/radio/Curso-de-Esperanto-p401332/",
+    "category": "radio",
+    "level": "A1",
+    "format": "podcast",
+    "isFree": true,
+    "tags": [
+      "kurso",
+      "portugala",
+      "brazilo",
+      "radio"
+    ],
+    "description": {
+      "eo": "Radiokurso de Esperanto en la portugala, aŭskultebla ĉe TuneIn.",
+      "es": "Curso de esperanto por radio en portugués, para escuchar en TuneIn.",
+      "en": "Portuguese-language Esperanto radio course, available on TuneIn."
+    }
+  },
+  {
+    "title": "Esperanto en brazilaj radioj",
+    "url": "https://esperanto.org.br/info/index.php/2-uncategorised/179-esperanto-estuito-ativo-em-ros-brasileiras",
+    "category": "radio",
+    "level": "all",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "brazilo",
+      "radio",
+      "artikolo",
+      "portugala"
+    ],
+    "description": {
+      "eo": "Artikolo de la Brazila Esperanto-Ligo pri la multaj Esperanto-programoj en brazilaj radiostacioj.",
+      "es": "Artículo de la Liga Brasileña de Esperanto sobre los numerosos programas de esperanto en radios brasileñas.",
+      "en": "Brazilian Esperanto League article on the many Esperanto programmes on Brazilian radio stations."
+    }
+  },
+  {
+    "title": "3ZZZ Esperanto Radio (Melburna Esperanto Asocio)",
+    "url": "https://www.esperanto.com.au/3zzz-esperanto-radio/",
+    "category": "radio",
+    "level": "B1",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "3zzz",
+      "melburno",
+      "aŭstralio"
+    ],
+    "description": {
+      "eo": "Paĝo de Melburna Esperanto Asocio pri ĝia semajna programo ĉe 3ZZZ kaj la arkivo.",
+      "es": "Página de la Asociación de Esperanto de Melbourne sobre su programa semanal en 3ZZZ y el archivo.",
+      "en": "Melbourne Esperanto Association page on its weekly 3ZZZ programme and the archive."
+    }
+  },
+  {
+    "title": "3ZZZ Esperanto radio (AEA)",
+    "url": "https://esperanto.org.au/multimedia/3zzz/",
+    "category": "radio",
+    "level": "B1",
+    "format": "website",
+    "isFree": true,
+    "tags": [
+      "3zzz",
+      "aŭstralio",
+      "aea"
+    ],
+    "description": {
+      "eo": "Informoj de Aŭstralia Esperanto-Asocio pri la radioprogramo en Esperanto ĉe 3ZZZ.",
+      "es": "Información de la Asociación Australiana de Esperanto sobre el programa de radio en esperanto en 3ZZZ.",
+      "en": "Australian Esperanto Association information on the 3ZZZ Esperanto radio programme."
+    }
+  }
+]

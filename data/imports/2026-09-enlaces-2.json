@@ -1,0 +1,982 @@
+[
+  {
+    "title": "Listo de filmoj en Esperanto (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/List_of_Esperanto-language_films",
+    "description": {
+      "eo": "Listo de filmoj parolitaj en Esperanto, de Angoroj (1964) ĝis nuntempaj produktaĵoj.",
+      "es": "Lista de películas habladas en esperanto, desde Angoroj (1964) hasta producciones actuales.",
+      "en": "List of films spoken in Esperanto, from Angoroj (1964) to current productions."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "filmoj",
+      "kino",
+      "listo",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Adventures in Esperanto: rimedoj",
+    "url": "https://www.adventures-in-esperanto.com/resources/",
+    "description": {
+      "eo": "Blogo kun zorge elektita listo de rimedoj por lerni kaj uzi Esperanton.",
+      "es": "Blog con una lista cuidada de recursos para aprender y usar el esperanto.",
+      "en": "Blog with a curated list of resources for learning and using Esperanto."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "rimedoj",
+      "ligiloj",
+      "blogo",
+      "lerni"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanta klavaro por Windows",
+    "url": "https://github.com/unikanomo/esperanta-klavaro",
+    "description": {
+      "eo": "Klavararanĝo por Windows por tajpi ĉ ĝ ĥ ĵ ŝ ŭ per AltGr kaj la baza litero.",
+      "es": "Distribución de teclado para Windows para escribir ĉ ĝ ĥ ĵ ŝ ŭ con AltGr y la letra base.",
+      "en": "Windows keyboard layout for typing ĉ ĝ ĥ ĵ ŝ ŭ with AltGr plus the base letter."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "klavaro",
+      "windows",
+      "altgr",
+      "tajpi"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kiel tajpi en Esperanto: Windows (NZ)",
+    "url": "https://www.esperanto.org.nz/learn-and-use-esperanto/kiel-tajpi-en-esperanto/windows/",
+    "description": {
+      "eo": "Gvidilo de la Novzelanda Esperanto-Asocio pri tajpado de Esperantaj literoj en Windows.",
+      "es": "Guía de la Asociación de Esperanto de Nueva Zelanda para escribir las letras del esperanto en Windows.",
+      "en": "Guide from the Esperanto Association of New Zealand on typing Esperanto letters on Windows."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "tajpi",
+      "klavaro",
+      "windows",
+      "gvidilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto keyboard layout on Windows (ubikium)",
+    "url": "https://ubikium.gitlab.io/portfolio/esperanto-windows-keyboard-layout.html",
+    "description": {
+      "eo": "Paŝo-post-paŝa gvidilo por agordi Esperantan klavararanĝon en Windows.",
+      "es": "Guía paso a paso para configurar un teclado de esperanto en Windows.",
+      "en": "Step-by-step guide to setting up an Esperanto keyboard layout on Windows."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "klavaro",
+      "windows",
+      "gvidilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Infra Keyboards: reta Esperanta klavaro",
+    "url": "https://infrakeyboards.com/esperanto-keyboard/",
+    "description": {
+      "eo": "Reta klavaro por tajpi Esperanton sen instali ion ajn; subtenas la x-sistemon (cx → ĉ).",
+      "es": "Teclado en línea para escribir en esperanto sin instalar nada; admite el sistema x (cx → ĉ).",
+      "en": "Online keyboard for typing Esperanto without installing anything; supports the x-system (cx → ĉ)."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "klavaro",
+      "reta",
+      "x-sistemo",
+      "tajpi"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Tajpi",
+    "url": "https://github.com/PumpedSardines/Tajpi",
+    "description": {
+      "eo": "Programo kiu aŭtomate anstataŭigas kombinaĵojn kiel sx, gh aŭ ^u per la ĝustaj Esperantaj literoj.",
+      "es": "Programa que sustituye automáticamente combinaciones como sx, gh o ^u por las letras correctas del esperanto.",
+      "en": "Program that automatically replaces combinations like sx, gh or ^u with the proper Esperanto letters."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "tajpi",
+      "klavaro",
+      "sx",
+      "macos",
+      "windows"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto keyboard (iOS)",
+    "url": "https://apps.apple.com/us/app/id1053129877",
+    "description": {
+      "eo": "Klavara apo por iPhone kun prognoza teksto, glita tajpado kaj aŭtomata korektado en Esperanto.",
+      "es": "App de teclado para iPhone con texto predictivo, escritura deslizando y autocorrección en esperanto.",
+      "en": "iPhone keyboard app with predictive text, swipe typing and autocorrect in Esperanto."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "klavaro",
+      "ios",
+      "iphone",
+      "prognozo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Literumiloj kaj gramatikiloj (NZ)",
+    "url": "https://www.esperanto.org.nz/learn-and-use-esperanto/kiel-tajpi-en-esperanto/spellchecker/",
+    "description": {
+      "eo": "Kiel instali literumilon kaj gramatikan kontrolilon por Esperanto en LibreOffice kaj aliaj programoj.",
+      "es": "Cómo instalar el corrector ortográfico y gramatical de esperanto en LibreOffice y otros programas.",
+      "en": "How to install Esperanto spelling and grammar checkers in LibreOffice and other programs."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "literumilo",
+      "libreoffice",
+      "languagetool",
+      "gvidilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "LanguageTool",
+    "url": "https://languagetool.org/",
+    "description": {
+      "eo": "Gramatika kaj literuma kontrolilo kiu subtenas Esperanton; uzebla rete, en retumiloj kaj en LibreOffice.",
+      "es": "Corrector gramatical y ortográfico compatible con el esperanto; se usa en la web, en navegadores y en LibreOffice.",
+      "en": "Grammar and spell checker that supports Esperanto; works on the web, in browsers and in LibreOffice."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "gramatiko",
+      "literumilo",
+      "kontrolilo",
+      "libreoffice"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Stars21: reta Esperanta literumilo",
+    "url": "https://www.stars21.com/spelling/esperanto/",
+    "description": {
+      "eo": "Senpaga reta literumilo por kontroli tekstojn en Esperanto.",
+      "es": "Corrector ortográfico en línea y gratuito para textos en esperanto.",
+      "en": "Free online spell checker for Esperanto texts."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "literumilo",
+      "reta",
+      "kontrolilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-Asocio de Novzelando",
+    "url": "https://www.esperanto.org.nz/",
+    "description": {
+      "eo": "Nacia Esperanto-asocio de Nov-Zelando, kun informoj pri kursoj, eventoj kaj tajpado en Esperanto.",
+      "es": "Asociación nacional de esperanto de Nueva Zelanda, con información sobre cursos, eventos y cómo escribir en esperanto.",
+      "en": "National Esperanto association of New Zealand, with information on courses, events and typing Esperanto."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "novzelando",
+      "asocio",
+      "klubo",
+      "oceanio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-USA: Retbutiko",
+    "url": "https://retbutiko.esperanto-usa.org/",
+    "description": {
+      "eo": "Retbutiko de Esperanto-USA kun libroj, vortaroj, muziko kaj abonoj al revuoj.",
+      "es": "Tienda en línea de Esperanto-USA con libros, diccionarios, música y suscripciones a revistas.",
+      "en": "Esperanto-USA online shop with books, dictionaries, music and magazine subscriptions."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "libroj",
+      "butiko",
+      "usono",
+      "muziko"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kurso de Esperanto (jubilo.ca)",
+    "url": "http://jubilo.ca/esperanto/kurso/unikodo",
+    "description": {
+      "eo": "Kompleta teksta kurso de Esperanto en unikodo, kun lecionoj kaj ekzercoj por komencantoj.",
+      "es": "Curso de esperanto completo en texto (Unicode), con lecciones y ejercicios para principiantes.",
+      "en": "Complete text-based Esperanto course in Unicode, with lessons and exercises for beginners."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "kurso",
+      "lecionoj",
+      "komencanto",
+      "teksto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Curso de esperanto en 12 lecciones (Aprender Gratis)",
+    "url": "https://aprendergratis.es/cursos-online/curso-de-esperanto-en-12-lecciones/",
+    "description": {
+      "eo": "Senpaga kurso en la hispana: 12 lecionoj, ĉiu kun teksto, gramatika klarigo kaj tri ekzercoj.",
+      "es": "Curso gratuito en español: 12 lecciones, cada una con un texto, una explicación gramatical y tres ejercicios.",
+      "en": "Free course in Spanish: 12 lessons, each with a text, a grammar explanation and three exercises."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "kurso",
+      "hispana",
+      "12 lecionoj",
+      "español",
+      "curso"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Curso de esperanto básico (Aprender Gratis)",
+    "url": "https://aprendergratis.es/cursos-online/curso-de-esperanto-basico/",
+    "description": {
+      "eo": "Baza kurso en la hispana kun 26 temoj, lecionoj kaj ekzercoj.",
+      "es": "Curso básico en español con 26 temas, lecciones y ejercicios.",
+      "en": "Basic course in Spanish with 26 topics, lessons and exercises."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "kurso",
+      "hispana",
+      "baza",
+      "español",
+      "curso"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Aprendemás: recursos gratuitos para aprender esperanto",
+    "url": "https://www.aprendemas.com/es/blog/idiomas-y-comunicacion/seis-recursos-gratuitos-para-aprender-el-idioma-universal-el-esperanto-74033",
+    "description": {
+      "eo": "Artikolo en la hispana kiu prezentas ses senpagajn rimedojn por lerni Esperanton.",
+      "es": "Artículo en español que presenta seis recursos gratuitos para aprender esperanto.",
+      "en": "Spanish-language article presenting six free resources for learning Esperanto."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "rimedoj",
+      "hispana",
+      "artikolo",
+      "español"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Kurso",
+    "url": "https://esperantokurso.com/",
+    "description": {
+      "eo": "Senpaga reta kurso de Esperanto kun lecionoj kaj vivaj klasoj por bazaj kaj mezaj niveloj.",
+      "es": "Curso gratuito de esperanto en línea con lecciones y clases en vivo de nivel básico e intermedio.",
+      "en": "Free online Esperanto course with lessons and live classes at beginner and intermediate levels."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "kurso",
+      "senpaga",
+      "hispana",
+      "vivaj klasoj",
+      "curso"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto, el idioma internacional: Aprender",
+    "url": "https://idiomaesperanto.weebly.com/aprender.html",
+    "description": {
+      "eo": "Hispanlingva retejo kun gvidiloj kaj ligiloj por eklerni Esperanton.",
+      "es": "Web en español con guías y enlaces para empezar a aprender esperanto.",
+      "en": "Spanish-language site with guides and links for starting to learn Esperanto."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "lerni",
+      "hispana",
+      "rimedoj",
+      "español"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Duolingo: esperanto para hispanohablantes",
+    "url": "https://es.duolingo.com/course/eo/es/Aprender-esperanto",
+    "description": {
+      "eo": "La Esperanto-kurso de Duolingo instruata el la hispana, per mallongaj ĉiutagaj lecionoj.",
+      "es": "El curso de esperanto de Duolingo impartido desde el español, con lecciones diarias cortas.",
+      "en": "Duolingo's Esperanto course taught from Spanish, with short daily lessons."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "app",
+    "tags": [
+      "duolingo",
+      "hispana",
+      "apo",
+      "komencanto",
+      "español"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "HEF: grupos de esperanto en España",
+    "url": "https://www.esperanto.es/grupos-en-espana/",
+    "description": {
+      "eo": "Listo de lokaj Esperanto-grupoj en Hispanio kun kontaktoj, de Hispana Esperanto-Federacio.",
+      "es": "Lista de grupos locales de esperanto en España con sus contactos, de la Federación Española de Esperanto.",
+      "en": "List of local Esperanto groups in Spain with contact details, from the Spanish Esperanto Federation."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "hispanio",
+      "grupoj",
+      "kluboj",
+      "hef",
+      "españa"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "HEF: asociaciones en Iberoamérica",
+    "url": "https://www.esperanto.es/asociaciones-en-iberoamerica/",
+    "description": {
+      "eo": "Kontaktoj de la naciaj Esperanto-asocioj en Latinameriko kaj Iberio.",
+      "es": "Contactos de las asociaciones nacionales de esperanto en Latinoamérica y la península ibérica.",
+      "en": "Contacts for the national Esperanto associations in Latin America and Iberia."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "iberameriko",
+      "asocioj",
+      "latinameriko",
+      "hispana"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Asociación de Esperanto Frateco (Zaragoza)",
+    "url": "https://sites.google.com/site/fratecoes/la-asociacion/asociacion-frateco",
+    "description": {
+      "eo": "Esperanto-asocio Frateco, aktiva en Zaragozo ekde 1908, kun kursoj kaj kunvenoj ĉiun marde.",
+      "es": "Asociación de esperanto Frateco, activa en Zaragoza desde 1908, con clases y reuniones los martes.",
+      "en": "Frateco Esperanto association, active in Zaragoza since 1908, with classes and meetings every Tuesday."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "zaragozo",
+      "aragono",
+      "frateco",
+      "klubo",
+      "zaragoza"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Diario de Teruel: homenaje a Julio Belenguer",
+    "url": "https://www.diariodeteruel.es/cultura/los-esperantistas-turolenses-homenajean-al-pionero-alcorisano-julio-belenguer",
+    "description": {
+      "eo": "Artikolo de Diario de Teruel pri la omaĝo de la turolaj esperantistoj al la pioniro Julio Belenguer el Alcorisa.",
+      "es": "Artículo del Diario de Teruel sobre el homenaje de los esperantistas turolenses al pionero alcorisano Julio Belenguer.",
+      "en": "Diario de Teruel article on the tribute paid by Teruel's Esperanto speakers to the pioneer Julio Belenguer."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "teruelo",
+      "historio",
+      "belenguer",
+      "gazetaro",
+      "teruel"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Diario de Teruel: los orígenes del esperanto en Teruel",
+    "url": "https://www.diariodeteruel.es/cultura/los-origenes-del-esperanto-en-teruel-en-una-obra-bilingue-de-serafin-aldecoa",
+    "description": {
+      "eo": "Artikolo pri la dulingva libro de Serafín Aldecoa pri la komencoj de Esperanto en Teruelo.",
+      "es": "Artículo sobre la obra bilingüe de Serafín Aldecoa acerca de los orígenes del esperanto en Teruel.",
+      "en": "Article about Serafín Aldecoa's bilingual book on the origins of Esperanto in Teruel."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "teruelo",
+      "historio",
+      "libro",
+      "aldecoa",
+      "teruel"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Un siglo de esperanto en Aragón (Antonio Marco Botella)",
+    "url": "https://sites.google.com/site/fratecoamb/finverkitaj-libroj/2000---un-siglo-de-esperanto-en-aragon/1903---1919",
+    "description": {
+      "eo": "La historio de Esperanto en Aragono de 1903 ĝis 1919, el la libro de Antonio Marco Botella.",
+      "es": "La historia del esperanto en Aragón de 1903 a 1919, del libro de Antonio Marco Botella.",
+      "en": "History of Esperanto in Aragon from 1903 to 1919, from Antonio Marco Botella's book."
+    },
+    "category": "literature",
+    "level": "B1",
+    "format": "book",
+    "tags": [
+      "aragono",
+      "historio",
+      "libro",
+      "frateco",
+      "aragón"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Anexo: Organizaciones esperantistas (Wikipedia)",
+    "url": "https://es.wikipedia.org/wiki/Anexo:Organizaciones_esperantistas",
+    "description": {
+      "eo": "Listo de Esperanto-organizoj tra la mondo en la hispana Vikipedio.",
+      "es": "Lista de organizaciones esperantistas de todo el mundo en la Wikipedia en español.",
+      "en": "List of Esperanto organisations worldwide on Spanish Wikipedia."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "organizoj",
+      "listo",
+      "wikipedia",
+      "hispana"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto/Enlaces (Wikilibros)",
+    "url": "https://es.wikibooks.org/wiki/Esperanto/Enlaces",
+    "description": {
+      "eo": "Kolekto de ligiloj al Esperanto-rimedoj en la hispana Vikilibroj.",
+      "es": "Colección de enlaces a recursos de esperanto en Wikilibros en español.",
+      "en": "Collection of links to Esperanto resources on Spanish Wikibooks."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ligiloj",
+      "wikibooks",
+      "hispana",
+      "rimedoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto lernen (Deutscher Esperanto-Bund)",
+    "url": "https://www.esperanto.de/de/lernen",
+    "description": {
+      "eo": "Paĝo de la Germana Esperanto-Asocio pri ĉiuj manieroj lerni Esperanton: kursoj surloke, retaj kaj memlernado.",
+      "es": "Página de la Asociación Alemana de Esperanto sobre todas las formas de aprender esperanto: presencial, en línea y autodidacta.",
+      "en": "German Esperanto Association page on all the ways to learn Esperanto: in person, online and self-study."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "germana",
+      "kursoj",
+      "lerni",
+      "deutsch"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-Fernkurs (DEB)",
+    "url": "https://www.esperanto.de/de/fernkurs",
+    "description": {
+      "eo": "Koresponda kurso de Esperanto (ne nur) por junuloj, kun korektanto, de la Germana Esperanto-Asocio.",
+      "es": "Curso de esperanto a distancia (no solo) para jóvenes, con corrector, de la Asociación Alemana de Esperanto.",
+      "en": "Distance Esperanto course (not only) for young people, with a tutor, from the German Esperanto Association."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "germana",
+      "koresponda kurso",
+      "junularo",
+      "deutsch"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "EsperantoLand: Esperanto-Kurs",
+    "url": "https://esperantoland.org/de/kurs/",
+    "description": {
+      "eo": "Senpaga reta kurso de Esperanto en la germana.",
+      "es": "Curso de esperanto en línea gratuito en alemán.",
+      "en": "Free online Esperanto course in German."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "germana",
+      "kurso",
+      "senpaga",
+      "deutsch"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Espéranto-France: apprendre par internet",
+    "url": "https://esperanto-france.org/apprendre-l-esperanto-par-internet",
+    "description": {
+      "eo": "Gvidilo de Espéranto-France pri la retaj rimedoj por lerni Esperanton en la franca.",
+      "es": "Guía de Espéranto-France sobre los recursos en línea para aprender esperanto en francés.",
+      "en": "Espéranto-France guide to online resources for learning Esperanto in French."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "franca",
+      "lerni",
+      "rimedoj",
+      "français"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ikurso",
+    "url": "https://ikurso.esperanto-france.org/",
+    "description": {
+      "eo": "Senpaga franclingva kurso en 10 lecionoj kun volontulaj korektantoj de Espéranto-France.",
+      "es": "Curso gratuito en francés de 10 lecciones con correctores voluntarios de Espéranto-France.",
+      "en": "Free French-language course in 10 lessons with volunteer tutors from Espéranto-France."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "franca",
+      "kurso",
+      "korektanto",
+      "10 lecionoj",
+      "français"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Babbel Magazine: guide pour apprendre l'espéranto",
+    "url": "https://fr.babbel.com/fr/magazine/guide-pour-apprendre-l-esperanto",
+    "description": {
+      "eo": "Gvidilo en la franca por bone komenci lerni Esperanton.",
+      "es": "Guía en francés para empezar bien a aprender esperanto.",
+      "en": "French-language guide to getting started with Esperanto."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "franca",
+      "gvidilo",
+      "artikolo",
+      "français"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "GINEAD: curso online gratuito de esperanto",
+    "url": "https://www.ginead.com.br/curso/curso-online-gratuito-de-esperanto",
+    "description": {
+      "eo": "Senpaga reta kurso de Esperanto en la portugala, tute rete.",
+      "es": "Curso de esperanto gratuito y 100 % en línea en portugués.",
+      "en": "Free, fully online Esperanto course in Portuguese."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "portugala",
+      "kurso",
+      "senpaga",
+      "brazilo",
+      "português"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Editora Lorenz: aprendendo esperanto gratuitamente",
+    "url": "https://www.editoralorenz.com.br/pagina/aprendendo-esperanto-gratuitamente.html",
+    "description": {
+      "eo": "Paĝo de la brazila eldonejo Lorenz kun senpagaj rimedoj por lerni Esperanton en la portugala.",
+      "es": "Página de la editorial brasileña Lorenz con recursos gratuitos para aprender esperanto en portugués.",
+      "en": "Page from Brazilian publisher Lorenz with free resources for learning Esperanto in Portuguese."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "portugala",
+      "rimedoj",
+      "brazilo",
+      "português"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Concidadania: curso gratuito de esperanto",
+    "url": "https://concidadania.org.br/esperanto/",
+    "description": {
+      "eo": "Senpaga kurso de Esperanto en la portugala proponita de la brazila organizaĵo Concidadania.",
+      "es": "Curso gratuito de esperanto en portugués de la organización brasileña Concidadania.",
+      "en": "Free Esperanto course in Portuguese from the Brazilian organisation Concidadania."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "portugala",
+      "kurso",
+      "brazilo",
+      "português"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "FEI: imparare l'esperanto",
+    "url": "https://www.esperanto.it/imparare-lesperanto/",
+    "description": {
+      "eo": "Senpagaj retaj kursoj de la Itala Esperanto-Federacio: 15 lecionoj kun persona tutoro.",
+      "es": "Cursos gratuitos en línea de la Federación Esperantista Italiana: 15 lecciones con tutor personal.",
+      "en": "Free online courses from the Italian Esperanto Federation: 15 lessons with a personal tutor."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "itala",
+      "kursoj",
+      "tutoro",
+      "italiano"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Oggi",
+    "url": "https://esperanto-oggi.it/",
+    "description": {
+      "eo": "Itallingva retejo kun novaĵoj pri Esperanto kaj informoj pri kursoj en Italio.",
+      "es": "Web en italiano con noticias sobre el esperanto e información de cursos en Italia.",
+      "en": "Italian-language site with Esperanto news and information about courses in Italy."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "itala",
+      "novaĵoj",
+      "italio",
+      "italiano"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Universala Kongreso 2026 (Graz)",
+    "url": "https://uk.esperanto.net/2026/",
+    "description": {
+      "eo": "Oficiala retejo de la 111-a Universala Kongreso de Esperanto en Graz: programo, kotizoj kaj aliĝo.",
+      "es": "Web oficial del 111.º Congreso Universal de Esperanto en Graz: programa, cuotas e inscripción.",
+      "en": "Official site of the 111th World Esperanto Congress in Graz: programme, fees and registration."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "uk",
+      "kongreso",
+      "graz",
+      "aŭstrio",
+      "2026"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "UEA en Instagram",
+    "url": "https://www.instagram.com/ueaesperanto/",
+    "description": {
+      "eo": "La Instagram-konto de Universala Esperanto-Asocio, kun fotoj kaj novaĵoj de la movado.",
+      "es": "La cuenta de Instagram de la Asociación Universal de Esperanto, con fotos y noticias del movimiento.",
+      "en": "The Universal Esperanto Association's Instagram account, with photos and news from the movement."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "uea",
+      "instagram",
+      "sociaj retoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Universala Kongreso de Esperanto (Facebook)",
+    "url": "https://www.facebook.com/universala.kongreso/",
+    "description": {
+      "eo": "Facebook-paĝo de la Universala Kongreso de Esperanto kun anoncoj kaj fotoj.",
+      "es": "Página de Facebook del Congreso Universal de Esperanto con anuncios y fotos.",
+      "en": "Facebook page of the World Esperanto Congress with announcements and photos."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "uk",
+      "kongreso",
+      "facebook",
+      "eventoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ÖNB: Esperanto World Congresses (cifereca kolekto)",
+    "url": "https://www.onb.ac.at/en/departments/department-of-planned-languages/digital-collections/esperanto-world-congresses",
+    "description": {
+      "eo": "Cifereca kolekto de la Aŭstria Nacia Biblioteko pri la historio de la Universalaj Kongresoj.",
+      "es": "Colección digital de la Biblioteca Nacional de Austria sobre la historia de los Congresos Universales.",
+      "en": "Digital collection of the Austrian National Library on the history of the World Esperanto Congresses."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "arkivo",
+      "kongresoj",
+      "biblioteko",
+      "vieno",
+      "historio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "E@I: aliaj eventoj",
+    "url": "https://ikso.net/event/other-events/",
+    "description": {
+      "eo": "Listo de Esperanto-eventoj kaj renkontiĝoj tra la mondo, de E@I.",
+      "es": "Lista de eventos y encuentros de esperanto en todo el mundo, de E@I.",
+      "en": "List of Esperanto events and gatherings around the world, from E@I."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "eventoj",
+      "kalendaro",
+      "renkontiĝoj",
+      "e@i"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "La Esperanto-Societo de Ĉikago",
+    "url": "http://esperanto-chicago.org/",
+    "description": {
+      "eo": "Esperanto-societo de Ĉikago: kunvenoj surloke kaj rete, somera pikniko kaj Zamenhofa festeno.",
+      "es": "Sociedad de Esperanto de Chicago: reuniones presenciales y en línea, pícnic de verano y banquete de Zamenhof.",
+      "en": "The Esperanto Society of Chicago: in-person and online meetings, summer picnic and Zamenhof banquet."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ĉikago",
+      "usono",
+      "klubo",
+      "piknikoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-USA: komunumo",
+    "url": "https://esperanto-usa.org/community/",
+    "description": {
+      "eo": "Informoj de Esperanto-USA pri lokaj kluboj kaj kiel trovi aliajn esperantistojn en Usono.",
+      "es": "Información de Esperanto-USA sobre clubes locales y cómo encontrar esperantistas en EE. UU.",
+      "en": "Esperanto-USA information on local clubs and how to find other speakers in the US."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "usono",
+      "kluboj",
+      "komunumo",
+      "mapo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Radio Omniglot: Esperanto",
+    "url": "https://www.omniglot.com/radio/?cat=39",
+    "description": {
+      "eo": "Epizodoj de la podkasto Radio Omniglot pri Esperanto kaj ĝia historio.",
+      "es": "Episodios del pódcast Radio Omniglot sobre el esperanto y su historia.",
+      "en": "Radio Omniglot podcast episodes about Esperanto and its history."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "podcast",
+    "tags": [
+      "podkasto",
+      "omniglot",
+      "lingvoj",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Omniglot: Esperanto courses, dictionaries and phrasebooks",
+    "url": "https://www.omniglot.com/books/language/esperanto.htm",
+    "description": {
+      "eo": "Elekto de lernolibroj, vortaroj kaj frazaroj de Esperanto rekomendataj de Omniglot.",
+      "es": "Selección de manuales, diccionarios y guías de conversación de esperanto recomendados por Omniglot.",
+      "en": "Selection of Esperanto textbooks, dictionaries and phrasebooks recommended by Omniglot."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "libroj",
+      "kursoj",
+      "vortaroj",
+      "omniglot"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Wiktionary: Esperanto language",
+    "url": "https://en.wiktionary.org/wiki/Category:Esperanto_language",
+    "description": {
+      "eo": "La Esperanta sekcio de la angla Vikivortaro, kun miloj da vortoj, difinoj kaj etimologioj.",
+      "es": "La sección de esperanto del Wikcionario en inglés, con miles de palabras, definiciones y etimologías.",
+      "en": "The Esperanto section of English Wiktionary, with thousands of words, definitions and etymologies."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vikivortaro",
+      "vortaro",
+      "angla",
+      "difinoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Wiktionary: Esperanto terms by etymology",
+    "url": "https://en.wiktionary.org/wiki/Category:Esperanto_terms_by_etymology",
+    "description": {
+      "eo": "Esperantaj vortoj ordigitaj laŭ ilia deveno: pruntvortoj, kalkoj, kunmetaĵoj kaj internaciismoj.",
+      "es": "Palabras del esperanto ordenadas por su origen: préstamos, calcos, compuestos e internacionalismos.",
+      "en": "Esperanto words sorted by origin: loanwords, calques, compounds and internationalisms."
+    },
+    "category": "tools",
+    "level": "B1",
+    "format": "tool",
+    "tags": [
+      "etimologio",
+      "vikivortaro",
+      "radikoj",
+      "pruntvortoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Usona Esperantisto (bulteno)",
+    "url": "https://bulteno.esperanto-usa.org/",
+    "description": {
+      "eo": "Reta bulteno de Esperanto-USA kun novaĵoj, artikoloj kaj instruaj rubrikoj.",
+      "es": "Boletín en línea de Esperanto-USA con noticias, artículos y secciones didácticas.",
+      "en": "Esperanto-USA's online bulletin with news, articles and teaching columns."
+    },
+    "category": "news",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "usono",
+      "bulteno",
+      "novaĵoj",
+      "instruado"
+    ],
+    "isFree": true
+  }
+]

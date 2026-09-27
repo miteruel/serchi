@@ -22,6 +22,10 @@
     <span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">★ @t.featuredBadge</span>
     }
     <span class="flex-1"></span>
+    @if r.HasStream {
+    <button type="button" hx-get="/player?id=@r.Id" hx-target="#player"
+            class="px-3 py-1 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-500">▶ @t.listenBtn</button>
+    }
     <button type="button" hx-get="/resource?id=@r.Id" hx-target="#modal"
             class="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">👁 @t.quickPreview</button>
     <button type="button" data-copy="@r.Url" data-copied="@t.linkCopied"

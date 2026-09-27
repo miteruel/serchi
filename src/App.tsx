@@ -24,6 +24,7 @@ import { ResourceDetailModal } from './components/ResourceDetailModal';
 import { BookmarksDrawer } from './components/BookmarksDrawer';
 import { AddResourceModal } from './components/AddResourceModal';
 import { Footer } from './components/Footer';
+import { RadioPlayer } from './components/RadioPlayer';
 import { 
   convertXSystem, 
   normalizeText, 
@@ -125,6 +126,8 @@ export default function App() {
   const [addResourceInitialQuery, setAddResourceInitialQuery] = useState('');
   const [addResourceInitialTab, setAddResourceInitialTab] = useState<'single' | 'liveCrawler'>('single');
   const [previewResource, setPreviewResource] = useState<EsperantoResource | null>(null);
+  // Station playing in the bottom player bar (kept while navigating)
+  const [playing, setPlaying] = useState<EsperantoResource | null>(null);
 
   const handleOpenAddResource = (query = '', tab: 'single' | 'liveCrawler' = 'single') => {
     setAddResourceInitialQuery(query);
@@ -568,7 +571,7 @@ export default function App() {
   }, [resources]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#202124] text-gray-900 dark:text-gray-100 transition-colors">
+    <div className={`min-h-screen flex flex-col ${playing ? 'pb-56' : ''} bg-white dark:bg-[#202124] text-gray-900 dark:text-gray-100 transition-colors`}>
       
       {/* Top Header with Search / Community switcher and Add Link button */}
       <Header
@@ -634,6 +637,7 @@ export default function App() {
             selectedLevel={filters.level}
             onSelectLevel={(lvl) => setFilters((prev) => ({ ...prev, level: lvl }))}
             resources={resources}
+            onPlay={setPlaying}
           />
         ) : (
           <SearchResults
@@ -648,6 +652,7 @@ export default function App() {
             savedIds={savedIds}
             onToggleSave={handleToggleSave}
             onOpenPreview={(res) => setPreviewResource(res)}
+            onPlay={setPlaying}
             onOpenAdvanced={() => setIsAdvancedOpen(true)}
             onOpenAddResource={handleOpenAddResource}
           />
@@ -699,6 +704,10 @@ export default function App() {
         onOpenPreview={(res) => setPreviewResource(res)}
         settings={settings}
       />
+
+      {playing && playing.stream && (
+        <RadioPlayer resource={playing} settings={settings} onClose={() => setPlaying(null)} />
+      )}
 
       {/* Add Resource & Live Google Search Grounding Modal */}
       <AddResourceModal

@@ -46,6 +46,27 @@
     else if (e.target.matches && e.target.matches('[data-modal]')) closeModal();
   });
 
+  // Radio player bar: close button and episode list (RSS stations)
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest) return;
+    if (e.target.closest('[data-close-player]')) {
+      var player = document.getElementById('player');
+      if (player) player.innerHTML = '';
+      document.body.classList.remove('pb-56');
+      return;
+    }
+    var episode = e.target.closest('[data-episode]');
+    if (episode) {
+      var audio = document.getElementById('player-audio');
+      if (audio) { audio.src = episode.getAttribute('data-episode'); audio.play(); }
+    }
+  });
+
+  // Leave room for the player bar so it does not cover the footer
+  document.addEventListener('htmx:afterSwap', function (e) {
+    if (e.detail.target && e.detail.target.id === 'player') document.body.classList.add('pb-56');
+  });
+
   // Keyboard: "/" focuses the search box, Escape closes the modal
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeModal();

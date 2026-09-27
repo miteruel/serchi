@@ -1,0 +1,998 @@
+[
+  {
+    "title": "Verda News",
+    "url": "https://verda.news/",
+    "description": {
+      "eo": "Mondaj novaĵoj verkitaj en Esperanto kaj ĝisdatigataj regule: politiko, medio, ekonomio kaj kulturo.",
+      "es": "Noticias del mundo escritas en esperanto y actualizadas con regularidad: política, medio ambiente, economía y cultura.",
+      "en": "World news written in Esperanto and updated regularly: politics, environment, economy and culture."
+    },
+    "category": "news",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "novaĵoj",
+      "mondo",
+      "aktualaĵoj",
+      "news",
+      "noticias"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kafejo: Vetero, Novaĵoj, Gazetoj",
+    "url": "http://www.kafejo.com/news/",
+    "description": {
+      "eo": "Kolekto de ligiloj al novaĵfontoj, gazetoj kaj veterprognozoj en Esperanto, parto de la portalo Kafejo.",
+      "es": "Colección de enlaces a fuentes de noticias, periódicos y el tiempo en esperanto, dentro del portal Kafejo.",
+      "en": "Collection of links to news sources, periodicals and weather in Esperanto, part of the Kafejo portal."
+    },
+    "category": "news",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "novaĵoj",
+      "gazetoj",
+      "vetero",
+      "ligiloj",
+      "news"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Monato (Mastodon)",
+    "url": "https://esperanto.masto.host/@monato",
+    "description": {
+      "eo": "La oficiala Mastodon-konto de Monato, la sendependa monata revuo pri politiko, ekonomio kaj kulturo verkita de korespondantoj en 45 landoj.",
+      "es": "Cuenta oficial en Mastodon de Monato, la revista mensual independiente de política, economía y cultura escrita por corresponsales de 45 países.",
+      "en": "Official Mastodon account of Monato, the independent monthly magazine on politics, economics and culture written by correspondents in 45 countries."
+    },
+    "category": "news",
+    "level": "B2",
+    "format": "forum",
+    "tags": [
+      "monato",
+      "revuo",
+      "gazeto",
+      "politiko",
+      "mastodon"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Heroldo de Esperanto",
+    "url": "https://www.facebook.com/heroldodeesperanto/",
+    "description": {
+      "eo": "Paĝo de Heroldo de Esperanto, unu el la plej malnovaj gazetoj de la movado (fondita en 1920), kun novaĵoj el la Esperanto-mondo.",
+      "es": "Página de Heroldo de Esperanto, uno de los periódicos más antiguos del movimiento (fundado en 1920), con noticias del mundo esperantista.",
+      "en": "Page of Heroldo de Esperanto, one of the oldest periodicals of the movement (founded in 1920), with news from the Esperanto world."
+    },
+    "category": "news",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "heroldo",
+      "gazeto",
+      "novaĵoj",
+      "movado",
+      "revuo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "EAB: novaĵoj pri eldonado",
+    "url": "https://esperanto.org.uk/news/publishing/",
+    "description": {
+      "eo": "Novaĵoj de Esperanto-Asocio de Britio pri novaj libroj kaj eldonaĵoj en kaj pri Esperanto (en la angla).",
+      "es": "Noticias de la Asociación Británica de Esperanto sobre nuevos libros y publicaciones en y sobre esperanto (en inglés).",
+      "en": "News from the Esperanto Association of Britain about new books and publications in and about Esperanto."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "eab",
+      "britio",
+      "eldonado",
+      "libroj",
+      "news"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Listo de Esperantaj periodaĵoj (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/List_of_Esperanto_periodicals",
+    "description": {
+      "eo": "Ampleksa listo de gazetoj kaj revuoj en Esperanto, historiaj kaj aktualaj, en la angla Vikipedio.",
+      "es": "Amplia lista de periódicos y revistas en esperanto, históricos y actuales, en la Wikipedia en inglés.",
+      "en": "Comprehensive list of historical and current periodicals and magazines in Esperanto on English Wikipedia."
+    },
+    "category": "news",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "periodaĵoj",
+      "gazetoj",
+      "revuoj",
+      "listo",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "I Kinda Like Languages: Esperanto",
+    "url": "https://ikindalikelanguages.com/learn/Esperanto",
+    "description": {
+      "eo": "Senpaga interaga enkonduka kurso de Esperanto kun sondosieroj por aŭdi la prononcon de vortoj kaj frazoj.",
+      "es": "Curso introductorio interactivo y gratuito de esperanto con audios para escuchar la pronunciación de palabras y frases.",
+      "en": "Free interactive introductory Esperanto course with audio so you can hear how words and sentences are pronounced."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "kurso",
+      "komencanto",
+      "sono",
+      "interaga",
+      "course",
+      "curso"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Linguanaut: Learn Esperanto",
+    "url": "https://www.linguanaut.com/learn-esperanto/index.php",
+    "description": {
+      "eo": "Senpagaj lecionoj kaj vortlistoj (salutoj, nombroj, utilaj frazoj) por komenci lerni Esperanton.",
+      "es": "Lecciones y listas de vocabulario gratuitas (saludos, números, frases útiles) para empezar a aprender esperanto.",
+      "en": "Free lessons and vocabulary lists (greetings, numbers, useful phrases) to get started with Esperanto."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "kurso",
+      "vortlisto",
+      "frazoj",
+      "komencanto",
+      "course"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "50LANGUAGES: Esperanto",
+    "url": "https://50languages.com/esperanto-for-free",
+    "description": {
+      "eo": "100 senpagaj lecionoj kun praktikaj frazoj kaj aŭdaĵoj, disponeblaj en la reto kaj kiel apo por Android kaj iPhone.",
+      "es": "100 lecciones gratuitas con frases prácticas y audios, disponibles en la web y como app para Android e iPhone.",
+      "en": "100 free lessons with practical sentences and audio, available on the web and as an app for Android and iPhone."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "app",
+    "tags": [
+      "frazoj",
+      "apo",
+      "aŭdio",
+      "komencanto",
+      "app",
+      "curso"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Free Esperanto Course",
+    "url": "https://free-esperanto-course.net/",
+    "description": {
+      "eo": "Senpaga reta kurso por lerni la bazojn de Esperanto paŝon post paŝo.",
+      "es": "Curso en línea gratuito para aprender paso a paso los fundamentos del esperanto.",
+      "en": "Free online course to learn the basics of Esperanto step by step."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "kurso",
+      "senpaga",
+      "komencanto",
+      "gramatiko",
+      "course"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto.net: kiel lerni",
+    "url": "https://esperanto.net/en/learn-esperanto/",
+    "description": {
+      "eo": "Gvidilo de esperanto.net kun la plej bonaj manieroj kaj rimedoj por eklerni Esperanton.",
+      "es": "Guía de esperanto.net con las mejores formas y recursos para empezar a aprender esperanto.",
+      "en": "Guide from esperanto.net with the best ways and resources to start learning Esperanto."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "lerni",
+      "gvidilo",
+      "kursoj",
+      "komencanto",
+      "learn"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "La Kompanio: podkastoj en Esperanto",
+    "url": "https://open.spotify.com/show/4W0jHDRIc9351I60ptQjmJ",
+    "description": {
+      "eo": "Kolekto de podkastoj en Esperanto: La Famuloj, La Malfamuloj, Mondaj Sekretoj Ne Tiom Sekretaj, Ludi ol Labori kaj aliaj.",
+      "es": "Colección de pódcasts en esperanto: La Famuloj, La Malfamuloj, Mondaj Sekretoj Ne Tiom Sekretaj, Ludi ol Labori y otros.",
+      "en": "A collection of Esperanto podcasts: La Famuloj, La Malfamuloj, Mondaj Sekretoj Ne Tiom Sekretaj, Ludi ol Labori and more."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "podcast",
+    "tags": [
+      "podkasto",
+      "spotify",
+      "famuloj",
+      "sekretoj",
+      "podcast"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Player FM: Esperanto-podkastoj",
+    "url": "https://player.fm/podcasts/Esperanto",
+    "description": {
+      "eo": "Katalogo de podkastoj en kaj pri Esperanto, aŭskulteblaj rekte en la retumilo aŭ per la apo.",
+      "es": "Catálogo de pódcasts en y sobre esperanto, que se pueden escuchar en el navegador o con la app.",
+      "en": "Directory of podcasts in and about Esperanto that you can play in the browser or with the app."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "podcast",
+    "tags": [
+      "podkastoj",
+      "katalogo",
+      "aŭskulti",
+      "podcast"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Radio Esperanto (podkasto)",
+    "url": "https://podtail.com/en/podcast/radio-esperanto/",
+    "description": {
+      "eo": "Arkivo de la elsendoj de Radio Esperanto: intervjuoj, raportoj kaj muziko en Esperanto.",
+      "es": "Archivo de las emisiones de Radio Esperanto: entrevistas, reportajes y música en esperanto.",
+      "en": "Archive of Radio Esperanto broadcasts: interviews, reports and music in Esperanto."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "podcast",
+    "tags": [
+      "radio",
+      "podkasto",
+      "elsendoj",
+      "intervjuoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Lingvokasto",
+    "url": "http://lingvokasto.blogspot.com/",
+    "description": {
+      "eo": "Malgranda instrua podkasto por anglalingvanoj, farita de komencanto por komencantoj.",
+      "es": "Pequeño pódcast didáctico para angloparlantes, hecho por un principiante para principiantes.",
+      "en": "Small teaching podcast for English speakers, made by a beginner for beginners."
+    },
+    "category": "media",
+    "level": "A1",
+    "format": "podcast",
+    "tags": [
+      "podkasto",
+      "komencanto",
+      "angla",
+      "lerni",
+      "podcast"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Varsovia Vento (YouTube)",
+    "url": "https://www.youtube.com/channel/UCR5dluqaVH7xo5iAfkunyVA",
+    "description": {
+      "eo": "Jutuba kanalo de Varsovia Vento kun filmetoj el Esperanto-renkontiĝoj, koncertoj (Kantoparado) kaj literaturaj programeroj.",
+      "es": "Canal de YouTube de Varsovia Vento con vídeos de encuentros esperantistas, conciertos (Kantoparado) y programas literarios.",
+      "en": "Varsovia Vento YouTube channel with videos from Esperanto gatherings, concerts (Kantoparado) and literary programmes."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "video",
+    "tags": [
+      "varsovia vento",
+      "filmoj",
+      "kantoparado",
+      "youtube",
+      "video"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "3ZZZ Radio: programo en Esperanto",
+    "url": "https://www.3zzz.com.au/shows/esperanto/",
+    "description": {
+      "eo": "Semajna horlonga radioprogramo en Esperanto de Melburno (92.3 FM) kun novaĵoj, intervjuoj kaj kantoj, aŭskultebla ankaŭ rete.",
+      "es": "Programa de radio semanal de una hora en esperanto desde Melbourne (92.3 FM) con noticias, entrevistas y canciones, también en línea.",
+      "en": "Weekly one-hour Esperanto radio programme from Melbourne (92.3 FM) with news, interviews and songs, also streamed online."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "podcast",
+    "tags": [
+      "radio",
+      "aŭstralio",
+      "melburno",
+      "elsendo",
+      "3zzz"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Arkivo de 3ZZZ Radio en Esperanto",
+    "url": "https://podcasts.apple.com/us/podcast/arkivo-de-3zzz-radio-en-esperanto/id409799836",
+    "description": {
+      "eo": "La tuta arkivo de la Esperanto-elsendoj de 3ZZZ kiel podkasto en Apple Podcasts.",
+      "es": "Todo el archivo de las emisiones en esperanto de 3ZZZ como pódcast en Apple Podcasts.",
+      "en": "The full archive of 3ZZZ's Esperanto broadcasts as a podcast on Apple Podcasts."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "podcast",
+    "tags": [
+      "3zzz",
+      "arkivo",
+      "podkasto",
+      "apple",
+      "aŭstralio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Melburna Esperanto Asocio",
+    "url": "https://www.esperanto.com.au/",
+    "description": {
+      "eo": "Esperanto-asocio de Melburno (Aŭstralio): kursoj, renkontiĝoj kaj la radioprogramo ĉe 3ZZZ.",
+      "es": "Asociación de esperanto de Melbourne (Australia): cursos, encuentros y el programa de radio en 3ZZZ.",
+      "en": "Melbourne Esperanto Association (Australia): courses, meetings and the 3ZZZ radio programme."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "aŭstralio",
+      "melburno",
+      "klubo",
+      "asocio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Exploring Esperanto",
+    "url": "https://www.youtube.com/c/ExploringEsperanto",
+    "description": {
+      "eo": "Jutuba kanalo kun aŭdlibroj, mallongaj filmoj, gramatikaj lecionoj kaj registraĵoj de prelegoj, koncertoj kaj teatraĵoj.",
+      "es": "Canal de YouTube con audiolibros, cortometrajes, lecciones de gramática y grabaciones de charlas, conciertos y obras de teatro.",
+      "en": "YouTube channel with audiobooks, short films, grammar lessons and recordings of talks, concerts and plays."
+    },
+    "category": "media",
+    "level": "A2",
+    "format": "video",
+    "tags": [
+      "youtube",
+      "filmoj",
+      "aŭdlibroj",
+      "prelegoj",
+      "video"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Fácil",
+    "url": "https://www.youtube.com/c/EsperantoF%C3%A1cil",
+    "description": {
+      "eo": "Jutuba kanalo en la hispana por facile lerni Esperanton per mallongaj lecionoj.",
+      "es": "Canal de YouTube en español para aprender esperanto de forma sencilla con lecciones cortas.",
+      "en": "Spanish-language YouTube channel for learning Esperanto easily through short lessons."
+    },
+    "category": "media",
+    "level": "A1",
+    "format": "video",
+    "tags": [
+      "youtube",
+      "hispana",
+      "komencanto",
+      "lecionoj",
+      "video",
+      "español"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "AEA: jutubaj kanaloj",
+    "url": "https://esperanto.org.au/multimedia/youtube/",
+    "description": {
+      "eo": "Elekto de jutubaj kanaloj kaj videoj de Aŭstralia Esperanto-Asocio, inkluzive de prelegoj en Esperanto.",
+      "es": "Selección de canales y vídeos de YouTube de la Asociación Australiana de Esperanto, incluidas charlas en esperanto.",
+      "en": "Selection of YouTube channels and videos from the Australian Esperanto Association, including talks in Esperanto."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "video",
+    "tags": [
+      "youtube",
+      "aŭstralio",
+      "prelegoj",
+      "listo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "PReVo (fontkodo)",
+    "url": "https://github.com/bpeel/prevo",
+    "description": {
+      "eo": "Malfermitkoda portebla versio de Reta Vortaro por Android: la tuta vortaro funkcias sen interreto.",
+      "es": "Versión portátil de código abierto del Reta Vortaro para Android: todo el diccionario funciona sin conexión.",
+      "en": "Open-source portable version of Reta Vortaro for Android: the whole dictionary works offline."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "revo",
+      "senreta",
+      "malfermitkoda",
+      "github"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "PReVo – Vortaro de Esperanto (Android)",
+    "url": "https://play.google.com/store/apps/details?id=uk.co.busydoingnothing.prevo",
+    "description": {
+      "eo": "Senpaga apo por Android kun la tuta Reta Vortaro kaj tradukoj al multaj lingvoj, uzebla sen interreto.",
+      "es": "App gratuita para Android con todo el Reta Vortaro y traducciones a muchos idiomas, utilizable sin conexión.",
+      "en": "Free Android app with the complete Reta Vortaro and translations into many languages, usable offline."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "vortaro",
+      "android",
+      "senreta",
+      "revo",
+      "app"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Poŝa Reta Vortaro (iOS)",
+    "url": "https://apps.apple.com/us/app/po%C5%9Da-reta-vortaro/id1093321928",
+    "description": {
+      "eo": "La Reta Vortaro en via poŝtelefono: senreta vortaro de Esperanto por iPhone kaj iPad.",
+      "es": "El Reta Vortaro en tu móvil: diccionario de esperanto sin conexión para iPhone e iPad.",
+      "en": "Reta Vortaro in your pocket: offline Esperanto dictionary for iPhone and iPad."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "vortaro",
+      "ios",
+      "iphone",
+      "revo",
+      "app"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Praktika Vortaro",
+    "url": "https://play.google.com/store/apps/details?id=com.esperantajvortaroj.app",
+    "description": {
+      "eo": "Apo por Android kun praktika Esperanto-vortaro kaj tradukoj.",
+      "es": "App para Android con un diccionario práctico de esperanto y traducciones.",
+      "en": "Android app with a practical Esperanto dictionary and translations."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "vortaro",
+      "android",
+      "apo",
+      "tradukoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Simpla Vortaro",
+    "url": "https://github.com/Wilfred/simpla-vortaro",
+    "description": {
+      "eo": "Malfermitkoda “inteligenta vortaro” de Esperanto kiu rekonas vortfinaĵojn kaj kunmetitajn vortojn.",
+      "es": "“Diccionario inteligente” de esperanto de código abierto que reconoce terminaciones y palabras compuestas.",
+      "en": "Open-source 'intelligent dictionary' for Esperanto that understands word endings and compound words."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "malfermitkoda",
+      "github",
+      "inteligenta"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ReVo en Kindle",
+    "url": "https://github.com/djuretic/revo-en-kindle",
+    "description": {
+      "eo": "Reta Vortaro konvertita por Kindle, por serĉi vortojn dum legado de elektronikaj libroj.",
+      "es": "El Reta Vortaro convertido para Kindle, para consultar palabras mientras lees libros electrónicos.",
+      "en": "Reta Vortaro converted for Kindle so you can look up words while reading e-books."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "kindle",
+      "revo",
+      "elibro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "EAB: vortaroj",
+    "url": "https://esperanto.org.uk/resources/dictionaries/",
+    "description": {
+      "eo": "Gvidilo de Esperanto-Asocio de Britio pri la plej bonaj presitaj kaj retaj vortaroj de Esperanto.",
+      "es": "Guía de la Asociación Británica de Esperanto sobre los mejores diccionarios impresos y en línea.",
+      "en": "Guide from the Esperanto Association of Britain to the best printed and online Esperanto dictionaries."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "vortaroj",
+      "gvidilo",
+      "britio",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperantaj bitlibroj (Internet Archive)",
+    "url": "https://archive.org/details/bitlibroj_en_esperanto",
+    "description": {
+      "eo": "Kolekto de senpagaj bitlibroj en Esperanto ĉe Internet Archive, ekz. La Hobito kaj Don Kiĥoto.",
+      "es": "Colección de libros electrónicos gratuitos en esperanto en Internet Archive, como El Hobbit o Don Quijote.",
+      "en": "Collection of free Esperanto e-books on the Internet Archive, such as The Hobbit and Don Quixote."
+    },
+    "category": "literature",
+    "level": "B1",
+    "format": "book",
+    "tags": [
+      "bitlibroj",
+      "elibroj",
+      "senpaga",
+      "arkivo",
+      "ebooks"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "InfoBooks: libroj en Esperanto",
+    "url": "https://infobooks.org/free-pdf-books/language-learning/books-in-esperanto/",
+    "description": {
+      "eo": "Pli ol 15 senpagaj PDF-libroj en Esperanto ordigitaj laŭ malfacileco.",
+      "es": "Más de 15 libros gratuitos en PDF en esperanto ordenados por dificultad.",
+      "en": "15+ free PDF books in Esperanto sorted by difficulty."
+    },
+    "category": "literature",
+    "level": "A2",
+    "format": "book",
+    "tags": [
+      "libroj",
+      "pdf",
+      "senpaga",
+      "niveloj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The Esperanto Teacher (Helen Fryer)",
+    "url": "https://manybooks.net/titles/fryerheletext05esptr10.html",
+    "description": {
+      "eo": "Klasika lernolibro de Esperanto por anglalingvanoj de Helen Fryer, senpage elŝutebla.",
+      "es": "Manual clásico de esperanto para angloparlantes de Helen Fryer, descargable gratis.",
+      "en": "Helen Fryer's classic Esperanto textbook for English speakers, free to download."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "book",
+    "tags": [
+      "lernolibro",
+      "klasika",
+      "angla",
+      "gramatiko",
+      "book"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Loyal Books: Esperanto",
+    "url": "https://www.loyalbooks.com/language/Esperanto?type=ebook",
+    "description": {
+      "eo": "Senpagaj elektronikaj kaj aŭdaj libroj en Esperanto el la publika havaĵo.",
+      "es": "Libros electrónicos y audiolibros gratuitos en esperanto de dominio público.",
+      "en": "Free public-domain e-books and audiobooks in Esperanto."
+    },
+    "category": "literature",
+    "level": "B1",
+    "format": "book",
+    "tags": [
+      "elibroj",
+      "aŭdlibroj",
+      "senpaga",
+      "publika havaĵo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-literaturo ĉe Parsa's Page",
+    "url": "https://www.americanroads.us/esperanto.html",
+    "description": {
+      "eo": "Persona paĝo kun kolekto de literaturaj tekstoj kaj ligiloj al verkoj en Esperanto.",
+      "es": "Página personal con una colección de textos literarios y enlaces a obras en esperanto.",
+      "en": "Personal page with a collection of literary texts and links to works in Esperanto."
+    },
+    "category": "literature",
+    "level": "B1",
+    "format": "website",
+    "tags": [
+      "literaturo",
+      "elibroj",
+      "ligiloj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ligiloj el Esperantujo",
+    "url": "https://ligil.ujo.moe/",
+    "description": {
+      "eo": "Komunuma katalogo de ligiloj al retejoj, projektoj kaj rimedoj en Esperanto.",
+      "es": "Catálogo comunitario de enlaces a webs, proyectos y recursos en esperanto.",
+      "en": "Community-curated directory of links to Esperanto websites, projects and resources."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ligiloj",
+      "katalogo",
+      "esperantujo",
+      "dosierujo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Free Language: Esperanto-apoj",
+    "url": "https://freelanguage.org/learn-esperanto/learn-esperanto-with-android-apps",
+    "description": {
+      "eo": "Listo de senpagaj apoj por Android por lerni Esperanton.",
+      "es": "Lista de apps gratuitas para Android para aprender esperanto.",
+      "en": "List of free Android apps for learning Esperanto."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "apoj",
+      "android",
+      "listo",
+      "lerni"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "iVoca: Learn Esperanto",
+    "url": "https://ivoca.io/index-app-esperanto.html",
+    "description": {
+      "eo": "Apo por Android, iOS, reto kaj komputilo, kiu instruas Esperanton per dialogoj kaj videoj kun voĉrekono.",
+      "es": "App para Android, iOS, web y escritorio que enseña esperanto con diálogos y vídeos con reconocimiento de voz.",
+      "en": "App for Android, iOS, web and desktop that teaches Esperanto through dialogues and videos with speech recognition."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "app",
+    "tags": [
+      "apo",
+      "parolado",
+      "videoj",
+      "ai",
+      "app"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Learn Esperanto With Emma (infanoj)",
+    "url": "https://www.teachkidslanguages.com/esperanto/app/",
+    "description": {
+      "eo": "Apo por infanoj de 2 ĝis 7 jaroj por lerni Esperanton ludante.",
+      "es": "App para niños de 2 a 7 años para aprender esperanto jugando.",
+      "en": "App for children aged 2–7 to learn Esperanto through play."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "app",
+    "tags": [
+      "infanoj",
+      "apo",
+      "ludoj",
+      "kids",
+      "niños"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Teach Yourself Esperanto (MEA)",
+    "url": "https://www.esperanto.com.au/learn-esperanto/learning-online/",
+    "description": {
+      "eo": "Elekto de retaj rimedoj por memlerni Esperanton, preparita de Melburna Esperanto Asocio.",
+      "es": "Selección de recursos en línea para aprender esperanto por tu cuenta, de la Asociación de Esperanto de Melbourne.",
+      "en": "Selection of online resources for teaching yourself Esperanto, from the Melbourne Esperanto Association."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "memlernado",
+      "rimedoj",
+      "ligiloj",
+      "learn"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto: Quick and dirty guide (Wikibooks)",
+    "url": "https://en.wikibooks.org/wiki/Esperanto/Quick_and_dirty_guide",
+    "description": {
+      "eo": "Rapida gvidilo en Vikilibroj kiu instruas la bazojn de gramatiko kaj vortprovizo en ĉirkaŭ du horoj.",
+      "es": "Guía rápida en Wikilibros que enseña lo básico de la gramática y el vocabulario en unas dos horas.",
+      "en": "Quick Wikibooks guide that teaches the basics of Esperanto grammar and vocabulary in about two hours."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "gramatiko",
+      "gvidilo",
+      "rapida",
+      "wikibooks"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "LinguaShop: Esperanto Grammar",
+    "url": "https://www.linguashop.com/esperanto-grammar",
+    "description": {
+      "eo": "Superrigardo de la gramatiko de Esperanto (verboj, pronomoj, adjektivoj) kun PDF-elŝutoj.",
+      "es": "Resumen de la gramática del esperanto (verbos, pronombres, adjetivos) con descargas en PDF.",
+      "en": "Overview of Esperanto grammar (verbs, pronouns, adjectives) with PDF downloads."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "gramatiko",
+      "pdf",
+      "verboj",
+      "pronomoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Preply: kiel efike lerni Esperanton",
+    "url": "https://preply.com/en/blog/how-to-learn-esperanto-effectively/",
+    "description": {
+      "eo": "Detala artikolo kun konsiloj kaj plano por efike lerni Esperanton.",
+      "es": "Artículo detallado con consejos y un plan para aprender esperanto de forma eficaz.",
+      "en": "Detailed article with tips and a plan for learning Esperanto effectively."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "konsiloj",
+      "gvidilo",
+      "lerni",
+      "artikolo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "La 16 reguloj komentitaj de Don Harlow",
+    "url": "https://babel.ucsc.edu/~hank/105/Esperanto16.pdf",
+    "description": {
+      "eo": "La 16 fundamentaj reguloj de la Esperanta gramatiko, klarigitaj kaj komentitaj de Don Harlow (PDF, angle).",
+      "es": "Las 16 reglas fundamentales de la gramática del esperanto, explicadas y comentadas por Don Harlow (PDF, en inglés).",
+      "en": "The 16 fundamental rules of Esperanto grammar explained and commented by Don Harlow (PDF)."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "book",
+    "tags": [
+      "16 reguloj",
+      "gramatiko",
+      "fundamento",
+      "pdf"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "MyLanguages: Learn Esperanto",
+    "url": "http://mylanguages.org/learn_esperanto.php",
+    "description": {
+      "eo": "Senpagaj lecionoj pri adjektivoj, substantivoj, nombroj, pronomoj, verboj kaj utilaj frazoj.",
+      "es": "Lecciones gratuitas sobre adjetivos, sustantivos, números, pronombres, verbos y frases útiles.",
+      "en": "Free lessons on adjectives, nouns, numbers, pronouns, verbs and useful phrases."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "gramatiko",
+      "vortprovizo",
+      "lecionoj",
+      "frazoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Grammar Basics (My Little Word Land)",
+    "url": "https://mylittlewordland.com/course/312008/esperanto-grammar-basics",
+    "description": {
+      "eo": "Kurseto kun lernokartoj kaj ekzercoj pri la bazoj de la gramatiko.",
+      "es": "Minicurso con tarjetas y ejercicios sobre los fundamentos de la gramática.",
+      "en": "Mini-course with flashcards and exercises on grammar basics."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "course",
+    "tags": [
+      "gramatiko",
+      "kartoj",
+      "ekzercoj",
+      "komencanto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Resources: Muziko",
+    "url": "https://esperanto.miraheze.org/wiki/Music_/_Muziko",
+    "description": {
+      "eo": "Komunuma vikio kun listo de muzikaj rimedoj, grupoj kaj eldonejoj en Esperanto.",
+      "es": "Wiki comunitaria con una lista de recursos musicales, grupos y discográficas en esperanto.",
+      "en": "Community wiki with a list of music resources, bands and labels in Esperanto."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muziko",
+      "listo",
+      "viki",
+      "rimedoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Vinilkosmo (muzikplatformo)",
+    "url": "https://www.vinilkosmo.com/en",
+    "description": {
+      "eo": "Sendependa eldonejo kaj retbutiko de muziko en Esperanto en ĉiuj stiloj, kun vinilo, KD kaj elŝutoj.",
+      "es": "Discográfica independiente y tienda en línea de música en esperanto de todos los estilos, en vinilo, CD y descarga.",
+      "en": "Independent label and online shop for Esperanto music of every style, on vinyl, CD and download."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muziko",
+      "albumoj",
+      "eldonejo",
+      "kd",
+      "vinilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Music History (eomuziko)",
+    "url": "https://eomuziko.com/en/",
+    "description": {
+      "eo": "Profundaj historioj de Esperanto-muzikgrupoj kaj albumoj.",
+      "es": "Historias detalladas de grupos y álbumes de música en esperanto.",
+      "en": "In-depth histories of Esperanto music groups and albums."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muziko",
+      "historio",
+      "grupoj",
+      "albumoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Music Database",
+    "url": "https://db.eomuziko.com/en/",
+    "description": {
+      "eo": "La plej kompleta datumbazo de muziko en Esperanto: artistoj, albumoj kaj kantoj.",
+      "es": "La base de datos más completa de música en esperanto: artistas, álbumes y canciones.",
+      "en": "The most complete database of Esperanto music: artists, albums and songs."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "muziko",
+      "datumbazo",
+      "albumoj",
+      "kantoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Music on Internet (Esperanto Panorama)",
+    "url": "https://esperanto-panorama.net/angla/muziko.htm",
+    "description": {
+      "eo": "Kolekto de ligiloj al muziko en Esperanto disponebla en la reto.",
+      "es": "Colección de enlaces a música en esperanto disponible en internet.",
+      "en": "Collection of links to Esperanto music available online."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muziko",
+      "ligiloj",
+      "panoramo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Inicialoj DC – Urbano (Bandcamp)",
+    "url": "https://initialsdc.bandcamp.com/album/urbano",
+    "description": {
+      "eo": "Albumo “Urbano” de la brazila rokgrupo Inicialoj DC, aŭskultebla kaj aĉetebla en Bandcamp.",
+      "es": "Álbum “Urbano” del grupo de rock brasileño Inicialoj DC, para escuchar y comprar en Bandcamp.",
+      "en": "The album 'Urbano' by Brazilian rock band Inicialoj DC, to stream and buy on Bandcamp."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muziko",
+      "roko",
+      "bandcamp",
+      "albumo"
+    ],
+    "isFree": true
+  }
+]

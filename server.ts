@@ -12,6 +12,7 @@ import {
   sanitizeResource,
   type NewResource,
 } from './server/db';
+import { fetchEpisodes } from './server/radio';
 
 // Load .env.local (as documented in the README) and fall back to .env
 dotenv.config({ path: ['.env.local', '.env'] });
@@ -40,7 +41,8 @@ async function startServer() {
   app.post('/api/resources', (req, res) => {
     let item: NewResource;
     try {
-      item = sanitizeResource({ ...req.body, id: undefined });
+      // Players (stream) are only set by curated imports, never by visitors
+      item = sanitizeResource({ ...req.body, id: undefined, stream: undefined });
     } catch (err: any) {
       return res.status(400).json({ error: err.message });
     }
@@ -49,6 +51,19 @@ async function startServer() {
       return res.status(409).json({ error: 'duplicate' });
     }
     return res.status(201).json(inserted[0]);
+  });
+
+  // Latest episodes of a station whose player is a podcast feed (stream.type = rss)
+  app.get('/api/radio/:id/episodes', async (req, res) => {
+    const row = db.prepare("SELECT stream_url FROM resources WHERE id = ? AND stream_type = 'rss'").get(req.params.id) as
+      | { stream_url: string }
+      | undefined;
+    if (!row) return res.status(404).json({ error: 'No feed for this resource' });
+    try {
+      return res.json({ episodes: await fetchEpisodes(row.stream_url) });
+    } catch (err: any) {
+      return res.status(502).json({ error: err.message || 'Feed unavailable' });
+    }
   });
 
   // Add several resources (live Google Search crawler). Duplicates are skipped.
@@ -62,7 +77,7 @@ async function startServer() {
     let invalid = 0;
     for (const raw of list) {
       try {
-        items.push(sanitizeResource({ ...raw, id: undefined }));
+        items.push(sanitizeResource({ ...raw, id: undefined, stream: undefined }));
       } catch {
         invalid++;
       }

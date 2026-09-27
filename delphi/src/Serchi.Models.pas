@@ -37,6 +37,9 @@ type
     Year: string;
     Languages: TArray<string>;
     Features: TLocalizedList;
+    { Online player: spotify | zeno | rss | audio (empty = none), see src/types }
+    StreamType: string;
+    StreamUrl: string;
     // Precomputed search haystacks
     SearchText: string;
     NormalizedText: string;

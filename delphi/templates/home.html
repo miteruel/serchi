@@ -44,6 +44,29 @@
     </div>
   </div>
 
+  @* Esperanto radio: stations with an online player (Model.Results) *@
+  @if Model.HasResults {
+  <section class="mt-10 w-full" aria-labelledby="radio-heading">
+    <div class="flex items-center justify-between">
+      <h2 id="radio-heading" class="font-semibold">📻 @t.radioSectionTitle</h2>
+      <a href="/search?category=radio" class="text-sm text-emerald-700 dark:text-emerald-300 hover:underline">@t.radioSeeAll →</a>
+    </div>
+    <p class="text-sm text-gray-500 mt-1 mb-3">@t.radioSectionDesc</p>
+    <div class="grid sm:grid-cols-2 gap-2">
+      @ForEach (var st in Model.Results) {
+      <button type="button" hx-get="/player?id=@st.Id" hx-target="#player"
+              class="flex items-center gap-3 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-400">
+        <span class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">▶</span>
+        <span class="min-w-0">
+          <span class="block text-sm font-semibold truncate">@st.Title</span>
+          <span class="block text-xs text-gray-500 truncate">@st.DisplayUrl</span>
+        </span>
+      </button>
+      }
+    </div>
+  </section>
+  }
+
   <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 w-full">
     @ForEach (var c in Model.CategoryOptions) {
     <a href="/search?category=@c.Value" class="rounded-xl border border-gray-200 dark:border-gray-700 p-3 text-sm text-center hover:border-emerald-500">@c.Caption</a>

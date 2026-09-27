@@ -53,3 +53,56 @@ The [`delphi/`](delphi/README.md) folder contains a server-rendered version of t
 site built with Delphi WebBroker, WebStencils templates and HTMX. It reads the same
 SQLite database; UI translations and forum seed data are exported to JSON with
 `npm run export:delphi`.
+
+## Historia del proyecto
+
+Serĉilo es un buscador de recursos en esperanto (cursos, diccionarios, noticias,
+literatura, radio, comunidad…) de **Liberanimo Teruel**, el grupo esperantista de
+Teruel. Todo lo que sigue ocurrió el 27 de septiembre de 2026; entre paréntesis, los
+PR y commits correspondientes.
+
+1. **Origen en Google AI Studio** (`29f5106`, `e2b5c87`). Antonio Alcázar crea la
+   aplicación con AI Studio: una web React + Vite, con un servidor Express que usa
+   Gemini con búsqueda de Google para descubrir enlaces en vivo. Incluye 300 recursos
+   en ficheros TypeScript, paneles de conocimiento, un foro simulado, favoritos y la
+   interfaz en esperanto, español e inglés.
+2. **Puesta a punto para ejecutarla en local**
+   ([#1](https://github.com/miteruel/serchi/pull/1)). Se corrigen un conflicto de
+   dependencias de esbuild y la carga de `.env.local`.
+3. **Versión Delphi + WebStencils + HTMX**
+   ([#2](https://github.com/miteruel/serchi/pull/2)). Se añade en [`delphi/`](delphi/README.md)
+   una segunda versión del sitio, renderizada en el servidor con Delphi WebBroker y
+   plantillas WebStencils, y con HTMX para la búsqueda en vivo, el foro y los
+   favoritos, sin React.
+4. **Identidad de Liberanimo Teruel**
+   ([#3](https://github.com/miteruel/serchi/pull/3)). El logotipo del grupo sustituye a
+   la estrella genérica y la web indica expresamente que es de Liberanimo Teruel, en
+   los tres idiomas.
+5. **Migración de los datos a SQLite**
+   ([#4](https://github.com/miteruel/serchi/pull/4)). Los enlaces y los paneles pasan de
+   los ficheros `.ts` a `data/serchi.db`, que comparten las versiones Node y Delphi. La
+   migración se hizo con `scripts/db-import.ts`, que queda como herramienta de carga.
+   En el proceso apareció un enlace duplicado (Reddit r/Esperanto), así que quedaron 299.
+6. **Ampliación a más de 500 enlaces** (`7b9ecf3` … `11473ff`). Se añaden 204 enlaces
+   en cuatro tandas (`data/imports/2026-09-enlaces-*.json`), con especial atención a
+   cursos, herramientas, literatura y recursos en español, incluidos artículos sobre la
+   historia del esperanto en Teruel y Aragón. Cada URL se tomó de resultados reales de
+   búsqueda web; ninguna se escribió de memoria.
+7. **Sección de radio con reproductor en línea** (`17a84c9`). Nueva categoría *Radio*
+   con 36 emisoras y programas (Muzaiko, Pola Retradio, Radio Vaticano, 3ZZZ, Radio
+   Havano Kubo, China Radio International, Radio Brazila Esperanto…). Las que tienen
+   una fuente verificada se pueden escuchar sin salir de la web:
+   - reproductores oficiales de Spotify y Zeno.FM;
+   - feeds de pódcast leídos por el servidor.
+
+   La barra del reproductor sigue sonando mientras se navega.
+
+### Pendiente y limitaciones conocidas
+
+- **Enlaces originales sin revisar:** los 300 enlaces originales se generaron en AI
+  Studio y no se han revisado uno a uno; algunas direcciones pueden no existir. Los
+  añadidos a partir del paso 6 sí están verificados.
+- **Versión Delphi sin compilar:** no se ha compilado todavía con RAD Studio (ver
+  [`delphi/README.md`](delphi/README.md)).
+- **Foro sin base de datos:** el foro sigue sin guardarse en la base de datos (en el
+  navegador en la versión React y en memoria en la versión Delphi).

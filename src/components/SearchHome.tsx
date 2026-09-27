@@ -8,7 +8,9 @@ import {
   Compass, 
   Bookmark, 
   ArrowRight,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Radio,
+  Play
 } from 'lucide-react';
 import { UserSettings, Level, Category, EsperantoResource } from '../types';
 import { TRANSLATIONS } from '../translations';
@@ -25,6 +27,7 @@ interface SearchHomeProps {
   selectedLevel: Level;
   onSelectLevel: (lvl: Level) => void;
   resources: EsperantoResource[];
+  onPlay: (resource: EsperantoResource) => void;
 }
 
 export const SearchHome: React.FC<SearchHomeProps> = ({
@@ -38,6 +41,7 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
   selectedLevel,
   onSelectLevel,
   resources,
+  onPlay,
 }) => {
   const t = TRANSLATIONS[settings.language];
   const [isFocused, setIsFocused] = useState(false);
@@ -109,6 +113,8 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
     { label: 'Libera Folio', q: 'libera folio' },
     { label: 'Podkastoj', q: 'podkasto' },
   ];
+
+  const radioStations = resources.filter((r) => r.category === 'radio' && r.stream);
 
   const levelsList: { key: Level; label: string; badgeColor: string }[] = [
     { key: 'all', label: t.levels.all, badgeColor: 'hover:border-gray-400' },
@@ -330,6 +336,41 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
           </button>
         ))}
       </div>
+
+      {/* Esperanto radio: stations with an online player */}
+      {radioStations.length > 0 && (
+        <section className="mt-8 w-full max-w-2xl" aria-labelledby="radio-heading">
+          <div className="flex items-center justify-between mb-2">
+            <h2 id="radio-heading" className="text-sm font-semibold flex items-center gap-2 text-gray-700 dark:text-gray-300">
+              <Radio className="w-4 h-4 text-emerald-600" /> {t.radioSectionTitle}
+            </h2>
+            <button
+              onClick={() => onSearch('', undefined, 'radio')}
+              className="text-xs text-emerald-700 dark:text-emerald-400 hover:underline"
+            >
+              {t.radioSeeAll} →
+            </button>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{t.radioSectionDesc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {radioStations.map((station) => (
+              <button
+                key={station.id}
+                onClick={() => onPlay(station)}
+                className="flex items-center gap-3 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 transition-colors"
+              >
+                <span className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-semibold truncate">{station.title}</span>
+                  <span className="block text-xs text-gray-500 truncate">{station.displayUrl}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
     </div>
   );
