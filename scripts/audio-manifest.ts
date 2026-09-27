@@ -45,8 +45,16 @@ Hay dos formas de añadir grabaciones:
   cualquiera puede grabar con el micrófono y un moderador
   aprueba cada grabación antes de que suene en el curso. Se guardan en la base de
   datos, no en esta carpeta, y no aparecen en la tabla de abajo.
+- **Desde el editor de cursos**, con el botón 🎙️ de cada palabra: un moderador graba
+  su voz y se publica al momento, sin revisión.
 - **Como ficheros MP3** en el repositorio, siguiendo los pasos siguientes. Si una
   palabra tiene las dos, suena el fichero MP3.
+
+Las grabaciones aprobadas se pueden pasar a ficheros MP3 de \`public/audio/\` con
+\`npm run audio:export\` (hace falta ffmpeg; con Docker, copia antes la base de datos
+con \`docker compose cp serchi:/data/serchi.db /tmp/serchi.db\` y usa
+\`SERCHI_DB=/tmp/serchi.db\`). Así quedan guardadas en el repositorio y suenan también
+sin servidor.
 
 Mientras nadie graba una palabra, suena una **voz sintética** (espeak-ng) guardada en
 \`public/audio/tts/\`. Se regenera con \`npm run audio:tts\` (hacen falta espeak-ng y

@@ -107,17 +107,30 @@ export class RecordingError extends Error {
   }
 }
 
-/** Stores a visitor's recording as pending. Throws RecordingError on bad input or limits. */
+/**
+ * Stores a visitor's recording as pending. Throws RecordingError on bad input
+ * or limits. A moderator's recording (trusted, from the course editor) skips
+ * the daily and pending limits and is approved at once.
+ */
 export function addRecording(
   db: DatabaseSync,
   words: Map<string, string>,
-  input: { slug: string; audio: Buffer; visitorId: string; name?: string },
+  input: { slug: string; audio: Buffer; visitorId: string; name?: string; trusted?: boolean },
 ): { id: string; slug: string; text: string } {
   const text = words.get(input.slug);
   if (!text) throw new RecordingError('Unknown word', 400);
   if (input.audio.length > RECORDING_LIMITS.maxBytes) throw new RecordingError('Recording too long', 413);
   const mime = detectAudioType(input.audio);
   if (!mime) throw new RecordingError('Not an audio recording', 415);
+
+  if (input.trusted) {
+    const id = newResourceId('rec');
+    db.prepare(
+      "INSERT INTO recordings (id, slug, text, mime, audio, visitor_id, name, status, reviewed_at) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, 'approved', strftime('%Y-%m-%dT%H:%M:%fZ','now'))",
+    ).run(id, input.slug, text, mime, input.audio, input.visitorId, (input.name || '').trim().slice(0, 60) || null);
+    return { id, slug: input.slug, text };
+  }
 
   const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
   const today = db
@@ -141,6 +154,10 @@ export interface PendingRecording {
   text: string;
   name: string | null;
   createdAt: string;
+}
+
+export function countPendingRecordings(db: DatabaseSync): number {
+  return (db.prepare("SELECT COUNT(*) AS n FROM recordings WHERE status = 'pending'").get() as Row).n;
 }
 
 export function listPendingRecordings(db: DatabaseSync): PendingRecording[] {

@@ -60,6 +60,7 @@ type
   private
     FLang: string;
     FSavedCount: Integer;
+    FPendingRecordings: Integer;
     FRole: string;
     FUserName: string;
     FUserAvatar: string;
@@ -78,6 +79,10 @@ type
     property IsLangEs: Boolean read IsEs;
     property IsLangEn: Boolean read IsEn;
     property SavedCount: Integer read FSavedCount write FSavedCount;
+    { Recordings waiting for review, only counted for moderators (menu badge) }
+    property PendingRecordings: Integer read FPendingRecordings write FPendingRecordings;
+    function GetHasPendingRecordings: Boolean;
+    property HasPendingRecordings: Boolean read GetHasPendingRecordings;
     property Role: string read FRole write FRole;
     function GetIsModerator: Boolean;
     function GetIsTeacher: Boolean;
@@ -465,6 +470,11 @@ end;
 function TAppVM.IsEn: Boolean;
 begin
   Result := FLang = 'en';
+end;
+
+function TAppVM.GetHasPendingRecordings: Boolean;
+begin
+  Result := FPendingRecordings > 0;
 end;
 
 function TAppVM.GetIsModerator: Boolean;

@@ -102,6 +102,12 @@ async function forumRequest<T>(method: string, url: string, user: ForumUser | nu
   return data;
 }
 
+/** Recordings from the Grabar page that wait for review (moderators only). */
+export async function fetchPendingRecordingCount(): Promise<number> {
+  const data = await forumRequest<{ count: number }>('GET', '/api/recordings/pending/count', null);
+  return data.count || 0;
+}
+
 export interface ForumData {
   topics: ForumTopic[];
   comments: Record<string, ForumComment[]>;
