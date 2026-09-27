@@ -286,6 +286,12 @@ PR y commits correspondientes.
     añaden un `Dockerfile` que guarda la base de datos en un volumen y el script de
     copia de seguridad.
 
+26. **Docker Compose.** [`compose.yaml`](compose.yaml) arranca la web con un solo
+    comando (`docker compose up -d`), con la base de datos en un volumen y un servicio
+    que hace una copia de seguridad cada 24 horas. Con `--profile https` arranca también
+    Caddy, que sirve la web con HTTPS para el dominio de `DOMAIN`. Explicado en
+    [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

@@ -1,0 +1,63 @@
+# Serĉilo with Docker Compose. See docs/DESPLIEGUE.md.
+#
+#   docker compose up -d                   web on http://localhost:3000 + daily backups
+#   docker compose --profile https up -d   also Caddy with HTTPS for DOMAIN
+#
+# Settings go in .env.local (copy .env.example). The database lives in the
+# serchi-data volume, so it survives rebuilds: docker compose up -d --build
+
+services:
+  serchi:
+    build: .
+    image: serchi
+    restart: unless-stopped
+    ports:
+      - "${SERCHI_PORT:-3000}:3000"
+    env_file:
+      - path: .env.local
+        required: false
+    volumes:
+      - serchi-data:/data
+
+  # Copy of the database every 24 hours in /data/backups (keeps the last 14)
+  backup:
+    build: .
+    image: serchi
+    restart: unless-stopped
+    depends_on:
+      - serchi
+    volumes:
+      - serchi-data:/data
+    # Skip the image entrypoint: only the web service creates the database
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        while true; do
+          sleep 3600
+          npx tsx scripts/db-backup.ts --db /data/serchi.db --out /data/backups --keep 14
+          sleep 82800
+        done
+
+  # Optional: HTTPS with an automatic certificate. Needs DOMAIN in .env.local
+  # and ports 80 and 443 open on the server.
+  caddy:
+    image: caddy:2
+    profiles: [https]
+    restart: unless-stopped
+    depends_on:
+      - serchi
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - path: .env.local
+        required: false
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  serchi-data:
+  caddy-data:
+  caddy-config:

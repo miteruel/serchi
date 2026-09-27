@@ -1,0 +1,5 @@
+# HTTPS for Serĉilo (compose profile "https"). DOMAIN comes from .env.local.
+{$DOMAIN} {
+	encode gzip
+	reverse_proxy serchi:3000
+}
