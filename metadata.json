@@ -1,0 +1,6 @@
+{
+  "name": "Serĉilo - Esperanto Search Engine",
+  "description": "Rapida, minimalisma serĉilo por malkovri kursojn, projektojn, novaĵojn, literaturon kaj ilojn en Esperanto laŭ lingva nivelo kaj temoj.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
