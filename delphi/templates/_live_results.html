@@ -1,0 +1,33 @@
+@if Model.IsError {
+<p class="rounded bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-200 p-2">@Model.Message</p>
+}
+@if Model.HasLiveItems {
+<ul class="mt-2 space-y-3">
+  @ForEach (var it in Model.LiveItems) {
+  <li class="rounded-xl border border-gray-200 dark:border-gray-700 p-3">
+    <p class="text-xs text-gray-500">@it.DisplayUrl</p>
+    <a href="@it.Url" target="_blank" rel="noopener" hx-boost="false" class="font-semibold text-blue-800 dark:text-blue-300 hover:underline">@it.Title</a>
+    <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">@it.Snippet</p>
+    <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+      <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">@it.Level</span>
+      <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">@it.CategoryLabel</span>
+      <span class="flex-1"></span>
+      @if it.InIndex {
+      <span class="px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500">✔ @t.alreadyInIndexBadge</span>
+      }
+      @else {
+      <form hx-post="/import" hx-swap="outerHTML" class="inline">
+        <input type="hidden" name="url" value="@it.Url">
+        <input type="hidden" name="title" value="@it.Title">
+        <input type="hidden" name="displayUrl" value="@it.DisplayUrl">
+        <input type="hidden" name="snippet" value="@it.Snippet">
+        <input type="hidden" name="level" value="@it.Level">
+        <input type="hidden" name="category" value="@it.Category">
+        <button type="submit" class="px-3 py-1 rounded-full bg-emerald-600 text-white font-semibold">＋ @t.submitAddResourceBtn</button>
+      </form>
+      }
+    </div>
+  </li>
+  }
+</ul>
+}

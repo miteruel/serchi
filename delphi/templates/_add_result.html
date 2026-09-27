@@ -1,0 +1,6 @@
+@if Model.IsSuccess {
+<p class="rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-200 p-2">✔ @Model.Message</p>
+}
+@if Model.IsError {
+<p class="rounded bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-200 p-2">✖ @Model.Message</p>
+}

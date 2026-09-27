@@ -1,0 +1,2 @@
+<button type="button" hx-post="/forum/like?id=@Model.Id" hx-swap="outerHTML"
+        class="px-3 py-1 rounded-full border @if Model.Liked {border-red-300 text-red-600} @else {border-gray-300 dark:border-gray-600}">♥ @Model.Likes</button>

@@ -1,0 +1,10 @@
+<div class="rounded-xl bg-gray-50 dark:bg-[#303134] p-3 text-sm flex flex-wrap items-center gap-2">
+  <span class="inline-flex w-8 h-8 rounded-full @App.UserAvatar text-white items-center justify-center font-bold">👤</span>
+  <span><b>@App.UserName</b> · @t.currentRoleLabel</span>
+  <span class="flex-1"></span>
+  <span class="text-xs text-gray-500">@t.switchUserRole</span>
+  <a href="/role?r=learner" hx-boost="false" class="px-2 py-1 rounded-full text-xs border @if App.IsLearner {bg-emerald-600 text-white border-emerald-600} @else {border-gray-300 dark:border-gray-600}">@t.forumRoleLearner</a>
+  <a href="/role?r=teacher" hx-boost="false" class="px-2 py-1 rounded-full text-xs border @if App.IsTeacher {bg-blue-600 text-white border-blue-600} @else {border-gray-300 dark:border-gray-600}">@t.forumRoleTeacher</a>
+  <a href="/role?r=moderator" hx-boost="false" class="px-2 py-1 rounded-full text-xs border @if App.IsModerator {bg-purple-600 text-white border-purple-600} @else {border-gray-300 dark:border-gray-600}">@t.forumRoleModerator</a>
+  <p class="w-full text-xs text-gray-500">@if App.IsModerator {@t.forumModHelpText} @else {@t.forumLearnerHelpText}</p>
+</div>

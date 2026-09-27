@@ -1,0 +1,343 @@
+{
+  "topics": [
+    {
+      "id": "topic-bonvenon",
+      "title": "Bonvenon al la Komunumo de Serĉilo! Bonvolu prezenti vin ĉi tie 🌟",
+      "content": "Saluton al ĉiuj! Ĉi tiu forumo estas amika kaj libera spaco por ĉiuj esperantistoj kaj lernantoj, de nivelo A1 (komencantoj) ĝis C1 (spertuloj). Skribu el kie vi estas, kial vi eklernis Esperanton kaj kiun nivelon vi havas!",
+      "author": {
+        "id": "user_mod_ana",
+        "name": "Ana_Moderatorino",
+        "role": "moderator",
+        "avatarColor": "bg-purple-600",
+        "levelBadge": "C1"
+      },
+      "level": "all",
+      "category": "general",
+      "tags": [
+        "bonvenon",
+        "komunumo",
+        "prezentoj",
+        "a1",
+        "amikeco"
+      ],
+      "createdAt": "2026-09-24T00:52:15.428Z",
+      "updatedAt": "2026-09-27T00:22:15.428Z",
+      "views": 342,
+      "likes": 28,
+      "likedByMe": true,
+      "repliesCount": 4,
+      "isPinned": true,
+      "isLocked": false,
+      "languageUsed": "multilingual"
+    },
+    {
+      "id": "topic-akuzativo-helpo",
+      "title": "Duda sobre el acusativo (-n): ¿Cuándo NO debo usarlo? (Nivelo A1/A2)",
+      "content": "Saluton! Estoy empezando con el nivel A2 y a veces me confundo con el acusativo cuando hay preposiciones como \"al\", \"en\" o verbos de estado (\"esti\"). ¿Alguien me podría explicar de forma sencilla la regla básica para no meter la pata? Dankon antaŭe!",
+      "author": {
+        "id": "user_sofia",
+        "name": "Sofia_Komencanto",
+        "role": "learner",
+        "avatarColor": "bg-amber-600",
+        "levelBadge": "A1"
+      },
+      "level": "A1",
+      "category": "grammar",
+      "tags": [
+        "akuzativo",
+        "dudoj",
+        "gramatiko",
+        "a1",
+        "espanol"
+      ],
+      "createdAt": "2026-09-26T06:52:15.428Z",
+      "updatedAt": "2026-09-26T22:52:15.428Z",
+      "views": 189,
+      "likes": 14,
+      "likedByMe": false,
+      "repliesCount": 3,
+      "isPinned": false,
+      "isLocked": false,
+      "languageUsed": "es"
+    },
+    {
+      "id": "topic-podkasto-rekomendoj",
+      "title": "Kiujn podkastojn vi plej ŝatas por ekzerci la orelon en nivelo B1?",
+      "content": "Mi ĵus finis la kurson ĉe Duolingo kaj Lernu.net, kaj nun mi volas aŭskulti fluajn konversaciojn. Mi jam konas Esperanto Retradion (tre bona por mallongaj temoj) kaj Kern.punkton (iom rapida por mi). Ĉu vi havas aliajn rekomendojn por mezniveluloj?",
+      "author": {
+        "id": "user_current",
+        "name": "VerdaStelulo",
+        "role": "learner",
+        "avatarColor": "bg-emerald-600",
+        "levelBadge": "A2"
+      },
+      "level": "B1",
+      "category": "practice",
+      "tags": [
+        "podkastoj",
+        "audado",
+        "b1",
+        "rekomendoj",
+        "kernpunkto"
+      ],
+      "createdAt": "2026-09-26T16:52:15.428Z",
+      "updatedAt": "2026-09-27T00:07:15.428Z",
+      "views": 95,
+      "likes": 9,
+      "likedByMe": true,
+      "repliesCount": 2,
+      "isPinned": false,
+      "isLocked": false,
+      "languageUsed": "eo"
+    },
+    {
+      "id": "topic-virtuala-babilado",
+      "title": "Semajna virtuala babilado por komencantoj (Discord & Zoom)",
+      "content": "Ni organizas ĉiun ĵaŭdon je la 19:00 (UTC) amikan babiladon en Discord por komencantoj (A1-A2). Ni parolas malrapide, uzas facilan vortprovizon kaj reciproke helpas nin sen timo pri eraroj. Venu ĉiuj!",
+      "author": {
+        "id": "user_teacher_marko",
+        "name": "Instruisto_Marko",
+        "role": "teacher",
+        "avatarColor": "bg-blue-600",
+        "levelBadge": "C1"
+      },
+      "level": "A2",
+      "category": "events",
+      "tags": [
+        "eventoj",
+        "discord",
+        "babilado",
+        "parolado",
+        "senpaga"
+      ],
+      "createdAt": "2026-09-25T08:52:15.428Z",
+      "updatedAt": "2026-09-26T22:52:15.428Z",
+      "views": 215,
+      "likes": 21,
+      "likedByMe": false,
+      "repliesCount": 1,
+      "isPinned": true,
+      "isLocked": false,
+      "languageUsed": "eo"
+    },
+    {
+      "id": "topic-literaturo-facila",
+      "title": "Recomendaciones de primeros libros para leer en Esperanto",
+      "content": "Para quienes ya conocen las reglas básicas, ¿cuál fue su primer libro completo leído en Esperanto? Yo recomiendo \"Gerda malaperis!\" de Claude Piron y los relatos breves de Bobelarto. ¿Qué otros títulos fáciles aconsejáis?",
+      "author": {
+        "id": "user_mod_ana",
+        "name": "Ana_Moderatorino",
+        "role": "moderator",
+        "avatarColor": "bg-purple-600",
+        "levelBadge": "C1"
+      },
+      "level": "A2",
+      "category": "resources",
+      "tags": [
+        "libroj",
+        "legado",
+        "gerda",
+        "literaturo",
+        "bobelarto"
+      ],
+      "createdAt": "2026-09-24T00:52:15.428Z",
+      "updatedAt": "2026-09-26T12:52:15.428Z",
+      "views": 164,
+      "likes": 17,
+      "likedByMe": false,
+      "repliesCount": 2,
+      "isPinned": false,
+      "isLocked": false,
+      "languageUsed": "multilingual"
+    }
+  ],
+  "comments": {
+    "topic-bonvenon": [
+      {
+        "id": "comm-1",
+        "topicId": "topic-bonvenon",
+        "author": {
+          "id": "user_sofia",
+          "name": "Sofia_Komencanto",
+          "role": "learner",
+          "avatarColor": "bg-amber-600",
+          "levelBadge": "A1"
+        },
+        "content": "Saluton el Madrido! Mi estas Sofia, mi eklernis antaŭ 2 monatoj per Duolingo kaj mi tre ĝuas la lingvon. Ĉi tiu serĉilo kaj forumo estas bonegaj!",
+        "createdAt": "2026-09-25T00:52:15.428Z",
+        "likes": 6,
+        "likedByMe": true
+      },
+      {
+        "id": "comm-2",
+        "topicId": "topic-bonvenon",
+        "author": {
+          "id": "user_teacher_marko",
+          "name": "Instruisto_Marko",
+          "role": "teacher",
+          "avatarColor": "bg-blue-600",
+          "levelBadge": "C1"
+        },
+        "content": "Bonvenon Sofia kaj ĉiuj novuloj! Memoru ke en Esperanto ne ekzistas stultaj demandoj. Ĉiu eraro estas paŝo antaŭen!",
+        "createdAt": "2026-09-25T04:52:15.428Z",
+        "likes": 8,
+        "likedByMe": false
+      },
+      {
+        "id": "comm-3",
+        "topicId": "topic-bonvenon",
+        "author": {
+          "id": "user_current",
+          "name": "VerdaStelulo",
+          "role": "learner",
+          "avatarColor": "bg-emerald-600",
+          "levelBadge": "A2"
+        },
+        "content": "Saluton el Argentino! Mi celas atingi nivelon B1 ĉi-jare por partopreni en la sekva virtuala kongreso.",
+        "createdAt": "2026-09-26T04:52:15.428Z",
+        "likes": 4,
+        "likedByMe": false
+      },
+      {
+        "id": "comm-4",
+        "topicId": "topic-bonvenon",
+        "author": {
+          "id": "user_mod_ana",
+          "name": "Ana_Moderatorino",
+          "role": "moderator",
+          "avatarColor": "bg-purple-600",
+          "levelBadge": "C1"
+        },
+        "content": "Regulo de la forumo: bonvole estu respektemaj, helpemaj kaj afablaj. Moderantoj pretas helpi kiam ajn!",
+        "createdAt": "2026-09-27T00:22:15.428Z",
+        "likes": 12,
+        "isModeratorNote": true
+      }
+    ],
+    "topic-akuzativo-helpo": [
+      {
+        "id": "comm-5",
+        "topicId": "topic-akuzativo-helpo",
+        "author": {
+          "id": "user_teacher_marko",
+          "name": "Instruisto_Marko",
+          "role": "teacher",
+          "avatarColor": "bg-blue-600",
+          "levelBadge": "C1"
+        },
+        "content": "¡Hola Sofía! Regla de oro número 1: NUNCA se usa acusativo (-n) con el verbo \"esti\" (ser/estar) ni con verbos de estado (\"fariĝi\", \"ŝajni\"), porque no reciben la acción, sino que describen al sujeto. Ejemplo correcto: \"Ŝi estas bona instruisto\" (sin -n).\n\nRegla 2: Después de preposiciones que ya indican dirección fija como \"al\" o \"ĝis\", tampoco se pone -n (\"Mi iras al la lernejo\"). Solo se añade -n a preposiciones como \"en\", \"sub\", \"sur\" si hay movimiento de entrar o subirse (\"Mi saltas en la akvon\" = salto AL agua). ¡Ánimo!",
+        "createdAt": "2026-09-26T08:52:15.428Z",
+        "likes": 15,
+        "likedByMe": true
+      },
+      {
+        "id": "comm-6",
+        "topicId": "topic-akuzativo-helpo",
+        "author": {
+          "id": "user_sofia",
+          "name": "Sofia_Komencanto",
+          "role": "learner",
+          "avatarColor": "bg-amber-600",
+          "levelBadge": "A1"
+        },
+        "content": "¡Muchísimas gracias Marko! La distinción con \"esti\" y con \"al\" me ha quedado clarísima.",
+        "createdAt": "2026-09-26T10:52:15.428Z",
+        "likes": 3,
+        "likedByMe": false
+      },
+      {
+        "id": "comm-7",
+        "topicId": "topic-akuzativo-helpo",
+        "author": {
+          "id": "user_mod_ana",
+          "name": "Ana_Moderatorino",
+          "role": "moderator",
+          "avatarColor": "bg-purple-600",
+          "levelBadge": "C1"
+        },
+        "content": "Consulteu también la guía rápida en PMEG sobre el rol \"-n\" que está vinculada en el panel de herramientas de Serĉilo: bertilow.com/pmeg/gramatiko/rolmontriloj/n/",
+        "createdAt": "2026-09-26T22:52:15.428Z",
+        "likes": 5
+      }
+    ],
+    "topic-podkasto-rekomendoj": [
+      {
+        "id": "comm-8",
+        "topicId": "topic-podkasto-rekomendoj",
+        "author": {
+          "id": "user_mod_ana",
+          "name": "Ana_Moderatorino",
+          "role": "moderator",
+          "avatarColor": "bg-purple-600",
+          "levelBadge": "C1"
+        },
+        "content": "Provu \"Muzaiko\" por muziko kun mallongaj novaĵoj, kaj ankaŭ la kanalon \"Scivolemo\" se vi ŝatas sciencajn temojn en facila lingvo! Alia bonega podkasto estas \"Movada Vidpunkto\".",
+        "createdAt": "2026-09-26T18:52:15.428Z",
+        "likes": 5,
+        "likedByMe": false
+      },
+      {
+        "id": "comm-9",
+        "topicId": "topic-podkasto-rekomendoj",
+        "author": {
+          "id": "user_teacher_marko",
+          "name": "Instruisto_Marko",
+          "role": "teacher",
+          "avatarColor": "bg-blue-600",
+          "levelBadge": "C1"
+        },
+        "content": "Ankaŭ \"Tubaro\" havas filtrilon por videoj kun subtekstoj en Esperanto, kio multe helpas dum nivelo B1 por ligi la sonon al la skribita teksto.",
+        "createdAt": "2026-09-27T00:07:15.428Z",
+        "likes": 4,
+        "likedByMe": true
+      }
+    ],
+    "topic-virtuala-babilado": [
+      {
+        "id": "comm-10",
+        "topicId": "topic-virtuala-babilado",
+        "author": {
+          "id": "user_current",
+          "name": "VerdaStelulo",
+          "role": "learner",
+          "avatarColor": "bg-emerald-600",
+          "levelBadge": "A2"
+        },
+        "content": "Mi certe ĉeestos! Ĉu ni bezonas prepari iun temon aŭ ĉu estas libera konversacio?",
+        "createdAt": "2026-09-26T22:52:15.428Z",
+        "likes": 3
+      }
+    ],
+    "topic-literaturo-facila": [
+      {
+        "id": "comm-11",
+        "topicId": "topic-literaturo-facila",
+        "author": {
+          "id": "user_sofia",
+          "name": "Sofia_Komencanto",
+          "role": "learner",
+          "avatarColor": "bg-amber-600",
+          "levelBadge": "A1"
+        },
+        "content": "\"Gerda malaperis\" estis mia unua rakonto! Ĝi estas tre ekscita kaj oni lernas sen rimarki.",
+        "createdAt": "2026-09-25T18:52:15.428Z",
+        "likes": 6
+      },
+      {
+        "id": "comm-12",
+        "topicId": "topic-literaturo-facila",
+        "author": {
+          "id": "user_teacher_marko",
+          "name": "Instruisto_Marko",
+          "role": "teacher",
+          "avatarColor": "bg-blue-600",
+          "levelBadge": "C1"
+        },
+        "content": "Ankaŭ serĉu la bitlibrojn de la Hispana Esperanto-Federacio en bitlibroj.esperanto.es, ili havas senpagajn infanlibrojn kaj novelojn tre agrablajn por komencantoj.",
+        "createdAt": "2026-09-26T12:52:15.428Z",
+        "likes": 7,
+        "likedByMe": false
+      }
+    ]
+  }
+}

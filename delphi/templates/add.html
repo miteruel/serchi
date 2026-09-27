@@ -1,0 +1,84 @@
+@LayoutPage layout.html
+<section class="max-w-3xl mx-auto w-full px-4 py-8 space-y-8">
+  <div>
+    <h1 class="text-2xl font-semibold">＋ @t.addResourceModalTitle</h1>
+    <p class="text-gray-600 dark:text-gray-400 mt-1">@t.addResourceModalSubtitle</p>
+  </div>
+
+  @* Manual add *@
+  <form hx-post="/add" hx-target="#add-result" class="rounded-2xl border border-gray-200 dark:border-gray-700 p-5 space-y-3 text-sm">
+    <h2 class="font-semibold text-base">✍ @t.tabManualAdd</h2>
+    <label class="block">
+      <span class="text-gray-600 dark:text-gray-400">@t.urlLabel</span>
+      <input name="url" type="url" required placeholder="@t.urlPlaceholder"
+             class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+      <span class="text-xs text-gray-500">@t.urlHelperText</span>
+    </label>
+    <label class="block">
+      <span class="text-gray-600 dark:text-gray-400">@t.resourceTitleLabel</span>
+      <input name="title" data-xsystem placeholder="@t.resourceTitlePlaceholder"
+             class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+    </label>
+    <label class="block">
+      <span class="text-gray-600 dark:text-gray-400">@t.resourceDescLabel</span>
+      <textarea name="description" rows="3" data-xsystem placeholder="@t.resourceDescPlaceholder"
+                class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"></textarea>
+    </label>
+    <div class="grid sm:grid-cols-3 gap-3">
+      <label class="block">
+        <span class="text-gray-600 dark:text-gray-400">@t.categoryLabelSelect</span>
+        <select name="category" class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-2 py-2">
+          @ForEach (var o in Model.CategoryOptions) {
+          <option value="@o.Value" @if o.Selected {selected}>@o.Caption</option>
+          }
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-gray-600 dark:text-gray-400">@t.levelLabelSelect</span>
+        <select name="level" class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-2 py-2">
+          @ForEach (var o in Model.LevelOptions) {
+          <option value="@o.Value" @if o.Selected {selected}>@o.Caption</option>
+          }
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-gray-600 dark:text-gray-400">@t.formatLabelSelect</span>
+        <select name="format" class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-2 py-2">
+          @ForEach (var o in Model.FormatOptions) {
+          <option value="@o.Value" @if o.Selected {selected}>@o.Caption</option>
+          }
+        </select>
+      </label>
+    </div>
+    <label class="block">
+      <span class="text-gray-600 dark:text-gray-400">@t.tagsLabelInput</span>
+      <input name="tags" placeholder="@t.tagsPlaceholderInput"
+             class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+    </label>
+    <label class="inline-flex items-center gap-2">
+      <input type="checkbox" name="free" value="1" checked class="accent-emerald-600"> @t.freeResourceCheckbox
+    </label>
+    <div id="add-result"></div>
+    <button type="submit" class="px-5 py-2 rounded-full bg-emerald-600 text-white font-semibold">@t.submitAddResourceBtn</button>
+  </form>
+
+  @* Live discovery with Gemini + Google Search grounding *@
+  <form id="live" hx-post="/live-search" hx-target="#live-results" hx-indicator="#live-spinner"
+        class="rounded-2xl border border-emerald-300 dark:border-emerald-700 p-5 space-y-3 text-sm">
+    <h2 class="font-semibold text-base">🌐 @t.tabGoogleCrawler</h2>
+    <p class="text-gray-600 dark:text-gray-400">@t.crawlerNoticeText</p>
+    @if not App.LiveSearchEnabled {
+    <p class="rounded bg-amber-50 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200 p-2 text-xs">⚠ GEMINI_API_KEY</p>
+    }
+    <label class="block">
+      <span class="text-gray-600 dark:text-gray-400">@t.crawlerQueryLabel</span>
+      <div class="mt-1 flex gap-2">
+        <input name="q" value="@Model.LiveQuery" required data-xsystem placeholder="@t.crawlerQueryPlaceholder"
+               class="flex-1 rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+        <button type="submit" class="px-4 py-2 rounded-full bg-emerald-600 text-white font-semibold">@t.startCrawlerBtn</button>
+      </div>
+    </label>
+    <p id="live-spinner" class="htmx-indicator text-emerald-700 dark:text-emerald-300">◌ @t.crawlingProgressText</p>
+  </form>
+  <div id="live-results"></div>
+</section>

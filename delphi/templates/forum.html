@@ -1,0 +1,73 @@
+@LayoutPage layout.html
+<section class="max-w-4xl mx-auto w-full px-4 py-8 space-y-6">
+  <div>
+    <h1 class="text-3xl font-semibold">💬 @t.forumTitle</h1>
+    <p class="text-gray-600 dark:text-gray-400 mt-1">@t.forumTagline</p>
+  </div>
+
+  @Import _role_switcher.html
+
+  @* New topic form *@
+  <details class="rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+    <summary class="cursor-pointer font-semibold text-emerald-700 dark:text-emerald-300 select-none">＋ @t.newTopicBtn</summary>
+    <form hx-post="/forum/topic" hx-target="#topic-errors" class="mt-4 space-y-3 text-sm">
+      <label class="block">
+        <span class="text-gray-600 dark:text-gray-400">@t.forumTopicTitleLabel</span>
+        <input name="title" required data-xsystem placeholder="@t.topicTitlePlaceholder"
+               class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+      </label>
+      <label class="block">
+        <span class="text-gray-600 dark:text-gray-400">@t.forumTopicMessageLabel</span>
+        <textarea name="content" required rows="4" data-xsystem placeholder="@t.topicContentPlaceholder"
+                  class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"></textarea>
+      </label>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <label class="block">
+          <span class="text-gray-600 dark:text-gray-400">@t.topicCategoryLabel</span>
+          <select name="category" class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-2 py-2">
+            @ForEach (var o in Model.NewCategoryOptions) {
+            <option value="@o.Value" @if o.Selected {selected}>@o.Caption</option>
+            }
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-gray-600 dark:text-gray-400">@t.topicLevelLabel</span>
+          <select name="level" class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-2 py-2">
+            @ForEach (var o in Model.NewLevelOptions) {
+            <option value="@o.Value" @if o.Selected {selected}>@o.Caption</option>
+            }
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-gray-600 dark:text-gray-400">@t.topicTagsLabel</span>
+          <input name="tags" placeholder="@t.forumTopicTagsPlaceholder"
+                 class="mt-1 w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+        </label>
+      </div>
+      <div id="topic-errors"></div>
+      <button type="submit" class="px-5 py-2 rounded-full bg-emerald-600 text-white font-semibold">@t.publishTopicBtn</button>
+    </form>
+  </details>
+
+  @* Filters: live-updated topic list *@
+  <form hx-get="/forum" hx-target="#topics" hx-push-url="true"
+        hx-trigger="change, input changed delay:350ms from:#forum-q, submit"
+        class="flex flex-wrap gap-2 text-sm">
+    <input id="forum-q" type="search" name="q" value="@Model.Query" data-xsystem placeholder="@t.searchForumPlaceholder"
+           class="flex-1 min-w-[12rem] rounded-full border border-gray-300 dark:border-gray-600 bg-transparent px-4 py-2">
+    <select name="category" aria-label="@t.filterByForumCategory" class="rounded-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+      @ForEach (var o in Model.CategoryOptions) {
+      <option value="@o.Value" @if o.Selected {selected}>@o.Caption</option>
+      }
+    </select>
+    <select name="level" aria-label="@t.filterByForumLevel" class="rounded-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+      @ForEach (var o in Model.LevelOptions) {
+      <option value="@o.Value" @if o.Selected {selected}>@o.Caption</option>
+      }
+    </select>
+  </form>
+
+  <div id="topics">
+    @Import _topics.html
+  </div>
+</section>

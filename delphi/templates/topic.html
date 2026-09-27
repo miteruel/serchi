@@ -1,0 +1,88 @@
+@LayoutPage layout.html
+<section class="max-w-3xl mx-auto w-full px-4 py-8 space-y-6">
+  <a href="/forum" class="text-sm text-emerald-700 dark:text-emerald-300 hover:underline">← @t.backToTopics</a>
+
+  @Import _role_switcher.html
+
+  <article class="rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+    <div class="flex flex-wrap items-center gap-2 text-xs">
+      @if Model.Topic.IsPinned {<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">📌 @t.pinned</span>}
+      @if Model.Topic.IsLocked {<span class="px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">🔒 @t.locked</span>}
+      <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">@Model.Topic.CategoryLabel</span>
+      <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">@Model.Topic.LevelLabel</span>
+    </div>
+    <h1 class="mt-2 text-2xl font-semibold">@Model.Topic.Title</h1>
+    <div class="mt-3 flex items-center gap-3 text-sm">
+      <span class="inline-flex w-9 h-9 rounded-full @Model.Topic.AuthorAvatar text-white items-center justify-center font-bold text-xs">@Model.Topic.AuthorLevel</span>
+      <span><b>@Model.Topic.AuthorName</b> · @Model.Topic.AuthorRole · @Model.Topic.Created</span>
+    </div>
+    <p class="mt-4 leading-relaxed whitespace-pre-line">@Model.Topic.Content</p>
+    <div class="mt-4 flex flex-wrap gap-2">
+      @ForEach (var tag in Model.Topic.Tags) {
+      <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-xs">#@tag.Text</span>
+      }
+    </div>
+    <div class="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+      <button type="button" hx-post="/forum/like?id=@Model.Topic.Id" hx-swap="outerHTML"
+              class="px-3 py-1 rounded-full border @if Model.Topic.Liked {border-red-300 text-red-600} @else {border-gray-300 dark:border-gray-600}">♥ @Model.Topic.Likes</button>
+      <span>👁 @Model.Topic.Views @t.views</span>
+    </div>
+
+    @if Model.Topic.CanModerate {
+    <div class="mt-5 pt-4 border-t border-dashed border-purple-300 flex flex-wrap items-center gap-2 text-sm">
+      <span class="font-semibold text-purple-700 dark:text-purple-300">🛡 @t.moderatorTools</span>
+      <button type="button" hx-post="/forum/mod?action=pin&id=@Model.Topic.Id" class="px-3 py-1 rounded-full border border-purple-300">📌 @if Model.Topic.IsPinned {@t.modUnpinAction} @else {@t.modPinAction}</button>
+      <button type="button" hx-post="/forum/mod?action=lock&id=@Model.Topic.Id" class="px-3 py-1 rounded-full border border-purple-300">🔒 @if Model.Topic.IsLocked {@t.modUnlockAction} @else {@t.modLockAction}</button>
+      <button type="button" hx-post="/forum/mod?action=delete&id=@Model.Topic.Id" hx-confirm="@t.forumConfirmDeleteTopic" class="px-3 py-1 rounded-full border border-red-300 text-red-600">🗑 @t.modDeleteTopic</button>
+    </div>
+    }
+  </article>
+
+  <h2 class="text-lg font-semibold">💬 @t.replies</h2>
+  <ul id="comments" class="space-y-4">
+    @ForEach (var c in Model.Topic.Comments) {
+    <li id="c-@c.Id" class="rounded-xl p-4 @if c.IsModNote {bg-purple-50 dark:bg-purple-900/30 border border-purple-300} @else {bg-gray-50 dark:bg-[#303134]}">
+      <div class="flex items-center gap-2 text-sm">
+        <span class="inline-flex w-8 h-8 rounded-full @c.AuthorAvatar text-white items-center justify-center font-bold text-xs">@c.AuthorLevel</span>
+        <b>@c.AuthorName</b>
+        <span class="text-xs text-gray-500">@c.AuthorRole · @c.Created</span>
+        @if c.IsModNote {<span class="text-xs font-semibold text-purple-700 dark:text-purple-300">🛡 @t.forumOfficialNote</span>}
+      </div>
+      <p class="mt-2 whitespace-pre-line">@c.Content</p>
+      <div class="mt-2 flex items-center gap-2 text-xs">
+        <button type="button" hx-post="/forum/comment-like?topic=@c.TopicId&id=@c.Id" hx-swap="outerHTML"
+                class="px-2 py-0.5 rounded-full border @if c.Liked {border-red-300 text-red-600} @else {border-gray-300 dark:border-gray-600}">♥ @c.Likes</button>
+        @if c.CanModerate {
+        <button type="button" hx-post="/forum/comment-delete?topic=@c.TopicId&id=@c.Id" hx-target="#c-@c.Id" hx-swap="outerHTML"
+                hx-confirm="@t.forumConfirmDeleteComment" class="px-2 py-0.5 rounded-full border border-red-300 text-red-600">🗑 @t.modDeleteComment</button>
+        }
+      </div>
+    </li>
+    }
+  </ul>
+  @if not Model.Topic.HasComments {
+  <p id="no-replies" class="text-sm text-gray-500">@t.forumNoRepliesYet</p>
+  }
+
+  @if Model.Topic.CanReply {
+  <form hx-post="/forum/reply?id=@Model.Topic.Id" hx-target="#comments" hx-swap="beforeend"
+        hx-on::after-request="if(event.detail.successful) this.reset()"
+        class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
+    <label class="block text-sm font-semibold" for="reply">@t.replyToTopic</label>
+    <textarea id="reply" name="content" rows="3" required data-xsystem placeholder="@t.replyPlaceholder"
+              class="w-full rounded border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"></textarea>
+    <div class="flex flex-wrap items-center gap-3">
+      <button type="submit" class="px-5 py-2 rounded-full bg-emerald-600 text-white font-semibold">@t.postReplyBtn</button>
+      @if App.IsModerator {
+      <label class="inline-flex items-center gap-1.5 text-sm text-purple-700 dark:text-purple-300">
+        <input type="checkbox" name="modnote" value="1" class="accent-purple-600"> 🛡 @t.forumOfficialNote
+      </label>
+      }
+      <span class="text-xs text-gray-400">@t.forumAutoXActiveText</span>
+    </div>
+  </form>
+  }
+  @else {
+  <p class="rounded-xl bg-gray-100 dark:bg-gray-800 p-4 text-sm">🔒 @t.topicLockedNotice</p>
+  }
+</section>

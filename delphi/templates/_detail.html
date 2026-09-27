@@ -1,0 +1,55 @@
+@* Resource preview modal, loaded into #modal with hx-get="/resource?id=..." *@
+<div class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" data-modal>
+  <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-[#292a2d] shadow-2xl p-6">
+    <button type="button" data-close class="absolute top-3 right-3 w-9 h-9 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="@t.closeModal">✕</button>
+
+    <p class="text-xs text-gray-500">@Model.DisplayUrl</p>
+    <h2 class="text-2xl font-semibold mt-1 pr-8">@Model.Title</h2>
+    <div class="mt-2 flex flex-wrap gap-2 text-xs">
+      <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 font-semibold">@Model.LevelLabel</span>
+      <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">@Model.CategoryLabel</span>
+      <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">@Model.FormatLabel</span>
+      @if Model.IsFree {
+      <span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">@t.freeBadge</span>
+      }
+      @if Model.Featured {
+      <span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">★ @t.featuredBadge</span>
+      }
+    </div>
+
+    <h3 class="mt-5 text-sm font-semibold uppercase tracking-wide text-gray-500">@t.detailDescriptionTitle</h3>
+    <p class="mt-1 leading-relaxed">@Model.Description</p>
+
+    @if Model.HasFeatures {
+    <h3 class="mt-5 text-sm font-semibold uppercase tracking-wide text-gray-500">@t.detailFeaturesTitle</h3>
+    <ul class="mt-1 list-disc pl-5 space-y-1">
+      @ForEach (var f in Model.Features) {
+      <li>@f.Text</li>
+      }
+    </ul>
+    }
+
+    <dl class="mt-5 grid grid-cols-2 gap-3 text-sm">
+      @if Model.HasAuthor {
+      <div><dt class="text-gray-500">✍</dt><dd>@Model.Author</dd></div>
+      }
+      @if Model.HasYear {
+      <div><dt class="text-gray-500">📅</dt><dd>@Model.Year</dd></div>
+      }
+      <div class="col-span-2"><dt class="text-gray-500">🌐</dt><dd>@Model.LanguagesText</dd></div>
+    </dl>
+
+    <h3 class="mt-5 text-sm font-semibold uppercase tracking-wide text-gray-500">@t.detailTagsTitle</h3>
+    <div class="mt-2 flex flex-wrap gap-2">
+      @ForEach (var tag in Model.Tags) {
+      <a href="/search?q=@tag.Text" class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-xs hover:bg-emerald-50">#@tag.Text</a>
+      }
+    </div>
+
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <a href="@Model.Url" target="_blank" rel="noopener" hx-boost="false" class="px-5 py-2 rounded-full bg-emerald-600 text-white font-semibold">@t.visitSite ↗</a>
+      @Import _bookmark_btn.html
+      <button type="button" data-copy="@Model.Url" data-copied="@t.linkCopied" class="px-3 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-sm">🔗 @t.copyLink</button>
+    </div>
+  </div>
+</div>
