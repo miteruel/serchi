@@ -1,8 +1,14 @@
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+<img width="1200" height="320" alt="Serĉilo, de Liberanimo Teruel: creado con Google AI Studio, corregido y ampliado con Claude Code en la nube" src="docs/banner-claude-code.svg" />
 </div>
 
-# Run and deploy your AI Studio app
+# Serĉilo
+
+Search engine for Esperanto resources by **Liberanimo Teruel**. The app was created with
+Google AI Studio and later fixed and extended with Claude Code on the web: SQLite
+database, Delphi version, reviewed links, shared forum, mini-course and more (see
+[Historia del proyecto](#historia-del-proyecto)).
 
 This contains everything you need to run your app locally.
 
