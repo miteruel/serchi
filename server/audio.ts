@@ -9,9 +9,11 @@
  * sent by visitors (table "recordings", audio stored in the database) and the
  * list of recordings the pages play.
  *
- * Two sources of audio, the first one wins for a word:
+ * Three sources of audio, the first one wins for a word:
  *  1. MP3 files committed in public/audio/<slug>.mp3 (see docs/GRABACIONES.md);
- *  2. recordings sent from the "Grabar" page and approved by a moderator.
+ *  2. recordings sent from the "Grabar" page and approved by a moderator;
+ *  3. a synthetic voice in public/audio/tts/<slug>.mp3 (npm run audio:tts), so
+ *     every word has an example until someone records it.
  */
 import type { DatabaseSync } from 'node:sqlite';
 import fs from 'fs';
@@ -22,6 +24,7 @@ type Row = Record<string, any>;
 
 export const COURSE_PAGES = ['public/minikurso.html', 'public/minikurso-en.html'];
 export const AUDIO_DIR = path.join(ROOT_DIR, 'public', 'audio');
+export const TTS_DIR = path.join(AUDIO_DIR, 'tts');
 
 /** Limits for recordings sent by visitors. */
 export const RECORDING_LIMITS = {
@@ -66,14 +69,23 @@ export function courseWords(): Map<string, string> {
   return words;
 }
 
-/** Slugs of the MP3 files committed in public/audio. */
-export function committedRecordings(): string[] {
-  if (!fs.existsSync(AUDIO_DIR)) return [];
+function mp3Slugs(dir: string): string[] {
+  if (!fs.existsSync(dir)) return [];
   return fs
-    .readdirSync(AUDIO_DIR)
+    .readdirSync(dir)
     .filter((f) => f.endsWith('.mp3'))
     .map((f) => f.slice(0, -4))
     .sort();
+}
+
+/** Slugs of the MP3 files committed in public/audio. */
+export function committedRecordings(): string[] {
+  return mp3Slugs(AUDIO_DIR);
+}
+
+/** Slugs of the synthetic voice files in public/audio/tts. */
+export function synthesizedRecordings(): string[] {
+  return mp3Slugs(TTS_DIR);
 }
 
 /**
@@ -157,9 +169,10 @@ export function deleteRecording(db: DatabaseSync, id: string): boolean {
 
 /**
  * What the mini-course plays: slug -> URL. Committed MP3 files first, then the
- * newest approved recording of each word.
+ * newest approved recording of each word, then the synthetic voice (left out
+ * with withSynthetic = false, to know which words still need a real voice).
  */
-export function audioMap(db: DatabaseSync): Record<string, string> {
+export function audioMap(db: DatabaseSync, withSynthetic = true): Record<string, string> {
   const map: Record<string, string> = {};
   for (const slug of committedRecordings()) map[slug] = `/audio/${slug}.mp3`;
   const approved = db
@@ -167,6 +180,9 @@ export function audioMap(db: DatabaseSync): Record<string, string> {
     .all() as Row[];
   for (const r of approved) {
     if (!map[r.slug]) map[r.slug] = `/api/recordings/${encodeURIComponent(r.id)}/audio`;
+  }
+  if (withSynthetic) {
+    for (const slug of synthesizedRecordings()) if (!map[slug]) map[slug] = `/audio/tts/${slug}.mp3`;
   }
   return map;
 }

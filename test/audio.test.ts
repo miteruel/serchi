@@ -26,6 +26,7 @@ import {
   detectAudioType,
   getRecordingAudio,
   listPendingRecordings,
+  synthesizedRecordings,
 } from '../server/audio';
 
 // Smallest byte strings that look like each container
@@ -65,7 +66,7 @@ test('recordings wait for approval and then play in the course', () => {
   const rec = addRecording(db, words, { slug: 'saluton', audio: WEBM, visitorId: 'visitor-a', name: ' Ana ' });
   assert.equal(rec.text, 'Saluton!');
 
-  assert.equal(audioMap(db).saluton, undefined, 'pending recordings are not played');
+  assert.equal(audioMap(db).saluton, '/audio/tts/saluton.mp3', 'pending recordings are not played');
   const pending = listPendingRecordings(db);
   assert.equal(pending.length, 1);
   assert.equal(pending[0].name, 'Ana');
@@ -78,8 +79,15 @@ test('recordings wait for approval and then play in the course', () => {
   assert.deepEqual(Buffer.from(stored.audio), WEBM);
 
   assert.equal(deleteRecording(db, rec.id), true);
-  assert.equal(audioMap(db).saluton, undefined);
+  assert.equal(audioMap(db).saluton, '/audio/tts/saluton.mp3', 'back to the synthetic voice');
+  assert.equal(audioMap(db, false).saluton, undefined);
   db.close();
+});
+
+test('every course word has a synthetic voice (npm run audio:tts)', () => {
+  const synthetic = new Set(synthesizedRecordings());
+  const missing = [...courseWords().keys()].filter((slug) => !synthetic.has(slug));
+  assert.deepEqual(missing, []);
 });
 
 test('bad recordings and floods are rejected', () => {

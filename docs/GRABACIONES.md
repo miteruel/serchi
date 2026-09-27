@@ -14,6 +14,10 @@ Hay dos formas de añadir grabaciones:
 - **Como ficheros MP3** en el repositorio, siguiendo los pasos siguientes. Si una
   palabra tiene las dos, suena el fichero MP3.
 
+Mientras nadie graba una palabra, suena una **voz sintética** (espeak-ng) guardada en
+`public/audio/tts/`. Se regenera con `npm run audio:tts` (hacen falta espeak-ng y
+ffmpeg) y deja de sonar en cuanto la palabra tiene una grabación de verdad.
+
 ## Cómo grabar ficheros MP3
 
 1. Graba cada palabra o frase por separado, despacio y con claridad, como se la dirías
