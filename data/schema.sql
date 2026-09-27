@@ -183,6 +183,14 @@ CREATE TABLE IF NOT EXISTS synthetic_audio (
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
 );
 
+-- Words whose synthetic voice a teacher removed from the course editor because
+-- it sounded wrong: they play nothing until someone records them, and the
+-- synthetic voice is not made again unless the teacher asks for it.
+CREATE TABLE IF NOT EXISTS muted_voices (
+  slug       TEXT PRIMARY KEY,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+
 -- Courses made with the course editor (public/editor.html). The content of a
 -- course (lessons, words, exercises...) is a JSON document validated by
 -- server/courses.ts; published courses are shown at /kurso/<slug>.

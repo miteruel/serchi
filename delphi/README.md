@@ -17,6 +17,11 @@ JSON en `delphi/data/`.
 - Indy y FireDAC con el driver SQLite (incluidos con Delphi).
 - Opcional: variable de entorno `GEMINI_API_KEY` para el descubrimiento de enlaces en
   vivo con Gemini + Google Search.
+- Opcional: [eSpeak NG](https://github.com/espeak-ng/espeak-ng/releases) y
+  [lame](https://lame.sourceforge.io/) para la voz sintética de las palabras de los
+  cursos. Se buscan en el `PATH` (y eSpeak NG también en su carpeta de instalación de
+  Windows); si están en otro sitio, indica sus rutas en `ESPEAK_NG` y `LAME`. Sin
+  ellos los cursos funcionan igual, pero sin voz sintética.
 
 ## Compilar y ejecutar
 
@@ -45,7 +50,8 @@ delphi/
 │   ├── Serchi.I18n.pas        traducciones (@t.clave en las plantillas)
 │   ├── Serchi.Gemini.pas      búsqueda en vivo (Gemini + Google Search grounding)
 │   ├── Serchi.Radio.pas       episodios de pódcast de las emisoras de radio
-│   └── Serchi.Courses.pas     páginas de los cursos creados con el editor (/kursoj, /kurso/…)
+│   ├── Serchi.Courses.pas     páginas de los cursos creados con el editor (/kursoj, /kurso/…)
+│   └── Serchi.Tts.pas         voz sintética de las palabras (espeak-ng + lame)
 ├── templates/                 plantillas WebStencils (páginas y fragmentos _*.html)
 ├── static/                    app.js (x-sistemo, copiar enlace, modal), css, icono
 └── data/                      traducciones y sinónimos (JSON generado desde TypeScript)

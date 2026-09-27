@@ -120,6 +120,11 @@ type
       made by the Node server or npm run audio:tts): slugs and MP3 audio }
     function SyntheticAudioSlugs: TArray<string>;
     function SyntheticAudio(const ASlug: string; out AData: TBytes): Boolean;
+    procedure SaveSyntheticAudio(const ASlug, AText: string; const AData: TBytes);
+    { Words whose synthetic voice a teacher removed (table muted_voices) }
+    function MutedVoices: TArray<string>;
+    procedure MuteVoice(const ASlug: string);
+    function UnmuteVoice(const ASlug: string): Boolean;
 
     // Course editor and recorder (the JSON API used by public/editor.html and
     // public/grabar.html, same as server/courses.ts and server/audio.ts)
@@ -138,6 +143,8 @@ type
     { Returns the new picture id; '' if the course does not exist }
     function AddCourseImage(const ACourseId, AMime: string; const AData: TBytes): string;
     function PublishedCourseContents: TArray<string>;
+    { Published courses: Key = title, Value = content JSON, ordered by title }
+    function PublishedCourseTitledContents: TArray<TPair<string, string>>;
     function RecordingsByVisitorToday(const AVisitor: string): Integer;
     function PendingRecordingCount: Integer;
     { Stores a pending recording; returns its id }
@@ -1266,6 +1273,51 @@ begin
   end;
 end;
 
+function TSerchiStore.MutedVoices: TArray<string>;
+var
+  Q: TFDQuery;
+  List: TList<string>;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TList<string>.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT slug FROM muted_voices ORDER BY slug');
+    while not Q.Eof do
+    begin
+      List.Add(Q.Fields[0].AsString);
+      Q.Next;
+    end;
+    Result := List.ToArray;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+procedure TSerchiStore.MuteVoice(const ASlug: string);
+begin
+  Lock;
+  try
+    FDB.ExecSQL('INSERT OR IGNORE INTO muted_voices (slug) VALUES (:slug)', [ASlug]);
+    FDB.ExecSQL('DELETE FROM synthetic_audio WHERE slug = :slug', [ASlug]);
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.UnmuteVoice(const ASlug: string): Boolean;
+begin
+  Lock;
+  try
+    Result := FDB.ExecSQL('DELETE FROM muted_voices WHERE slug = :slug', [ASlug]) > 0;
+  finally
+    Unlock;
+  end;
+end;
+
 { Course editor and recorder }
 
 function TSerchiStore.NewId(const APrefix: string): string;
@@ -1537,6 +1589,17 @@ begin
   end;
 end;
 
+procedure TSerchiStore.SaveSyntheticAudio(const ASlug, AText: string; const AData: TBytes);
+begin
+  Lock;
+  try
+    InsertWithBlob(FDB, 'INSERT OR REPLACE INTO synthetic_audio (slug, text, audio) VALUES (:slug, :text, :data)',
+      ['slug', 'text'], [ASlug, AText], AData);
+  finally
+    Unlock;
+  end;
+end;
+
 function TSerchiStore.AddCourseImage(const ACourseId, AMime: string; const AData: TBytes): string;
 begin
   Lock;
@@ -1566,6 +1629,30 @@ begin
     while not Q.Eof do
     begin
       List.Add(Q.Fields[0].AsString);
+      Q.Next;
+    end;
+    Result := List.ToArray;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.PublishedCourseTitledContents: TArray<TPair<string, string>>;
+var
+  Q: TFDQuery;
+  List: TList<TPair<string, string>>;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TList<TPair<string, string>>.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT title, content FROM courses WHERE published = 1 ORDER BY title');
+    while not Q.Eof do
+    begin
+      List.Add(TPair<string, string>.Create(Q.Fields[0].AsString, Q.Fields[1].AsString));
       Q.Next;
     end;
     Result := List.ToArray;

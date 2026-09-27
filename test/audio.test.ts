@@ -28,7 +28,7 @@ import {
   listPendingRecordings,
   synthesizedRecordings,
 } from '../server/audio';
-import { fillVoices, getSyntheticAudio, missingVoices } from '../server/tts';
+import { fillVoices, getSyntheticAudio, missingVoices, mutedVoices, muteVoice, unmuteVoice } from '../server/tts';
 
 // Smallest byte strings that look like each container
 const WEBM = Buffer.concat([Buffer.from([0x1a, 0x45, 0xdf, 0xa3]), Buffer.alloc(60, 1)]);
@@ -136,5 +136,35 @@ test('the editor courses get a synthetic voice that human recordings replace', a
   const rec = addRecording(db, words, { slug, audio: WEBM, visitorId: 'visitor-c' });
   approveRecording(db, rec.id);
   assert.equal(audioMap(db)[slug], `/api/recordings/${rec.id}/audio`);
+  db.close();
+});
+
+test('a teacher can remove a synthetic voice that sounds wrong', async () => {
+  const db = tempDb();
+  const fake = async (text: string) => Buffer.from(`mp3 of ${text}`);
+  await fillVoices(db, ['Bonan vesperon, Ana!'], fake);
+  const slug = 'bonan-vesperon-ana';
+  assert.ok(audioMap(db)[slug]);
+
+  muteVoice(db, slug);
+  assert.equal(audioMap(db)[slug], undefined, 'removed: plays nothing');
+  assert.equal(getSyntheticAudio(db, slug), undefined);
+  assert.deepEqual(mutedVoices(db), [slug]);
+  assert.equal(await fillVoices(db, ['Bonan vesperon, Ana!'], fake), 0, 'not made again');
+
+  // A mini-course word with its file in public/audio/tts
+  muteVoice(db, 'saluton');
+  assert.equal(audioMap(db).saluton, undefined);
+  assert.equal(unmuteVoice(db, 'saluton'), true);
+  assert.equal(audioMap(db).saluton, '/audio/tts/saluton.mp3');
+
+  // A human recording plays even when the synthetic voice was removed
+  const rec = addRecording(db, new Map([[slug, 'Bonan vesperon, Ana!']]), { slug, audio: WEBM, visitorId: 'visitor-d' });
+  approveRecording(db, rec.id);
+  assert.equal(audioMap(db)[slug], `/api/recordings/${rec.id}/audio`);
+
+  assert.equal(unmuteVoice(db, slug), true);
+  assert.equal(unmuteVoice(db, slug), false);
+  assert.equal(await fillVoices(db, ['Bonan vesperon, Ana!'], fake), 1, 'made again once allowed');
   db.close();
 });

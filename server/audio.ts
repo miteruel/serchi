@@ -170,8 +170,9 @@ export function deleteRecording(db: DatabaseSync, id: string): boolean {
 
 /**
  * What the mini-course plays: slug -> URL. Committed MP3 files first, then the
- * newest approved recording of each word, then the synthetic voice (left out
- * with withSynthetic = false, to know which words still need a real voice).
+ * newest approved recording of each word, then the synthetic voice unless a
+ * teacher removed it (left out with withSynthetic = false, to know which words
+ * still need a real voice).
  */
 export function audioMap(db: DatabaseSync, withSynthetic = true): Record<string, string> {
   const map: Record<string, string> = {};
@@ -183,9 +184,14 @@ export function audioMap(db: DatabaseSync, withSynthetic = true): Record<string,
     if (!map[r.slug]) map[r.slug] = `/api/recordings/${encodeURIComponent(r.id)}/audio`;
   }
   if (withSynthetic) {
-    for (const slug of synthesizedRecordings()) if (!map[slug]) map[slug] = `/audio/tts/${slug}.mp3`;
+    // Voices a teacher removed from the editor (table muted_voices) are not played
+    const muted = new Set((db.prepare('SELECT slug FROM muted_voices').all() as Row[]).map((r) => r.slug as string));
+    const add = (slug: string, url: string) => {
+      if (!map[slug] && !muted.has(slug)) map[slug] = url;
+    };
+    for (const slug of synthesizedRecordings()) add(slug, `/audio/tts/${slug}.mp3`);
     for (const r of db.prepare('SELECT slug FROM synthetic_audio').all() as Row[]) {
-      if (!map[r.slug]) map[r.slug] = `/api/tts/${encodeURIComponent(r.slug)}/audio`;
+      add(r.slug, `/api/tts/${encodeURIComponent(r.slug)}/audio`);
     }
   }
   return map;

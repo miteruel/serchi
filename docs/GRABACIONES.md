@@ -19,9 +19,13 @@ Mientras nadie graba una palabra, suena una **voz sintética** (espeak-ng) guard
 lame) y deja de sonar en cuanto la palabra tiene una grabación de verdad.
 
 Las palabras de los cursos del editor también tienen voz sintética, guardada en la base
-de datos: el servidor Node la crea al arrancar y al guardar un curso publicado (la
-imagen de Docker ya trae espeak-ng y lame). Con la versión Delphi, que no puede
-crearla, hay que ejecutar `npm run audio:tts` después de publicar un curso.
+de datos: el servidor (Node o Delphi) la crea al arrancar y al guardar un curso, si
+encuentra espeak-ng y lame (la imagen de Docker ya los trae; en Windows, instala
+eSpeak NG y lame, o indica sus rutas en las variables `ESPEAK_NG` y `LAME`).
+`npm run audio:tts` también la crea.
+
+En el editor de cursos se oye cada palabra. Si una voz sintética suena mal, se quita
+con ✕: esa palabra no suena hasta que alguien la grabe o se vuelva a pedir su voz.
 
 ## Cómo grabar ficheros MP3
 
