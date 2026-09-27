@@ -1085,6 +1085,18 @@ var
       SendApiError(403, 'moderator_key');
   end;
 
+  // Publishing audio without review, and running espeak-ng, need a real key:
+  // without FORUM_MODERATOR_KEY everyone would count as a moderator, so then
+  // nobody may do them (the page explains what to set)
+  function KeyedModeratorOnly: Boolean;
+  begin
+    Result := (ModeratorKey <> '') and IsModeratorApi;
+    if ModeratorKey = '' then
+      SendApiError(403, 'moderator_key_not_set')
+    else if not Result then
+      SendApiError(403, 'moderator_key');
+  end;
+
 begin
   Result := True;
   Method := FRequest.Method.ToUpper;
@@ -1100,7 +1112,7 @@ begin
   // it already has, or a synthetic one made now. { url } or 503 without espeak-ng
   if (APath = '/api/tts') and (Method = 'POST') then
   begin
-    if ModeratorOnly then
+    if KeyedModeratorOnly then
     begin
       Body := RequestJson;
       Map := nil;
@@ -1160,7 +1172,7 @@ begin
   // Removes the synthetic voice of a word that sounds wrong (course editor)
   if (Length(Seg) = 4) and (Seg[2] = 'tts') and (Method = 'DELETE') then
   begin
-    if ModeratorOnly then
+    if KeyedModeratorOnly then
     begin
       Slug := AudioSlug(TNetEncoding.URL.Decode(Seg[3]));
       if Slug = '' then
@@ -1227,6 +1239,8 @@ begin
         SendApiError(400, 'Missing visitor id')
       else if FRequest.QueryFields.Values['consent'] <> '1' then
         SendApiError(400, 'consent')
+      else if Trusted and (ModeratorKey = '') then
+        SendApiError(403, 'moderator_key_not_set')
       else if Trusted and not IsModeratorApi then
         SendApiError(403, 'moderator_key')
       else

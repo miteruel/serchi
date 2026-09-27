@@ -192,6 +192,7 @@ test('only speakers who ask for it are thanked, once their recording is approved
   const b = addRecording(db, words, { slug: 'dankon', audio: WEBM, visitorId: 'visitor-f', name: 'ana', credit: true });
   const c = addRecording(db, words, { slug: 'jes', audio: WEBM, visitorId: 'visitor-g', name: 'Pablo' }); // name only for moderators
   assert.deepEqual(recordingCredits(db), [], 'pending recordings are not credited');
+  assert.deepEqual(listPendingRecordings(db).map((r) => r.credit), [true, true, false], 'moderators see who will be named');
   for (const r of [a, b, c]) approveRecording(db, r.id);
   assert.deepEqual(recordingCredits(db), [{ name: 'Ana', slugs: ['dankon', 'saluton'] }]);
   deleteRecording(db, a.id);

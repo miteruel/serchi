@@ -165,6 +165,8 @@ export interface PendingRecording {
   slug: string;
   text: string;
   name: string | null;
+  /** The name will be shown on the course pages once approved ("Voces de este curso"). */
+  credit: boolean;
   createdAt: string;
 }
 
@@ -196,9 +198,12 @@ export function countPendingRecordings(db: DatabaseSync): number {
 
 export function listPendingRecordings(db: DatabaseSync): PendingRecording[] {
   const rows = db
-    .prepare("SELECT id, slug, text, name, created_at FROM recordings WHERE status = 'pending' ORDER BY created_at")
+    .prepare(
+      'SELECT r.id, r.slug, r.text, r.name, r.created_at, c.recording_id IS NOT NULL AS credit FROM recordings r ' +
+        "LEFT JOIN recording_credits c ON c.recording_id = r.id WHERE r.status = 'pending' ORDER BY r.created_at",
+    )
     .all() as Row[];
-  return rows.map((r) => ({ id: r.id, slug: r.slug, text: r.text, name: r.name, createdAt: r.created_at }));
+  return rows.map((r) => ({ id: r.id, slug: r.slug, text: r.text, name: r.name, credit: !!r.credit, createdAt: r.created_at }));
 }
 
 export function getRecordingAudio(db: DatabaseSync, id: string): { mime: string; audio: Uint8Array; status: string } | undefined {

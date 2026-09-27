@@ -243,7 +243,7 @@
               setStatus('Grabación de «' + text + '» publicada ✓', '');
             });
           }).catch(function (e) {
-            setStatus('No se pudo guardar la grabación: ' + e.message, 'err');
+            setStatus('No se pudo guardar la grabación: ' + voiceError(e), 'err');
           }).then(redraw);
         };
         recorder.start();
@@ -259,6 +259,16 @@
       });
     });
     return mic;
+  }
+
+  // Recording, creating and removing voices need FORUM_MODERATOR_KEY on the server
+  function voiceError(e) {
+    if (e.message === 'moderator_key_not_set') {
+      return 'el servidor no tiene clave de moderador. Sin ella nadie puede publicar grabaciones sin revisión ' +
+        'ni crear o quitar voces: define FORUM_MODERATOR_KEY y reinicia el servidor.';
+    }
+    if (e.message === 'moderator_key') return 'la clave de moderador no es correcta.';
+    return e.message;
   }
 
   function play(url) { player.pause(); player.src = url; player.play().catch(function () {}); }
@@ -295,7 +305,7 @@
             bt.disabled = false;
             setStatus(e.status === 503
               ? 'Este servidor no puede crear voces automáticas: falta espeak-ng o lame (con Delphi en Windows, indica sus rutas en ESPEAK_NG y LAME)'
-              : 'No se pudo crear la voz: ' + e.message, 'err');
+              : 'No se pudo crear la voz: ' + voiceError(e), 'err');
           });
         });
         row.appendChild(bt);
@@ -315,7 +325,7 @@
               draw();
             }).catch(function (e) {
               off.disabled = false;
-              setStatus('No se pudo quitar la voz: ' + e.message, 'err');
+              setStatus('No se pudo quitar la voz: ' + voiceError(e), 'err');
             });
           });
           row.appendChild(off);
