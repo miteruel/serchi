@@ -153,6 +153,14 @@ PR y commits correspondientes.
     ha compactado para que quepan las 12 pestañas. La base de datos queda con 568
     enlaces.
 
+13. **Minicurso «Esperanto en 7 tagoj».** Un curso para niños y familias en siete
+    lecciones, con explicaciones en español, dibujos sencillos, vocabulario, ejercicios
+    con soluciones y un reto diario. Al marcar los siete días aparece un diploma con el
+    nombre del niño (se guarda solo en su navegador). Es una página independiente,
+    [`public/minikurso.html`](public/minikurso.html), enlazada desde el rincón infantil
+    de la portada: la versión React la sirve en `/minikurso.html` y la Delphi en
+    `/minikurso`.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

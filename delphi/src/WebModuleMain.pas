@@ -43,6 +43,7 @@ type
     procedure Render(const ATemplate: string; AModel: TObject);
     procedure Redirect(const AUrl: string);
     procedure SendStatic(const APath: string);
+    procedure SendMiniCourse;
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -281,6 +282,22 @@ begin
   else
     FResponse.ContentType := 'application/octet-stream';
   FResponse.SetCustomHeader('Cache-Control', 'public, max-age=3600');
+  FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+end;
+
+{ The kids' mini-course is a standalone page shared with the React version
+  (public/minikurso.html in the repository, next to the delphi folder). }
+procedure TWebModuleMain.SendMiniCourse;
+var
+  FileName: string;
+begin
+  FileName := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + 'minikurso.html'));
+  if not TFile.Exists(FileName) then
+  begin
+    SendHtml('Not found', 404);
+    Exit;
+  end;
+  FResponse.ContentType := 'text/html; charset=utf-8';
   FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
 end;
 
@@ -1160,6 +1177,11 @@ begin
   if Path.StartsWith('/static/') then
   begin
     SendStatic(Path.Substring(Length('/static/')));
+    Exit;
+  end;
+  if (Path = '/minikurso') or (Path = '/minikurso.html') then
+  begin
+    SendMiniCourse;
     Exit;
   end;
 

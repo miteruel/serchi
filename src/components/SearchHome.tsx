@@ -462,6 +462,16 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
             </button>
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{t.kidsSectionDesc}</p>
+          <a
+            href="/minikurso.html"
+            className="flex items-center gap-3 mb-2 px-3 py-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+          >
+            <span className="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 font-bold">7</span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold text-emerald-800 dark:text-emerald-300">{t.miniCourseTitle}</span>
+              <span className="block text-xs text-gray-600 dark:text-gray-400">{t.miniCourseDesc}</span>
+            </span>
+          </a>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {kidsCorner.map((item) => (
               <a

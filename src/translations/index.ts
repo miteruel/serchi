@@ -239,6 +239,8 @@ export interface TranslationDictionary {
   kidsSectionTitle: string;
   kidsSectionDesc: string;
   kidsSeeAll: string;
+  miniCourseTitle: string;
+  miniCourseDesc: string;
   listenBtn: string;
   nowPlaying: string;
   closePlayer: string;
@@ -522,6 +524,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSectionTitle: "Angulo por infanoj",
     kidsSectionDesc: "Rakontoj, kantoj, ludoj kaj kursoj por infanoj kaj iliaj familioj.",
     kidsSeeAll: "Ĉio por infanoj",
+    miniCourseTitle: "Minikurso: Esperanto en 7 tagoj",
+    miniCourseDesc: "Sep lecionoj kun desegnaĵoj por infanoj kaj familioj (klarigoj en la hispana).",
     listenBtn: "Aŭskulti",
     nowPlaying: "Nun ludas",
     closePlayer: "Fermi ludilon",
@@ -804,6 +808,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSectionTitle: "Rincón infantil",
     kidsSectionDesc: "Cuentos, canciones, juegos y cursos para niños y sus familias.",
     kidsSeeAll: "Todo para niños",
+    miniCourseTitle: "Minicurso: esperanto en 7 días",
+    miniCourseDesc: "Siete lecciones con dibujos para niños y familias.",
     listenBtn: "Escuchar",
     nowPlaying: "Sonando",
     closePlayer: "Cerrar reproductor",
@@ -1086,6 +1092,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSectionTitle: "Kids' corner",
     kidsSectionDesc: "Stories, songs, games and courses for children and their families.",
     kidsSeeAll: "Everything for kids",
+    miniCourseTitle: "Mini-course: Esperanto in 7 days",
+    miniCourseDesc: "Seven lessons with drawings for children and families (explained in Spanish).",
     listenBtn: "Listen",
     nowPlaying: "Now playing",
     closePlayer: "Close player",
