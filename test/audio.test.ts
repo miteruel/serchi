@@ -21,6 +21,7 @@ import {
   approveRecording,
   audioMap,
   audioSlug,
+  countPendingRecordings,
   courseWords,
   deleteRecording,
   detectAudioType,
@@ -166,5 +167,19 @@ test('a teacher can remove a synthetic voice that sounds wrong', async () => {
   assert.equal(unmuteVoice(db, slug), true);
   assert.equal(unmuteVoice(db, slug), false);
   assert.equal(await fillVoices(db, ['Bonan vesperon, Ana!'], fake), 1, 'made again once allowed');
+  db.close();
+});
+
+test('a moderator recording from the editor is published at once and skips the limits', () => {
+  const db = tempDb();
+  const words = new Map([['bonan-matenon-petro', 'Bonan matenon, Petro!']]);
+  for (let i = 0; i < RECORDING_LIMITS.perVisitorPerDay + 2; i++) {
+    addRecording(db, words, { slug: 'bonan-matenon-petro', audio: WEBM, visitorId: 'teacher-1', trusted: true });
+  }
+  assert.equal(countPendingRecordings(db), 0, 'nothing waits for review');
+  assert.match(audioMap(db)['bonan-matenon-petro'], /^\/api\/recordings\/rec-/);
+
+  addRecording(db, courseWords(), { slug: 'saluton', audio: WEBM, visitorId: 'visitor-e' });
+  assert.equal(countPendingRecordings(db), 1, 'a visitor recording still waits');
   db.close();
 });

@@ -115,7 +115,7 @@
       <p class="msg" id="msg" role="status"></p>
     </section>
 
-    <section class="card" aria-labelledby="h-mod">
+    <section class="card" id="moderacion" aria-labelledby="h-mod">
       <h2 id="h-mod">Moderación</h2>
       <p class="muted">Para quien revisa las grabaciones antes de publicarlas.</p>
       <div class="row">
@@ -347,6 +347,8 @@
       moderatorKeyRequired = data.moderatorKeyRequired;
       MAX_SECONDS = data.maxSeconds || MAX_SECONDS;
       renderWords();
+      // /grabar.html#moderacion (from the notice for moderators): open the pending list
+      if (location.hash === '#moderacion') $('mod-open').click();
     }).catch(function () {
       $('app').hidden = true;
       $('unavailable').hidden = false;

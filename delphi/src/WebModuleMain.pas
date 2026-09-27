@@ -1076,7 +1076,7 @@ var
   Groups: TDictionary<string, string>;
   Course: TCourseInfo;
   ImageIds: TArray<string>;
-  Found: Boolean;
+  Found, Trusted: Boolean;
 
   function ModeratorOnly: Boolean;
   begin
@@ -1219,11 +1219,16 @@ begin
     end
     else if (Length(Seg) = 3) and (Method = 'POST') then
     begin
+      // approve=1: a moderator recording from the course editor, published at
+      // once. It can be any word (text=...), also of a course not published yet.
+      Trusted := FRequest.QueryFields.Values['approve'] = '1';
       Visitor := FRequest.GetFieldByName('X-Visitor-Id');
       if not TRegEx.IsMatch(Visitor, '^[A-Za-z0-9-]{8,64}$') then
         SendApiError(400, 'Missing visitor id')
       else if FRequest.QueryFields.Values['consent'] <> '1' then
         SendApiError(400, 'consent')
+      else if Trusted and not IsModeratorApi then
+        SendApiError(403, 'moderator_key')
       else
       begin
         Slug := FRequest.QueryFields.Values['slug'];
@@ -1231,6 +1236,12 @@ begin
         for Word in RecordableWords do
           if Word.Key = Slug then
             Text := Word.Value;
+        if (Text = '') and Trusted then
+        begin
+          Text := FRequest.QueryFields.Values['text'].Trim;
+          if (AudioSlug(Text) <> Slug) or (Length(Text) > 200) then
+            Text := '';
+        end;
         Data := RequestBody;
         Mime := DetectAudioType(Data);
         if Text = '' then
@@ -1239,16 +1250,19 @@ begin
           SendApiError(413, 'Recording too long')
         else if Mime = '' then
           SendApiError(415, 'Not an audio recording')
-        else if Store.RecordingsByVisitorToday(Visitor) >= RecordingsPerVisitorPerDay then
+        else if not Trusted and (Store.RecordingsByVisitorToday(Visitor) >= RecordingsPerVisitorPerDay) then
           SendApiError(429, 'daily_limit')
-        else if Store.PendingRecordingCount >= RecordingsMaxPending then
+        else if not Trusted and (Store.PendingRecordingCount >= RecordingsMaxPending) then
           SendApiError(503, 'too_many_pending')
         else
         begin
           Id := Store.AddRecording(Slug, Text, Mime, Data, Visitor, FRequest.QueryFields.Values['name']);
+          if Trusted then
+            Store.ApproveRecording(Id);
           Obj := TJSONObject.Create;
           try
-            Obj.AddPair('id', Id).AddPair('slug', Slug).AddPair('text', Text);
+            Obj.AddPair('id', Id).AddPair('slug', Slug).AddPair('text', Text)
+              .AddPair('url', '/api/recordings/' + TNetEncoding.URL.Encode(Id) + '/audio');
             SendJson(Obj.ToJSON, 201);
           finally
             Obj.Free;
@@ -1260,6 +1274,20 @@ begin
     begin
       if ModeratorOnly then
         SendJson(Store.PendingRecordingsJson);
+    end
+    else if (Length(Seg) = 5) and (Seg[3] = 'pending') and (Seg[4] = 'count') and (Method = 'GET') then
+    begin
+      // How many recordings wait for review (the moderators see it in the menu and the editor)
+      if ModeratorOnly then
+      begin
+        Obj := TJSONObject.Create;
+        try
+          Obj.AddPair('count', TJSONNumber.Create(Store.PendingRecordingCount));
+          SendJson(Obj.ToJSON);
+        finally
+          Obj.Free;
+        end;
+      end;
     end
     else if (Length(Seg) = 5) and (Seg[4] = 'audio') and (Method = 'GET') then
     begin
@@ -1955,6 +1983,8 @@ begin
     FApp.UserAvatar := User.AvatarColor;
     FApp.UserLevel := User.LevelBadge;
     FApp.SavedCount := FSaved.Count;
+    if FApp.IsModerator then
+      FApp.PendingRecordings := Store.PendingRecordingCount;
     FApp.LiveSearchEnabled := TGeminiSearch.IsConfigured;
     FApp.ResourceCount := Store.ResourceCount;
     FApp.Year := YearOf(Now).ToString;

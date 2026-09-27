@@ -44,6 +44,7 @@ import {
   addRecording,
   approveRecording,
   audioMap,
+  countPendingRecordings,
   audioSlug,
   courseWords,
   deleteRecording,
@@ -292,14 +293,24 @@ async function startServer() {
       const visitor = visitorOf(req);
       if (!visitor) return res.status(400).json({ error: 'Missing visitor id' });
       if (req.query.consent !== '1') return res.status(400).json({ error: 'consent' });
+      // approve=1: a moderator recording from the course editor, published at
+      // once. It can be any word (text=...), also of a course not published yet.
+      const trusted = req.query.approve === '1';
+      if (trusted && !isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+      const slug = String(req.query.slug || '');
+      const text = String(req.query.text || '').trim();
+      const words = trusted
+        ? new Map(audioSlug(text) === slug && text.length <= 200 ? [[slug, text]] : [])
+        : recordableWords();
       try {
-        const saved = addRecording(db, recordableWords(), {
-          slug: String(req.query.slug || ''),
+        const saved = addRecording(db, words, {
+          slug,
           audio: Buffer.isBuffer(req.body) ? req.body : Buffer.alloc(0),
           visitorId: visitor,
           name: String(req.query.name || ''),
+          trusted,
         });
-        return res.status(201).json(saved);
+        return res.status(201).json({ ...saved, url: `/api/recordings/${encodeURIComponent(saved.id)}/audio` });
       } catch (err: any) {
         if (err instanceof RecordingError) return res.status(err.status).json({ error: err.message });
         throw err;
@@ -391,6 +402,12 @@ async function startServer() {
   // Words whose synthetic voice was removed
   app.get('/api/tts/off', (_req, res) => {
     res.set('Cache-Control', 'no-cache').json(mutedVoices(db));
+  });
+
+  // How many recordings wait for review (the moderators see it in the menu and the editor)
+  app.get('/api/recordings/pending/count', (req, res) => {
+    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    return res.set('Cache-Control', 'no-cache').json({ count: countPendingRecordings(db) });
   });
 
   app.get('/api/recordings/pending', (req, res) => {

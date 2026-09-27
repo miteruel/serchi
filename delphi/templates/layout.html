@@ -36,7 +36,12 @@
         <a href="/search" class="px-3 py-2 rounded-full @if App.IsSearchSection {bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 font-semibold} @else {hover:bg-gray-100 dark:hover:bg-gray-800}">🔎 <span class="hidden md:inline">@t.searchTab</span></a>
         <a href="/forum" class="px-3 py-2 rounded-full @if App.IsForumSection {bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 font-semibold} @else {hover:bg-gray-100 dark:hover:bg-gray-800}">💬 <span class="hidden md:inline">@t.communityTab</span></a>
         <a href="/kursoj" hx-boost="false" class="px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" title="@t.coursesTab">📚 <span class="hidden lg:inline">@t.coursesTab</span></a>
+        @if App.HasPendingRecordings {
+        <a href="/grabar#moderacion" hx-boost="false" class="relative px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" title="@t.recordTab (@App.PendingRecordings)">🎙️ <span class="hidden lg:inline">@t.recordTab</span><span class="absolute -top-1 -right-1 min-w-4 h-4 px-1 rounded-full bg-red-600 text-white text-[10px] font-bold leading-4 text-center">@App.PendingRecordings</span></a>
+        }
+        @else {
         <a href="/grabar" hx-boost="false" class="px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" title="@t.recordTab">🎙️ <span class="hidden lg:inline">@t.recordTab</span></a>
+        }
         <a href="/editor" hx-boost="false" class="px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" title="@t.editorTab">✏️ <span class="hidden lg:inline">@t.editorTab</span></a>
         <a href="/bookmarks" class="relative px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" title="@t.savedResources">
           ⭐ <span id="saved-count" class="text-xs font-bold text-amber-600"

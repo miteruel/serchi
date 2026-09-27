@@ -68,6 +68,8 @@
   .voices button.none { border-style: dashed; color: var(--muted); }
   .voices button.off { padding: 2px 6px; margin-left: -4px; color: var(--muted); border-color: transparent; }
   .voices button.off:hover { color: var(--red); }
+  .voices button.mic { padding: 2px 6px; margin-left: -4px; border-color: transparent; }
+  .voices button.mic.on { background: var(--red); color: var(--surface); border-color: var(--red); }
   code { background: var(--green-soft); padding: 0 4px; border-radius: 4px; }
   [hidden] { display: none !important; }
 </style>
@@ -79,6 +81,7 @@
   </header>
 
   <p id="unavailable" class="card status err" hidden>El editor no está disponible en este servidor.</p>
+  <p id="pending-note" class="card" hidden></p>
 
   <section class="card" id="login" hidden>
     <h2>Clave de moderador</h2>
@@ -114,7 +117,7 @@
       </div>
       <label>Presentación<textarea id="c-intro" maxlength="3000"></textarea></label>
       <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="c-published" style="width:20px;height:20px"> Publicado (visible en <span id="c-url"></span>)</label>
-      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊. Debajo de cada bloque puedes escuchar sus palabras: 🔊 es una grabación, 🔊🤖 la voz automática que suena mientras nadie la graba (con ✕ la quitas si suena mal) y las de borde discontinuo no tienen voz (púlsalas para crearla). Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
+      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊. Debajo de cada bloque puedes escuchar sus palabras: 🔊 es una grabación, 🔊🤖 la voz automática que suena mientras nadie la graba (con ✕ la quitas si suena mal) y las de borde discontinuo no tienen voz (púlsalas para crearla). Con 🎙️ grabas tú la palabra: se publica al momento, sin revisión. Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
     </section>
 
     <div id="lessons" style="display:grid;gap:12px;margin-top:12px"></div>
@@ -178,6 +181,82 @@
     var seen = {};
     return out.filter(function (t) { var s = audioSlug(t); if (!s || seen[s]) return false; seen[s] = true; return true; });
   }
+  // ---- Recording a word from the editor (a moderator: published at once) ----
+  var MAX_SECONDS = 10, active = null; // one recording at a time
+  function visitorId() {
+    try {
+      var id = localStorage.getItem('sercilo_visitor_id');
+      if (!id) { id = crypto.randomUUID(); localStorage.setItem('sercilo_visitor_id', id); }
+      return id;
+    } catch (e) { return 'anonymous-visitor'; }
+  }
+  function pickMime() {
+    var types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+    for (var i = 0; i < types.length; i++) if (window.MediaRecorder && MediaRecorder.isTypeSupported(types[i])) return types[i];
+    return '';
+  }
+  function micButton(text, slug, redraw) {
+    var mic = document.createElement('button');
+    mic.type = 'button';
+    mic.className = 'mic';
+    mic.textContent = '🎙️';
+    mic.title = 'Grabar tu voz para «' + text + '» (se publica al momento)';
+    mic.setAttribute('aria-label', mic.title);
+    mic.addEventListener('click', function () {
+      if (active && active.slug === slug) { active.stop(); return; }
+      if (active) { setStatus('Termina antes la grabación de «' + active.text + '».', 'err'); return; }
+      if (!navigator.mediaDevices || !window.MediaRecorder) {
+        setStatus('Este navegador no permite grabar aquí (la web tiene que abrirse con https://).', 'err');
+        return;
+      }
+      var agreed = false;
+      try { agreed = sessionStorage.getItem('sercilo_editor_voice_ok') === '1'; } catch (e) {}
+      if (!agreed) {
+        if (!confirm('Tu voz se publicará en los cursos de Liberanimo Teruel. ¿Grabar?')) return;
+        try { sessionStorage.setItem('sercilo_editor_voice_ok', '1'); } catch (e) {}
+      }
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        var mime = pickMime(), chunks = [], left = MAX_SECONDS, timer;
+        var recorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+        active = { slug: slug, text: text, stop: function () { if (recorder.state === 'recording') recorder.stop(); } };
+        recorder.ondataavailable = function (e) { if (e.data.size) chunks.push(e.data); };
+        recorder.onstop = function () {
+          stream.getTracks().forEach(function (t) { t.stop(); });
+          clearInterval(timer);
+          active = null;
+          var blob = new Blob(chunks, { type: recorder.mimeType || mime || 'audio/webm' });
+          setStatus('Enviando la grabación de «' + text + '»…');
+          fetch('/api/recordings?consent=1&approve=1&slug=' + encodeURIComponent(slug) + '&text=' + encodeURIComponent(text), {
+            method: 'POST',
+            headers: { 'Content-Type': blob.type, 'X-Visitor-Id': visitorId(), 'X-Moderator-Key': key() },
+            body: blob,
+          }).then(function (r) {
+            return r.json().catch(function () { return {}; }).then(function (d) {
+              if (!r.ok) throw new Error(d.error || ('HTTP ' + r.status));
+              voiceMap[slug] = d.url;
+              delete mutedVoices[slug];
+              play(d.url);
+              setStatus('Grabación de «' + text + '» publicada ✓', '');
+            });
+          }).catch(function (e) {
+            setStatus('No se pudo guardar la grabación: ' + e.message, 'err');
+          }).then(redraw);
+        };
+        recorder.start();
+        mic.classList.add('on');
+        mic.textContent = '⏹ ' + left + ' s';
+        timer = setInterval(function () {
+          left--;
+          mic.textContent = '⏹ ' + left + ' s';
+          if (left <= 0) active.stop();
+        }, 1000);
+      }).catch(function () {
+        setStatus('No se pudo usar el micrófono. Revisa el permiso del navegador.', 'err');
+      });
+    });
+    return mic;
+  }
+
   function play(url) { player.pause(); player.src = url; player.play().catch(function () {}); }
   // Row of 🔊 buttons under a block, redrawn while typing
   function voiceRow(b) {
@@ -237,6 +316,7 @@
           });
           row.appendChild(off);
         }
+        row.appendChild(micButton(text, slug, draw));
       });
     };
     var timer = null;
@@ -250,6 +330,21 @@
   window.addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
 
   // ---- Login and course list ----
+  // Recordings sent from the Grabar page that wait for a moderator
+  function showPending() {
+    api('GET', '/api/recordings/pending/count').then(function (r) {
+      var note = $('pending-note');
+      note.hidden = !r.count;
+      if (!r.count) return;
+      note.innerHTML = '';
+      note.appendChild(document.createTextNode('🎙️ ' + (r.count === 1 ? 'Hay 1 grabación' : 'Hay ' + r.count + ' grabaciones') + ' de voluntarios esperando revisión. '));
+      var a = document.createElement('a');
+      a.href = '/grabar.html#moderacion';
+      a.textContent = 'Revisarlas';
+      note.appendChild(a);
+    }).catch(function () {});
+  }
+
   function loadList(selectId) {
     return api('GET', '/api/courses?all=1').then(function (list) {
       $('login').hidden = true;
@@ -269,6 +364,7 @@
         box.appendChild(b);
       });
       if (selectId) openCourse(selectId);
+      showPending();
     }).catch(function (e) {
       if (e.status === 403) { $('login').hidden = false; $('list').hidden = true; $('editor').hidden = true; if (key()) $('key-msg').textContent = 'La clave no es correcta.'; }
       else { $('unavailable').hidden = false; }

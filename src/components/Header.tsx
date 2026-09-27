@@ -31,6 +31,8 @@ interface HeaderProps {
   onOpenSaved: () => void;
   onOpenAddResource: () => void;
   savedCount: number;
+  /** Recordings waiting for review, shown to moderators on the Record link. */
+  pendingRecordings?: number;
   onGoHome: () => void;
   query: string;
   onSearchChange: (val: string) => void;
@@ -46,6 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSaved,
   onOpenAddResource,
   savedCount,
+  pendingRecordings,
   onGoHome,
   query,
   onSearchChange,
@@ -167,19 +170,25 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
             {/* Standalone pages served from public/: courses, recorder and course editor */}
             {[
-              { href: '/kursoj', label: t.coursesTab, Icon: BookOpen },
-              { href: '/grabar.html', label: t.recordTab, Icon: Mic },
-              { href: '/editor.html', label: t.editorTab, Icon: Pencil },
-            ].map(({ href, label, Icon }) => (
+              { href: '/kursoj', label: t.coursesTab, Icon: BookOpen, badge: 0 },
+              // With recordings to review, the link opens the moderation part of the page
+              { href: pendingRecordings ? '/grabar.html#moderacion' : '/grabar.html', label: t.recordTab, Icon: Mic, badge: pendingRecordings || 0 },
+              { href: '/editor.html', label: t.editorTab, Icon: Pencil, badge: 0 },
+            ].map(({ href, label, Icon, badge }) => (
               <a
-                key={href}
+                key={label}
                 href={href}
-                title={label}
-                aria-label={label}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-1 text-xs font-semibold rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                title={badge ? `${label} (${badge})` : label}
+                aria-label={badge ? `${label} (${badge})` : label}
+                className="relative flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-1 text-xs font-semibold rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
               >
                 <Icon className="w-3.5 h-3.5" />
                 <span className="hidden lg:inline">{label}</span>
+                {badge > 0 && (
+                  <span className="absolute -top-1.5 -right-0.5 min-w-4 h-4 px-1 rounded-full bg-red-600 text-white text-[10px] font-bold leading-4 text-center">
+                    {badge}
+                  </span>
+                )}
               </a>
             ))}
           </nav>

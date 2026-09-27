@@ -27,6 +27,7 @@ import {
   toggleForumLike,
   toggleForumTopicFlag,
   deleteForumItem,
+  fetchPendingRecordingCount,
 } from './api';
 import { CURRENT_MOCK_USERS } from './data/forumData';
 import { Header } from './components/Header';
@@ -142,6 +143,19 @@ export default function App() {
     } catch {}
     return CURRENT_MOCK_USERS.meLearner;
   });
+
+  // Moderators see on the menu how many recordings wait for review
+  const [pendingRecordings, setPendingRecordings] = useState(0);
+  useEffect(() => {
+    if (currentUser.role !== 'moderator') {
+      setPendingRecordings(0);
+      return;
+    }
+    const load = () => fetchPendingRecordingCount().then(setPendingRecordings, () => setPendingRecordings(0));
+    load();
+    window.addEventListener('focus', load);
+    return () => window.removeEventListener('focus', load);
+  }, [currentUser.role]);
 
   // UI Views: 'home' | 'results' | 'forum'
   // The first view comes from the address, e.g. /?q=vortaro or /?view=forum
@@ -653,6 +667,7 @@ export default function App() {
         onOpenSaved={() => setIsBookmarksOpen(true)}
         onOpenAddResource={() => handleOpenAddResource('', 'single')}
         savedCount={savedIds.length}
+        pendingRecordings={pendingRecordings}
         onGoHome={() => {
           setView('home');
           setQueryInput('');
