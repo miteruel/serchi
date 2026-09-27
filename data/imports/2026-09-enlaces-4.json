@@ -1,0 +1,959 @@
+[
+  {
+    "title": "Biblioteko Hector Hodler",
+    "url": "https://www.esperantic.org/en/research/research-tools/the-hector-hodler-library/",
+    "description": {
+      "eo": "Unu el la plej grandaj Esperanto-bibliotekoj (ĉ. 30 000 libroj), nun ĉefe en la Pola Nacia Biblioteko.",
+      "es": "Una de las mayores bibliotecas de esperanto (unos 30 000 libros), hoy sobre todo en la Biblioteca Nacional de Polonia.",
+      "en": "One of the largest Esperanto libraries (about 30,000 books), now mostly at the National Library of Poland."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "biblioteko",
+      "hodler",
+      "uea",
+      "arkivo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The Esperanto Museum in Vienna (Language Museum)",
+    "url": "https://languagemuseum.org/the-esperanto-museum/",
+    "description": {
+      "eo": "Artikolo de la usona Nacia Lingvomuzeo pri la Esperanto-Muzeo de Vieno.",
+      "es": "Artículo del Museo Nacional del Lenguaje de EE. UU. sobre el Museo del Esperanto de Viena.",
+      "en": "Article from the US National Museum of Language about the Esperanto Museum in Vienna."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muzeo",
+      "vieno",
+      "aŭstrio",
+      "historio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-Muzeo de la Aŭstria Nacia Biblioteko",
+    "url": "https://www.onb.ac.at/en/museums/esperanto-museum",
+    "description": {
+      "eo": "La Esperanto-Muzeo kaj Kolekto de Planlingvoj en Vieno: ekspozicioj, horaro kaj vizitoj.",
+      "es": "El Museo del Esperanto y Colección de Lenguas Planificadas en Viena: exposiciones, horarios y visitas.",
+      "en": "The Esperanto Museum and Collection of Planned Languages in Vienna: exhibitions, opening hours and visits."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muzeo",
+      "vieno",
+      "planlingvoj",
+      "biblioteko"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "CED: Esperanto-bibliotekoj",
+    "url": "https://interlingvistiko.net/en/libraries/",
+    "description": {
+      "eo": "Listo de gravaj bibliotekoj kaj kolektoj pri Esperanto kaj interlingvistiko, de CED.",
+      "es": "Lista de bibliotecas y colecciones importantes sobre esperanto e interlingüística, del CED.",
+      "en": "List of major libraries and collections on Esperanto and interlinguistics, from CED."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "bibliotekoj",
+      "interlingvistiko",
+      "ced",
+      "esploro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-Muzeo en Svitavy (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperanto_Museum_in_Svitavy",
+    "description": {
+      "eo": "Pri la Esperanto-muzeo en Svitavy, Ĉeĥio.",
+      "es": "Sobre el museo del esperanto de Svitavy (Chequia).",
+      "en": "About the Esperanto museum in Svitavy, Czech Republic."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "muzeo",
+      "ĉeĥio",
+      "svitavy",
+      "historio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "HelloTalk: Esperanto",
+    "url": "https://www.hellotalk.com/en/learn/esperanto",
+    "description": {
+      "eo": "Lingvointerŝanĝa apo por babili kaj paroli kun esperantistoj tra la mondo.",
+      "es": "App de intercambio de idiomas para chatear y hablar con esperantistas de todo el mundo.",
+      "en": "Language exchange app for chatting and speaking with Esperanto speakers worldwide."
+    },
+    "category": "community",
+    "level": "A2",
+    "format": "app",
+    "tags": [
+      "interŝanĝo",
+      "konversacio",
+      "apo",
+      "parolantoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Duolingo Esperanto: semajna konversacio",
+    "url": "https://www.peptalkradio.com/duolingo-esperanto-conversation-practice/",
+    "description": {
+      "eo": "Informoj pri semajnaj retaj konversaciaj kunvenoj por praktiki Esperanton.",
+      "es": "Información sobre encuentros semanales de conversación en línea para practicar esperanto.",
+      "en": "Information about weekly online conversation meet-ups for practising Esperanto."
+    },
+    "category": "community",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "konversacio",
+      "duolingo",
+      "rete",
+      "praktiko"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "MyLanguageExchange: Esperanto",
+    "url": "https://www.mylanguageexchange.com/Learn/Esperanto.asp",
+    "description": {
+      "eo": "Serĉu partnerojn por skribi aŭ paroli en Esperanto per lingvointerŝanĝo.",
+      "es": "Busca compañeros para escribir o hablar en esperanto mediante intercambio de idiomas.",
+      "en": "Find partners to write or speak in Esperanto through language exchange."
+    },
+    "category": "community",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "interŝanĝo",
+      "korespondado",
+      "parolado"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Talkpal: speaking Esperanto guide",
+    "url": "https://talkpal.ai/master-the-art-of-speaking-esperanto-your-ultimate-guide-to-fluent-conversation/",
+    "description": {
+      "eo": "Gvidilo kun konsiloj por flue paroli kaj konversacii en Esperanto.",
+      "es": "Guía con consejos para hablar y conversar con fluidez en esperanto.",
+      "en": "Guide with tips for speaking and holding conversations fluently in Esperanto."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "parolado",
+      "konversacio",
+      "konsiloj",
+      "ai"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "FESTO (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/FESTO_(Esperanto_meeting)",
+    "description": {
+      "eo": "Pri FESTO, la ĉiujara junulara Esperanto-renkontiĝo en Francio.",
+      "es": "Sobre FESTO, el encuentro juvenil anual de esperanto en Francia.",
+      "en": "About FESTO, the annual Esperanto youth gathering in France."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "festo",
+      "francio",
+      "junularo",
+      "renkontiĝo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-bibliotekoj (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperanto_library",
+    "description": {
+      "eo": "Superrigardo de la ĉefaj bibliotekoj kaj kolektoj de Esperanto-literaturo.",
+      "es": "Panorama de las principales bibliotecas y colecciones de literatura en esperanto.",
+      "en": "Overview of the main libraries and collections of Esperanto literature."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "bibliotekoj",
+      "kolektoj",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ekparolu!",
+    "url": "https://www.kursaro.net/en/ekparolu.html",
+    "description": {
+      "eo": "Senpagaj individuaj konversacioj de 30 minutoj per video kun spertaj parolantoj (geonkloj), post baza kurso.",
+      "es": "Conversaciones individuales gratuitas de 30 minutos por vídeo con hablantes expertos (geonkloj), tras un curso básico.",
+      "en": "Free one-to-one 30-minute video conversations with experienced speakers (geonkloj) after a basic course."
+    },
+    "category": "courses",
+    "level": "B1",
+    "format": "course",
+    "tags": [
+      "konversacio",
+      "video",
+      "mentoroj",
+      "senpaga"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanta Mondo (Substack)",
+    "url": "https://esperantamondo.substack.com/",
+    "description": {
+      "eo": "Novaĵletero kun gvidiloj, lecionoj kaj ligiloj por lernantoj kaj parolantoj de Esperanto.",
+      "es": "Boletín con guías, lecciones y enlaces para estudiantes y hablantes de esperanto.",
+      "en": "Newsletter with guides, lessons and links for Esperanto learners and speakers."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "novaĵletero",
+      "gvidiloj",
+      "lecionoj",
+      "ligiloj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Learn Esperanto – Lentil (iOS)",
+    "url": "https://apps.apple.com/app/id1473596985",
+    "description": {
+      "eo": "Apo por iPhone kaj iPad por lerni bazan vortprovizon kaj frazojn de Esperanto.",
+      "es": "App para iPhone y iPad para aprender vocabulario y frases básicas de esperanto.",
+      "en": "iPhone and iPad app for learning basic Esperanto vocabulary and phrases."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "app",
+    "tags": [
+      "apo",
+      "ios",
+      "vortprovizo",
+      "komencanto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-literaturo (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperanto_literature",
+    "description": {
+      "eo": "Superrigardo de la originala kaj tradukita literaturo en Esperanto kaj ĝiaj ĉefaj periodoj.",
+      "es": "Panorama de la literatura original y traducida en esperanto y de sus principales etapas.",
+      "en": "Overview of original and translated Esperanto literature and its main periods."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "literaturo",
+      "historio",
+      "verkistoj",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kálmán Kalocsay (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/K%C3%A1lm%C3%A1n_Kalocsay",
+    "description": {
+      "eo": "Biografio de Kálmán Kalocsay, poeto de la Budapeŝta Skolo kaj aŭtoro de Mondo kaj Koro kaj Streĉita Kordo.",
+      "es": "Biografía de Kálmán Kalocsay, poeta de la Escuela de Budapest y autor de Mondo kaj Koro y Streĉita Kordo.",
+      "en": "Biography of Kálmán Kalocsay, Budapest School poet and author of Mondo kaj Koro and Streĉita Kordo."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "kalocsay",
+      "poezio",
+      "budapeŝta skolo",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Raymond Schwartz (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Raymond_Schwartz",
+    "description": {
+      "eo": "Biografio de Raymond Schwartz, franca humuristo kaj aŭtoro de la romano Anni kaj Montmartre.",
+      "es": "Biografía de Raymond Schwartz, humorista francés y autor de la novela Anni kaj Montmartre.",
+      "en": "Biography of Raymond Schwartz, French humorist and author of the novel Anni kaj Montmartre."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "schwartz",
+      "humuro",
+      "romano",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The Esperanto Book (Don Harlow): literaturo",
+    "url": "http://literaturo.org/HARLOW-Don/Esperanto/EBook/chap09.html",
+    "description": {
+      "eo": "Ĉapitro pri Esperanto-literaturo el The Esperanto Book de Don Harlow.",
+      "es": "Capítulo sobre la literatura en esperanto del libro The Esperanto Book de Don Harlow.",
+      "en": "Chapter on Esperanto literature from Don Harlow's The Esperanto Book."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "harlow",
+      "literaturo",
+      "historio",
+      "angla"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto.boutique",
+    "url": "https://www.esperanto.boutique/",
+    "description": {
+      "eo": "Retbutiko de originala kaj tradukita literaturo en Esperanto, beletra kaj faka.",
+      "es": "Tienda en línea de literatura original y traducida en esperanto, de ficción y no ficción.",
+      "en": "Online shop for original and translated Esperanto literature, fiction and non-fiction."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "libroj",
+      "butiko",
+      "originala",
+      "tradukita"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Literatura Mondo (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Literatura_Mondo",
+    "description": {
+      "eo": "Pri Literatura Mondo, la influa budapeŝta literatura revuo de la inter-militaj jaroj.",
+      "es": "Sobre Literatura Mondo, la influyente revista literaria de Budapest de entreguerras.",
+      "en": "About Literatura Mondo, the influential Budapest literary magazine of the inter-war years."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "revuo",
+      "literaturo",
+      "budapeŝto",
+      "historio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto for Kids (Kid World Citizen)",
+    "url": "https://kidworldcitizen.org/esperanto-for-kids/",
+    "description": {
+      "eo": "Ideoj, kantoj kaj rakontoj por instrui Esperanton al infanoj.",
+      "es": "Ideas, canciones y cuentos para enseñar esperanto a niños.",
+      "en": "Ideas, songs and stories for teaching Esperanto to children."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "infanoj",
+      "kantoj",
+      "rakontoj",
+      "familio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "My First Esperanto Alphabets Picture Book",
+    "url": "https://www.amazon.com/Esperanto-Alphabets-Picture-English-Translations/dp/108124142X",
+    "description": {
+      "eo": "Dulingva bildlibro por infanoj kun la Esperanta alfabeto kaj bazaj vortoj.",
+      "es": "Libro ilustrado bilingüe para niños con el alfabeto del esperanto y palabras básicas.",
+      "en": "Bilingual picture book for children with the Esperanto alphabet and basic words."
+    },
+    "category": "literature",
+    "level": "A1",
+    "format": "book",
+    "tags": [
+      "infanoj",
+      "alfabeto",
+      "bildlibro",
+      "dulingva"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "Denaskaj esperantistoj (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Native_Esperanto_speakers",
+    "description": {
+      "eo": "Pri la denaskaj parolantoj de Esperanto kaj la familioj kiuj uzas ĝin hejme.",
+      "es": "Sobre los hablantes nativos de esperanto y las familias que lo usan en casa.",
+      "en": "About native Esperanto speakers and families who use it at home."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "denaskuloj",
+      "familioj",
+      "infanoj",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "L. L. Zamenhof (Britannica)",
+    "url": "https://www.britannica.com/biography/L-L-Zamenhof",
+    "description": {
+      "eo": "Biografio de Zamenhof, kreinto de Esperanto, en Encyclopaedia Britannica.",
+      "es": "Biografía de Zamenhof, creador del esperanto, en la Encyclopaedia Britannica.",
+      "en": "Biography of Zamenhof, creator of Esperanto, in Encyclopaedia Britannica."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "zamenhof",
+      "biografio",
+      "historio",
+      "enciklopedio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "History Today: Birth of Ludwig Zamenhof",
+    "url": "https://www.historytoday.com/archive/birth-ludwig-zamenhof-creator-esperanto",
+    "description": {
+      "eo": "Historia artikolo pri la naskiĝo kaj vivo de Zamenhof.",
+      "es": "Artículo histórico sobre el nacimiento y la vida de Zamenhof.",
+      "en": "Historical article on the birth and life of Zamenhof."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "zamenhof",
+      "historio",
+      "artikolo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Zamenhof: The Life, Works, and Ideas (Korĵenkov)",
+    "url": "http://www.esperantic.org/wp-content/uploads/2016/06/LLZ-Bio-En.pdf",
+    "description": {
+      "eo": "Biografio de Zamenhof verkita de Aleksandr Korĵenkov (PDF, angle).",
+      "es": "Biografía de Zamenhof escrita por Aleksandr Korzhenkov (PDF, en inglés).",
+      "en": "Biography of Zamenhof by Aleksandr Korzhenkov (PDF)."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "zamenhof",
+      "biografio",
+      "korĵenkov",
+      "pdf"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Zamenhof.info: mini-biografio",
+    "url": "https://zamenhof.info/en/biografio",
+    "description": {
+      "eo": "Mallonga biografio de L. L. Zamenhof.",
+      "es": "Breve biografía de L. L. Zamenhof.",
+      "en": "Short biography of L. L. Zamenhof."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "zamenhof",
+      "biografio",
+      "vivo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Historio de Esperanto (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/History_of_Esperanto",
+    "description": {
+      "eo": "La historio de Esperanto de 1887 ĝis nun.",
+      "es": "La historia del esperanto desde 1887 hasta hoy.",
+      "en": "The history of Esperanto from 1887 to the present."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "historio",
+      "movado",
+      "wikipedia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Resources: Vortaroj",
+    "url": "https://esperanto.miraheze.org/wiki/Dictionaries_/_Vortaroj",
+    "description": {
+      "eo": "Komunuma listo de ĝeneralaj kaj fakaj vortaroj de Esperanto.",
+      "es": "Lista comunitaria de diccionarios generales y especializados de esperanto.",
+      "en": "Community list of general and specialist Esperanto dictionaries."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "vortaroj",
+      "listo",
+      "viki",
+      "rimedoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "STEB: fakaj vortaroj kaj terminaroj",
+    "url": "http://www.eventoj.hu/steb/vortaroj/index-vortaro.htm",
+    "description": {
+      "eo": "Listo de konsulteblaj fakaj vortaroj kaj terminaroj en Esperanto, de la Scienca kaj Teknika Esperanto-Biblioteko.",
+      "es": "Lista de diccionarios técnicos y terminologías en esperanto, de la Biblioteca Científica y Técnica de Esperanto.",
+      "en": "List of specialist dictionaries and terminologies in Esperanto from the Scientific and Technical Esperanto Library."
+    },
+    "category": "tools",
+    "level": "B2",
+    "format": "website",
+    "tags": [
+      "terminaroj",
+      "scienco",
+      "fakvortoj",
+      "steb"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Terminologia kurso (Jan Werner)",
+    "url": "https://dvd.ikso.net/faka/scienco/Terminologia_kurso.pdf",
+    "description": {
+      "eo": "Kurso de Jan Werner pri kiel krei kaj uzi fakan terminologion en Esperanto (PDF).",
+      "es": "Curso de Jan Werner sobre cómo crear y usar terminología especializada en esperanto (PDF).",
+      "en": "Jan Werner's course on creating and using specialist terminology in Esperanto (PDF)."
+    },
+    "category": "tools",
+    "level": "C1",
+    "format": "book",
+    "tags": [
+      "terminologio",
+      "kurso",
+      "pdf",
+      "scienco"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Sciencaj kaj fakaj libroj en Esperanto",
+    "url": "http://www.eventoj.hu/sciencverkoj/",
+    "description": {
+      "eo": "Kolekto de sciencaj kaj fakaj libroj en Esperanto.",
+      "es": "Colección de libros científicos y técnicos en esperanto.",
+      "en": "Collection of scientific and technical books in Esperanto."
+    },
+    "category": "literature",
+    "level": "B2",
+    "format": "book",
+    "tags": [
+      "scienco",
+      "fakaj libroj",
+      "elŝutoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto-radio Muzaiko (Android)",
+    "url": "https://play.google.com/store/apps/details?id=dk.nordfalk.esperanto.radio",
+    "description": {
+      "eo": "Apo por aŭskulti Muzaikon kaj aliajn Esperanto-elsendojn (Pola Retradio, 3ZZZ, Radio Havano Kubo…).",
+      "es": "App para escuchar Muzaiko y otras emisiones en esperanto (Pola Retradio, 3ZZZ, Radio Habana Cuba…).",
+      "en": "App for listening to Muzaiko and other Esperanto broadcasts (Pola Retradio, 3ZZZ, Radio Havana Cuba…)."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "app",
+    "tags": [
+      "radio",
+      "apo",
+      "muzaiko",
+      "pola retradio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Muzaiko ĉe Zeno.FM",
+    "url": "https://zeno.fm/radio/muzaiko/",
+    "description": {
+      "eo": "Aŭskultu rekte Muzaikon, la tuttagan Esperanto-radion kun muziko, intervjuoj kaj novaĵoj.",
+      "es": "Escucha en directo Muzaiko, la radio en esperanto 24 horas con música, entrevistas y noticias.",
+      "en": "Listen live to Muzaiko, the round-the-clock Esperanto radio with music, interviews and news."
+    },
+    "category": "media",
+    "level": "B1",
+    "format": "podcast",
+    "tags": [
+      "radio",
+      "muzaiko",
+      "rekta elsendo",
+      "muziko"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperantologio (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperantology",
+    "description": {
+      "eo": "Pri esperantologio, la scienca studo de Esperanto.",
+      "es": "Sobre la esperantología, el estudio científico del esperanto.",
+      "en": "About Esperantology, the scholarly study of Esperanto."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "esperantologio",
+      "lingvistiko",
+      "esploro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "DISBOARD: Esperanto-serviloj ĉe Discord",
+    "url": "https://disboard.org/servers/tag/esperanto",
+    "description": {
+      "eo": "Katalogo de Discord-serviloj pri Esperanto por babili kaj praktiki.",
+      "es": "Catálogo de servidores de Discord sobre esperanto para chatear y practicar.",
+      "en": "Directory of Esperanto Discord servers for chatting and practice."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "forum",
+    "tags": [
+      "discord",
+      "serviloj",
+      "babilejoj",
+      "listo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Top.gg: Esperanto Discord Servers",
+    "url": "https://top.gg/servers/tag/esperanto",
+    "description": {
+      "eo": "Listo de la plej popularaj Esperanto-serviloj ĉe Discord.",
+      "es": "Lista de los servidores de Discord de esperanto más populares.",
+      "en": "List of the most popular Esperanto Discord servers."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "forum",
+    "tags": [
+      "discord",
+      "serviloj",
+      "listo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Discord-servilo de Esperanto-USA",
+    "url": "https://bulteno.esperanto-usa.org/a/2022/04/anoncoj/discord/",
+    "description": {
+      "eo": "Invito al la Discord-servilo de Esperanto-USA, malfermita ne nur al membroj.",
+      "es": "Invitación al servidor de Discord de Esperanto-USA, abierto no solo a socios.",
+      "en": "Invitation to the Esperanto-USA Discord server, open to non-members too."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "forum",
+    "tags": [
+      "discord",
+      "usono",
+      "babilejo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "La Sankta Biblio 1926 (Bible App)",
+    "url": "https://www.bible.com/versions/841-esp-la-sankta-biblio-1926-esperanto-londona-biblio",
+    "description": {
+      "eo": "La Londona Biblio (1926) en Esperanto, legebla kaj elŝutebla senpage; la Malnova Testamento tradukita de Zamenhof.",
+      "es": "La Biblia de Londres (1926) en esperanto, gratuita para leer y descargar; el Antiguo Testamento lo tradujo Zamenhof.",
+      "en": "The London Bible (1926) in Esperanto, free to read and download; the Old Testament was translated by Zamenhof."
+    },
+    "category": "literature",
+    "level": "B2",
+    "format": "book",
+    "tags": [
+      "biblio",
+      "religio",
+      "zamenhof",
+      "tradukoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Bible (Internet Sacred Text Archive)",
+    "url": "https://sacred-texts.com/bib/wb/esp/index.htm",
+    "description": {
+      "eo": "La tuta Biblio en Esperanto, legebla rete ĉe Internet Sacred Text Archive.",
+      "es": "La Biblia completa en esperanto, para leer en línea en Internet Sacred Text Archive.",
+      "en": "The complete Bible in Esperanto, readable online at the Internet Sacred Text Archive."
+    },
+    "category": "literature",
+    "level": "B2",
+    "format": "book",
+    "tags": [
+      "biblio",
+      "tekstoj",
+      "reta legado"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ludoj en Esperanto: retgvidilo",
+    "url": "http://www.autodidactproject.org/bib/esperanto-ludoj.html",
+    "description": {
+      "eo": "Retgvidilo al ludoj en Esperanto: elŝuteblaj kaj retaj ludoj, enigmoj kaj lingvaj ludoj.",
+      "es": "Guía de juegos en esperanto: juegos descargables y en línea, acertijos y juegos lingüísticos.",
+      "en": "Web guide to games in Esperanto: downloadable and online games, puzzles and word games."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ludoj",
+      "enigmoj",
+      "krucvortenigmoj",
+      "gvidilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ludoj! Ludoj! Ludoj!!!",
+    "url": "http://jaclyn.pacejo.net/games/",
+    "description": {
+      "eo": "Kolekto de simplaj retaj ludoj en Esperanto.",
+      "es": "Colección de juegos sencillos en línea en esperanto.",
+      "en": "Collection of simple online games in Esperanto."
+    },
+    "category": "media",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "ludoj",
+      "retaj ludoj",
+      "amuzo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Filmoj Esperanto Colombia (YouTube)",
+    "url": "https://www.youtube.com/c/EsperantoColombia",
+    "description": {
+      "eo": "Jutuba kanalo de la Kolombia Esperanto-Ligo kun filmetoj pri ĝiaj agadoj kaj pri la lingvo.",
+      "es": "Canal de YouTube de la Liga Colombiana de Esperanto con vídeos sobre sus actividades y sobre el idioma.",
+      "en": "YouTube channel of the Colombian Esperanto League with videos about its activities and the language."
+    },
+    "category": "media",
+    "level": "A2",
+    "format": "video",
+    "tags": [
+      "kolombio",
+      "youtube",
+      "filmoj",
+      "hispana",
+      "colombia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Resources: Podkastoj",
+    "url": "https://esperanto.miraheze.org/wiki/Podcasts_/_Podkastoj",
+    "description": {
+      "eo": "Komunuma listo de podkastoj en Esperanto, kun ligiloj kaj priskriboj.",
+      "es": "Lista comunitaria de pódcasts en esperanto, con enlaces y descripciones.",
+      "en": "Community list of Esperanto podcasts with links and descriptions."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "podcast",
+    "tags": [
+      "podkastoj",
+      "listo",
+      "viki",
+      "aŭskulti"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kompleta listo de Esperantaj podkastoj (/r/Esperanto)",
+    "url": "https://esperantoreddit.wordpress.com/kompleta-listo-de-esperantaj-podkastoj/",
+    "description": {
+      "eo": "Ampleksa listo de Esperantaj podkastoj kompilita de la komunumo /r/Esperanto.",
+      "es": "Amplia lista de pódcasts en esperanto recopilada por la comunidad /r/Esperanto.",
+      "en": "Comprehensive list of Esperanto podcasts compiled by the /r/Esperanto community."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "podcast",
+    "tags": [
+      "podkastoj",
+      "reddit",
+      "listo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Grupo Esperantista de Bilbao",
+    "url": "https://sites.google.com/site/esperantobi/",
+    "description": {
+      "eo": "Esperanto-grupo de Bilbao (Eŭskio) kun novaĵoj, kursoj kaj agadoj.",
+      "es": "Grupo esperantista de Bilbao (Euskadi) con noticias, cursos y actividades.",
+      "en": "Esperanto group in Bilbao (Basque Country) with news, courses and activities."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "bilbao",
+      "eŭskio",
+      "klubo",
+      "hispanio",
+      "euskadi"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Listening tips: Esperanto (grammaticus)",
+    "url": "https://grammaticus.blog/2026/08/15/listening-tips-esperanto/",
+    "description": {
+      "eo": "Konsiloj por plibonigi la aŭskultan komprenon de Esperanto per podkastoj kaj radio.",
+      "es": "Consejos para mejorar la comprensión auditiva del esperanto con pódcasts y radio.",
+      "en": "Tips for improving Esperanto listening comprehension with podcasts and radio."
+    },
+    "category": "courses",
+    "level": "A2",
+    "format": "website",
+    "tags": [
+      "aŭskultado",
+      "konsiloj",
+      "podkastoj",
+      "blogo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "ILERA: radioamatoroj esperantistaj (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/International_League_of_Esperantist_Radio_Amateurs",
+    "description": {
+      "eo": "Pri la Internacia Ligo de Esperantistaj Radioamatoroj (ILERA).",
+      "es": "Sobre la Liga Internacional de Radioaficionados Esperantistas (ILERA).",
+      "en": "About the International League of Esperantist Radio Amateurs (ILERA)."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "radioamatoroj",
+      "ilera",
+      "faka asocio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Listo de Vikipedioj (en Esperanto)",
+    "url": "https://meta.wikimedia.org/wiki/List_of_Wikipedias/eo",
+    "description": {
+      "eo": "Listo de ĉiuj lingvaj versioj de Vikipedio kun statistikoj, en Esperanto.",
+      "es": "Lista de todas las ediciones lingüísticas de Wikipedia con estadísticas, en esperanto.",
+      "en": "List of every language edition of Wikipedia with statistics, in Esperanto."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "vikipedio",
+      "wikimedia",
+      "statistikoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The Grammar of Esperanto: a corpus-based description",
+    "url": "https://www.researchgate.net/publication/328306566_The_Grammar_of_Esperanto_A_corpus-based_description",
+    "description": {
+      "eo": "Lingvistika priskribo de la Esperanta gramatiko bazita sur tekstkorpuso.",
+      "es": "Descripción lingüística de la gramática del esperanto basada en un corpus de textos.",
+      "en": "Linguistic, corpus-based description of Esperanto grammar."
+    },
+    "category": "courses",
+    "level": "C1",
+    "format": "book",
+    "tags": [
+      "gramatiko",
+      "korpuso",
+      "lingvistiko",
+      "esploro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Fonologio de Esperanto (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/Esperanto_phonology",
+    "description": {
+      "eo": "Klarigo pri la prononco kaj sonoj de Esperanto, kun IPA-transskriboj.",
+      "es": "Explicación de la pronunciación y los sonidos del esperanto, con transcripciones AFI.",
+      "en": "Explanation of Esperanto pronunciation and sounds, with IPA transcriptions."
+    },
+    "category": "courses",
+    "level": "A1",
+    "format": "website",
+    "tags": [
+      "prononco",
+      "fonologio",
+      "sonoj",
+      "akcento"
+    ],
+    "isFree": true
+  }
+]
