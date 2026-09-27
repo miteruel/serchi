@@ -30,3 +30,7 @@ jobs:
         run: |
           npm run export:delphi
           git diff --exit-code delphi/data
+      - name: Mini-course audio list up to date (run npm run audio:manifest if this fails)
+        run: |
+          npm run audio:manifest
+          git diff --exit-code public/audio/index.json docs/GRABACIONES.md

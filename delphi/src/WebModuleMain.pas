@@ -48,6 +48,7 @@ type
     procedure Redirect(const AUrl: string);
     procedure SendStatic(const APath: string);
     procedure SendPublicPage(const AName: string);
+    procedure SendPublicFile(const APath: string);
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -293,12 +294,42 @@ begin
   FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
 end;
 
+{ Files of the public folder used by the standalone pages: the mini-course
+  recordings (/audio/*.mp3 and /audio/index.json) and the preview image
+  shown when a page is shared (/og-image.png). }
+procedure TWebModuleMain.SendPublicFile(const APath: string);
+var
+  PublicDir, FileName, Ext: string;
+begin
+  PublicDir := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public'));
+  FileName := TPath.GetFullPath(TPath.Combine(PublicDir, APath.Replace('/', PathDelim)));
+  if not FileName.StartsWith(PublicDir + PathDelim) or not TFile.Exists(FileName) then
+  begin
+    SendHtml('Not found', 404);
+    Exit;
+  end;
+  Ext := TPath.GetExtension(FileName).ToLower;
+  if Ext = '.mp3' then
+    FResponse.ContentType := 'audio/mpeg'
+  else if Ext = '.json' then
+    FResponse.ContentType := 'application/json; charset=utf-8'
+  else if Ext = '.png' then
+    FResponse.ContentType := 'image/png'
+  else
+  begin
+    SendHtml('Not found', 404);
+    Exit;
+  end;
+  FResponse.SetCustomHeader('Cache-Control', 'public, max-age=3600');
+  FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+end;
+
 { Standalone pages shared with the React version: the kids' mini-course and
   the history of Esperanto in Aragon (public/<name>.html in the repository,
   next to the delphi folder). }
 procedure TWebModuleMain.SendPublicPage(const AName: string);
 var
-  FileName: string;
+  FileName, Origin, Proto: string;
 begin
   FileName := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + AName + '.html'));
   if not TFile.Exists(FileName) then
@@ -306,8 +337,19 @@ begin
     SendHtml('Not found', 404);
     Exit;
   end;
-  FResponse.ContentType := 'text/html; charset=utf-8';
-  FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+  // The pages use __SITE_URL__ for absolute links (canonical, Open Graph):
+  // SITE_URL if set, else the address of this request (as server/seo.ts does)
+  Origin := GetEnvironmentVariable('SITE_URL').Trim;
+  while Origin.EndsWith('/') do
+    Origin := Origin.Substring(0, Origin.Length - 1);
+  if Origin = '' then
+  begin
+    Proto := FRequest.GetFieldByName('X-Forwarded-Proto');
+    if Proto = '' then
+      Proto := 'http';
+    Origin := Proto + '://' + FRequest.Host;
+  end;
+  SendHtml(TFile.ReadAllText(FileName, TEncoding.UTF8).Replace('__SITE_URL__', Origin, [rfReplaceAll]));
 end;
 
 { ---------------------------------------------------------------------------
@@ -1247,6 +1289,11 @@ begin
   if (Path.Length > 1) and Path.EndsWith('/') then
     Path := Path.Substring(0, Path.Length - 1);
 
+  if Path.StartsWith('/audio/') or (Path = '/og-image.png') then
+  begin
+    SendPublicFile(Path.Substring(1));
+    Exit;
+  end;
   if Path.StartsWith('/static/') then
   begin
     SendStatic(Path.Substring(Length('/static/')));

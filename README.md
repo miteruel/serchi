@@ -13,8 +13,6 @@ database, Delphi version, reviewed links, shared forum, mini-course and more (se
 This contains everything you need to run your app locally. To publish it on a server
 (Docker, environment variables, backups), see [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
 
-View your app in AI Studio: https://ai.studio/apps/1f685933-e473-4c77-9a87-e5e3f760bab5
-
 ## Run Locally
 
 **Prerequisites:**  Node.js
@@ -77,6 +75,8 @@ Scripts:
 - `npm run forum:import -- [--file forum.json]`: replaces the whole forum with the
   content of a JSON file (default: the demo forum in
   [`data/imports/2026-09-foro-inicial.json`](data/imports/2026-09-foro-inicial.json)).
+- `npm run audio:manifest`: after adding recordings to `public/audio/`, updates the
+  list the mini-course reads and [`docs/GRABACIONES.md`](docs/GRABACIONES.md).
 - `npm run links:check -- [--category radio] [--out report.md]`: opens every URL in
   the database (links, knowledge panel links and radio feeds) and writes a report of
   the broken, blocked and redirected ones (default
@@ -98,7 +98,8 @@ Teruel. Todo lo que sigue ocurrió el 27 de septiembre de 2026; entre paréntesi
 PR y commits correspondientes.
 
 1. **Origen en Google AI Studio** (`29f5106`, `e2b5c87`). Antonio Alcázar crea la
-   aplicación con AI Studio: una web React + Vite, con un servidor Express que usa
+   aplicación con [AI Studio](https://ai.studio/apps/1f685933-e473-4c77-9a87-e5e3f760bab5):
+   una web React + Vite, con un servidor Express que usa
    Gemini con búsqueda de Google para descubrir enlaces en vivo. Incluye 300 recursos
    en ficheros TypeScript, paneles de conocimiento, un foro simulado, favoritos y la
    interfaz en esperanto, español e inglés.
@@ -291,6 +292,33 @@ PR y commits correspondientes.
     que hace una copia de seguridad cada 24 horas. Con `--profile https` arranca también
     Caddy, que sirve la web con HTTPS para el dominio de `DOMAIN`. Explicado en
     [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
+
+27. **Limpieza de restos de AI Studio.** El paquete pasa a llamarse `serchi` (antes
+    `react-example`) y declara su licencia GPL. Se eliminan el manifiesto `metadata.json`
+    y los ajustes de `vite.config.ts` propios de AI Studio. En `.env.example` desaparece
+    `APP_URL`, que no se usaba. `index.html` deja de pedir la fuente *Product Sans*, que
+    no existe en Google Fonts.
+
+28. **Buscadores y redes sociales.**
+    - **Direcciones propias:** cada vista de la web tiene su dirección. Una búsqueda es
+      `/?q=vortaro&category=tools` y el foro es `/?view=forum`, así que se pueden
+      compartir y los botones de atrás y adelante funcionan. El título de la pestaña y el
+      idioma de la página siguen a la vista y al idioma elegido.
+    - **Ficheros para buscadores:** el servidor sirve `robots.txt` y `sitemap.xml`.
+    - **Metadatos:** las páginas llevan enlace canónico, Open Graph con una imagen para
+      la vista previa al compartir (`public/og-image.png`), la relación entre el
+      minicurso en español y en inglés (`hreflang`), y los datos que indican a Google
+      cómo buscar dentro del sitio.
+    - **URLs absolutas:** se escriben con `__SITE_URL__`, que el servidor (también el
+      Delphi) cambia por `SITE_URL` o por la dirección de la petición.
+
+29. **Audio en el minicurso.** Las palabras y frases en esperanto del minicurso pueden
+    llevar un botón 🔊 para oírlas. El botón solo aparece cuando existe la grabación, así
+    que se pueden ir añadiendo poco a poco en `public/audio/`, en MP3. La lista de las 134
+    grabaciones posibles, con el nombre que debe tener cada fichero y cómo grabarlas, está
+    en [`docs/GRABACIONES.md`](docs/GRABACIONES.md). Tras añadir grabaciones hay que
+    ejecutar `npm run audio:manifest`; el CI avisa si se olvida. Las grabaciones sirven
+    para las dos versiones del curso y también para la versión Delphi.
 
 ### Pendiente y limitaciones conocidas
 

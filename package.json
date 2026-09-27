@@ -1,7 +1,9 @@
 {
-  "name": "react-example",
+  "name": "serchi",
   "private": true,
   "version": "0.0.0",
+  "description": "Serĉilo: buscador de recursos en esperanto de Liberanimo Teruel",
+  "license": "GPL-3.0-or-later",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
@@ -16,7 +18,8 @@
     "db:export": "tsx scripts/db-export.ts",
     "db:backup": "tsx scripts/db-backup.ts",
     "forum:import": "tsx scripts/forum-import.ts",
-    "links:check": "tsx scripts/check-links.ts"
+    "links:check": "tsx scripts/check-links.ts",
+    "audio:manifest": "tsx scripts/audio-manifest.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
