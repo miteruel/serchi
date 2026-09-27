@@ -181,6 +181,13 @@ PR y commits correspondientes.
     Liberanimo (*libera animo*, «alma libre»). El logotipo va incrustado en las páginas
     para que se vea igual en las versiones React y Delphi.
 
+16. **Teruel en la portada.** El dibujo de Teruel aparece también en la portada, bajo el
+    nombre del sitio, y al pulsarlo se abre la historia del esperanto en Aragón. Está
+    hecho con clases de Tailwind para seguir el modo claro u oscuro de la web
+    (`src/components/TeruelSkyline.tsx` y, en Delphi, `delphi/templates/_teruel.html`).
+    De paso, la columna de la portada se alinea arriba: al crecer con las nuevas
+    secciones, el logotipo y el título quedaban tapados bajo la barra superior.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir
