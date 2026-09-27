@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.github
+.env*
+!.env.example
+data/backups
+data/export
+*.db-journal
+*.db-wal
+*.db-shm
+delphi
+test

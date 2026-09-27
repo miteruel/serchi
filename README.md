@@ -10,7 +10,8 @@ Google AI Studio and later fixed and extended with Claude Code on the web: SQLit
 database, Delphi version, reviewed links, shared forum, mini-course and more (see
 [Historia del proyecto](#historia-del-proyecto)).
 
-This contains everything you need to run your app locally.
+This contains everything you need to run your app locally. To publish it on a server
+(Docker, environment variables, backups), see [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
 
 View your app in AI Studio: https://ai.studio/apps/1f685933-e473-4c77-9a87-e5e3f760bab5
 
@@ -69,6 +70,10 @@ Scripts:
   comment at the top of [`scripts/db-import.ts`](scripts/db-import.ts)).
 - `npm run db:export -- [--out dir]`: dumps the database to `resources.json` and
   `knowledge.json` (default `data/export/`), handy for reviewing or editing by hand.
+- `npm test`: tests for the database and forum layers (Node's built-in test runner).
+  GitHub runs them with the type check and the build on every push and pull request.
+- `npm run db:backup -- [--out dir] [--keep 14]`: consistent copy of the database while
+  the server is running (default `data/backups/`).
 - `npm run forum:import -- [--file forum.json]`: replaces the whole forum with the
   content of a JSON file (default: the demo forum in
   [`data/imports/2026-09-foro-inicial.json`](data/imports/2026-09-foro-inicial.json)).
@@ -261,6 +266,25 @@ PR y commits correspondientes.
     de la clave (un HMAC, nunca la clave en sí) que dura 30 días. Sin esa cookie, el
     servidor trata al visitante como estudiante aunque tenga el rol de moderador, así que
     no puede fijar, cerrar ni borrar mensajes.
+
+23. **Pruebas, CI y comprobación mensual de enlaces.** `npm test` prueba la capa de datos
+    y el foro: la validación, los duplicados, los «me gusta» por visitante, el borrado en
+    cascada y la coherencia de la base de datos del repositorio. En GitHub, el workflow
+    *CI* comprueba en cada cambio los tipos, las pruebas, el build y que los JSON de
+    Delphi están al día. El workflow *Comprobar enlaces* ejecuta `npm run links:check`
+    el día 1 de cada mes desde los servidores de GitHub, que sí tienen internet, y abre
+    o actualiza un issue con los enlaces rotos.
+
+24. **Delphi ve los cambios de Node.** Si las dos versiones comparten la base de datos,
+    Delphi comprueba en cada petición si otra conexión la ha cambiado
+    (`PRAGMA data_version`) y recarga enlaces, paneles y foro. Los datos antiguos se
+    liberan cinco minutos después, por si otra petición todavía los está usando.
+
+25. **Guía de despliegue.** [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md) explica cómo
+    publicar la web con Docker o con Node, las variables de entorno, HTTPS con Caddy,
+    las copias de seguridad (`npm run db:backup`) y cómo cargar datos en producción. Se
+    añaden un `Dockerfile` que guarda la base de datos en un volumen y el script de
+    copia de seguridad.
 
 ### Pendiente y limitaciones conocidas
 

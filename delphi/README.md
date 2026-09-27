@@ -29,7 +29,7 @@ El ejecutable busca las carpetas `templates/`, `static/` y `data/` subiendo desd
 carpeta del `.exe` (p. ej. `Win64\Debug\`), o en la ruta indicada por `SERCHI_HOME`.
 La base de datos se busca en `../data/serchi.db` (junto a `schema.sql`) o en la ruta
 de la variable `SERCHI_DB`. Las versiones Node y Delphi pueden usar el mismo fichero a
-la vez, pero cada una solo ve los enlaces nuevos de la otra al reiniciarse.
+la vez y cada una ve enseguida lo que escribe la otra.
 
 ## Estructura
 
@@ -89,9 +89,10 @@ delphi/
 
 ## Diferencias con la versión React
 
-- Los enlaces añadidos y el foro se guardan en SQLite. Como con los enlaces, el servidor
-  lee el foro al arrancar y lo mantiene en memoria: si la versión React y la Delphi usan
-  la misma base de datos a la vez, cada una ve los cambios de la otra al reiniciarse.
+- Los enlaces añadidos y el foro se guardan en SQLite. El servidor los lee al arrancar
+  y los mantiene en memoria. Antes de cada petición comprueba si otro programa (la
+  versión Node) ha cambiado la base de datos (`PRAGMA data_version`) y, si es así,
+  vuelve a cargarlos.
   Idioma, rol del foro y favoritos van en cookies.
 - Si se define `FORUM_MODERATOR_KEY`, el rol de moderador pide esa clave en la página
   `/moderator` (en React se pide en un cuadro de diálogo). Al acertarla se guarda una

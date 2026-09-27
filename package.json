@@ -10,9 +10,11 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
+    "test": "node --import tsx --test test/*.test.ts",
     "export:delphi": "tsx scripts/export-delphi-data.ts",
     "db:import": "tsx scripts/db-import.ts",
     "db:export": "tsx scripts/db-export.ts",
+    "db:backup": "tsx scripts/db-backup.ts",
     "forum:import": "tsx scripts/forum-import.ts",
     "links:check": "tsx scripts/check-links.ts"
   },

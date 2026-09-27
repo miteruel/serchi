@@ -1,0 +1,49 @@
+# Once a month, opens every URL in the database and reports the broken ones
+# in an issue labelled "enlaces" (the same issue is updated while it is open).
+# It can also be started by hand from the Actions tab.
+name: Comprobar enlaces
+
+on:
+  schedule:
+    - cron: '17 6 1 * *' # day 1 of each month, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check links
+        id: check
+        run: |
+          set +e
+          npm run links:check -- --out links-report.md
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+      - name: Keep the report
+        uses: actions/upload-artifact@v4
+        with:
+          name: links-report
+          path: links-report.md
+      - name: Open or update the issue
+        if: steps.check.outputs.exit != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create enlaces --color d93f0b --description "Enlaces rotos detectados por npm run links:check" 2>/dev/null || true
+          number=$(gh issue list --label enlaces --state open --json number --jq '.[0].number')
+          { echo "Informe generado por el workflow *Comprobar enlaces* ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."; echo; head -c 60000 links-report.md; } > body.md
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file body.md
+            gh issue comment "$number" --body "Nueva comprobación: el informe de arriba está actualizado."
+          else
+            gh issue create --title "Enlaces rotos o sin respuesta" --label enlaces --body-file body.md
+          fi

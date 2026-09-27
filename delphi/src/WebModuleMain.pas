@@ -1268,6 +1268,7 @@ begin
     Exit;
   end;
 
+  Store.RefreshIfChanged; // pick up changes made by the Node server
   FApp := TAppVM.Create;
   FSaved := TList<string>.Create;
   try
