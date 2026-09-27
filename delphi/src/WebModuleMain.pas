@@ -1259,6 +1259,9 @@ begin
           Id := Store.AddRecording(Slug, Text, Mime, Data, Visitor, FRequest.QueryFields.Values['name']);
           if Trusted then
             Store.ApproveRecording(Id);
+          // Thanked by name on the course pages only when the speaker asked for it
+          if (FRequest.QueryFields.Values['credit'] = '1') and (FRequest.QueryFields.Values['name'].Trim <> '') then
+            Store.AddRecordingCredit(Id, FRequest.QueryFields.Values['name']);
           Obj := TJSONObject.Create;
           try
             Obj.AddPair('id', Id).AddPair('slug', Slug).AddPair('text', Text)
@@ -1270,6 +1273,8 @@ begin
         end;
       end;
     end
+    else if (Length(Seg) = 4) and (Seg[3] = 'credits') and (Method = 'GET') then
+      SendJson(Store.RecordingCreditsJson) // speakers to thank on the course pages
     else if (Length(Seg) = 4) and (Seg[3] = 'pending') and (Method = 'GET') then
     begin
       if ModeratorOnly then
@@ -1901,7 +1906,7 @@ begin
     Path := Path.Substring(0, Path.Length - 1);
 
   if Path.StartsWith('/audio/') or (Path = '/og-image.png') or (Path = '/kurso.css') or
-    (Path = '/kurso.js') then
+    (Path = '/kurso.js') or (Path = '/kurso-extra.js') then
   begin
     SendPublicFile(Path.Substring(1));
     Exit;

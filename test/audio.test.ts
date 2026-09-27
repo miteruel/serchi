@@ -27,6 +27,7 @@ import {
   detectAudioType,
   getRecordingAudio,
   listPendingRecordings,
+  recordingCredits,
   synthesizedRecordings,
 } from '../server/audio';
 import { fillVoices, getSyntheticAudio, missingVoices, mutedVoices, muteVoice, unmuteVoice } from '../server/tts';
@@ -181,5 +182,19 @@ test('a moderator recording from the editor is published at once and skips the l
 
   addRecording(db, courseWords(), { slug: 'saluton', audio: WEBM, visitorId: 'visitor-e' });
   assert.equal(countPendingRecordings(db), 1, 'a visitor recording still waits');
+  db.close();
+});
+
+test('only speakers who ask for it are thanked, once their recording is approved', () => {
+  const db = tempDb();
+  const words = courseWords();
+  const a = addRecording(db, words, { slug: 'saluton', audio: WEBM, visitorId: 'visitor-f', name: ' Ana ', credit: true });
+  const b = addRecording(db, words, { slug: 'dankon', audio: WEBM, visitorId: 'visitor-f', name: 'ana', credit: true });
+  const c = addRecording(db, words, { slug: 'jes', audio: WEBM, visitorId: 'visitor-g', name: 'Pablo' }); // name only for moderators
+  assert.deepEqual(recordingCredits(db), [], 'pending recordings are not credited');
+  for (const r of [a, b, c]) approveRecording(db, r.id);
+  assert.deepEqual(recordingCredits(db), [{ name: 'Ana', slugs: ['dankon', 'saluton'] }]);
+  deleteRecording(db, a.id);
+  assert.deepEqual(recordingCredits(db), [{ name: 'ana', slugs: ['dankon'] }]);
   db.close();
 });

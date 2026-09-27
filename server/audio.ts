@@ -115,6 +115,18 @@ export class RecordingError extends Error {
 export function addRecording(
   db: DatabaseSync,
   words: Map<string, string>,
+  input: { slug: string; audio: Buffer; visitorId: string; name?: string; trusted?: boolean; credit?: boolean },
+): { id: string; slug: string; text: string } {
+  const saved = storeRecording(db, words, input);
+  // Thanked by name on the course pages only when the speaker asked for it
+  const name = (input.name || '').trim().slice(0, 60);
+  if (input.credit && name) db.prepare('INSERT INTO recording_credits (recording_id, name) VALUES (?, ?)').run(saved.id, name);
+  return saved;
+}
+
+function storeRecording(
+  db: DatabaseSync,
+  words: Map<string, string>,
   input: { slug: string; audio: Buffer; visitorId: string; name?: string; trusted?: boolean },
 ): { id: string; slug: string; text: string } {
   const text = words.get(input.slug);
@@ -154,6 +166,28 @@ export interface PendingRecording {
   text: string;
   name: string | null;
   createdAt: string;
+}
+
+/**
+ * Speakers to thank on the course pages: each name with the words of its
+ * approved recordings, most words first. Only speakers who asked for it.
+ */
+export function recordingCredits(db: DatabaseSync): { name: string; slugs: string[] }[] {
+  const rows = db
+    .prepare(
+      "SELECT c.name, r.slug FROM recording_credits c JOIN recordings r ON r.id = c.recording_id " +
+        "WHERE r.status = 'approved' ORDER BY r.created_at, r.rowid", // a name is written as in its first recording
+    )
+    .all() as Row[];
+  const byName = new Map<string, { name: string; slugs: Set<string> }>();
+  for (const r of rows) {
+    const key = String(r.name).trim().toLowerCase();
+    if (!byName.has(key)) byName.set(key, { name: String(r.name).trim(), slugs: new Set() });
+    byName.get(key)!.slugs.add(r.slug);
+  }
+  return [...byName.values()]
+    .map((c) => ({ name: c.name, slugs: [...c.slugs].sort() }))
+    .sort((a, b) => b.slugs.length - a.slugs.length || a.name.localeCompare(b.name));
 }
 
 export function countPendingRecordings(db: DatabaseSync): number {

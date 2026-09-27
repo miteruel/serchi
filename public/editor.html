@@ -117,7 +117,9 @@
       </div>
       <label>Presentación<textarea id="c-intro" maxlength="3000"></textarea></label>
       <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="c-published" style="width:20px;height:20px"> Publicado (visible en <span id="c-url"></span>)</label>
-      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊. Debajo de cada bloque puedes escuchar sus palabras: 🔊 es una grabación, 🔊🤖 la voz automática que suena mientras nadie la graba (con ✕ la quitas si suena mal) y las de borde discontinuo no tienen voz (púlsalas para crearla). Con 🎙️ grabas tú la palabra: se publica al momento, sin revisión. Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
+      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊. Debajo de cada bloque puedes escuchar sus palabras: 🔊 es una grabación, 🔊🤖 la voz automática que suena mientras nadie la graba (con ✕ la quitas si suena mal) y las de borde discontinuo no tienen voz (púlsalas para crearla). Con 🎙️ grabas tú la palabra: se publica al momento, sin revisión.</p>
+      <label>Tu nombre para «Voces de este curso» (opcional: sale al final de los cursos con tus grabaciones)<input type="text" id="voice-name" maxlength="60" autocomplete="nickname" style="max-width:280px"></label>
+      <p class="help">Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
     </section>
 
     <div id="lessons" style="display:grid;gap:12px;margin-top:12px"></div>
@@ -226,7 +228,9 @@
           active = null;
           var blob = new Blob(chunks, { type: recorder.mimeType || mime || 'audio/webm' });
           setStatus('Enviando la grabación de «' + text + '»…');
-          fetch('/api/recordings?consent=1&approve=1&slug=' + encodeURIComponent(slug) + '&text=' + encodeURIComponent(text), {
+          var speaker = $('voice-name').value.trim();
+          fetch('/api/recordings?consent=1&approve=1&slug=' + encodeURIComponent(slug) + '&text=' + encodeURIComponent(text) +
+            (speaker ? '&credit=1&name=' + encodeURIComponent(speaker) : ''), {
             method: 'POST',
             headers: { 'Content-Type': blob.type, 'X-Visitor-Id': visitorId(), 'X-Moderator-Key': key() },
             body: blob,
@@ -324,6 +328,15 @@
     draw();
     return row;
   }
+
+  // The speaker's name is remembered in this browser
+  (function () {
+    var input = $('voice-name');
+    try { input.value = localStorage.getItem('sercilo_editor_voice_name') || ''; } catch (e) {}
+    input.addEventListener('input', function () {
+      try { localStorage.setItem('sercilo_editor_voice_name', input.value.trim()); } catch (e) {}
+    });
+  })();
 
   function setStatus(text, cls) { var s = $('status'); s.textContent = text; s.className = 'status ' + (cls || ''); }
   function markDirty() { dirty = true; setStatus('Cambios sin guardar', 'dirty'); }

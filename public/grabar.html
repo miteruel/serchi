@@ -88,7 +88,8 @@
     <section class="card" aria-labelledby="h-consent">
       <h2 id="h-consent">Antes de grabar</h2>
       <label class="check"><input type="checkbox" id="consent"> Soy mayor de edad y acepto que mi voz se publique en el minicurso de Liberanimo Teruel.</label>
-      <label>Tu nombre o apodo (opcional, solo lo ven los moderadores)<br><input type="text" id="name" maxlength="60" autocomplete="nickname"></label>
+      <label>Tu nombre o apodo (opcional, lo ven los moderadores)<br><input type="text" id="name" maxlength="60" autocomplete="nickname"></label>
+      <label class="check"><input type="checkbox" id="credit"> Quiero que mi nombre salga en «Voces de este curso», al final de los cursos que tengan mis grabaciones.</label>
       <p class="muted">Consejos: habla despacio y claro, como se lo dirías a un niño, en un sitio sin ruido. Cada grabación dura como mucho 10 segundos.</p>
     </section>
 
@@ -253,7 +254,8 @@
     if (!$('consent').checked) { setMsg('Marca antes la casilla de consentimiento.', 'err'); return; }
     $('send').disabled = true;
     var url = '/api/recordings?consent=1&slug=' + encodeURIComponent(selected.slug) +
-      '&name=' + encodeURIComponent($('name').value.trim());
+      '&name=' + encodeURIComponent($('name').value.trim()) +
+      ($('credit').checked && $('name').value.trim() ? '&credit=1' : '');
     fetch(url, { method: 'POST', headers: { 'Content-Type': blob.type || 'audio/webm', 'X-Visitor-Id': visitorId() }, body: blob })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, data: d }; }); })
       .then(function (res) {

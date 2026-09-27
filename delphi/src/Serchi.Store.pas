@@ -151,6 +151,10 @@ type
     function AddRecording(const ASlug, AText, AMime: string; const AData: TBytes;
       const AVisitor, AName: string): string;
     function PendingRecordingsJson: string;
+    { Speakers to thank on the course pages, as GET /api/recordings/credits:
+      [{name, slugs}], only those who asked for it, most words first }
+    procedure AddRecordingCredit(const AId, AName: string);
+    function RecordingCreditsJson: string;
     function RecordingAudio(const AId: string; AIncludePending: Boolean; out AMime: string;
       out AData: TBytes): Boolean;
     function ApproveRecording(const AId: string): Boolean;
@@ -1695,6 +1699,87 @@ begin
       ['id', 'slug', 'text', 'mime', 'visitor', 'name'],
       [Result, ASlug, AText, AMime, AVisitor, Copy(AName.Trim, 1, 60)], AData);
   finally
+    Unlock;
+  end;
+end;
+
+procedure TSerchiStore.AddRecordingCredit(const AId, AName: string);
+begin
+  Lock;
+  try
+    FDB.ExecSQL('INSERT INTO recording_credits (recording_id, name) VALUES (:id, :name)',
+      [AId, Copy(AName.Trim, 1, 60)]);
+  finally
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.RecordingCreditsJson: string;
+var
+  Q: TFDQuery;
+  Index: TDictionary<string, Integer>;
+  Names: TList<string>;
+  Slugs: TObjectList<TList<string>>;
+  Order: TList<Integer>;
+  Key, Slug: string;
+  I, N: Integer;
+  List, Words: TJSONArray;
+  Item: TJSONObject;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  Index := TDictionary<string, Integer>.Create;
+  Names := TList<string>.Create;
+  Slugs := TObjectList<TList<string>>.Create(True);
+  Order := TList<Integer>.Create;
+  List := TJSONArray.Create;
+  try
+    Q.Connection := FDB;
+    // A name is written as in its first recording
+    Q.Open('SELECT c.name, r.slug FROM recording_credits c JOIN recordings r ON r.id = c.recording_id ' +
+      'WHERE r.status = ''approved'' ORDER BY r.created_at, r.rowid');
+    while not Q.Eof do
+    begin
+      Key := Q.Fields[0].AsString.Trim.ToLower;
+      if not Index.TryGetValue(Key, N) then
+      begin
+        N := Names.Add(Q.Fields[0].AsString.Trim);
+        Slugs.Add(TList<string>.Create);
+        Index.Add(Key, N);
+      end;
+      Slug := Q.Fields[1].AsString;
+      if not Slugs[N].Contains(Slug) then
+        Slugs[N].Add(Slug);
+      Q.Next;
+    end;
+    for I := 0 to Names.Count - 1 do
+      Order.Add(I);
+    Order.Sort(TComparer<Integer>.Construct(
+      function(const A, B: Integer): Integer
+      begin
+        Result := Slugs[B].Count - Slugs[A].Count;
+        if Result = 0 then
+          Result := CompareText(Names[A], Names[B]);
+      end));
+    for N in Order do
+    begin
+      Slugs[N].Sort;
+      Words := TJSONArray.Create;
+      for Slug in Slugs[N] do
+        Words.Add(Slug);
+      Item := TJSONObject.Create;
+      Item.AddPair('name', Names[N]);
+      Item.AddPair('slugs', Words);
+      List.AddElement(Item);
+    end;
+    Result := List.ToJSON;
+  finally
+    List.Free;
+    Order.Free;
+    Slugs.Free;
+    Names.Free;
+    Index.Free;
+    Q.Free;
     Unlock;
   end;
 end;

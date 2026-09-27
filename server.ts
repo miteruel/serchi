@@ -45,6 +45,7 @@ import {
   approveRecording,
   audioMap,
   countPendingRecordings,
+  recordingCredits,
   audioSlug,
   courseWords,
   deleteRecording,
@@ -309,6 +310,7 @@ async function startServer() {
           visitorId: visitor,
           name: String(req.query.name || ''),
           trusted,
+          credit: req.query.credit === '1',
         });
         return res.status(201).json({ ...saved, url: `/api/recordings/${encodeURIComponent(saved.id)}/audio` });
       } catch (err: any) {
@@ -402,6 +404,11 @@ async function startServer() {
   // Words whose synthetic voice was removed
   app.get('/api/tts/off', (_req, res) => {
     res.set('Cache-Control', 'no-cache').json(mutedVoices(db));
+  });
+
+  // Speakers to thank on the course pages (only those who asked for it)
+  app.get('/api/recordings/credits', (_req, res) => {
+    res.set('Cache-Control', 'no-cache').json(recordingCredits(db));
   });
 
   // How many recordings wait for review (the moderators see it in the menu and the editor)
