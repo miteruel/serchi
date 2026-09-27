@@ -16,6 +16,8 @@ COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 COPY . .
+# A checkout made on Windows may have CRLF line endings, which break the script
+RUN sed -i 's/\r$//' docker/entrypoint.sh && chmod +x docker/entrypoint.sh
 RUN npm run build
 
 ENV NODE_ENV=production \
