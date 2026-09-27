@@ -4,7 +4,7 @@
   see LICENSE for the full text.
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   EsperantoResource, 
   KnowledgePanel, 
@@ -69,6 +69,34 @@ const INITIAL_FILTERS: FilterOptions = {
   anyWords: '',
 };
 
+const URL_CATEGORIES: Category[] = [
+  'courses', 'news', 'projects', 'tools', 'literature', 'media',
+  'community', 'radio', 'people', 'events', 'kids',
+];
+
+type View = 'home' | 'results' | 'forum';
+
+/** Address of a view, so searches can be shared and the Back button works. */
+function urlFor(view: View, query: string, category: Category): string {
+  if (view === 'forum') return '/?view=forum';
+  if (view !== 'results') return '/';
+  const params = new URLSearchParams();
+  if (query) params.set('q', query);
+  if (category !== 'all') params.set('category', category);
+  const qs = params.toString();
+  return qs ? `/?${qs}` : '/?q=';
+}
+
+/** Reads the view from the address (the inverse of urlFor). */
+function readUrl(): { view: View; query: string; category: Category } {
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get('category') as Category | null;
+  const category: Category = cat && URL_CATEGORIES.includes(cat) ? cat : 'all';
+  if (params.get('view') === 'forum') return { view: 'forum', query: '', category: 'all' };
+  if (params.has('q') || category !== 'all') return { view: 'results', query: params.get('q') || '', category };
+  return { view: 'home', query: '', category: 'all' };
+}
+
 export default function App() {
   // Load settings from localStorage
   const [settings, setSettings] = useState<UserSettings>(() => {
@@ -116,9 +144,40 @@ export default function App() {
   });
 
   // UI Views: 'home' | 'results' | 'forum'
-  const [view, setView] = useState<'home' | 'results' | 'forum'>('home');
-  const [queryInput, setQueryInput] = useState('');
-  const [filters, setFilters] = useState<FilterOptions>(INITIAL_FILTERS);
+  // The first view comes from the address, e.g. /?q=vortaro or /?view=forum
+  const initialUrl = useMemo(readUrl, []);
+  const [view, setView] = useState<View>(initialUrl.view);
+  const [queryInput, setQueryInput] = useState(initialUrl.query);
+  const [filters, setFilters] = useState<FilterOptions>({
+    ...INITIAL_FILTERS,
+    query: initialUrl.query,
+    category: initialUrl.category,
+  });
+
+  // Keep the address in step with the view. Changing view adds a history
+  // entry; refining a search (typing, filters) only replaces the current one.
+  const lastView = useRef<View>(initialUrl.view);
+  useEffect(() => {
+    const url = urlFor(view, filters.query, filters.category);
+    if (url !== window.location.pathname + window.location.search) {
+      if (view === lastView.current) window.history.replaceState(null, '', url);
+      else window.history.pushState(null, '', url);
+    }
+    lastView.current = view;
+  }, [view, filters.query, filters.category]);
+
+  // Back / Forward buttons
+  useEffect(() => {
+    const onPop = () => {
+      const next = readUrl();
+      lastView.current = next.view;
+      setView(next.view);
+      setQueryInput(next.query);
+      setFilters((prev) => ({ ...prev, query: next.query, category: next.category }));
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
   
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
@@ -204,6 +263,18 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('sercilo_current_user', JSON.stringify(currentUser));
   }, [currentUser]);
+
+  // Page language and title, for search engines, screen readers and browser tabs
+  useEffect(() => {
+    const t = TRANSLATIONS[settings.language];
+    document.documentElement.lang = settings.language;
+    document.title =
+      view === 'results' && filters.query
+        ? `${filters.query} – Serĉilo`
+        : view === 'forum'
+          ? `${t.communityTab} – Serĉilo`
+          : 'Serĉilo · Liberanimo Teruel';
+  }, [settings.language, view, filters.query]);
 
   // Theme application (light / dark / system)
   useEffect(() => {

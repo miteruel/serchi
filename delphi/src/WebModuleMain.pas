@@ -298,7 +298,7 @@ end;
   next to the delphi folder). }
 procedure TWebModuleMain.SendPublicPage(const AName: string);
 var
-  FileName: string;
+  FileName, Origin, Proto: string;
 begin
   FileName := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + AName + '.html'));
   if not TFile.Exists(FileName) then
@@ -306,8 +306,19 @@ begin
     SendHtml('Not found', 404);
     Exit;
   end;
-  FResponse.ContentType := 'text/html; charset=utf-8';
-  FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+  // The pages use __SITE_URL__ for absolute links (canonical, Open Graph):
+  // SITE_URL if set, else the address of this request (as server/seo.ts does)
+  Origin := GetEnvironmentVariable('SITE_URL').Trim;
+  while Origin.EndsWith('/') do
+    Origin := Origin.Substring(0, Origin.Length - 1);
+  if Origin = '' then
+  begin
+    Proto := FRequest.GetFieldByName('X-Forwarded-Proto');
+    if Proto = '' then
+      Proto := 'http';
+    Origin := Proto + '://' + FRequest.Host;
+  end;
+  SendHtml(TFile.ReadAllText(FileName, TEncoding.UTF8).Replace('__SITE_URL__', Origin, [rfReplaceAll]));
 end;
 
 { ---------------------------------------------------------------------------

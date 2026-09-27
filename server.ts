@@ -20,6 +20,8 @@ import {
   type NewResource,
 } from './server/db';
 import { fetchEpisodes } from './server/radio';
+import { mountSeo, siteOrigin, withSiteUrl } from './server/seo';
+import fs from 'fs';
 import {
   addComment,
   createTopic,
@@ -43,6 +45,8 @@ const __dirname = path.dirname(__filename);
 async function startServer() {
   const app = express();
   const port = process.env.PORT || 3000;
+  // Behind a reverse proxy (Caddy in compose.yaml) trust its X-Forwarded-* headers
+  app.set('trust proxy', 'loopback, linklocal, uniquelocal');
 
   app.use(express.json({ limit: '2mb' }));
 
@@ -355,16 +359,29 @@ Output ONLY valid JSON inside \`\`\`json ... \`\`\` or as raw JSON. Do not fabri
   });
 
   // Mount Vite middleware in development
+  // (robots.txt, sitemap.xml and pages with __SITE_URL__ replaced, see server/seo.ts)
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
+    mountSeo(app, path.join(__dirname, 'public'));
+    app.get('/', async (req, res, next) => {
+      try {
+        const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+        res.type('html').send(await vite.transformIndexHtml(req.originalUrl, withSiteUrl(html, siteOrigin(req))));
+      } catch (err) {
+        next(err);
+      }
+    });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static(path.join(__dirname, 'dist')));
+    const dist = path.join(__dirname, 'dist');
+    const indexHtml = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+    mountSeo(app, dist);
+    app.use(express.static(dist, { index: false }));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+      res.type('html').send(withSiteUrl(indexHtml, siteOrigin(req)));
     });
   }
 

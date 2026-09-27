@@ -17,6 +17,7 @@ y actualizaciones. La versión Delphi tiene sus propias instrucciones en
 | `PORT` | Puerto en el que escucha el servidor | `3000` |
 | `NODE_ENV` | Con `production` sirve la web ya compilada (`dist/`) en vez del modo desarrollo | — |
 | `SERCHI_DB` | Ruta del fichero SQLite con enlaces, paneles y foro | `data/serchi.db` |
+| `SITE_URL` | Dirección pública del sitio, sin `/` final (p. ej. `https://serchi.ejemplo.org`). Se usa en `sitemap.xml` y en la vista previa al compartir un enlace | la de cada petición |
 | `GEMINI_API_KEY` | Activa la búsqueda en vivo de webs nuevas con Gemini | desactivada |
 | `FORUM_MODERATOR_KEY` | Si se define, el rol de moderador del foro pide esta clave | cualquiera modera |
 | `DOMAIN` | Solo con `docker compose --profile https`: dominio para el certificado HTTPS | — |
