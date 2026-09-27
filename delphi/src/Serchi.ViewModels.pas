@@ -196,7 +196,7 @@ type
   TSearchVM = class
   private
     FQuery, FDisplayQuery, FStats, FExactPhrase, FAnyWords, FExcludeWords: string;
-    FResults, FPeople, FEvents: TObjectList<TResourceVM>;
+    FResults, FPeople, FEvents, FKids: TObjectList<TResourceVM>;
     FKnowledge: TKnowledgeVM;
     FTotal: Integer;
     FHasMore: Boolean;
@@ -208,6 +208,7 @@ type
     function GetHasResults: Boolean;
     function GetHasPeople: Boolean;
     function GetHasEvents: Boolean;
+    function GetHasKids: Boolean;
     function GetHasKnowledge: Boolean;
     function GetHasQuery: Boolean;
   public
@@ -227,6 +228,9 @@ type
     { Home page: main Esperanto events (featured resources of the 'events' category) }
     property Events: TObjectList<TResourceVM> read FEvents;
     property HasEvents: Boolean read GetHasEvents;
+    { Home page: kids' corner (featured resources of the 'kids' category) }
+    property Kids: TObjectList<TResourceVM> read FKids;
+    property HasKids: Boolean read GetHasKids;
     property Knowledge: TKnowledgeVM read FKnowledge;
     property HasKnowledge: Boolean read GetHasKnowledge;
     property HasMore: Boolean read FHasMore write FHasMore;
@@ -701,6 +705,7 @@ begin
   FResults := TObjectList<TResourceVM>.Create(True);
   FPeople := TObjectList<TResourceVM>.Create(True);
   FEvents := TObjectList<TResourceVM>.Create(True);
+  FKids := TObjectList<TResourceVM>.Create(True);
   FLevelOptions := TObjectList<TOptionVM>.Create(True);
   FCategoryOptions := TObjectList<TOptionVM>.Create(True);
   FFormatOptions := TObjectList<TOptionVM>.Create(True);
@@ -716,6 +721,7 @@ begin
   FCategoryOptions.Free;
   FLevelOptions.Free;
   FKnowledge.Free;
+  FKids.Free;
   FEvents.Free;
   FPeople.Free;
   FResults.Free;
@@ -741,6 +747,11 @@ end;
 function TSearchVM.GetHasEvents: Boolean;
 begin
   Result := FEvents.Count > 0;
+end;
+
+function TSearchVM.GetHasKids: Boolean;
+begin
+  Result := FKids.Count > 0;
 end;
 
 function TSearchVM.GetHasKnowledge: Boolean;

@@ -306,8 +306,8 @@ end;
 
 procedure TWebModuleMain.FillCategoryOptions(AList: TObjectList<TOptionVM>; const ASelected: string);
 const
-  Cats: array[0..10] of string = ('all', 'courses', 'news', 'projects', 'tools',
-    'literature', 'media', 'community', 'radio', 'people', 'events');
+  Cats: array[0..11] of string = ('all', 'courses', 'news', 'projects', 'tools',
+    'literature', 'media', 'community', 'radio', 'people', 'events', 'kids');
 var
   C: string;
 begin
@@ -418,6 +418,13 @@ begin
     for Res in Found do
       if Res.Featured then
         VM.Events.Add(ResourceVM(Res));
+    // Kids' corner: featured resources for children
+    Found.Clear;
+    Filters.Category := 'kids';
+    Store.Search(Filters, Found);
+    for Res in Found do
+      if Res.Featured then
+        VM.Kids.Add(ResourceVM(Res));
     Render('home.html', VM);
   finally
     Found.Free;

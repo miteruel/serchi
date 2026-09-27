@@ -1,0 +1,344 @@
+[
+  {
+    "title": "IIK - Internacia Infana-adoleskanta Kongreseto",
+    "url": "https://iik.uea.org/2025/",
+    "description": {
+      "eo": "Semajna feria renkontiĝo por infanoj kaj adoleskantoj kiuj parolas Esperanton, okazanta apud la Universala Kongreso ekde 1951; la 53-a okazis en Brno en 2025.",
+      "es": "Encuentro vacacional de una semana para niños y adolescentes que hablan esperanto, junto al Congreso Universal desde 1951; el 53.º fue en Brno en 2025.",
+      "en": "One-week holiday meeting for Esperanto-speaking children and teenagers, held next to the World Congress since 1951; the 53rd was in Brno in 2025."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "iik",
+      "infanoj",
+      "adoleskantoj",
+      "kongreso"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Renkontiĝo de Esperantistaj Familioj (Vikipedio)",
+    "url": "https://eo.wikipedia.org/wiki/Renkonti%C4%9Do_de_Esperantistaj_Familioj",
+    "description": {
+      "eo": "Ĉiujara renkontiĝo, ekde 1979, de familioj kiuj uzas Esperanton hejme kun siaj infanoj.",
+      "es": "Encuentro anual, desde 1979, de familias que usan el esperanto en casa con sus hijos.",
+      "en": "Yearly meeting, since 1979, of families who use Esperanto at home with their children."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ref",
+      "familioj",
+      "denaskuloj",
+      "renkontiĝo"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Infankantoj en esperanto (Babelo Filmoj)",
+    "url": "https://www.youtube.com/playlist?list=PLpnXGNI3v_RFyEdkYMYAh0jugiar2Lr0z",
+    "description": {
+      "eo": "Ludlisto de infankantoj en Esperanto: Dek bovinoj, Eta araneo, Krokodilo en la kavo, La malgranda ŝipeto...",
+      "es": "Lista de canciones infantiles en esperanto: Dek bovinoj, Eta araneo, Krokodilo en la kavo, La malgranda ŝipeto…",
+      "en": "Playlist of children's songs in Esperanto: Dek bovinoj, Eta araneo, Krokodilo en la kavo, La malgranda ŝipeto…"
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "video",
+    "tags": [
+      "kantoj",
+      "infankantoj",
+      "muziko",
+      "video"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Dek bovinoj (uea.facila)",
+    "url": "https://uea.facila.org/filmetoj/dek-bovinoj-infankantoj-en-esperanto/",
+    "description": {
+      "eo": "Infankanto por kalkuli ĝis dek, en la filmeta sekcio de uea.facila, taŭga ankaŭ por komencantoj.",
+      "es": "Canción infantil para contar hasta diez, en la sección de vídeos de uea.facila, útil también para principiantes.",
+      "en": "Children's counting song, in the video section of uea.facila, also good for beginners."
+    },
+    "category": "kids",
+    "level": "A1",
+    "format": "video",
+    "tags": [
+      "kantoj",
+      "nombroj",
+      "infankantoj",
+      "video"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Aventuroj de Uliso - Infanaj Kantoj",
+    "url": "https://www.youtube.com/playlist?list=PLbFJPe2oU9hMLDZQnGJeSZ_kmvgzFyp-A",
+    "description": {
+      "eo": "Ludlisto de infanaj kantoj en Esperanto.",
+      "es": "Lista de reproducción de canciones infantiles en esperanto.",
+      "en": "Playlist of children's songs in Esperanto."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "video",
+    "tags": [
+      "kantoj",
+      "infankantoj",
+      "video"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Tiel do: Rakontoj por malgrandaj infanoj",
+    "url": "https://onlinebooks.library.upenn.edu/webbin/gutbook/lookup?num=48900",
+    "description": {
+      "eo": "Libro de rakontoj por malgrandaj infanoj, senpage legebla ĉe Projekto Gutenberg.",
+      "es": "Libro de cuentos para niños pequeños, gratuito en el Proyecto Gutenberg.",
+      "en": "Book of stories for small children, free on Project Gutenberg."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "rakontoj",
+      "infanlibroj",
+      "gutenberg"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Fabeloj de Andersen (trad. Zamenhof)",
+    "url": "https://onlinebooks.library.upenn.edu/webbin/gutbook/lookup?num=27915",
+    "description": {
+      "eo": "La fabeloj de Hans Christian Andersen tradukitaj de Zamenhof, senpage ĉe Projekto Gutenberg.",
+      "es": "Los cuentos de Hans Christian Andersen traducidos por Zamenhof, gratis en el Proyecto Gutenberg.",
+      "en": "Hans Christian Andersen's fairy tales translated by Zamenhof, free on Project Gutenberg."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "fabeloj",
+      "andersen",
+      "zamenhof",
+      "gutenberg"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "La eta princo (teksto)",
+    "url": "https://github.com/LaPingvino/esperantolibroj/blob/master/La%20eta%20princo%20-%20Antoine%20de%20Saint-Exupery.md",
+    "description": {
+      "eo": "La esperanta traduko de La eta princo de Saint-Exupéry, en la kolekto esperantolibroj ĉe GitHub.",
+      "es": "La traducción al esperanto de El principito de Saint-Exupéry, en la colección esperantolibroj de GitHub.",
+      "en": "The Esperanto translation of Saint-Exupéry's The Little Prince, in the esperantolibroj collection on GitHub."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "eta princo",
+      "saint-exupéry",
+      "libro"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Ŝnufido: ludoj kaj lernomaterialoj por infanoj",
+    "url": "https://sxnufido.itch.io/",
+    "description": {
+      "eo": "Ĉeĥa familia eldonejo de tabulludoj kaj lernomaterialoj en Esperanto por infanoj, gepatroj kaj instruistoj.",
+      "es": "Pequeña editorial familiar checa de juegos de tablero y materiales didácticos en esperanto para niños, familias y docentes.",
+      "en": "Small Czech family publisher of board games and learning materials in Esperanto for children, parents and teachers."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ludoj",
+      "tabulludoj",
+      "lernomaterialoj",
+      "ĉeĥio"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Kvin novaj infanlibroj (EAB)",
+    "url": "https://esperanto.org.uk/news/shop/kvin-novaj-infanlibroj-%C2%A320/",
+    "description": {
+      "eo": "Kvin novaj infanlibroj eldonitaj de la Esperanto-Asocio de Britio, aĉeteblaj unuope aŭ kune.",
+      "es": "Cinco libros infantiles nuevos publicados por la Asociación de Esperanto de Gran Bretaña, a la venta sueltos o en lote.",
+      "en": "Five new children's books published by the Esperanto Association of Britain, sold singly or as a set."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "infanlibroj",
+      "britio",
+      "librovendejo"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "EsperantoLand: infana literaturo",
+    "url": "http://www.esperantoland.org/eo/libroj/index.php?rubriko=Infana+literaturo",
+    "description": {
+      "eo": "Katalogo de infanlibroj en Esperanto kun priskriboj.",
+      "es": "Catálogo de libros infantiles en esperanto con descripciones.",
+      "en": "Catalogue of children's books in Esperanto with descriptions."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "infanlibroj",
+      "katalogo",
+      "librovendejo"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "Familioj: vikio por esperantistaj familioj",
+    "url": "https://familioj.miraheze.org/wiki/%C4%88efpa%C4%9Do",
+    "description": {
+      "eo": "Vikio por familioj kiuj uzas Esperanton hejme: infanlibroj kun komentoj de gepatroj, kantoj kaj informoj pri REF.",
+      "es": "Wiki para familias que usan el esperanto en casa: libros infantiles comentados por otras familias, canciones e información sobre el REF.",
+      "en": "Wiki for families who use Esperanto at home: children's books with parents' comments, songs and information about REF."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "familioj",
+      "denaskuloj",
+      "infanlibroj",
+      "kantoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Familioj: libroj por infanoj",
+    "url": "https://familioj.miraheze.org/wiki/Libroj",
+    "description": {
+      "eo": "Listo de infanlibroj en Esperanto kun komentoj de familioj.",
+      "es": "Lista de libros infantiles en esperanto con comentarios de familias.",
+      "en": "List of children's books in Esperanto with comments from families."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "infanlibroj",
+      "familioj",
+      "listo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Familioj: kantoj",
+    "url": "https://familioj.miraheze.org/wiki/Kantoj",
+    "description": {
+      "eo": "Kantoj por kanti kun infanoj en Esperanto, kun ligiloj al kantaro-vikio.",
+      "es": "Canciones para cantar en esperanto con niños, con enlaces a un wiki de canciones.",
+      "en": "Songs to sing in Esperanto with children, with links to a songs wiki."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "kantoj",
+      "infankantoj",
+      "familioj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kumeŭaŭa, la filo de la ĝangalo",
+    "url": "https://familioj.miraheze.org/wiki/Kume%C5%ADa%C5%ADa,_la_filo_de_la_%C4%9Dangalo",
+    "description": {
+      "eo": "La plej sukcesa libro de Tibor Sekelj: aventuroj de 12-jara knabo de la karaĵa tribo en la brazila ĝangalo; tradukita al 22 lingvoj.",
+      "es": "El libro de más éxito de Tibor Sekelj: aventuras de un niño karajá de 12 años en la selva brasileña; traducido a 22 lenguas.",
+      "en": "Tibor Sekelj's most successful book: adventures of a 12-year-old Karajá boy in the Brazilian jungle; translated into 22 languages."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "sekelj",
+      "kumeŭaŭa",
+      "infanlibroj",
+      "brazilo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "La aventuroj de Alicio en Mirlando",
+    "url": "https://www.gutenberg.org/ebooks/17482",
+    "description": {
+      "eo": "La esperanta traduko de Alico en Mirlando de Lewis Carroll, senpage ĉe Projekto Gutenberg.",
+      "es": "La traducción al esperanto de Alicia en el país de las maravillas de Lewis Carroll, gratis en el Proyecto Gutenberg.",
+      "en": "The Esperanto translation of Lewis Carroll's Alice's Adventures in Wonderland, free on Project Gutenberg."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "alico",
+      "carroll",
+      "gutenberg",
+      "infanlibroj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Pipi Ŝtrumpolonga (teksto)",
+    "url": "https://github.com/LaPingvino/esperantolibroj/blob/master/Pipi%20S'trumpolonga%20-%20Astrid%20Lindgren.md",
+    "description": {
+      "eo": "La libro de Astrid Lindgren tradukita al Esperanto de Sven Alexandersson (1989), en la kolekto esperantolibroj ĉe GitHub.",
+      "es": "El libro de Astrid Lindgren traducido al esperanto por Sven Alexandersson (1989), en la colección esperantolibroj de GitHub.",
+      "en": "Astrid Lindgren's book translated into Esperanto by Sven Alexandersson (1989), in the esperantolibroj collection on GitHub."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "pipi",
+      "lindgren",
+      "infanlibroj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "La fratoj Leonkoro (teksto)",
+    "url": "https://github.com/LaPingvino/esperantolibroj/blob/master/La%20fratoj%20Leonkoro%20-%20Astrid%20Lindgren.md",
+    "description": {
+      "eo": "La fratoj Leonkoro de Astrid Lindgren en Esperanto, en la kolekto esperantolibroj ĉe GitHub.",
+      "es": "Los hermanos Corazón de León de Astrid Lindgren en esperanto, en la colección esperantolibroj de GitHub.",
+      "en": "Astrid Lindgren's The Brothers Lionheart in Esperanto, in the esperantolibroj collection on GitHub."
+    },
+    "category": "kids",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "lindgren",
+      "infanlibroj",
+      "leonkoro"
+    ],
+    "isFree": true
+  }
+]

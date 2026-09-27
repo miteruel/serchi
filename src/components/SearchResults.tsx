@@ -25,7 +25,8 @@ import {
   Radio,
   Play,
   UserRound,
-  CalendarDays
+  CalendarDays,
+  Baby
 } from 'lucide-react';
 import { 
   EsperantoResource, 
@@ -95,6 +96,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     radio: <Radio className="w-3.5 h-3.5" />,
     people: <UserRound className="w-3.5 h-3.5" />,
     events: <CalendarDays className="w-3.5 h-3.5" />,
+    kids: <Baby className="w-3.5 h-3.5" />,
   };
 
   const categoriesList: Category[] = [
@@ -108,7 +110,8 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     'community',
     'radio',
     'people',
-    'events'
+    'events',
+    'kids'
   ];
 
   const levelsList: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];
@@ -185,14 +188,14 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
       {/* Category Navigation Tabs Row (Google Style) */}
       <div className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#202124] sticky top-0 z-10 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-2">
+          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar lg:flex-wrap lg:overflow-visible py-2">
             {categoriesList.map((cat) => {
               const isActive = filters.category === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => onUpdateFilters({ category: cat })}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                     isActive
                       ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 shadow-xs'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/80 border border-transparent'

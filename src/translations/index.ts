@@ -234,6 +234,11 @@ export interface TranslationDictionary {
   eventsSectionTitle: string;
   eventsSectionDesc: string;
   eventsSeeAll: string;
+
+  // Kids section
+  kidsSectionTitle: string;
+  kidsSectionDesc: string;
+  kidsSeeAll: string;
   listenBtn: string;
   nowPlaying: string;
   closePlayer: string;
@@ -346,6 +351,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       radio: "Radio",
       people: "Personoj",
       events: "Eventoj",
+      kids: "Infanoj",
     },
     
     levels: {
@@ -513,6 +519,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     eventsSectionTitle: "Esperanto-eventoj",
     eventsSectionDesc: "Kongresoj, festivaloj kaj renkontiĝoj kie oni vivas Esperanton.",
     eventsSeeAll: "Ĉiuj eventoj",
+    kidsSectionTitle: "Angulo por infanoj",
+    kidsSectionDesc: "Rakontoj, kantoj, ludoj kaj kursoj por infanoj kaj iliaj familioj.",
+    kidsSeeAll: "Ĉio por infanoj",
     listenBtn: "Aŭskulti",
     nowPlaying: "Nun ludas",
     closePlayer: "Fermi ludilon",
@@ -624,6 +633,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       radio: "Radio",
       people: "Personas",
       events: "Eventos",
+      kids: "Niños",
     },
     
     levels: {
@@ -791,6 +801,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     eventsSectionTitle: "Eventos en esperanto",
     eventsSectionDesc: "Congresos, festivales y encuentros donde se vive en esperanto.",
     eventsSeeAll: "Todos los eventos",
+    kidsSectionTitle: "Rincón infantil",
+    kidsSectionDesc: "Cuentos, canciones, juegos y cursos para niños y sus familias.",
+    kidsSeeAll: "Todo para niños",
     listenBtn: "Escuchar",
     nowPlaying: "Sonando",
     closePlayer: "Cerrar reproductor",
@@ -902,6 +915,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       radio: "Radio",
       people: "People",
       events: "Events",
+      kids: "Kids",
     },
     
     levels: {
@@ -1069,6 +1083,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     eventsSectionTitle: "Esperanto events",
     eventsSectionDesc: "Congresses, festivals and meetings where Esperanto is lived.",
     eventsSeeAll: "All events",
+    kidsSectionTitle: "Kids' corner",
+    kidsSectionDesc: "Stories, songs, games and courses for children and their families.",
+    kidsSeeAll: "Everything for kids",
     listenBtn: "Listen",
     nowPlaying: "Now playing",
     closePlayer: "Close player",

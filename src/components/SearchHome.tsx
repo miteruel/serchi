@@ -12,7 +12,8 @@ import {
   Radio,
   Play,
   UserRound,
-  CalendarDays
+  CalendarDays,
+  Baby
 } from 'lucide-react';
 import { UserSettings, Level, Category, EsperantoResource } from '../types';
 import { TRANSLATIONS } from '../translations';
@@ -119,6 +120,7 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
   const radioStations = resources.filter((r) => r.category === 'radio' && r.stream);
   const famousPeople = resources.filter((r) => r.category === 'people' && r.featured);
   const mainEvents = resources.filter((r) => r.category === 'events' && r.featured);
+  const kidsCorner = resources.filter((r) => r.category === 'kids' && r.featured);
 
   const levelsList: { key: Level; label: string; badgeColor: string }[] = [
     { key: 'all', label: t.levels.all, badgeColor: 'hover:border-gray-400' },
@@ -438,6 +440,40 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
                 <span className="block text-sm font-semibold truncate">{event.title}</span>
                 <span className="block text-xs text-gray-500 truncate">
                   {event.description[settings.language] || event.description.eo}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Kids' corner: featured resources for children, linked to their websites */}
+      {kidsCorner.length > 0 && (
+        <section className="mt-8 w-full max-w-2xl" aria-labelledby="kids-heading">
+          <div className="flex items-center justify-between mb-2">
+            <h2 id="kids-heading" className="text-sm font-semibold flex items-center gap-2 text-gray-700 dark:text-gray-300">
+              <Baby className="w-4 h-4 text-emerald-600" /> {t.kidsSectionTitle}
+            </h2>
+            <button
+              onClick={() => onSearch('', undefined, 'kids')}
+              className="text-xs text-emerald-700 dark:text-emerald-400 hover:underline"
+            >
+              {t.kidsSeeAll} →
+            </button>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{t.kidsSectionDesc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {kidsCorner.map((item) => (
+              <a
+                key={item.id}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 transition-colors"
+              >
+                <span className="block text-sm font-semibold truncate">{item.title}</span>
+                <span className="block text-xs text-gray-500 truncate">
+                  {item.description[settings.language] || item.description.eo}
                 </span>
               </a>
             ))}

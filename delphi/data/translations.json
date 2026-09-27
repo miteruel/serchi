@@ -79,7 +79,8 @@
       "community": "Komunumo",
       "radio": "Radio",
       "people": "Personoj",
-      "events": "Eventoj"
+      "events": "Eventoj",
+      "kids": "Infanoj"
     },
     "levels": {
       "all": "Ĉiuj niveloj",
@@ -228,6 +229,9 @@
     "eventsSectionTitle": "Esperanto-eventoj",
     "eventsSectionDesc": "Kongresoj, festivaloj kaj renkontiĝoj kie oni vivas Esperanton.",
     "eventsSeeAll": "Ĉiuj eventoj",
+    "kidsSectionTitle": "Angulo por infanoj",
+    "kidsSectionDesc": "Rakontoj, kantoj, ludoj kaj kursoj por infanoj kaj iliaj familioj.",
+    "kidsSeeAll": "Ĉio por infanoj",
     "listenBtn": "Aŭskulti",
     "nowPlaying": "Nun ludas",
     "closePlayer": "Fermi ludilon",
@@ -330,7 +334,8 @@
       "community": "Comunidad",
       "radio": "Radio",
       "people": "Personas",
-      "events": "Eventos"
+      "events": "Eventos",
+      "kids": "Niños"
     },
     "levels": {
       "all": "Todos los niveles",
@@ -479,6 +484,9 @@
     "eventsSectionTitle": "Eventos en esperanto",
     "eventsSectionDesc": "Congresos, festivales y encuentros donde se vive en esperanto.",
     "eventsSeeAll": "Todos los eventos",
+    "kidsSectionTitle": "Rincón infantil",
+    "kidsSectionDesc": "Cuentos, canciones, juegos y cursos para niños y sus familias.",
+    "kidsSeeAll": "Todo para niños",
     "listenBtn": "Escuchar",
     "nowPlaying": "Sonando",
     "closePlayer": "Cerrar reproductor",
@@ -581,7 +589,8 @@
       "community": "Community",
       "radio": "Radio",
       "people": "People",
-      "events": "Events"
+      "events": "Events",
+      "kids": "Kids"
     },
     "levels": {
       "all": "All levels",
@@ -730,6 +739,9 @@
     "eventsSectionTitle": "Esperanto events",
     "eventsSectionDesc": "Congresses, festivals and meetings where Esperanto is lived.",
     "eventsSeeAll": "All events",
+    "kidsSectionTitle": "Kids' corner",
+    "kidsSectionDesc": "Stories, songs, games and courses for children and their families.",
+    "kidsSeeAll": "Everything for kids",
     "listenBtn": "Listen",
     "nowPlaying": "Now playing",
     "closePlayer": "Close player",

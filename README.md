@@ -143,6 +143,16 @@ PR y commits correspondientes.
     Frateco en Zaragoza. La portada muestra los 12 destacados, que enlazan a su web. La
     base de datos queda con 550 enlaces.
 
+12. **Rincón infantil.** Nueva categoría *Niños* (`kids`, esquema v4) con 23 recursos
+    para niños y familias: 18 nuevos (`data/imports/2026-09-ninos.json`) y 5 que ya
+    estaban en otras categorías. Hay canciones infantiles (Babelo Filmoj, *Dek bovinoj*),
+    cuentos y libros gratuitos (*Fabeloj de Andersen* traducidos por Zamenhof, *Alicio en
+    Mirlando*, *La eta princo*, *Pipi Ŝtrumpolonga*, *Kumeŭaŭa*), el congreso infantil
+    IIK, el encuentro de familias REF, el wiki *Familioj*, los juegos de Ŝnufido y apps y
+    cursos para niños. La portada muestra los 12 destacados. La barra de categorías se
+    ha compactado para que quepan las 12 pestañas. La base de datos queda con 568
+    enlaces.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

@@ -107,6 +107,26 @@
   </section>
   }
 
+  @* Kids' corner: featured resources of the 'kids' category (Model.Kids) *@
+  @if Model.HasKids {
+  <section class="mt-10 w-full" aria-labelledby="kids-heading">
+    <div class="flex items-center justify-between">
+      <h2 id="kids-heading" class="font-semibold">🧸 @t.kidsSectionTitle</h2>
+      <a href="/search?category=kids" class="text-sm text-emerald-700 dark:text-emerald-300 hover:underline">@t.kidsSeeAll →</a>
+    </div>
+    <p class="text-sm text-gray-500 mt-1 mb-3">@t.kidsSectionDesc</p>
+    <div class="grid sm:grid-cols-2 gap-2">
+      @ForEach (var kd in Model.Kids) {
+      <a href="@kd.Url" target="_blank" rel="noopener noreferrer"
+         class="block px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-400">
+        <span class="block text-sm font-semibold truncate">@kd.Title</span>
+        <span class="block text-xs text-gray-500 truncate">@kd.Description</span>
+      </a>
+      }
+    </div>
+  </section>
+  }
+
   <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 w-full">
     @ForEach (var c in Model.CategoryOptions) {
     <a href="/search?category=@c.Value" class="rounded-xl border border-gray-200 dark:border-gray-700 p-3 text-sm text-center hover:border-emerald-500">@c.Caption</a>
