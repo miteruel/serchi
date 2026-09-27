@@ -22,11 +22,28 @@ import {
 import { fetchEpisodes } from './server/radio';
 import { mountSeo, siteOrigin, withSiteUrl } from './server/seo';
 import {
+  COURSE_LIMITS,
+  CourseError,
+  addCourseImage,
+  createCourse,
+  deleteCourse,
+  getCourse,
+  getCourseBySlug,
+  getCourseImage,
+  listCourses,
+  publishedCourseTexts,
+  renderCourseIndex,
+  renderCoursePage,
+  sanitizeContent,
+  updateCourse,
+} from './server/courses';
+import {
   RECORDING_LIMITS,
   RecordingError,
   addRecording,
   approveRecording,
   audioMap,
+  audioSlug,
   courseWords,
   deleteRecording,
   getRecordingAudio,
@@ -231,7 +248,15 @@ async function startServer() {
   // Visitors send recordings, which wait as pending until a moderator (same
   // key as the forum: X-Moderator-Key) approves them. The audio is stored in
   // the database; see server/audio.ts.
-  const words = courseWords();
+  // Words that can be recorded: the mini-course and the published courses
+  const recordableWords = () => {
+    const words = courseWords();
+    for (const text of publishedCourseTexts(db)) {
+      const slug = audioSlug(text);
+      if (slug && !words.has(slug)) words.set(slug, text);
+    }
+    return words;
+  };
   const isModeratorRequest = (req: express.Request) =>
     !moderatorKey || sameKey(String(req.get('X-Moderator-Key') || ''));
 
@@ -243,7 +268,7 @@ async function startServer() {
   app.get('/api/recordings/words', (_req, res) => {
     const recorded = audioMap(db);
     res.json({
-      words: [...words].map(([slug, text]) => ({ slug, text, recorded: !!recorded[slug] })),
+      words: [...recordableWords()].map(([slug, text]) => ({ slug, text, recorded: !!recorded[slug] })),
       maxSeconds: 10,
       moderatorKeyRequired: !!moderatorKey,
     });
@@ -257,7 +282,7 @@ async function startServer() {
       if (!visitor) return res.status(400).json({ error: 'Missing visitor id' });
       if (req.query.consent !== '1') return res.status(400).json({ error: 'consent' });
       try {
-        const saved = addRecording(db, words, {
+        const saved = addRecording(db, recordableWords(), {
           slug: String(req.query.slug || ''),
           audio: Buffer.isBuffer(req.body) ? req.body : Buffer.alloc(0),
           visitorId: visitor,
@@ -294,6 +319,81 @@ async function startServer() {
   app.delete('/api/recordings/:id', (req, res) => {
     if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
     return deleteRecording(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Not found' });
+  });
+
+  // ---- Courses made with the course editor (public/editor.html) ----
+  //
+  // Editing needs the moderator key (X-Moderator-Key). Published courses are
+  // shown at /kurso/<slug> and listed at /kursoj; see server/courses.ts.
+  const moderatorOnly = (req: express.Request, res: express.Response) => {
+    if (isModeratorRequest(req)) return true;
+    res.status(403).json({ error: 'moderator_key' });
+    return false;
+  };
+  const courseRoute =
+    (handler: (req: express.Request, res: express.Response) => unknown) =>
+    (req: express.Request, res: express.Response) => {
+      if (!moderatorOnly(req, res)) return;
+      try {
+        handler(req, res);
+      } catch (err: any) {
+        if (err instanceof CourseError) return res.status(err.status).json({ error: err.message });
+        throw err;
+      }
+    };
+
+  app.get('/api/courses', (req, res) => {
+    if (req.query.all === '1') {
+      if (!moderatorOnly(req, res)) return;
+      return res.json(listCourses(db, false));
+    }
+    return res.json(listCourses(db, true));
+  });
+  app.post('/api/courses', courseRoute((req, res) => res.status(201).json(createCourse(db, req.body || {}))));
+  app.get('/api/courses/:id', courseRoute((req, res) => {
+    const course = getCourse(db, req.params.id);
+    return course ? res.json(course) : res.status(404).json({ error: 'Not found' });
+  }));
+  app.put('/api/courses/:id', courseRoute((req, res) => res.json(updateCourse(db, req.params.id, req.body))));
+  app.delete('/api/courses/:id', courseRoute((req, res) =>
+    deleteCourse(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Not found' })));
+  app.post(
+    '/api/courses/:id/images',
+    express.raw({ type: () => true, limit: COURSE_LIMITS.imageBytes }),
+    courseRoute((req, res) =>
+      res.status(201).json(addCourseImage(db, req.params.id, Buffer.isBuffer(req.body) ? req.body : Buffer.alloc(0)))),
+  );
+  // Preview of the course as it is in the editor, before saving or publishing
+  app.post('/api/courses/:id/preview', courseRoute((req, res) => {
+    const course = getCourse(db, req.params.id);
+    if (!course) return res.status(404).json({ error: 'Not found' });
+    const images = new Set(
+      (db.prepare('SELECT id FROM course_images WHERE course_id = ?').all(course.id) as { id: string }[]).map((r) => r.id),
+    );
+    const draft = {
+      slug: course.slug,
+      lang: req.body?.lang === 'en' ? 'en' : req.body?.lang === 'es' ? 'es' : course.lang,
+      title: String(req.body?.title || course.title).slice(0, COURSE_LIMITS.title),
+      content: sanitizeContent(req.body?.content, images),
+    } as const;
+    return res.type('html').send(renderCoursePage(draft, { preview: true }));
+  }));
+  app.get('/api/course-images/:id', (req, res) => {
+    const img = getCourseImage(db, req.params.id);
+    if (!img) return res.status(404).json({ error: 'Not found' });
+    res.set('Cache-Control', 'public, max-age=86400');
+    return res.type(img.mime).send(Buffer.from(img.data));
+  });
+  app.get('/kursoj', (_req, res) => {
+    res.type('html').send(renderCourseIndex(listCourses(db, true)));
+  });
+  app.get('/kurso/:slug', (req, res) => {
+    const course = getCourseBySlug(db, req.params.slug);
+    if (!course || !course.published) {
+      // Drafts are only visible in the editor's preview
+      return res.status(404).type('html').send(renderCourseIndex(listCourses(db, true)));
+    }
+    return res.type('html').send(renderCoursePage(course));
   });
 
   // Initialize Google Gen AI with server-side API key
@@ -439,6 +539,8 @@ Output ONLY valid JSON inside \`\`\`json ... \`\`\` or as raw JSON. Do not fabri
     }
   });
 
+  const publishedCoursePaths = () => ['/kursoj', ...listCourses(db, true).map((c) => `/kurso/${encodeURIComponent(c.slug)}`)];
+
   // Mount Vite middleware in development
   // (robots.txt, sitemap.xml and pages with __SITE_URL__ replaced, see server/seo.ts)
   if (process.env.NODE_ENV !== 'production') {
@@ -446,7 +548,7 @@ Output ONLY valid JSON inside \`\`\`json ... \`\`\` or as raw JSON. Do not fabri
       server: { middlewareMode: true },
       appType: 'spa',
     });
-    mountSeo(app, path.join(__dirname, 'public'));
+    mountSeo(app, path.join(__dirname, 'public'), publishedCoursePaths);
     app.get('/', async (req, res, next) => {
       try {
         const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
@@ -459,7 +561,7 @@ Output ONLY valid JSON inside \`\`\`json ... \`\`\` or as raw JSON. Do not fabri
   } else {
     const dist = path.join(__dirname, 'dist');
     const indexHtml = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
-    mountSeo(app, dist);
+    mountSeo(app, dist, publishedCoursePaths);
     app.use(express.static(dist, { index: false }));
     app.get('*', (req, res) => {
       res.type('html').send(withSiteUrl(indexHtml, siteOrigin(req)));

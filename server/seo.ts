@@ -34,8 +34,8 @@ export function robotsTxt(origin: string): string {
   return ['User-agent: *', 'Allow: /', 'Disallow: /api/', '', `Sitemap: ${origin}/sitemap.xml`, ''].join('\n');
 }
 
-export function sitemapXml(origin: string, lastmod: string): string {
-  const urls = ['/', ...STANDALONE_PAGES]
+export function sitemapXml(origin: string, lastmod: string, extraPages: string[] = []): string {
+  const urls = ['/', ...STANDALONE_PAGES, ...extraPages]
     .map((p) => `  <url><loc>${origin}${p}</loc><lastmod>${lastmod}</lastmod></url>`)
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
@@ -43,9 +43,10 @@ export function sitemapXml(origin: string, lastmod: string): string {
 
 /**
  * Adds robots.txt, sitemap.xml and the standalone pages (with __SITE_URL__
- * replaced) to the app. `pagesDir` is public/ in development, dist/ in production.
+ * replaced) to the app. `pagesDir` is public/ in development, dist/ in production;
+ * `extraPages` adds pages that change at run time (the published courses).
  */
-export function mountSeo(app: express.Express, pagesDir: string): void {
+export function mountSeo(app: express.Express, pagesDir: string, extraPages: () => string[] = () => []): void {
   app.get('/robots.txt', (req, res) => {
     res.type('text/plain').send(robotsTxt(siteOrigin(req)));
   });
@@ -54,7 +55,7 @@ export function mountSeo(app: express.Express, pagesDir: string): void {
     const files = STANDALONE_PAGES.map((p) => path.join(pagesDir, p));
     const newest = Math.max(...files.map((f) => (fs.existsSync(f) ? fs.statSync(f).mtimeMs : 0)));
     const lastmod = new Date(newest || Date.now()).toISOString().slice(0, 10);
-    res.type('application/xml').send(sitemapXml(siteOrigin(req), lastmod));
+    res.type('application/xml').send(sitemapXml(siteOrigin(req), lastmod, extraPages()));
   });
 
   for (const page of STANDALONE_PAGES) {

@@ -54,6 +54,9 @@ shared by every visitor.
 | GET · POST | `/api/recordings/words` · `/api/recordings?slug=&consent=1` | words to record · send a recording (raw audio body) |
 | GET | `/api/recordings/:id/audio` | an approved recording (pending ones: moderators only) |
 | GET · POST · DELETE | `/api/recordings/pending` · `/api/recordings/:id/approve` · `/api/recordings/:id` | moderators: review recordings |
+| GET | `/api/courses` · `/kursoj` · `/kurso/:slug` | published courses (JSON · list page · course page) |
+| GET · POST · PUT · DELETE | `/api/courses?all=1` · `/api/courses` · `/api/courses/:id` | moderators: course editor |
+| POST | `/api/courses/:id/images` · `/api/courses/:id/preview` | moderators: upload a lesson picture · preview |
 
 Visitors post as one of the forum's demo users (learner, teacher or moderator). Set
 `FORUM_MODERATOR_KEY` in `.env.local` so that the moderator role asks for that key;
@@ -337,6 +340,25 @@ PR y commits correspondientes.
     - **Límites:** 20 grabaciones al día por navegador y 500 pendientes como máximo.
     - **Enlace:** el minicurso enlaza a la grabadora solo cuando el servidor la ofrece
       (versión Node).
+
+31. **Editor de cursos.** Los profesores de Liberanimo pueden crear cursos como el
+    minicurso sin tocar código, en [`/editor.html`](public/editor.html), con la clave
+    de moderador. Guía: [`docs/EDITOR.md`](docs/EDITOR.md).
+    - **Contenido:** cada curso tiene presentación y lecciones. Cada lección lleva su
+      imagen subida y bloques de palabras, texto, reglas, ejercicios con soluciones y
+      diálogos, más el reto del día. Las explicaciones pueden ir en español o en inglés.
+    - **Publicación:** con la vista previa se ve el curso antes de publicarlo. Los cursos
+      publicados salen en `/kurso/<dirección>` con el aspecto del minicurso (progreso,
+      diploma y botones 🔊), y en la lista `/kursoj` y el `sitemap.xml`.
+    - **Almacenamiento:** los cursos y sus imágenes se guardan en la base de datos
+      (tablas `courses` y `course_images`).
+    - **Seguridad:** los textos se escapan, así que no se puede meter HTML, y solo se
+      aceptan imágenes PNG, JPEG, WebP o GIF de verdad (SVG no, porque puede llevar
+      código).
+    - **Grabación:** las palabras de los cursos publicados se pueden grabar en
+      `/grabar.html`.
+    - **Versión Delphi:** el editor y los cursos nuevos solo funcionan con la versión
+      Node.
 
 ### Pendiente y limitaciones conocidas
 

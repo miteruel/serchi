@@ -1,0 +1,242 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+
+  Styles of the courses made with the course editor (/kurso/<slug>, /kursoj).
+  Copied from the mini-course (public/minikurso.html) so both look the same.
+*/
+  @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&display=swap");
+  :root {
+    --bg: #f5f9f4;
+    --surface: #ffffff;
+    --ink: #1f2a33;
+    --muted: #55646b;
+    --line: #d9e5dc;
+    --green: #1e8c4e;
+    --green-soft: #e3f3e8;
+    --sky: #3a86c8;
+    --sun: #f2b632;
+    --coral: #e8604c;
+    --violet: #8a5cc2;
+    --skin: #f4c9a6;
+    --hair: #5b3a24;
+    --paper: #ffffff;
+    --sky: #eaf4fb;
+    --brick-2: #d9825f;
+    --roof: #b8553d;
+    --wall: #fbeed5;
+    --wall-2: #f4dfb8;
+    --window: #6b4a33;
+    --stone: #c4bdb0;
+    --hill: #f2d59a;
+    --ground: #d9bf86;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111813;
+      --surface: #1a231c;
+      --ink: #e7efe9;
+      --muted: #a5b4aa;
+      --line: #2c3a30;
+      --green: #4cc27f;
+      --green-soft: #1d3325;
+      --sky: #6aa9e0;
+      --sun: #f5c451;
+      --coral: #f0806e;
+      --violet: #b08be0;
+      --skin: #e8b996;
+      --hair: #caa27f;
+      --paper: #202b23;
+      --sky: #16212a;
+      --brick-2: #c7704f;
+      --roof: #d06b4f;
+      --wall: #4a4034;
+      --wall-2: #3d352b;
+      --window: #1a1511;
+      --stone: #7d776c;
+      --hill: #5a4a2c;
+      --ground: #4a3d24;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111813;
+    --surface: #1a231c;
+    --ink: #e7efe9;
+    --muted: #a5b4aa;
+    --line: #2c3a30;
+    --green: #4cc27f;
+    --green-soft: #1d3325;
+    --sky: #6aa9e0;
+    --sun: #f5c451;
+    --coral: #f0806e;
+    --violet: #b08be0;
+    --skin: #e8b996;
+    --hair: #caa27f;
+    --paper: #202b23;
+    --sky: #16212a;
+    --brick-2: #c7704f;
+    --roof: #d06b4f;
+    --wall: #4a4034;
+    --wall-2: #3d352b;
+    --window: #1a1511;
+    --stone: #7d776c;
+    --hill: #5a4a2c;
+    --ground: #4a3d24;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.6 "Nunito", "Segoe UI", system-ui, sans-serif;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  }
+  .wrap { max-width: 860px; margin: 0 auto; display: grid; gap: 28px; }
+  h1, h2, h3 { font-family: "Baloo 2", "Nunito", system-ui, sans-serif; line-height: 1.15; text-wrap: balance; margin: 0; }
+  a { color: var(--green); font-weight: 700; }
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; border-radius: 6px; }
+  .eo { font-weight: 800; color: var(--green); }
+
+  /* Header */
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; }
+  .top a { text-decoration: none; }
+  .hero { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
+  .hero h1 { font-size: clamp(34px, 7vw, 56px); font-weight: 800; }
+  .hero h1 span { color: var(--green); }
+  .hero p { margin: 6px 0 0; color: var(--muted); max-width: 58ch; }
+  .star { width: clamp(72px, 16vw, 112px); height: auto; }
+  @media (max-width: 520px) { .hero { grid-template-columns: 1fr; } }
+
+  /* Day picker */
+  .days { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .days a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 14px 6px 6px; border-radius: 999px;
+    background: var(--surface); border: 2px solid var(--line);
+    color: var(--ink); text-decoration: none; font-weight: 800; font-size: 15px;
+  }
+  .days a:hover { border-color: var(--green); }
+  .days .n {
+    width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--green-soft); color: var(--green); font-family: "Baloo 2", sans-serif;
+  }
+  .days a.done .n { background: var(--green); color: var(--paper); }
+  .progress { font-size: 14px; color: var(--muted); }
+
+  /* Lesson */
+  .lesson {
+    background: var(--surface); border: 2px solid var(--line); border-radius: 22px;
+    padding: 24px clamp(16px, 4vw, 32px); display: grid; gap: 18px; scroll-margin-top: 16px;
+  }
+  .lesson-head { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+  .tag {
+    display: inline-block; font: 800 13px/1 "Nunito", sans-serif; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--paper); background: var(--green); padding: 6px 10px; border-radius: 999px;
+  }
+  .lesson h2 { font-size: clamp(28px, 5vw, 38px); margin-top: 8px; }
+  .lesson h2 small { display: block; font: 600 17px/1.4 "Nunito", sans-serif; color: var(--muted); margin-top: 2px; }
+  .art { width: clamp(150px, 30vw, 220px); height: auto; }
+  @media (max-width: 560px) { .lesson-head { grid-template-columns: 1fr; } .art { justify-self: center; } }
+  .lesson h3 { font-size: 21px; color: var(--ink); }
+  .lesson p { margin: 0; max-width: 65ch; }
+  .block { display: grid; gap: 8px; }
+
+  .words { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; }
+  .word {
+    display: flex; justify-content: space-between; gap: 8px; align-items: baseline;
+    background: var(--green-soft); border-radius: 12px; padding: 8px 12px;
+  }
+  .word b { color: var(--green); font-weight: 800; }
+  .word span { color: var(--muted); font-size: 15px; text-align: right; }
+
+  .rule {
+    border-left: 5px solid var(--sun); background: color-mix(in srgb, var(--sun) 14%, var(--surface));
+    border-radius: 0 14px 14px 0; padding: 10px 14px; max-width: 65ch;
+  }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; min-width: 320px; }
+  th, td { text-align: left; padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  td.big { font: 800 22px/1.2 "Baloo 2", sans-serif; color: var(--green); }
+
+  .ex { display: grid; gap: 8px; margin: 0; padding-left: 22px; }
+  details { background: var(--bg); border-radius: 12px; padding: 8px 12px; }
+  summary { cursor: pointer; font-weight: 800; color: var(--sky); }
+  details ol { margin: 8px 0 0; padding-left: 22px; }
+
+  .dialog { display: grid; gap: 8px; max-width: 560px; }
+  .say { padding: 8px 14px; border-radius: 16px; max-width: 85%; }
+  .say.a { background: var(--green-soft); justify-self: start; border-bottom-left-radius: 4px; }
+  .say.b { background: color-mix(in srgb, var(--sky) 16%, var(--surface)); justify-self: end; border-bottom-right-radius: 4px; }
+  .say i { display: block; color: var(--muted); font-size: 14px; }
+
+  .challenge { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+  .challenge p { flex: 1 1 260px; }
+  .check {
+    display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 800;
+    border: 2px solid var(--green); color: var(--green); background: transparent;
+    border-radius: 999px; padding: 8px 16px; font: 800 15px "Nunito", sans-serif;
+  }
+  .check[aria-pressed="true"] { background: var(--green); color: var(--paper); }
+
+  /* Diploma */
+  .diploma {
+    border: 3px dashed var(--green); border-radius: 22px; padding: 24px; text-align: center;
+    background: var(--surface); display: grid; gap: 10px; justify-items: center;
+  }
+  .diploma h2 { font-size: clamp(30px, 6vw, 44px); color: var(--green); }
+  .diploma .name { font: 800 28px "Baloo 2", sans-serif; min-height: 1.2em; }
+  .diploma input {
+    font: 600 17px "Nunito", sans-serif; padding: 8px 12px; border-radius: 12px;
+    border: 2px solid var(--line); background: var(--bg); color: var(--ink); width: min(320px, 100%);
+  }
+  .locked { color: var(--muted); }
+
+  .next { display: grid; gap: 8px; }
+  .next ul { margin: 0; padding-left: 22px; display: grid; gap: 4px; }
+
+  /* Liberanimo card with the Teruel skyline */
+  .liberanimo { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; }
+  .teruel { display: block; width: 100%; height: auto; background: var(--sky); }
+  .liberanimo figcaption { display: flex; gap: 16px; align-items: center; padding: 16px 20px; }
+  @media (max-width: 520px) { .liberanimo figcaption { align-items: flex-start; } }
+  .liberanimo img { width: 64px; height: 64px; border-radius: 10px; flex-shrink: 0; background: #fff; }
+  .lib-name { font: 800 clamp(30px, 6vw, 44px)/1 "Baloo 2", "Nunito", system-ui, sans-serif; color: var(--green); margin: 0; letter-spacing: -.01em; }
+  .lib-sub { color: var(--muted); font-size: 16px; margin-top: 4px; }
+  .t-glaze { fill: var(--green); } .t-tile { fill: var(--paper); } .t-tile-s { stroke: var(--paper); }
+  .t-brick { fill: var(--coral); } .t-brick2 { fill: var(--brick-2); } .t-roof { fill: var(--roof); }
+  .t-wall { fill: var(--wall); } .t-wall2 { fill: var(--wall-2); } .t-win { fill: var(--window); }
+  .t-stone { fill: var(--stone); } .t-arch { fill: #231c17; } .t-ink { fill: var(--ink); } .t-ink-s { stroke: var(--ink); }
+  .t-hill { fill: var(--hill); } .t-ground { fill: var(--ground); } .t-soft { fill: var(--green-soft); }
+  .nav-lib { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
+  .nav-lib img { width: 24px; height: 24px; border-radius: 5px; background: #fff; }
+  footer { color: var(--muted); font-size: 14px; text-align: center; }
+  .listen {
+    border: 0; background: transparent; cursor: pointer; padding: 0 4px;
+    font-size: 15px; line-height: 1; vertical-align: middle;
+  }
+  .listen:hover { transform: scale(1.15); }
+  .word .listen { margin-right: auto; } /* next to the word, not in the middle of the card */
+
+  /* Drawing palette */
+  .f-green { fill: var(--green); } .f-sky { fill: var(--sky); } .f-sun { fill: var(--sun); }
+  .f-coral { fill: var(--coral); } .f-violet { fill: var(--violet); } .f-skin { fill: var(--skin); }
+  .f-hair { fill: var(--hair); } .f-ink { fill: var(--ink); } .f-paper { fill: var(--paper); }
+  .f-soft { fill: var(--green-soft); } .f-line { fill: var(--line); }
+  .s-ink { stroke: var(--ink); } .s-sun { stroke: var(--sun); } .s-muted { stroke: var(--muted); }
+
+  /* Course editor pages */
+  .art { border-radius: 16px; object-fit: contain; max-height: 220px; }
+  .muted { color: var(--muted); }
+  .course-list { display: grid; gap: 10px; font-size: 19px; padding-left: 22px; }
+  .preview-banner {
+    position: sticky; top: 0; z-index: 5; margin: -16px -16px 16px; padding: 8px 16px;
+    background: var(--sun); color: #1f2a33; font-weight: 800; text-align: center;
+  }
