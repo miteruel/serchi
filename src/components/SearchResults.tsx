@@ -23,7 +23,8 @@ import {
   Plus,
   Globe,
   Radio,
-  Play
+  Play,
+  UserRound
 } from 'lucide-react';
 import { 
   EsperantoResource, 
@@ -91,6 +92,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     media: <Headphones className="w-3.5 h-3.5" />,
     community: <Users className="w-3.5 h-3.5" />,
     radio: <Radio className="w-3.5 h-3.5" />,
+    people: <UserRound className="w-3.5 h-3.5" />,
   };
 
   const categoriesList: Category[] = [
@@ -102,7 +104,8 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     'media',
     'projects',
     'community',
-    'radio'
+    'radio',
+    'people'
   ];
 
   const levelsList: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];

@@ -224,6 +224,11 @@ export interface TranslationDictionary {
   radioSectionTitle: string;
   radioSectionDesc: string;
   radioSeeAll: string;
+
+  // Famous Esperantists section
+  peopleSectionTitle: string;
+  peopleSectionDesc: string;
+  peopleSeeAll: string;
   listenBtn: string;
   nowPlaying: string;
   closePlayer: string;
@@ -334,6 +339,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       media: 'Aŭdvidaj & Podkastoj',
       community: 'Komunumo & Eventoj',
       radio: "Radio",
+      people: "Personoj",
     },
     
     levels: {
@@ -495,6 +501,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     radioSectionTitle: "Radio en Esperanto",
     radioSectionDesc: "Aŭskultu rekte staciojn kaj elsendojn en Esperanto el la tuta mondo.",
     radioSeeAll: "Ĉiuj radiostacioj",
+    peopleSectionTitle: "Famaj esperantistoj",
+    peopleSectionDesc: "Verkistoj, sciencistoj kaj aktivuloj kiuj parolis kaj uzis Esperanton.",
+    peopleSeeAll: "Ĉiuj personoj",
     listenBtn: "Aŭskulti",
     nowPlaying: "Nun ludas",
     closePlayer: "Fermi ludilon",
@@ -604,6 +613,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       media: 'Audio, Vídeo y Podcasts',
       community: 'Comunidad y Eventos',
       radio: "Radio",
+      people: "Personas",
     },
     
     levels: {
@@ -765,6 +775,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     radioSectionTitle: "Radio en esperanto",
     radioSectionDesc: "Escucha en directo emisoras y programas en esperanto de todo el mundo.",
     radioSeeAll: "Todas las emisoras",
+    peopleSectionTitle: "Esperantistas célebres",
+    peopleSectionDesc: "Escritores, científicos y activistas que hablaron y usaron el esperanto.",
+    peopleSeeAll: "Todas las personas",
     listenBtn: "Escuchar",
     nowPlaying: "Sonando",
     closePlayer: "Cerrar reproductor",
@@ -874,6 +887,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       media: 'Audio, Video & Podcasts',
       community: 'Community & Events',
       radio: "Radio",
+      people: "People",
     },
     
     levels: {
@@ -1035,6 +1049,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     radioSectionTitle: "Esperanto radio",
     radioSectionDesc: "Listen live to Esperanto stations and programmes from around the world.",
     radioSeeAll: "All stations",
+    peopleSectionTitle: "Famous Esperantists",
+    peopleSectionDesc: "Writers, scientists and activists who spoke and used Esperanto.",
+    peopleSeeAll: "All people",
     listenBtn: "Listen",
     nowPlaying: "Now playing",
     closePlayer: "Close player",

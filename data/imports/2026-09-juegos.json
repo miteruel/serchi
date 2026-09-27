@@ -1,0 +1,435 @@
+[
+  {
+    "title": "Videoludoj en Esperanto (Esperanto Resources)",
+    "url": "https://esperanto.miraheze.org/wiki/Videogames_/_Videoludoj",
+    "description": {
+      "eo": "Vikia listo de videoludoj haveblaj en Esperanto aŭ kun esperanta traduko: Steam, itch.io, Google Play, F-Droid kaj fanaj tradukoj.",
+      "es": "Lista wiki de videojuegos disponibles en esperanto o con traducción al esperanto: Steam, itch.io, Google Play, F-Droid y traducciones de aficionados.",
+      "en": "Wiki list of video games available in Esperanto or with an Esperanto translation: Steam, itch.io, Google Play, F-Droid and fan translations."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "videoludoj",
+      "ludoj",
+      "listo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "itch.io: ludoj haveblaj en Esperanto",
+    "url": "https://itch.io/games/lang-eo",
+    "description": {
+      "eo": "Katalogo de sendependaj ludoj en itch.io kies interfaco estas en Esperanto; multaj senpagaj kaj ludeblaj en la retumilo.",
+      "es": "Catálogo de juegos independientes de itch.io con la interfaz en esperanto; muchos son gratuitos y se juegan en el navegador.",
+      "en": "Catalogue of indie games on itch.io available in Esperanto; many are free and playable in the browser."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "videoludoj",
+      "ludoj",
+      "itch.io"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Steam-kuratoro: Ludoj en Esperanto",
+    "url": "https://store.steampowered.com/curator/38919824-Ludoj-en-Esperanto/",
+    "description": {
+      "eo": "Kuratora paĝo en Steam kiu rekomendas ludojn tradukitajn al Esperanto aŭ rilatajn al ĝi.",
+      "es": "Página de conservador en Steam que recomienda juegos traducidos al esperanto o relacionados con él.",
+      "en": "Steam curator page recommending games translated into Esperanto or related to it."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "videoludoj",
+      "ludoj",
+      "steam"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Videoludoj.com",
+    "url": "https://videoludoj.com/",
+    "description": {
+      "eo": "Retejo tute en Esperanto kun recenzoj de videoludoj en Esperanto (senpagaj kaj pagaj), filmoj, podkastoj kaj lernaj iloj.",
+      "es": "Web íntegramente en esperanto con reseñas de videojuegos en esperanto (gratuitos y de pago), películas, pódcast y herramientas de aprendizaje.",
+      "en": "Website entirely in Esperanto reviewing Esperanto video games (free and paid), films, podcasts and learning tools."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "videoludoj",
+      "ludoj",
+      "recenzoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Vortludo Rapida (LinoGorilo)",
+    "url": "https://linogorilo.itch.io/vortludo-rapida",
+    "description": {
+      "eo": "Rapida retumila kvizo: elektu la ĝustan esperantan vorton laŭ ĝia priskribo. Senpaga.",
+      "es": "Test rápido en el navegador: elige la palabra en esperanto correcta a partir de su descripción. Gratuito.",
+      "en": "Fast browser quiz: pick the right Esperanto word from its description. Free."
+    },
+    "category": "courses",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "ludoj",
+      "vortludo",
+      "vortprovizo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Vetveturistoj – lernohelpa tabuloludo (Ŝnufido)",
+    "url": "https://sxnufido.itch.io/vetveturistoj-lernohelpa-tabuloludo",
+    "description": {
+      "eo": "Presebla tabulludo pri aŭtovetkuro por infanoj kaj plenkreskuloj, kun variaĵoj por ekzerci vortojn, kalkuladon kaj literojn. De ĉeĥa familia eldonejo.",
+      "es": "Juego de tablero imprimible de carreras de coches para niños y adultos, con variantes para practicar vocabulario, cálculo y letras. De una pequeña editorial familiar checa.",
+      "en": "Printable car-racing board game for children and adults, with variants to practise vocabulary, arithmetic and letters. From a small Czech family publisher."
+    },
+    "category": "courses",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "tabulludoj",
+      "ludoj",
+      "infanoj"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "Skrablo: la esperantlingva krucvortludo",
+    "url": "https://www.thegamecrafter.com/games/skrablo:-la-esperantlingva-krucvortludo",
+    "description": {
+      "eo": "Krucvorta tabulludo por Esperanto, kun 100 literkaheloj laŭ la esperanta distribuo, tabulo kaj reguloj.",
+      "es": "Juego de tablero de palabras cruzadas para esperanto, con 100 fichas de letras según la frecuencia del esperanto, tablero y reglamento.",
+      "en": "Crossword board game for Esperanto, with 100 letter tiles following Esperanto letter frequencies, board and rulebook."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "tabulludoj",
+      "ludoj",
+      "vortludo"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "LinguaPolis Esperanto",
+    "url": "https://linguapolisgame.com/Esperanto.shtml",
+    "description": {
+      "eo": "Tabulludo por lerni paroli Esperanton en ĉiutagaj situacioj (restoracio, transporto, taksio...) en imaga urbo EsperantoPolis.",
+      "es": "Juego de tablero para aprender a hablar esperanto en situaciones cotidianas (restaurante, transporte, taxi…) en la ciudad imaginaria EsperantoPolis.",
+      "en": "Board game for learning to speak Esperanto in everyday situations (restaurant, transport, taxi…) in the imaginary city of EsperantoPolis."
+    },
+    "category": "courses",
+    "level": "all",
+    "format": "book",
+    "tags": [
+      "tabulludoj",
+      "ludoj",
+      "konversacio"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "Tabuo: la divenludo en Esperanto",
+    "url": "https://github.com/Esperanto/Tabuo",
+    "description": {
+      "eo": "Malfermkoda esperanta versio de la konata divenludo Tabuo, ludebla per poŝtelefono aŭ tabulkomputilo; oni povas aldoni kartojn.",
+      "es": "Versión libre en esperanto del conocido juego de adivinanzas Tabú, para jugar con el móvil o la tableta; se pueden añadir tarjetas.",
+      "en": "Open-source Esperanto version of the well-known guessing game Taboo, playable on a phone or tablet; new cards can be added."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "ludoj",
+      "kartludoj",
+      "malferma kodo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "hVortaro: vortaro itala-esperanta kun vortludoj",
+    "url": "https://hvortaro.esperanto.it/index_eo.php",
+    "description": {
+      "eo": "Granda itala-esperanta vortaro de la Itala Esperanto-Federacio, kun vortludoj por ekzerci Esperanton: pendumito, litersupo, anagramoj kaj krucvortoj.",
+      "es": "Gran diccionario italiano-esperanto de la Federación Esperantista Italiana, con juegos para practicar: ahorcado, sopa de letras, anagramas y crucigramas.",
+      "en": "Large Italian-Esperanto dictionary by the Italian Esperanto Federation, with word games to practise: hangman, word search, anagrams and crosswords."
+    },
+    "category": "tools",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "vortaro",
+      "italio",
+      "ludoj",
+      "vortludo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Super Mario Bros. en Esperanto",
+    "url": "https://github.com/tboronczyk/supermariobros",
+    "description": {
+      "eo": "Fana traduko (ROM-flikaĵo) de Super Mario Bros. por NES al Esperanto.",
+      "es": "Traducción no oficial (parche de ROM) de Super Mario Bros. para NES al esperanto.",
+      "en": "Fan translation (ROM hack) of Super Mario Bros. for the NES into Esperanto."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "videoludoj",
+      "traduko",
+      "mario"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Super Mario Bros. 2 en Esperanto",
+    "url": "https://github.com/tboronczyk/supermariobros2",
+    "description": {
+      "eo": "Fana traduko (ROM-flikaĵo) de Super Mario Bros. 2 por NES al Esperanto.",
+      "es": "Traducción no oficial (parche de ROM) de Super Mario Bros. 2 para NES al esperanto.",
+      "en": "Fan translation (ROM hack) of Super Mario Bros. 2 for the NES into Esperanto."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "videoludoj",
+      "traduko",
+      "mario"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Super Mario Bros. 3 en Esperanto",
+    "url": "https://github.com/tboronczyk/supermariobros3",
+    "description": {
+      "eo": "Fana traduko (ROM-flikaĵo) de Super Mario Bros. 3 por NES al Esperanto.",
+      "es": "Traducción no oficial (parche de ROM) de Super Mario Bros. 3 para NES al esperanto.",
+      "en": "Fan translation (ROM hack) of Super Mario Bros. 3 for the NES into Esperanto."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "tool",
+    "tags": [
+      "videoludoj",
+      "traduko",
+      "mario"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Daŭre Parolu, por ke Neniu Eksplodu: manlibro en Esperanto",
+    "url": "https://www.bombmanual.com/eo/web/index.html",
+    "description": {
+      "eo": "La manlibro pri malŝaltado de bomboj de la kunlabora ludo Keep Talking and Nobody Explodes, tradukita al Esperanto.",
+      "es": "El manual de desactivación de bombas del juego cooperativo Keep Talking and Nobody Explodes, traducido al esperanto.",
+      "en": "The bomb defusal manual of the co-op game Keep Talking and Nobody Explodes, translated into Esperanto."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "videoludoj",
+      "traduko",
+      "kunlabora ludo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The Battle for Wesnoth: esperanta traduko",
+    "url": "https://wiki.wesnoth.org/Esperanto_translation",
+    "description": {
+      "eo": "Paĝo de la esperanta tradukteamo de la libera strategia ludo The Battle for Wesnoth.",
+      "es": "Página del equipo de traducción al esperanto del juego libre de estrategia The Battle for Wesnoth.",
+      "en": "Page of the Esperanto translation team of the free strategy game The Battle for Wesnoth."
+    },
+    "category": "projects",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "videoludoj",
+      "traduko",
+      "libera programaro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Wordle",
+    "url": "https://contextogame.io/esperanto-wordle",
+    "description": {
+      "eo": "Esperanta versio de Wordle: divenu vorton de kvin literoj en ses provoj.",
+      "es": "Versión en esperanto de Wordle: adivina una palabra de cinco letras en seis intentos.",
+      "en": "Esperanto version of Wordle: guess a five-letter word in six tries."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "wordle",
+      "vortludo",
+      "ludoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Esperanto Ŝako Klubo (Chess.com)",
+    "url": "https://www.chess.com/club/esperanto-sako-klubo",
+    "description": {
+      "eo": "Klubo de esperantistaj ŝakludantoj en Chess.com, por ludi retajn partiojn kaj turnirojn en Esperanto.",
+      "es": "Club de ajedrecistas esperantistas en Chess.com, para jugar partidas y torneos en línea en esperanto.",
+      "en": "Club for Esperanto-speaking chess players on Chess.com, for online games and tournaments in Esperanto."
+    },
+    "category": "community",
+    "level": "all",
+    "format": "forum",
+    "tags": [
+      "ŝako",
+      "ludoj",
+      "klubo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "VocabVan - Esperanto (Steam)",
+    "url": "https://store.steampowered.com/app/3190190/VocabVan__Esperanto/",
+    "description": {
+      "eo": "Aldonaĵo de la lerna ludo VocabVan kiu malŝlosas ĉiujn esperantajn funkciojn por lerni vortprovizon ludante.",
+      "es": "Contenido descargable del juego educativo VocabVan que activa todas las funciones de esperanto para aprender vocabulario jugando.",
+      "en": "DLC for the learning game VocabVan that unlocks all its Esperanto features, to learn vocabulary through play."
+    },
+    "category": "courses",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "videoludoj",
+      "vortprovizo",
+      "steam"
+    ],
+    "isFree": false
+  },
+  {
+    "title": "esperantoludoj",
+    "url": "https://sites.google.com/site/esperantoludoj",
+    "description": {
+      "eo": "Retejo pri ludoj en Esperanto, ĉefe strategiaj tabulludoj.",
+      "es": "Web sobre juegos en esperanto, sobre todo juegos de tablero de estrategia.",
+      "en": "Website about games in Esperanto, mainly strategy board games."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "tabulludoj",
+      "ludoj",
+      "strategio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Games in Esperanto-Land (Ralph Dumain)",
+    "url": "http://www.autodidactproject.org/my/games-espo.html",
+    "description": {
+      "eo": "Eseo de Ralph Dumain pri ludoj en la esperanta mondo, kompletigo de lia retgvidilo pri ludoj.",
+      "es": "Ensayo de Ralph Dumain sobre los juegos en el mundo esperantista, complemento de su guía web de juegos.",
+      "en": "Essay by Ralph Dumain on games in the Esperanto world, a companion to his games web guide."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ludoj",
+      "eseo",
+      "ŝako"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "International Language: Chess and Esperanto (Edward Winter)",
+    "url": "https://www.chesshistory.com/winter/extra/esperanto.html",
+    "description": {
+      "eo": "Artikolo de la ŝakhistoriisto Edward Winter pri la rilatoj inter ŝako kaj Esperanto.",
+      "es": "Artículo del historiador del ajedrez Edward Winter sobre la relación entre el ajedrez y el esperanto.",
+      "en": "Article by chess historian Edward Winter on the links between chess and Esperanto."
+    },
+    "category": "literature",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ŝako",
+      "historio",
+      "ludoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Videoludoj en Esperanto (YouTube)",
+    "url": "https://www.youtube.com/channel/UCh5W4y9PpOmHvBeNEk3T8bA",
+    "description": {
+      "eo": "Jutuba kanalo kun videoludoj ludataj kaj komentataj en Esperanto.",
+      "es": "Canal de YouTube con partidas de videojuegos jugadas y comentadas en esperanto.",
+      "en": "YouTube channel with video games played and commented in Esperanto."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "video",
+    "tags": [
+      "videoludoj",
+      "ni ludu",
+      "youtube"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Listo de Ni-Ludu-aj jutubaj kanaloj en Esperanto (Vanege)",
+    "url": "https://vanege.medium.com/list-of-lets-play-youtube-channels-in-esperanto-listo-de-ni-ludu-aj-jutubaj-kanaloj-en-esperanto-1f1c178becbc",
+    "description": {
+      "eo": "Dulingva listo (2017) de jutubaj kanaloj kiuj publikigas videoludajn filmetojn («Ni ludu») en Esperanto.",
+      "es": "Lista bilingüe (2017) de canales de YouTube que publican partidas de videojuegos comentadas («let's play») en esperanto.",
+      "en": "Bilingual list (2017) of YouTube channels publishing let's play videos in Esperanto."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "videoludoj",
+      "ni ludu",
+      "youtube"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "The Expression Amrilato (Steam)",
+    "url": "https://store.steampowered.com/app/1044490/The_Expression_Amrilato/",
+    "description": {
+      "eo": "Japana vida romano en kiu la protagonistino devas lerni Esperanton; la tekstoj estis kontrolitaj de la japana landa esperanto-asocio.",
+      "es": "Novela visual japonesa en la que la protagonista tiene que aprender esperanto; los textos los supervisó la asociación nacional de esperanto de Japón.",
+      "en": "Japanese visual novel in which the heroine has to learn Esperanto; the texts were supervised by Japan's national Esperanto association."
+    },
+    "category": "media",
+    "level": "all",
+    "format": "app",
+    "tags": [
+      "videoludoj",
+      "vida romano",
+      "japanio"
+    ],
+    "isFree": false
+  }
+]

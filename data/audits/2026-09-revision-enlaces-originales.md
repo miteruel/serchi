@@ -5,7 +5,7 @@ Fecha: 2026-09-27. Método: cada enlace se buscó en la web restringiendo la bú
 - Verificados sin cambios: **113**
 - URL corregida (el recurso existe, pero la dirección estaba mal): **67**
 - Eliminados: **73**
-- Pendientes de revisar (se agotó el límite de búsquedas de la sesión): **46**
+- Pendientes de revisar (se agotó el límite de búsquedas de la sesión): **46**, revisados después (ver la última sección)
 
 ## Eliminados
 
@@ -157,53 +157,73 @@ Fecha: 2026-09-27. Método: cada enlace se buscó en la web restringiendo la bú
 | homaranismo-zamenhof | La interna ideo kaj homaranismo (The Esperanto Book, Don Harlow) | https://literaturo.org/zamenhof/homaranismo | http://literaturo.org/HARLOW-Don/Esperanto/EBook/chap11.html |
 | sfero-san-francisco | SFERO - San-Francisko Esperanto-Societo | https://sfero.org | http://esperanto.org/sfero/ |
 
-## Pendientes de revisar
+## Revisión de los 46 pendientes
+
+Fecha: 2026-09-27, en una segunda sesión y con el mismo método. Además de corregir la URL, en los enlaces corregidos se reescribieron título, descripción y etiquetas con lo que dicen las fuentes encontradas, y se quitaron las listas de características, que eran inventadas.
+
+- Verificados sin cambios: **5**
+- URL corregida: **25**
+- Eliminados: **16**
+
+Balance final de los 299 enlaces originales: 118 verificados, 92 corregidos y 89 eliminados.
+
+### Verificados sin cambios
 
 | id | Título | URL |
 |---|---|---|
 | vikivojago-esperanto | Vikivojaĝo en Esperanto (Wikivoyage) | https://eo.wikivoyage.org |
-| jefo-junularo | Franca Esperanto-Junularo (JEFO) | https://jefo.fr |
 | gej-junularo | Germana Esperanto-Junularo (GEJ) | https://esperanto-jugend.de |
 | pej-junularo | Pola Esperanto-Junularo (PEJ) | https://pej.pl |
-| hejs-junularo | Hispana Esperanto-Junulara Sekcio (HEJS) | https://esperanto.es/juventud |
-| fleja-junularo | Flandra Ligo de Esperantistaj Junuloj (FLEJA) | https://esperanto.be/fleja |
 | bje-junularo | Brazila Junulara Esperanto-Organizo (BEJO) | https://bejo.esperanto.org.br |
-| usej-junularo | Usona Junulara Esperanto-Organizo (USEJ) | https://usej.esperanto-usa.org |
-| roma-esperanto-klubo | Roma Esperanto-Klubo (Circolo Esperantista di Roma) | https://esperanto.roma.it |
-| milana-esperanto-klubo | Milana Esperanto-Klubo (Milano) | https://esperanto.milano.it |
-| venezuela-esperanto-asocio | Venezuela Esperanto-Asocio (VEA) | https://esperanto-venezuela.org |
-| urugvaja-esperanto-societo | Urugvaja Esperanto-Societo (UES) | https://esperanto.uy |
-| islanda-esperanto-asocio | Islanda Esperanto-Asocio (IEA) | https://esperanto.is |
-| luksemburga-esperanto-asocio | Luksemburga Esperanto-Asocio (LEA) | https://esperanto.lu |
-| postmarkoj-elf-arek | Esperanto-Ligo Filatelista (ELF-AREK) | https://elf-arek.esperanto.org |
-| rondo-kato-amantoj | Rondo Kato - Faka Asocio por Kat-Amantoj | https://rondo-kato.blogspot.com |
-| bahaa-esperanto-ligo | Bahaa Esperanto-Ligo (BEL) | https://bahaa-esperanto-ligo.org |
-| kvakera-esperanto-servo | Kvakera Esperanto-Servo (Amika Societo) | https://quaker.org/esperanto/ |
-| internacia-naturista-organizo | Internacia Naturista Organizo Esperantista (INOE) | https://inoe.esperanto.org |
-| motorciklistoj-esperanto | Esperantista Motorciklisto-Klubo | https://motorciklo.esperanto.org |
-| kriptografia-terminaro | Kriptografio kaj Cibersekureco en Esperanto | https://komputeko.net/kripto |
-| linux-en-esperanto | Linux kaj Libera Programaro en Esperanto (KDE & GNOME) | https://eo.fedoraproject.org |
 | libretranslate-esperanto | LibreTranslate - Malfermkoda Reta Tradukilo | https://libretranslate.com |
-| matrix-esperanto-cxambroj | Matrix Esperanto-Ĉambroj (Sekura Malcentrigita Ĉato) | https://matrix.to/#/#esperanto:matrix.org |
-| lemmy-esperanto | Lemmy Esperanto-Komunumo (Federita Reddit) | https://lemmy.world/c/esperanto |
-| esperanto-tv-sidnejo | Esperanto TV (Sidnejo, Aŭstralio) | https://esperantotv.net |
-| komprenu-min-podkasto | Komprenu Min - Intervjuoj kun Denaskuloj | https://anchor.fm/komprenumin |
-| isu-somera-universitato | Internacia Somera Universitato (ISU de UEA) | https://uea.org/kongresoj/isu |
-| filipina-esperanto-junularo | Filipina Esperanto-Junularo (FEJ) | https://esperanto-philippines.org |
-| barata-esperanto-federacio | Fondaĵo Esperanto Barato (FEI - Hindio) | https://esperanto-india.org |
-| tajvana-esperanto-asocio | Tajvana Esperanto-Asocio (TEA) | https://esperanto.tw |
-| kostarika-esperanto-asocio | Kostarika Esperanto-Asocio (KEA) | https://esperanto-costarica.org |
-| madagaskara-esperanto-unio | Madagaskara Esperanto-Unio (MEU) | https://esperanto-madagaskaro.org |
-| konga-esperanto-asocio | Esperanto-Asocio de DR Kongo (Kinŝaso) | https://esperanto-rdc.org |
-| paragvaja-esperanto-klubo | Paragvaja Esperanto-Klubo (Asunciono) | https://esperanto-paraguay.org |
-| malta-esperanto-societo | Malta Esperanto-Societo (MES) | https://esperanto-malta.org |
-| armena-esperanto-asocio | Armena Esperanto-Asocio (AEE) | https://esperanto-armenia.org |
-| kartvela-esperanto-asocio | Kartvela Esperanto-Asocio (Tbiliso) | https://esperanto-georgia.org |
-| kazaha-esperanto-asocio | Kazaĥa Esperanto-Asocio (Almato) | https://esperanto-kazakhstan.org |
-| mongola-esperanto-societo | Mongola Esperanto-Societo (Ulanbatoro) | https://esperanto-mongolia.org |
-| los-angeles-esperanto-club | Los Angeles Esperanto Club (Kalifornio) | https://www.meetup.com/esperanto-la/ |
-| aeh-handikapuloj | Asocio de Esperantistoj Handikapuloj (AEH) | https://aeh.esperanto.org |
-| policanoj-ipa-esperanto | Policanoj kaj Esperanto (IPA Esperanto-Sekcio) | https://ipa-esperanto.org |
-| tole-ortodoksuloj | Tutmonda Ortodoksa Ligo Esperantista (TOLE) | https://tole.esperanto.org |
-| tatoeba-audio-vocoj | Tatoeba Audio - Voĉregistraĵoj de Frazoj | https://tatoeba.org/eo/audio/index/epo |
-| lingvomapo-europo | Eŭropa Lingvomapo kaj Esperanto (Lingvo.info) | https://lingvo.info/eo/babylon/european_languages |
+
+### URL corregida
+
+| id | Título nuevo | URL anterior | URL nueva |
+|---|---|---|---|
+| jefo-junularo | Espéranto-Jeunes (JEFO, Francia) | https://jefo.fr | https://esperanto-jeunes.org/fr/ |
+| hejs-junularo | HEJS - Hispana Esperanto-Junulara Societo | https://esperanto.es/juventud (esperanto.es/juventud no existe) | http://web.esperanto.es/wordpress/nuevo-en-esperantujo/ |
+| usej-junularo | Usona Esperantista Junularo (USEJ) | https://usej.esperanto-usa.org | https://groups.google.com/g/usej |
+| roma-esperanto-klubo | Esperanto-Centro «Luigi Minnaja» (Roma Esperanto-Grupo) | https://esperanto.roma.it | http://www.esperantoroma.it/ |
+| milana-esperanto-klubo | Circolo Esperantista Milanese (Milano) | https://esperanto.milano.it | https://milano.esperanto.it/ |
+| venezuela-esperanto-asocio | Venezuela Esperanto-Asocio (Facebook) | https://esperanto-venezuela.org (esperanto-venezuela.org es ahora un blog indonesio sobre México) | https://www.facebook.com/EsperantoVE/ |
+| urugvaja-esperanto-societo | Urugvaja Esperanto-Societo (Vikipedio) | https://esperanto.uy | https://es.wikipedia.org/wiki/Sociedad_Uruguaya_de_Esperanto |
+| islanda-esperanto-asocio | Islanda Esperanto-Asocio | https://esperanto.is | http://esperanto.is/retejo/ |
+| luksemburga-esperanto-asocio | Luksemburga Esperanto-Asocio (LEA) | https://esperanto.lu | http://w3.restena.lu/antd/albert/lea/ |
+| postmarkoj-elf-arek | Esperanto-Ligo Filatelista (ELF-AREK) | https://elf-arek.esperanto.org | https://www.facebook.com/esperantoligofilatelista/ |
+| bahaa-esperanto-ligo | Bahaa Esperanto-Ligo (BEL) | https://bahaa-esperanto-ligo.org (el dominio no aparece) | https://www.facebook.com/esperantobahaakredo/ |
+| kvakera-esperanto-servo | Kvakera Esperanto-Societo (KES) | https://quaker.org/esperanto/ | https://www.noos.ch/kes/ |
+| internacia-naturista-organizo | Internacia Naturista Organizo Esperantista (INOE) | https://inoe.esperanto.org | https://www.esperanto-naturismo.org/ |
+| lemmy-esperanto | Lemmy: komunumo !esperanto | https://lemmy.world/c/esperanto | https://lemmy.ml/c/esperanto |
+| esperanto-tv-sidnejo | Esperanto-TV (YouTube) | https://esperantotv.net | https://www.youtube.com/user/wwwesperantotv |
+| isu-somera-universitato | Internacia Kongresa Universitato (antaŭe ISU) | https://uea.org/kongresoj/isu | https://eo.wikipedia.org/wiki/Internacia_Kongresa_Universitato |
+| filipina-esperanto-junularo | Filipina Esperanto-Junularo (FEJ) | https://esperanto-philippines.org | https://esperanto-ph.org/ |
+| barata-esperanto-federacio | Federacio Esperanto de Barato (FEB) | https://esperanto-india.org | http://barato.50webs.org/ |
+| tajvana-esperanto-asocio | Tajvana Esperanto-Asocio (Vikipedio) | https://esperanto.tw | https://en.wikipedia.org/wiki/Taiwan_Esperanto_Association |
+| kostarika-esperanto-asocio | Esperanto en Costa Rica | https://esperanto-costarica.org | http://esperantoencostarica.blogspot.com/ |
+| konga-esperanto-asocio | Demokratia Kongolanda Esperanto-Asocio (Vikipedio) | https://esperanto-rdc.org | https://eo.wikipedia.org/wiki/Demokratia_Kongolanda_Esperanto-Asocio |
+| malta-esperanto-societo | Malta Esperanto-Societo (Facebook) | https://esperanto-malta.org | https://www.facebook.com/p/Malta-Esperanto-Societo-100082738382756/ |
+| aeh-handikapuloj | Asocio de Esperantistoj Handikapuloj (AEH) | https://aeh.esperanto.org | https://eo.wikipedia.org/wiki/Asocio_de_Esperantistoj_Handikapuloj |
+| tatoeba-audio-vocoj | Tatoeba: frazoj en Esperanto kun sonregistraĵo | https://tatoeba.org/eo/audio/index/epo | https://tatoeba.org/en/audio/index/epo |
+| lingvomapo-europo | Esperanto en Lingvopedia (lingvo.info) | https://lingvo.info/eo/babylon/european_languages | https://lingvo.info/lingvopedia/esperanto |
+
+### Eliminados
+
+| id | Título | URL | Motivo |
+|---|---|---|---|
+| fleja-junularo | Flandra Ligo de Esperantistaj Junuloj (FLEJA) | https://esperanto.be/fleja | no aparece; en esperanto.be solo está la web de los scouts (Verdaj Skoltoj) |
+| rondo-kato-amantoj | Rondo Kato - Faka Asocio por Kat-Amantoj | https://rondo-kato.blogspot.com | no aparece en ninguna búsqueda |
+| motorciklistoj-esperanto | Esperantista Motorciklisto-Klubo | https://motorciklo.esperanto.org | el club de motoristas existe, pero no tiene web localizable |
+| kriptografia-terminaro | Kriptografio kaj Cibersekureco en Esperanto | https://komputeko.net/kripto | la página no existe; Komputeko ya está en la lista |
+| linux-en-esperanto | Linux kaj Libera Programaro en Esperanto (KDE & GNOME) | https://eo.fedoraproject.org | eo.fedoraproject.org no existe; la descripción era genérica e inventada |
+| matrix-esperanto-cxambroj | Matrix Esperanto-Ĉambroj (Sekura Malcentrigita Ĉato) | https://matrix.to/#/#esperanto:matrix.org | la sala no aparece en ninguna búsqueda |
+| komprenu-min-podkasto | Komprenu Min - Intervjuoj kun Denaskuloj | https://anchor.fm/komprenumin | no aparece ningún pódcast con ese nombre |
+| madagaskara-esperanto-unio | Madagaskara Esperanto-Unio (MEU) | https://esperanto-madagaskaro.org | no aparece la asociación ni el dominio |
+| paragvaja-esperanto-klubo | Paragvaja Esperanto-Klubo (Asunciono) | https://esperanto-paraguay.org | no aparece el dominio; solo noticias sueltas sobre el esperanto en Paraguay |
+| armena-esperanto-asocio | Armena Esperanto-Asocio (AEE) | https://esperanto-armenia.org | no aparece el dominio ni una web de la asociación |
+| kartvela-esperanto-asocio | Kartvela Esperanto-Asocio (Tbiliso) | https://esperanto-georgia.org | no aparece el dominio ni una web de la asociación (solo Wikidata) |
+| kazaha-esperanto-asocio | Kazaĥa Esperanto-Asocio (Almato) | https://esperanto-kazakhstan.org | no aparece el dominio ni una web de la asociación |
+| mongola-esperanto-societo | Mongola Esperanto-Societo (Ulanbatoro) | https://esperanto-mongolia.org | no aparece el dominio ni una web de la asociación (solo Wikidata) |
+| los-angeles-esperanto-club | Los Angeles Esperanto Club (Kalifornio) | https://www.meetup.com/esperanto-la/ | la dirección de Meetup no aparece en ninguna búsqueda |
+| policanoj-ipa-esperanto | Policanoj kaj Esperanto (IPA Esperanto-Sekcio) | https://ipa-esperanto.org | no existe una sección de esperanto de la IPA; solo su lema está en esperanto |
+| tole-ortodoksuloj | Tutmonda Ortodoksa Ligo Esperantista (TOLE) | https://tole.esperanto.org | la liga existió, pero no aparece ninguna web |
