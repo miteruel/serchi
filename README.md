@@ -195,6 +195,11 @@ PR y commits correspondientes.
     pantallas anchas. La fila de acciones de cada resultado también puede partirse en
     dos líneas.
 
+18. **Menú de idioma en móvil.** El selector de idioma de la versión React se abría solo
+    al pasar el ratón, así que en pantallas táctiles no funcionaba bien. Ahora se abre al
+    tocarlo y se cierra al elegir un idioma, al tocar fuera o con Escape. En escritorio
+    sigue abriéndose también al pasar el ratón.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir
