@@ -1,0 +1,32 @@
+# Checks every push and pull request: types, tests, production build and
+# that the JSON data of the Delphi version is in sync with the TypeScript sources.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Type check
+        run: npm run lint
+      - name: Tests
+        run: npm test
+      - name: Production build
+        run: npm run build
+      - name: Delphi data in sync (run npm run export:delphi if this fails)
+        run: |
+          npm run export:delphi
+          git diff --exit-code delphi/data

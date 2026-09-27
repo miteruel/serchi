@@ -71,6 +71,9 @@ type
     procedure HandleBookmarksExport;
     procedure HandleLanguage;
     procedure HandleRole;
+    procedure HandleModeratorForm;
+    procedure HandleModeratorLogin;
+    function HasModeratorAccess: Boolean;
     procedure HandleForum;
     procedure HandleForumTopic;
     procedure HandleForumCreate;
@@ -103,13 +106,14 @@ implementation
 
 uses
   System.IOUtils, System.JSON, System.DateUtils, System.NetEncoding, System.Math,
-  Serchi.I18n, Serchi.Text, Serchi.Gemini, Serchi.Radio;
+  System.Hash, Serchi.I18n, Serchi.Text, Serchi.Gemini, Serchi.Radio;
 
 const
   PageSize = 20;
   CookieLang = 'serchi_lang';
   CookieSaved = 'serchi_saved';
   CookieRole = 'serchi_role';
+  CookieModerator = 'serchi_mod';
   CookieVisitor = 'serchi_uid';
   DefaultSaved: array[0..2] of string = ('lernu-net', 'vortaro-piv', 'pasporta-servo');
   PopularSearches: array[0..7] of string = ('piv vortaro', 'lernu', 'pmeg', 'duolingo',
@@ -717,7 +721,8 @@ begin
       Result := '/';
   end;
   if (Result = '') or not Result.StartsWith('/') or Result.StartsWith('//') or
-    Result.StartsWith('/lang') or Result.StartsWith('/role') then
+    Result.StartsWith('/lang') or Result.StartsWith('/role') or
+    Result.StartsWith('/moderator') then
     Result := ADefault;
 end;
 
@@ -727,6 +732,25 @@ begin
   Redirect(SafeBack(FRequest.Referer, '/'));
 end;
 
+{ Moderator key (FORUM_MODERATOR_KEY). When it is set, the moderator role
+  needs the serchi_mod cookie, which holds an HMAC of the key (never the key
+  itself) and is only set after the visitor types the key in /moderator. }
+
+function ModeratorKey: string;
+begin
+  Result := GetEnvironmentVariable('FORUM_MODERATOR_KEY');
+end;
+
+function ModeratorToken(const AKey: string): string;
+begin
+  Result := THashSHA2.GetHMAC('serchi-forum-moderator', AKey);
+end;
+
+function TWebModuleMain.HasModeratorAccess: Boolean;
+begin
+  Result := (ModeratorKey = '') or (Cookie(CookieModerator) = ModeratorToken(ModeratorKey));
+end;
+
 procedure TWebModuleMain.HandleRole;
 var
   Role: string;
@@ -734,8 +758,56 @@ begin
   Role := Param('r');
   if (Role <> 'moderator') and (Role <> 'teacher') then
     Role := 'learner';
+  if (Role = 'moderator') and not HasModeratorAccess then
+  begin
+    Redirect('/moderator');
+    Exit;
+  end;
   SetCookie(CookieRole, Role);
   Redirect(SafeBack(FRequest.Referer, '/forum'));
+end;
+
+procedure TWebModuleMain.HandleModeratorForm;
+var
+  VM: TModeratorVM;
+begin
+  FApp.Section := 'forum';
+  VM := TModeratorVM.Create;
+  try
+    Render('moderator.html', VM);
+  finally
+    VM.Free;
+  end;
+end;
+
+procedure TWebModuleMain.HandleModeratorLogin;
+var
+  C: TCookie;
+  VM: TModeratorVM;
+begin
+  if (ModeratorKey <> '') and (Param('key') <> ModeratorKey) then
+  begin
+    FApp.Section := 'forum';
+    VM := TModeratorVM.Create;
+    try
+      VM.IsError := True;
+      SendHtml(RenderTemplate('moderator.html', VM), 403);
+    finally
+      VM.Free;
+    end;
+    Exit;
+  end;
+  if ModeratorKey <> '' then
+  begin
+    C := FResponse.Cookies.Add;
+    C.Name := CookieModerator;
+    C.Value := ModeratorToken(ModeratorKey);
+    C.Path := '/';
+    C.Expires := IncDay(Now, 30);
+    C.HttpOnly := True; // page scripts never need it
+  end;
+  SetCookie(CookieRole, 'moderator');
+  Redirect('/forum');
 end;
 
 { ---------------------------------------------------------------------------
@@ -1196,6 +1268,7 @@ begin
     Exit;
   end;
 
+  Store.RefreshIfChanged; // pick up changes made by the Node server
   FApp := TAppVM.Create;
   FSaved := TList<string>.Create;
   try
@@ -1210,7 +1283,8 @@ begin
 
     FApp.Lang := FLang;
     FApp.Role := Cookie(CookieRole);
-    if FApp.Role = '' then
+    // Without the moderator key cookie, a moderator role cookie is not enough
+    if (FApp.Role = '') or ((FApp.Role = 'moderator') and not HasModeratorAccess) then
       FApp.Role := 'learner';
     User := CurrentUser;
     FApp.UserName := User.Name;
@@ -1235,6 +1309,8 @@ begin
       else if Path = '/bookmarks/export' then HandleBookmarksExport
       else if Path = '/lang' then HandleLanguage
       else if Path = '/role' then HandleRole
+      else if (Path = '/moderator') and IsPost then HandleModeratorLogin
+      else if Path = '/moderator' then HandleModeratorForm
       else if Path = '/forum' then HandleForum
       else if (Path = '/forum/topic') and IsPost then HandleForumCreate
       else if Path = '/forum/topic' then HandleForumTopic

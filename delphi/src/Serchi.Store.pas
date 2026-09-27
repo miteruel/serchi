@@ -9,7 +9,8 @@ unit Serchi.Store;
   with the Node/React version (data/serchi.db, schema in data/schema.sql) and
   cached in memory for searching; new resources are written to the database.
   The forum (tables forum_*) is loaded the same way and every change to it is
-  written to the database as well.
+  written to the database as well. When another program (the Node server)
+  writes to the database, RefreshIfChanged reloads everything.
   Implements the search/ranking algorithm (port of the useMemo block in
   src/App.tsx). Access to mutable state is serialized with Lock/Unlock. }
 
@@ -34,9 +35,18 @@ type
     function IsEmpty: Boolean;
   end;
 
+  { An object replaced by a reload, freed only after a grace period because a
+    request may still be rendering it (resources are used outside Lock) }
+  TRetiredObject = record
+    Obj: TObject;
+    At: TDateTime;
+  end;
+
   TSerchiStore = class
   private
     FLock: TObject;
+    FDataVersion: Int64;
+    FRetired: TList<TRetiredObject>;
     FResources: TObjectList<TResource>;
     FKnowledge: TObjectList<TKnowledgePanel>;
     FTopics: TObjectList<TForumTopic>;
@@ -48,6 +58,8 @@ type
     procedure LoadKnowledge;
     procedure LoadForum;
     function NextId(const APrefix: string): string;
+    function DataVersion: Int64;
+    procedure Retire(AObj: TObject);
   public
     { ADatabase: SQLite file; ADataDir: folder with synonyms.json;
       ASchemaFile: data/schema.sql, applied if the database has no tables }
@@ -56,6 +68,10 @@ type
 
     procedure Lock;
     procedure Unlock;
+    { Reloads resources, knowledge panels and forum if another connection
+      (e.g. the Node server) changed the database since the last load.
+      Cheap when nothing changed: one PRAGMA data_version query. }
+    procedure RefreshIfChanged;
 
     // Resources
     function Search(const AFilters: TSearchFilters; AResults: TList<TResource>): TKnowledgePanel;
@@ -199,15 +215,22 @@ begin
   FKnowledge := TObjectList<TKnowledgePanel>.Create(True);
   FTopics := TObjectList<TForumTopic>.Create(True);
   FUsers := TDictionary<string, TForumUser>.Create;
+  FRetired := TList<TRetiredObject>.Create;
   LoadSynonyms(TPath.Combine(ADataDir, 'synonyms.json'));
   OpenDatabase(ADatabase, ASchemaFile);
   LoadResources;
   LoadKnowledge;
   LoadForum;
+  FDataVersion := DataVersion;
 end;
 
 destructor TSerchiStore.Destroy;
+var
+  R: TRetiredObject;
 begin
+  for R in FRetired do
+    R.Obj.Free;
+  FRetired.Free;
   FDB.Free;
   FUsers.Free;
   FTopics.Free;
@@ -215,6 +238,54 @@ begin
   FResources.Free;
   FLock.Free;
   inherited;
+end;
+
+function TSerchiStore.DataVersion: Int64;
+begin
+  // Changes only when another connection commits to the database file
+  Result := FDB.ExecSQLScalar('PRAGMA data_version');
+end;
+
+procedure TSerchiStore.Retire(AObj: TObject);
+var
+  R: TRetiredObject;
+  I: Integer;
+begin
+  for I := FRetired.Count - 1 downto 0 do
+    if FRetired[I].At < IncMinute(Now, -5) then
+    begin
+      FRetired[I].Obj.Free;
+      FRetired.Delete(I);
+    end;
+  R.Obj := AObj;
+  R.At := Now;
+  FRetired.Add(R);
+end;
+
+procedure TSerchiStore.RefreshIfChanged;
+var
+  Version: Int64;
+begin
+  Lock;
+  try
+    Version := DataVersion;
+    if Version = FDataVersion then
+      Exit;
+    // Load into fresh lists; the old ones may still be in use by other requests
+    Retire(FResources);
+    Retire(FKnowledge);
+    Retire(FTopics);
+    FResources := TObjectList<TResource>.Create(True);
+    FKnowledge := TObjectList<TKnowledgePanel>.Create(True);
+    FTopics := TObjectList<TForumTopic>.Create(True);
+    FUsers.Clear;
+    LoadResources;
+    LoadKnowledge;
+    LoadForum;
+    FDataVersion := Version;
+  finally
+    Unlock;
+  end;
 end;
 
 procedure TSerchiStore.Lock;

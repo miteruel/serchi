@@ -12,3 +12,6 @@ coverage/
 *.db-wal
 *.db-shm
 data/export/
+
+# Database backups (npm run db:backup)
+data/backups/

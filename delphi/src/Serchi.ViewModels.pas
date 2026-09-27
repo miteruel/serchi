@@ -352,6 +352,14 @@ type
   end;
 
   { Add-resource form and live Google-grounded discovery }
+  { Page that asks for the moderator key (FORUM_MODERATOR_KEY) }
+  TModeratorVM = class
+  private
+    FIsError: Boolean;
+  public
+    property IsError: Boolean read FIsError write FIsError;
+  end;
+
   TAddVM = class
   private
     FMessage: string;

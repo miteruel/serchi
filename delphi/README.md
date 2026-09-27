@@ -29,7 +29,7 @@ El ejecutable busca las carpetas `templates/`, `static/` y `data/` subiendo desd
 carpeta del `.exe` (p. ej. `Win64\Debug\`), o en la ruta indicada por `SERCHI_HOME`.
 La base de datos se busca en `../data/serchi.db` (junto a `schema.sql`) o en la ruta
 de la variable `SERCHI_DB`. Las versiones Node y Delphi pueden usar el mismo fichero a
-la vez, pero cada una solo ve los enlaces nuevos de la otra al reiniciarse.
+la vez y cada una ve enseguida lo que escribe la otra.
 
 ## Estructura
 
@@ -81,6 +81,7 @@ delphi/
 | GET | `/bookmarks` · `/bookmarks/count` · `/bookmarks/export` | Favoritos, contador, exportar JSON |
 | POST | `/bookmarks/clear` | Borra favoritos |
 | GET | `/lang?l=eo\|es\|en` · `/role?r=learner\|teacher\|moderator` | Preferencias (cookies) |
+| GET · POST | `/moderator` | Pide y comprueba la clave de moderador (`FORUM_MODERATOR_KEY`) |
 | GET | `/forum` · `/forum/topic?id=` | Foro y tema |
 | POST | `/forum/topic` · `/forum/reply?id=` · `/forum/like?id=` · `/forum/comment-like` · `/forum/mod?action=pin\|lock\|delete&id=` · `/forum/comment-delete` | Acciones del foro |
 | GET/POST | `/add` | Añadir enlace manualmente |
@@ -88,12 +89,14 @@ delphi/
 
 ## Diferencias con la versión React
 
-- Los enlaces añadidos y el foro se guardan en SQLite. Como con los enlaces, el servidor
-  lee el foro al arrancar y lo mantiene en memoria: si la versión React y la Delphi usan
-  la misma base de datos a la vez, cada una ve los cambios de la otra al reiniciarse.
+- Los enlaces añadidos y el foro se guardan en SQLite. El servidor los lee al arrancar
+  y los mantiene en memoria. Antes de cada petición comprueba si otro programa (la
+  versión Node) ha cambiado la base de datos (`PRAGMA data_version`) y, si es así,
+  vuelve a cargarlos.
   Idioma, rol del foro y favoritos van en cookies.
-- La clave de moderador (`FORUM_MODERATOR_KEY`) solo la pide la versión React: en la
-  versión Delphi cualquiera puede elegir el rol de moderador.
+- Si se define `FORUM_MODERATOR_KEY`, el rol de moderador pide esa clave en la página
+  `/moderator` (en React se pide en un cuadro de diálogo). Al acertarla se guarda una
+  cookie `HttpOnly` con un HMAC de la clave, válida 30 días.
 - El tema claro/oscuro sigue la preferencia del sistema (`prefers-color-scheme`).
 - La búsqueda avanzada es un panel desplegable en lugar de un modal.
 

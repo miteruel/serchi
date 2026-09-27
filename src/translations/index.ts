@@ -276,6 +276,7 @@ export interface TranslationDictionary {
   forumAutoXActiveText: string;
   forumModeratorKeyPrompt: string;
   forumModeratorKeyWrong: string;
+  forumModeratorKeyButton: string;
   forumSaveError: string;
 }
 
@@ -567,6 +568,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumAutoXActiveText: 'Ikso-sistemo (cx → ĉ) estas aktiva',
     forumModeratorKeyPrompt: 'Enskribu la ŝlosilon de moderanto:',
     forumModeratorKeyWrong: 'La ŝlosilo de moderanto ne estas ĝusta.',
+    forumModeratorKeyButton: 'Eniri kiel moderanto',
     forumSaveError: 'Ne eblis konservi la ŝanĝon en la forumo. Bonvolu reprovi.',
   },
 
@@ -857,6 +859,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumAutoXActiveText: 'El sistema X (cx → ĉ) está activo',
     forumModeratorKeyPrompt: 'Escribe la clave de moderador:',
     forumModeratorKeyWrong: 'La clave de moderador no es correcta.',
+    forumModeratorKeyButton: 'Entrar como moderador',
     forumSaveError: 'No se pudo guardar el cambio en el foro. Inténtalo de nuevo.',
   },
 
@@ -1147,6 +1150,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumAutoXActiveText: 'X-system (cx → ĉ) is active',
     forumModeratorKeyPrompt: 'Enter the moderator key:',
     forumModeratorKeyWrong: 'The moderator key is not correct.',
+    forumModeratorKeyButton: 'Enter as moderator',
     forumSaveError: 'The forum change could not be saved. Please try again.',
   },
 };

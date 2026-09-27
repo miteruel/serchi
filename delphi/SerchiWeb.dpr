@@ -11,7 +11,8 @@ program SerchiWeb;
   Env:   GEMINI_API_KEY           enables the live Google Search discovery
          SERCHI_HOME              folder containing data/, templates/, static/
          SERCHI_DB                SQLite database (default: ../data/serchi.db,
-                                  shared with the Node/React version) }
+                                  shared with the Node/React version)
+         FORUM_MODERATOR_KEY      if set, the forum's moderator role asks for it }
 
 {$APPTYPE CONSOLE}
 

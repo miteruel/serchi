@@ -1,0 +1,18 @@
+@LayoutPage layout.html
+<section class="max-w-md mx-auto w-full px-4 py-16">
+  <form method="post" action="/moderator" hx-boost="false" class="rounded-2xl border border-gray-200 dark:border-gray-700 p-6 space-y-4 text-sm">
+    <h1 class="text-xl font-semibold">🛡 @t.forumRoleModerator</h1>
+    <label class="block">
+      <span class="text-gray-600 dark:text-gray-400">@t.forumModeratorKeyPrompt</span>
+      <input type="password" name="key" required autofocus autocomplete="current-password"
+        class="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#303134] px-3 py-2">
+    </label>
+    @if Model.IsError {
+    <p role="alert" class="text-red-600">@t.forumModeratorKeyWrong</p>
+    }
+    <div class="flex items-center gap-3">
+      <button type="submit" class="px-4 py-2 rounded-full bg-purple-600 text-white font-medium">@t.forumModeratorKeyButton</button>
+      <a href="/forum" class="text-gray-600 dark:text-gray-400 hover:underline">← @t.communityTab</a>
+    </div>
+  </form>
+</section>
