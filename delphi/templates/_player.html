@@ -34,7 +34,7 @@
           @ForEach (var ep in Model.Episodes) {
           <li>
             <button type="button" data-episode="@ep.AudioUrl" class="w-full text-left px-2 py-1.5 flex gap-2 hover:bg-gray-50 dark:hover:bg-gray-800">
-              <span>▶</span><span class="truncate flex-1">@ep.Title</span><span class="text-xs text-gray-400">@ep.Published</span>
+              <span>▶</span><span class="truncate flex-1">@ep.Title</span><span class="text-xs text-gray-400">@ep.PubDate</span>
             </button>
           </li>
           }

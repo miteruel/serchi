@@ -13,7 +13,7 @@ type
   TRadioEpisode = record
     Title: string;
     AudioUrl: string;
-    Published: string;
+    PubDate: string;
   end;
 
   TRadioFeed = class
@@ -78,9 +78,9 @@ begin
         Ep.Title := 'Elsendo';
       M := TRegEx.Match(Body, '<pubDate\b[^>]*>([\s\S]*?)</pubDate>', [roIgnoreCase]);
       if M.Success then
-        Ep.Published := DecodeXml(M.Groups[1].Value)
+        Ep.PubDate := DecodeXml(M.Groups[1].Value)
       else
-        Ep.Published := '';
+        Ep.PubDate := '';
       List.Add(Ep);
       if List.Count >= ALimit then
         Break;

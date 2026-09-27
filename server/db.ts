@@ -25,11 +25,11 @@ export const ROOT_DIR = path.resolve(__dirname, '..');
 export const DEFAULT_DB_PATH = path.join(ROOT_DIR, 'data', 'serchi.db');
 const SCHEMA_PATH = path.join(ROOT_DIR, 'data', 'schema.sql');
 
-const CATEGORIES: Category[] = ['courses', 'news', 'projects', 'tools', 'literature', 'media', 'community', 'radio', 'people'];
+const CATEGORIES: Category[] = ['courses', 'news', 'projects', 'tools', 'literature', 'media', 'community', 'radio', 'people', 'events', 'kids'];
 const STREAM_TYPES: StreamType[] = ['spotify', 'zeno', 'rss', 'audio'];
 
 /** Schema version stored in PRAGMA user_version (see migrate()). */
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 4;
 const LEVELS: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];
 const FORMATS: Format[] = ['website', 'app', 'podcast', 'book', 'video', 'forum', 'course', 'tool'];
 const LANGS = ['eo', 'es', 'en'] as const;
@@ -57,7 +57,9 @@ export function openDatabase(file = process.env.SERCHI_DB || DEFAULT_DB_PATH): D
  * Upgrades a database created with an older schema.
  *  v0 -> v1: adds the 'radio' category and the stream_type/stream_url columns.
  *  v1 -> v2: adds the 'people' category (famous Esperanto speakers).
- *  SQLite cannot change a CHECK constraint in place, so in both cases the
+ *  v2 -> v3: adds the 'events' category (congresses, festivals, meetings).
+ *  v3 -> v4: adds the 'kids' category (resources for children).
+ *  SQLite cannot change a CHECK constraint in place, so in every case the
  *  resources table is rebuilt from the CREATE TABLE in schema.sql.
  */
 function migrate(db: DatabaseSync, schema: string): void {

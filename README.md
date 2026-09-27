@@ -133,6 +133,34 @@ PR y commits correspondientes.
     Piron y Tibor Sekelj tienen además panel de conocimiento. Está también en la versión
     Delphi. La base de datos queda con 528 enlaces y 10 paneles.
 
+11. **Sección de eventos.** Nueva categoría *Eventos* (`events`, esquema v3), separada de
+    *Comunidad*, que pasa a llamarse solo así. Reúne 33 congresos, festivales y
+    encuentros: 22 nuevos (`data/imports/2026-09-eventos.json`) y 11 que ya estaban en
+    otras categorías (el Congreso Universal, SES, IJF, NASK, Eventa Servo…). Entre los
+    nuevos, el Congreso Universal de 2027 en Melbourne, el IJK, el JES, el Congreso
+    Español, el 41.º Congreso Catalán (Reus, octubre de 2026), ARKONES, KEF, los
+    congresos continentales, el Congreso Español de 2017 en Teruel y las actividades de
+    Frateco en Zaragoza. La portada muestra los 12 destacados, que enlazan a su web. La
+    base de datos queda con 550 enlaces.
+
+12. **Rincón infantil.** Nueva categoría *Niños* (`kids`, esquema v4) con 23 recursos
+    para niños y familias: 18 nuevos (`data/imports/2026-09-ninos.json`) y 5 que ya
+    estaban en otras categorías. Hay canciones infantiles (Babelo Filmoj, *Dek bovinoj*),
+    cuentos y libros gratuitos (*Fabeloj de Andersen* traducidos por Zamenhof, *Alicio en
+    Mirlando*, *La eta princo*, *Pipi Ŝtrumpolonga*, *Kumeŭaŭa*), el congreso infantil
+    IIK, el encuentro de familias REF, el wiki *Familioj*, los juegos de Ŝnufido y apps y
+    cursos para niños. La portada muestra los 12 destacados. La barra de categorías se
+    ha compactado para que quepan las 12 pestañas. La base de datos queda con 568
+    enlaces.
+
+13. **Minicurso «Esperanto en 7 tagoj».** Un curso para niños y familias en siete
+    lecciones, con explicaciones en español, dibujos sencillos, vocabulario, ejercicios
+    con soluciones y un reto diario. Al marcar los siete días aparece un diploma con el
+    nombre del niño (se guarda solo en su navegador). Es una página independiente,
+    [`public/minikurso.html`](public/minikurso.html), enlazada desde el rincón infantil
+    de la portada: la versión React la sirve en `/minikurso.html` y la Delphi en
+    `/minikurso`.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

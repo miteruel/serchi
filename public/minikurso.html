@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Esperanto en 7 tagoj</title>
+<meta name="description" content="Minicurso de esperanto para niños y familias en siete lecciones, con dibujos y ejercicios. Liberanimo Teruel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&display=swap">
+<style>
+  :root {
+    --bg: #f5f9f4;
+    --surface: #ffffff;
+    --ink: #1f2a33;
+    --muted: #55646b;
+    --line: #d9e5dc;
+    --green: #1e8c4e;
+    --green-soft: #e3f3e8;
+    --sky: #3a86c8;
+    --sun: #f2b632;
+    --coral: #e8604c;
+    --violet: #8a5cc2;
+    --skin: #f4c9a6;
+    --hair: #5b3a24;
+    --paper: #ffffff;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111813;
+      --surface: #1a231c;
+      --ink: #e7efe9;
+      --muted: #a5b4aa;
+      --line: #2c3a30;
+      --green: #4cc27f;
+      --green-soft: #1d3325;
+      --sky: #6aa9e0;
+      --sun: #f5c451;
+      --coral: #f0806e;
+      --violet: #b08be0;
+      --skin: #e8b996;
+      --hair: #caa27f;
+      --paper: #202b23;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111813;
+    --surface: #1a231c;
+    --ink: #e7efe9;
+    --muted: #a5b4aa;
+    --line: #2c3a30;
+    --green: #4cc27f;
+    --green-soft: #1d3325;
+    --sky: #6aa9e0;
+    --sun: #f5c451;
+    --coral: #f0806e;
+    --violet: #b08be0;
+    --skin: #e8b996;
+    --hair: #caa27f;
+    --paper: #202b23;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.6 "Nunito", "Segoe UI", system-ui, sans-serif;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  }
+  .wrap { max-width: 860px; margin: 0 auto; display: grid; gap: 28px; }
+  h1, h2, h3 { font-family: "Baloo 2", "Nunito", system-ui, sans-serif; line-height: 1.15; text-wrap: balance; margin: 0; }
+  a { color: var(--green); font-weight: 700; }
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; border-radius: 6px; }
+  .eo { font-weight: 800; color: var(--green); }
+
+  /* Header */
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; }
+  .top a { text-decoration: none; }
+  .hero { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
+  .hero h1 { font-size: clamp(34px, 7vw, 56px); font-weight: 800; }
+  .hero h1 span { color: var(--green); }
+  .hero p { margin: 6px 0 0; color: var(--muted); max-width: 58ch; }
+  .star { width: clamp(72px, 16vw, 112px); height: auto; }
+  @media (max-width: 520px) { .hero { grid-template-columns: 1fr; } }
+
+  /* Day picker */
+  .days { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .days a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 14px 6px 6px; border-radius: 999px;
+    background: var(--surface); border: 2px solid var(--line);
+    color: var(--ink); text-decoration: none; font-weight: 800; font-size: 15px;
+  }
+  .days a:hover { border-color: var(--green); }
+  .days .n {
+    width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--green-soft); color: var(--green); font-family: "Baloo 2", sans-serif;
+  }
+  .days a.done .n { background: var(--green); color: var(--paper); }
+  .progress { font-size: 14px; color: var(--muted); }
+
+  /* Lesson */
+  .lesson {
+    background: var(--surface); border: 2px solid var(--line); border-radius: 22px;
+    padding: 24px clamp(16px, 4vw, 32px); display: grid; gap: 18px; scroll-margin-top: 16px;
+  }
+  .lesson-head { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+  .tag {
+    display: inline-block; font: 800 13px/1 "Nunito", sans-serif; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--paper); background: var(--green); padding: 6px 10px; border-radius: 999px;
+  }
+  .lesson h2 { font-size: clamp(28px, 5vw, 38px); margin-top: 8px; }
+  .lesson h2 small { display: block; font: 600 17px/1.4 "Nunito", sans-serif; color: var(--muted); margin-top: 2px; }
+  .art { width: clamp(150px, 30vw, 220px); height: auto; }
+  @media (max-width: 560px) { .lesson-head { grid-template-columns: 1fr; } .art { justify-self: center; } }
+  .lesson h3 { font-size: 21px; color: var(--ink); }
+  .lesson p { margin: 0; max-width: 65ch; }
+  .block { display: grid; gap: 8px; }
+
+  .words { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; }
+  .word {
+    display: flex; justify-content: space-between; gap: 8px; align-items: baseline;
+    background: var(--green-soft); border-radius: 12px; padding: 8px 12px;
+  }
+  .word b { color: var(--green); font-weight: 800; }
+  .word span { color: var(--muted); font-size: 15px; text-align: right; }
+
+  .rule {
+    border-left: 5px solid var(--sun); background: color-mix(in srgb, var(--sun) 14%, var(--surface));
+    border-radius: 0 14px 14px 0; padding: 10px 14px; max-width: 65ch;
+  }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; min-width: 320px; }
+  th, td { text-align: left; padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  td.big { font: 800 22px/1.2 "Baloo 2", sans-serif; color: var(--green); }
+
+  .ex { display: grid; gap: 8px; margin: 0; padding-left: 22px; }
+  details { background: var(--bg); border-radius: 12px; padding: 8px 12px; }
+  summary { cursor: pointer; font-weight: 800; color: var(--sky); }
+  details ol { margin: 8px 0 0; padding-left: 22px; }
+
+  .dialog { display: grid; gap: 8px; max-width: 560px; }
+  .say { padding: 8px 14px; border-radius: 16px; max-width: 85%; }
+  .say.a { background: var(--green-soft); justify-self: start; border-bottom-left-radius: 4px; }
+  .say.b { background: color-mix(in srgb, var(--sky) 16%, var(--surface)); justify-self: end; border-bottom-right-radius: 4px; }
+  .say i { display: block; color: var(--muted); font-size: 14px; }
+
+  .challenge { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+  .challenge p { flex: 1 1 260px; }
+  .check {
+    display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 800;
+    border: 2px solid var(--green); color: var(--green); background: transparent;
+    border-radius: 999px; padding: 8px 16px; font: 800 15px "Nunito", sans-serif;
+  }
+  .check[aria-pressed="true"] { background: var(--green); color: var(--paper); }
+
+  /* Diploma */
+  .diploma {
+    border: 3px dashed var(--green); border-radius: 22px; padding: 24px; text-align: center;
+    background: var(--surface); display: grid; gap: 10px; justify-items: center;
+  }
+  .diploma h2 { font-size: clamp(30px, 6vw, 44px); color: var(--green); }
+  .diploma .name { font: 800 28px "Baloo 2", sans-serif; min-height: 1.2em; }
+  .diploma input {
+    font: 600 17px "Nunito", sans-serif; padding: 8px 12px; border-radius: 12px;
+    border: 2px solid var(--line); background: var(--bg); color: var(--ink); width: min(320px, 100%);
+  }
+  .locked { color: var(--muted); }
+
+  .next { display: grid; gap: 8px; }
+  .next ul { margin: 0; padding-left: 22px; display: grid; gap: 4px; }
+  footer { color: var(--muted); font-size: 14px; text-align: center; }
+
+  /* Drawing palette */
+  .f-green { fill: var(--green); } .f-sky { fill: var(--sky); } .f-sun { fill: var(--sun); }
+  .f-coral { fill: var(--coral); } .f-violet { fill: var(--violet); } .f-skin { fill: var(--skin); }
+  .f-hair { fill: var(--hair); } .f-ink { fill: var(--ink); } .f-paper { fill: var(--paper); }
+  .f-soft { fill: var(--green-soft); } .f-line { fill: var(--line); }
+  .s-ink { stroke: var(--ink); } .s-sun { stroke: var(--sun); } .s-muted { stroke: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="top" aria-label="Navegación">
+    <a href="/">← Serĉilo</a>
+    <span>Liberanimo Teruel</span>
+  </nav>
+
+  <header class="hero">
+    <svg class="star" viewBox="0 0 100 100" role="img" aria-label="Estrella verde del esperanto">
+      <circle cx="50" cy="50" r="48" class="f-soft"/>
+      <polygon class="f-green" points="50,12 59.4,37.1 86.1,38.2 65.2,54.9 72.4,80.8 50,66 27.6,80.8 34.8,54.9 13.9,38.2 40.6,37.1"/>
+    </svg>
+    <div>
+      <h1>Esperanto en <span>7 tagoj</span></h1>
+      <p>Un minicurso para niños y familias: una lección cada día, con dibujos, palabras nuevas y un pequeño reto. Al terminar los siete días te espera un diploma.</p>
+    </div>
+  </header>
+
+  <div class="block">
+    <ol class="days" id="days">
+      <li><a href="#tago-1" data-day="1"><span class="n">1</span>Saluton!</a></li>
+      <li><a href="#tago-2" data-day="2"><span class="n">2</span>Mi estas…</a></li>
+      <li><a href="#tago-3" data-day="3"><span class="n">3</span>Kato kaj katoj</a></li>
+      <li><a href="#tago-4" data-day="4"><span class="n">4</span>Nombroj kaj koloroj</a></li>
+      <li><a href="#tago-5" data-day="5"><span class="n">5</span>Mi manĝas pomon</a></li>
+      <li><a href="#tago-6" data-day="6"><span class="n">6</span>Familio</a></li>
+      <li><a href="#tago-7" data-day="7"><span class="n">7</span>Ĉu vi ŝatas?</a></li>
+    </ol>
+    <p class="progress" id="progress">Marca cada día al terminarlo: llevas 0 de 7.</p>
+  </div>
+
+  <!-- ============ TAGO 1 ============ -->
+  <section class="lesson" id="tago-1" aria-labelledby="h1-1">
+    <div class="lesson-head">
+      <div>
+        <span class="tag">Tago 1 · Día 1</span>
+        <h2 id="h1-1">Saluton! <small>Saludar y leer en esperanto</small></h2>
+      </div>
+      <svg class="art" viewBox="0 0 220 160" role="img" aria-label="Un sol sonriente que saluda y dice Saluton">
+        <g class="s-sun" stroke-width="7" stroke-linecap="round">
+          <line x1="80" y1="14" x2="80" y2="30"/><line x1="80" y1="130" x2="80" y2="146"/>
+          <line x1="14" y1="80" x2="30" y2="80"/><line x1="130" y1="80" x2="146" y2="80"/>
+          <line x1="33" y1="33" x2="44" y2="44"/><line x1="116" y1="116" x2="127" y2="127"/>
+          <line x1="33" y1="127" x2="44" y2="116"/><line x1="116" y1="44" x2="127" y2="33"/>
+        </g>
+        <circle cx="80" cy="80" r="42" class="f-sun"/>
+        <circle cx="66" cy="72" r="5" class="f-ink"/><circle cx="94" cy="72" r="5" class="f-ink"/>
+        <path d="M62 90 Q80 106 98 90" fill="none" class="s-ink" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="58" cy="88" r="6" class="f-coral" opacity=".5"/><circle cx="102" cy="88" r="6" class="f-coral" opacity=".5"/>
+        <path d="M140 20 h68 a8 8 0 0 1 8 8 v26 a8 8 0 0 1 -8 8 h-50 l-14 12 l2 -12 h-6 a8 8 0 0 1 -8 -8 v-26 a8 8 0 0 1 8 -8 z" class="f-paper s-ink" stroke-width="2"/>
+        <text x="174" y="47" text-anchor="middle" class="f-green" style="font:800 16px 'Baloo 2',sans-serif">Saluton!</text>
+      </svg>
+    </div>
+
+    <div class="block">
+      <h3>Palabras de hoy</h3>
+      <div class="words">
+        <div class="word"><b>Saluton!</b><span>¡Hola!</span></div>
+        <div class="word"><b>Bonan tagon!</b><span>¡Buenos días!</span></div>
+        <div class="word"><b>Bonan nokton!</b><span>¡Buenas noches!</span></div>
+        <div class="word"><b>Dankon!</b><span>¡Gracias!</span></div>
+        <div class="word"><b>Bonvolu</b><span>Por favor</span></div>
+        <div class="word"><b>Jes / Ne</b><span>Sí / No</span></div>
+        <div class="word"><b>Ĝis revido!</b><span>¡Hasta la vista!</span></div>
+        <div class="word"><b>Ĝis!</b><span>¡Adiós!</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Se lee como se escribe</h3>
+      <p>Cada letra suena siempre igual y la fuerza de la voz va en la penúltima sílaba: sa-<b>LU</b>-ton, <b>DAN</b>-kon, bon-<b>VO</b>-lu. Casi todas las letras suenan como en español. Estas son las que cambian:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Letra</th><th>Suena como…</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td class="big">c</td><td>«ts», como en <i>pizza</i></td><td><span class="eo">cent</span> (cien)</td></tr>
+            <tr><td class="big">ĉ</td><td>«ch», como en <i>chocolate</i></td><td><span class="eo">ĉokolado</span></td></tr>
+            <tr><td class="big">g</td><td>siempre «g» de <i>gato</i>, también en «ge» y «gi»</td><td><span class="eo">geografio</span></td></tr>
+            <tr><td class="big">ĝ</td><td>«dy», como la <i>j</i> inglesa de <i>jam</i></td><td><span class="eo">ĝardeno</span> (jardín)</td></tr>
+            <tr><td class="big">h</td><td>una «h» que suena suave, como al echar el aliento</td><td><span class="eo">hundo</span> (perro)</td></tr>
+            <tr><td class="big">ĥ</td><td>la «j» española, la de <i>jota</i></td><td><span class="eo">ĥoro</span> (coro)</td></tr>
+            <tr><td class="big">j</td><td>«i» / «y», como en <i>ya</i></td><td><span class="eo">jes</span> (sí)</td></tr>
+            <tr><td class="big">ĵ</td><td>la «j» francesa de <i>journal</i></td><td><span class="eo">ĵurnalo</span> (periódico)</td></tr>
+            <tr><td class="big">ŝ</td><td>«sh», como cuando pedimos silencio</td><td><span class="eo">ŝipo</span> (barco)</td></tr>
+            <tr><td class="big">ŭ</td><td>una «u» cortita detrás de vocal</td><td><span class="eo">aŭto</span> (coche)</td></tr>
+            <tr><td class="big">z</td><td>una «s» que zumba como una abeja: zzz</td><td><span class="eo">zebro</span> (cebra)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Ejercicio: ¿cómo se leen?</h3>
+      <ol class="ex">
+        <li><span class="eo">ĉokolado</span></li>
+        <li><span class="eo">ŝipo</span></li>
+        <li><span class="eo">jes</span></li>
+        <li><span class="eo">ĝardeno</span></li>
+        <li><span class="eo">aŭto</span></li>
+      </ol>
+      <details><summary>Ver soluciones</summary>
+        <ol><li>cho-ko-LA-do</li><li>SHI-po</li><li>yes</li><li>dyar-DE-no</li><li>AU-to</li></ol>
+      </details>
+    </div>
+
+    <div class="challenge">
+      <p><b>Reto del día:</b> saluda hoy a tu familia con <span class="eo">Bonan tagon!</span> por la mañana y despídete por la noche con <span class="eo">Bonan nokton!</span></p>
+      <button type="button" class="check" data-day="1" aria-pressed="false">✓ Hecho</button>
+    </div>
+  </section>
+
+  <!-- ============ TAGO 2 ============ -->
+  <section class="lesson" id="tago-2" aria-labelledby="h1-2">
+    <div class="lesson-head">
+      <div>
+        <span class="tag">Tago 2 · Día 2</span>
+        <h2 id="h1-2">Mi estas… <small>Yo, tú, él, ella… y el verbo «ser»</small></h2>
+      </div>
+      <svg class="art" viewBox="0 0 220 160" role="img" aria-label="Un niño y una niña que se presentan">
+        <rect x="0" y="138" width="220" height="22" rx="6" class="f-soft"/>
+        <!-- niño -->
+        <rect x="48" y="84" width="48" height="56" rx="16" class="f-sky"/>
+        <circle cx="72" cy="58" r="28" class="f-skin"/>
+        <path d="M44 54 Q48 26 72 28 Q98 26 100 54 Q88 40 72 42 Q56 40 44 54 z" class="f-hair"/>
+        <circle cx="62" cy="60" r="3.5" class="f-ink"/><circle cx="82" cy="60" r="3.5" class="f-ink"/>
+        <path d="M62 70 Q72 78 82 70" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/>
+        <!-- niña -->
+        <rect x="128" y="84" width="48" height="56" rx="16" class="f-coral"/>
+        <circle cx="120" cy="52" r="10" class="f-hair"/><circle cx="184" cy="52" r="10" class="f-hair"/>
+        <circle cx="152" cy="58" r="28" class="f-skin"/>
+        <path d="M124 56 Q126 28 152 28 Q178 28 180 56 Q170 38 152 40 Q134 38 124 56 z" class="f-hair"/>
+        <circle cx="142" cy="60" r="3.5" class="f-ink"/><circle cx="162" cy="60" r="3.5" class="f-ink"/>
+        <path d="M142 70 Q152 78 162 70" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/>
+        <text x="72" y="18" text-anchor="middle" class="f-green" style="font:800 14px 'Baloo 2',sans-serif">Mi estas Pablo</text>
+        <text x="152" y="18" text-anchor="middle" class="f-green" style="font:800 14px 'Baloo 2',sans-serif">Mi estas Lucía</text>
+      </svg>
+    </div>
+
+    <div class="block">
+      <h3>Las personas</h3>
+      <div class="words">
+        <div class="word"><b>mi</b><span>yo</span></div>
+        <div class="word"><b>vi</b><span>tú / vosotros</span></div>
+        <div class="word"><b>li</b><span>él</span></div>
+        <div class="word"><b>ŝi</b><span>ella</span></div>
+        <div class="word"><b>ĝi</b><span>ello (animal o cosa)</span></div>
+        <div class="word"><b>ni</b><span>nosotros</span></div>
+        <div class="word"><b>ili</b><span>ellos / ellas</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Una sola forma para todos</h3>
+      <p class="rule"><span class="eo">estas</span> significa <i>soy, eres, es, somos, sois, son</i>… ¡y también <i>estoy, estás, está</i>! En esperanto el verbo no cambia con la persona.</p>
+      <div class="words">
+        <div class="word"><b>Mi estas Ana.</b><span>Soy Ana.</span></div>
+        <div class="word"><b>Li estas knabo.</b><span>Él es un niño.</span></div>
+        <div class="word"><b>Ŝi estas knabino.</b><span>Ella es una niña.</span></div>
+        <div class="word"><b>Kiel vi fartas?</b><span>¿Cómo estás?</span></div>
+        <div class="word"><b>Mi fartas bone.</b><span>Estoy bien.</span></div>
+        <div class="word"><b>Mi nomiĝas…</b><span>Me llamo…</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Ejercicio: tradúcelo al esperanto</h3>
+      <ol class="ex">
+        <li>Ella es Marta.</li>
+        <li>Él es un niño.</li>
+        <li>Estoy bien, gracias.</li>
+        <li>Me llamo Pedro.</li>
+      </ol>
+      <details><summary>Ver soluciones</summary>
+        <ol><li>Ŝi estas Marta.</li><li>Li estas knabo.</li><li>Mi fartas bone, dankon.</li><li>Mi nomiĝas Pedro.</li></ol>
+      </details>
+    </div>
+
+    <div class="challenge">
+      <p><b>Reto del día:</b> preséntate en voz alta: <span class="eo">Saluton! Mi nomiĝas…</span> y pregunta a alguien <span class="eo">Kiel vi fartas?</span></p>
+      <button type="button" class="check" data-day="2" aria-pressed="false">✓ Hecho</button>
+    </div>
+  </section>
+
+  <!-- ============ TAGO 3 ============ -->
+  <section class="lesson" id="tago-3" aria-labelledby="h1-3">
+    <div class="lesson-head">
+      <div>
+        <span class="tag">Tago 3 · Día 3</span>
+        <h2 id="h1-3">Kato kaj katoj <small>Las cosas acaban en -o y cómo son en -a</small></h2>
+      </div>
+      <svg class="art" viewBox="0 0 220 160" role="img" aria-label="Un gato grande y un gato pequeño">
+        <rect x="0" y="138" width="220" height="22" rx="6" class="f-soft"/>
+        <!-- gato grande -->
+        <path d="M150 128 Q190 120 180 80" fill="none" class="s-muted" stroke-width="9" stroke-linecap="round"/>
+        <ellipse cx="110" cy="112" rx="52" ry="30" class="f-sun"/>
+        <polygon points="62,52 70,22 88,44" class="f-sun"/><polygon points="132,44 150,22 158,52" class="f-sun"/>
+        <circle cx="110" cy="64" r="40" class="f-sun"/>
+        <circle cx="96" cy="60" r="5" class="f-ink"/><circle cx="124" cy="60" r="5" class="f-ink"/>
+        <polygon points="104,72 116,72 110,79" class="f-coral"/>
+        <g class="s-ink" stroke-width="2" stroke-linecap="round"><line x1="70" y1="74" x2="92" y2="76"/><line x1="70" y1="84" x2="92" y2="80"/><line x1="128" y1="76" x2="150" y2="74"/><line x1="128" y1="80" x2="150" y2="84"/></g>
+        <!-- gato pequeño -->
+        <ellipse cx="34" cy="128" rx="20" ry="12" class="f-ink"/>
+        <polygon points="16,98 20,84 28,94" class="f-ink"/><polygon points="40,94 48,84 52,98" class="f-ink"/>
+        <circle cx="34" cy="106" r="16" class="f-ink"/>
+        <circle cx="28" cy="104" r="3" class="f-sun"/><circle cx="40" cy="104" r="3" class="f-sun"/>
+        <text x="110" y="14" text-anchor="middle" class="f-green" style="font:800 14px 'Baloo 2',sans-serif">granda kato</text>
+        <text x="34" y="74" text-anchor="middle" class="f-green" style="font:800 12px 'Baloo 2',sans-serif">malgranda</text>
+      </svg>
+    </div>
+
+    <div class="block">
+      <h3>Las cosas terminan en -o</h3>
+      <div class="words">
+        <div class="word"><b>kato</b><span>gato</span></div>
+        <div class="word"><b>hundo</b><span>perro</span></div>
+        <div class="word"><b>birdo</b><span>pájaro</span></div>
+        <div class="word"><b>domo</b><span>casa</span></div>
+        <div class="word"><b>arbo</b><span>árbol</span></div>
+        <div class="word"><b>libro</b><span>libro</span></div>
+        <div class="word"><b>knabo</b><span>niño</span></div>
+        <div class="word"><b>amiko</b><span>amigo</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Cómo son las cosas: terminan en -a</h3>
+      <div class="words">
+        <div class="word"><b>granda</b><span>grande</span></div>
+        <div class="word"><b>malgranda</b><span>pequeño</span></div>
+        <div class="word"><b>bela</b><span>bonito</span></div>
+        <div class="word"><b>bona</b><span>bueno</span></div>
+        <div class="word"><b>nova</b><span>nuevo</span></div>
+        <div class="word"><b>feliĉa</b><span>contento</span></div>
+      </div>
+      <p class="rule">Para decir <b>muchos</b> se añade <b>-j</b> (suena «i»): <span class="eo">kato → katoj</span>, <span class="eo">granda kato → grandaj katoj</span>. La palabra <span class="eo">la</span> vale para <i>el, la, los, las</i>, y no hace falta decir «un»: <span class="eo">kato</span> es «un gato».</p>
+    </div>
+
+    <div class="block">
+      <h3>Ejercicio: tradúcelo al esperanto</h3>
+      <ol class="ex">
+        <li>un árbol bonito</li>
+        <li>los perros grandes</li>
+        <li>los pájaros pequeños</li>
+        <li>Mi amigo es feliz.</li>
+      </ol>
+      <details><summary>Ver soluciones</summary>
+        <ol><li>bela arbo</li><li>la grandaj hundoj</li><li>la malgrandaj birdoj</li><li>Mia amiko estas feliĉa.</li></ol>
+        <p>Fíjate: <span class="eo">mia</span> («mi», de mío) también termina en -a, porque dice cómo es el amigo: es <i>mío</i>.</p>
+      </details>
+    </div>
+
+    <div class="challenge">
+      <p><b>Reto del día:</b> busca en casa cinco cosas y di su nombre en esperanto, con cómo son: <span class="eo">granda libro</span>, <span class="eo">bela kato</span>…</p>
+      <button type="button" class="check" data-day="3" aria-pressed="false">✓ Hecho</button>
+    </div>
+  </section>
+
+  <!-- ============ TAGO 4 ============ -->
+  <section class="lesson" id="tago-4" aria-labelledby="h1-4">
+    <div class="lesson-head">
+      <div>
+        <span class="tag">Tago 4 · Día 4</span>
+        <h2 id="h1-4">Nombroj kaj koloroj <small>Contar hasta diez y los colores</small></h2>
+      </div>
+      <svg class="art" viewBox="0 0 220 160" role="img" aria-label="Cinco globos de colores numerados">
+        <g class="s-muted" stroke-width="2" fill="none">
+          <path d="M30 78 Q34 118 100 150"/><path d="M68 66 Q70 110 100 150"/><path d="M110 56 Q106 110 100 150"/>
+          <path d="M150 66 Q140 112 100 150"/><path d="M190 78 Q170 118 100 150"/>
+        </g>
+        <ellipse cx="30" cy="52" rx="20" ry="26" class="f-coral"/>
+        <ellipse cx="68" cy="40" rx="20" ry="26" class="f-sun"/>
+        <ellipse cx="110" cy="30" rx="20" ry="26" class="f-green"/>
+        <ellipse cx="150" cy="40" rx="20" ry="26" class="f-sky"/>
+        <ellipse cx="190" cy="52" rx="20" ry="26" class="f-violet"/>
+        <g class="f-paper" style="font:800 18px 'Baloo 2',sans-serif" text-anchor="middle">
+          <text x="30" y="58">1</text><text x="68" y="46">2</text><text x="110" y="36">3</text><text x="150" y="46">4</text><text x="190" y="58">5</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="block">
+      <h3>Los números</h3>
+      <div class="words">
+        <div class="word"><b>unu</b><span>1</span></div>
+        <div class="word"><b>du</b><span>2</span></div>
+        <div class="word"><b>tri</b><span>3</span></div>
+        <div class="word"><b>kvar</b><span>4</span></div>
+        <div class="word"><b>kvin</b><span>5</span></div>
+        <div class="word"><b>ses</b><span>6</span></div>
+        <div class="word"><b>sep</b><span>7</span></div>
+        <div class="word"><b>ok</b><span>8</span></div>
+        <div class="word"><b>naŭ</b><span>9</span></div>
+        <div class="word"><b>dek</b><span>10</span></div>
+      </div>
+      <p class="rule">Los demás se construyen como con piezas: <span class="eo">dek unu</span> = 11, <span class="eo">dudek</span> = 20 (dos dieces), <span class="eo">dudek tri</span> = 23, <span class="eo">cent</span> = 100.</p>
+    </div>
+
+    <div class="block">
+      <h3>Los colores</h3>
+      <div class="words">
+        <div class="word"><b>ruĝa</b><span>rojo</span></div>
+        <div class="word"><b>oranĝa</b><span>naranja</span></div>
+        <div class="word"><b>flava</b><span>amarillo</span></div>
+        <div class="word"><b>verda</b><span>verde</span></div>
+        <div class="word"><b>blua</b><span>azul</span></div>
+        <div class="word"><b>violkolora</b><span>violeta</span></div>
+        <div class="word"><b>nigra</b><span>negro</span></div>
+        <div class="word"><b>blanka</b><span>blanco</span></div>
+        <div class="word"><b>bruna</b><span>marrón</span></div>
+        <div class="word"><b>rozkolora</b><span>rosa</span></div>
+      </div>
+      <p class="rule">Los colores dicen cómo son las cosas, así que terminan en <b>-a</b> y llevan <b>-j</b> cuando hay muchas: <span class="eo">tri ruĝaj pomoj</span> = tres manzanas rojas.</p>
+    </div>
+
+    <div class="block">
+      <h3>Ejercicio</h3>
+      <ol class="ex">
+        <li>Mira el dibujo: <span class="eo">Kiom da balonoj?</span> (¿Cuántos globos hay?)</li>
+        <li>¿De qué color es el globo número <span class="eo">tri</span>?</li>
+        <li>Traduce: dos perros negros.</li>
+        <li>Traduce: siete pájaros azules.</li>
+      </ol>
+      <details><summary>Ver soluciones</summary>
+        <ol><li>Kvin balonoj.</li><li>Verda (verde).</li><li>du nigraj hundoj</li><li>sep bluaj birdoj</li></ol>
+      </details>
+    </div>
+
+    <div class="challenge">
+      <p><b>Reto del día:</b> cuenta los escalones de tu casa o del cole en esperanto, y di de qué color es tu ropa hoy.</p>
+      <button type="button" class="check" data-day="4" aria-pressed="false">✓ Hecho</button>
+    </div>
+  </section>
+
+  <!-- ============ TAGO 5 ============ -->
+  <section class="lesson" id="tago-5" aria-labelledby="h1-5">
+    <div class="lesson-head">
+      <div>
+        <span class="tag">Tago 5 · Día 5</span>
+        <h2 id="h1-5">Mi manĝas pomon <small>Las acciones: ayer, hoy y mañana</small></h2>
+      </div>
+      <svg class="art" viewBox="0 0 220 160" role="img" aria-label="Una niña comiendo una manzana roja">
+        <rect x="0" y="138" width="220" height="22" rx="6" class="f-soft"/>
+        <rect x="56" y="92" width="60" height="50" rx="18" class="f-violet"/>
+        <circle cx="86" cy="62" r="32" class="f-skin"/>
+        <path d="M54 62 Q54 26 86 26 Q118 26 118 62 Q108 42 86 44 Q64 42 54 62 z" class="f-hair"/>
+        <path d="M68 58 Q74 52 80 58" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/>
+        <path d="M92 58 Q98 52 104 58" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="96" cy="76" r="6" class="f-coral"/>
+        <!-- manzana -->
+        <circle cx="140" cy="84" r="24" class="f-coral"/>
+        <circle cx="120" cy="80" r="9" class="f-skin"/>
+        <path d="M140 60 Q142 50 148 46" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/>
+        <path d="M146 54 Q160 44 166 56 Q152 60 146 54 z" class="f-green"/>
+        <circle cx="120" cy="92" r="9" class="f-skin"/>
+        <text x="166" y="126" text-anchor="middle" class="f-green" style="font:800 15px 'Baloo 2',sans-serif">ñam!</text>
+      </svg>
+    </div>
+
+    <div class="block">
+      <h3>Acciones (terminan en -i)</h3>
+      <div class="words">
+        <div class="word"><b>manĝi</b><span>comer</span></div>
+        <div class="word"><b>trinki</b><span>beber</span></div>
+        <div class="word"><b>ludi</b><span>jugar</span></div>
+        <div class="word"><b>legi</b><span>leer</span></div>
+        <div class="word"><b>dormi</b><span>dormir</span></div>
+        <div class="word"><b>kuri</b><span>correr</span></div>
+        <div class="word"><b>vidi</b><span>ver</span></div>
+        <div class="word"><b>ami</b><span>querer, amar</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Cambia solo el final</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Cuándo</th><th>Final</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td>ayer (<span class="eo">hieraŭ</span>)</td><td class="big">-is</td><td><span class="eo">Mi ludis.</span> Jugué.</td></tr>
+            <tr><td>hoy (<span class="eo">hodiaŭ</span>)</td><td class="big">-as</td><td><span class="eo">Mi ludas.</span> Juego.</td></tr>
+            <tr><td>mañana (<span class="eo">morgaŭ</span>)</td><td class="big">-os</td><td><span class="eo">Mi ludos.</span> Jugaré.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="rule">¡Sin excepciones! Todos los verbos funcionan igual y no cambian con la persona: <span class="eo">mi manĝas, vi manĝas, ili manĝas</span>.</p>
+      <p class="rule">Lo que se come, se ve o se lee lleva <b>-n</b> al final: <span class="eo">Mi manĝas pomon.</span> (Como una manzana.) <span class="eo">La kato vidas la birdon.</span> (El gato ve al pájaro.)</p>
+    </div>
+
+    <div class="block">
+      <h3>Ejercicio: tradúcelo al esperanto</h3>
+      <ol class="ex">
+        <li>Ayer jugué.</li>
+        <li>Mañana leeré un libro.</li>
+        <li>El perro bebe agua. (agua = <span class="eo">akvo</span>)</li>
+        <li>Nosotros vemos un gato.</li>
+      </ol>
+      <details><summary>Ver soluciones</summary>
+        <ol><li>Hieraŭ mi ludis.</li><li>Morgaŭ mi legos libron.</li><li>La hundo trinkas akvon.</li><li>Ni vidas katon.</li></ol>
+      </details>
+    </div>
+
+    <div class="challenge">
+      <p><b>Reto del día:</b> en la cena, di tres cosas que comes: <span class="eo">Mi manĝas…</span> ¡No olvides la <b>-n</b>!</p>
+      <button type="button" class="check" data-day="5" aria-pressed="false">✓ Hecho</button>
+    </div>
+  </section>
+
+  <!-- ============ TAGO 6 ============ -->
+  <section class="lesson" id="tago-6" aria-labelledby="h1-6">
+    <div class="lesson-head">
+      <div>
+        <span class="tag">Tago 6 · Día 6</span>
+        <h2 id="h1-6">Familio <small>La familia y las piezas para crear palabras</small></h2>
+      </div>
+      <svg class="art" viewBox="0 0 220 160" role="img" aria-label="Una familia delante de su casa">
+        <rect x="0" y="138" width="220" height="22" rx="6" class="f-soft"/>
+        <!-- casa -->
+        <rect x="120" y="66" width="84" height="72" class="f-sun"/>
+        <polygon points="112,70 162,26 212,70" class="f-coral"/>
+        <rect x="150" y="98" width="24" height="40" rx="4" class="f-hair"/>
+        <rect x="128" y="80" width="16" height="16" class="f-paper"/><rect x="180" y="80" width="16" height="16" class="f-paper"/>
+        <!-- padre -->
+        <rect x="16" y="82" width="30" height="56" rx="12" class="f-sky"/><circle cx="31" cy="68" r="16" class="f-skin"/>
+        <path d="M15 66 Q16 50 31 50 Q46 50 47 66 Q40 58 31 58 Q22 58 15 66 z" class="f-hair"/>
+        <!-- madre -->
+        <rect x="54" y="84" width="30" height="54" rx="12" class="f-green"/><circle cx="69" cy="70" r="16" class="f-skin"/>
+        <path d="M51 78 Q50 52 69 52 Q88 52 87 78 Q80 60 69 60 Q58 60 51 78 z" class="f-hair"/>
+        <!-- hijo -->
+        <rect x="90" y="106" width="22" height="32" rx="9" class="f-violet"/><circle cx="101" cy="96" r="12" class="f-skin"/>
+        <path d="M89 94 Q90 82 101 82 Q112 82 113 94 Q106 88 101 88 Q96 88 89 94 z" class="f-hair"/>
+      </svg>
+    </div>
+
+    <div class="block">
+      <h3>La familia</h3>
+      <div class="words">
+        <div class="word"><b>patro</b><span>padre</span></div>
+        <div class="word"><b>patrino</b><span>madre</span></div>
+        <div class="word"><b>frato</b><span>hermano</span></div>
+        <div class="word"><b>fratino</b><span>hermana</span></div>
+        <div class="word"><b>avo</b><span>abuelo</span></div>
+        <div class="word"><b>avino</b><span>abuela</span></div>
+        <div class="word"><b>filo</b><span>hijo</span></div>
+        <div class="word"><b>gepatroj</b><span>padre y madre</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Piezas para inventar palabras</h3>
+      <p>En esperanto las palabras se montan como un juego de construcción. Con pocas piezas sabes muchísimas palabras:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pieza</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td class="big">-in-</td><td>femenino</td><td><span class="eo">knabo → knabino</span> (niño → niña)</td></tr>
+            <tr><td class="big">ge-</td><td>los dos juntos</td><td><span class="eo">gepatroj, geavoj</span> (padres, abuelos)</td></tr>
+            <tr><td class="big">mal-</td><td>lo contrario</td><td><span class="eo">bona → malbona</span> (bueno → malo)</td></tr>
+            <tr><td class="big">-et-</td><td>pequeñito</td><td><span class="eo">domo → dometo</span> (casita)</td></tr>
+            <tr><td class="big">-eg-</td><td>enorme</td><td><span class="eo">domo → domego</span> (casota)</td></tr>
+            <tr><td class="big">-ej-</td><td>el sitio para</td><td><span class="eo">lerni → lernejo</span> (aprender → escuela)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Ejercicio: ¡monta la palabra!</h3>
+      <ol class="ex">
+        <li>la abuela</li>
+        <li>los abuelos (abuelo y abuela)</li>
+        <li>frío (caliente = <span class="eo">varma</span>)</li>
+        <li>un perrito</li>
+        <li>el comedor (el sitio para comer)</li>
+      </ol>
+      <details><summary>Ver soluciones</summary>
+        <ol><li>la avino</li><li>la geavoj</li><li>malvarma</li><li>hundeto</li><li>la manĝejo</li></ol>
+      </details>
+    </div>
+
+    <div class="challenge">
+      <p><b>Reto del día:</b> dibuja a tu familia y escribe debajo de cada persona su nombre en esperanto: <span class="eo">patro, patrino, frato…</span></p>
+      <button type="button" class="check" data-day="6" aria-pressed="false">✓ Hecho</button>
+    </div>
+  </section>
+
+  <!-- ============ TAGO 7 ============ -->
+  <section class="lesson" id="tago-7" aria-labelledby="h1-7">
+    <div class="lesson-head">
+      <div>
+        <span class="tag">Tago 7 · Día 7</span>
+        <h2 id="h1-7">Ĉu vi ŝatas? <small>Hacer preguntas y charlar</small></h2>
+      </div>
+      <svg class="art" viewBox="0 0 220 160" role="img" aria-label="Un pájaro en una rama con un bocadillo de pregunta">
+        <path d="M10 130 Q110 116 210 132" fill="none" class="s-muted" stroke-width="8" stroke-linecap="round"/>
+        <ellipse cx="94" cy="98" rx="38" ry="30" class="f-sky"/>
+        <circle cx="120" cy="72" r="22" class="f-sky"/>
+        <path d="M62 92 Q40 84 36 104 Q52 106 64 102 z" class="f-sky"/>
+        <path d="M80 96 Q96 84 112 100 Q96 110 80 96 z" class="f-paper" opacity=".6"/>
+        <circle cx="126" cy="68" r="4.5" class="f-ink"/>
+        <polygon points="140,72 158,78 140,82" class="f-sun"/>
+        <g class="s-sun" stroke-width="4" stroke-linecap="round"><line x1="88" y1="126" x2="86" y2="138"/><line x1="102" y1="126" x2="104" y2="138"/></g>
+        <path d="M150 10 h52 a8 8 0 0 1 8 8 v30 a8 8 0 0 1 -8 8 h-30 l-14 12 l2 -12 h-10 a8 8 0 0 1 -8 -8 v-30 a8 8 0 0 1 8 -8 z" class="f-paper s-ink" stroke-width="2"/>
+        <text x="175" y="46" text-anchor="middle" class="f-coral" style="font:800 34px 'Baloo 2',sans-serif">?</text>
+      </svg>
+    </div>
+
+    <div class="block">
+      <h3>Palabras para preguntar</h3>
+      <div class="words">
+        <div class="word"><b>Kio?</b><span>¿Qué?</span></div>
+        <div class="word"><b>Kiu?</b><span>¿Quién?</span></div>
+        <div class="word"><b>Kie?</b><span>¿Dónde?</span></div>
+        <div class="word"><b>Kiam?</b><span>¿Cuándo?</span></div>
+        <div class="word"><b>Kial?</b><span>¿Por qué?</span></div>
+        <div class="word"><b>Kiel?</b><span>¿Cómo?</span></div>
+        <div class="word"><b>Kiom?</b><span>¿Cuánto?</span></div>
+        <div class="word"><b>ŝati</b><span>gustar</span></div>
+      </div>
+      <p class="rule">Para preguntas de <b>sí o no</b>, se pone <span class="eo">Ĉu</span> delante: <span class="eo">Ĉu vi ŝatas katojn?</span> (¿Te gustan los gatos?) — <span class="eo">Jes, mi ŝatas katojn!</span></p>
+    </div>
+
+    <div class="block">
+      <h3>Una conversación</h3>
+      <div class="dialog">
+        <p class="say a"><b>Saluton! Kiel vi nomiĝas?</b><i>¡Hola! ¿Cómo te llamas?</i></p>
+        <p class="say b"><b>Mi nomiĝas Lucía. Kaj vi?</b><i>Me llamo Lucía. ¿Y tú?</i></p>
+        <p class="say a"><b>Mi nomiĝas Pablo. Kie vi loĝas?</b><i>Me llamo Pablo. ¿Dónde vives?</i></p>
+        <p class="say b"><b>Mi loĝas en Teruelo.</b><i>Vivo en Teruel.</i></p>
+        <p class="say a"><b>Ĉu vi ŝatas ludi?</b><i>¿Te gusta jugar?</i></p>
+        <p class="say b"><b>Jes! Ni ludu kune!</b><i>¡Sí! ¡Juguemos juntos!</i></p>
+      </div>
+      <p class="rule">Un regalo para el último día: con <b>-u</b> se invita o se pide algo. <span class="eo">Ni ludu!</span> = ¡Juguemos! <span class="eo">Venu!</span> = ¡Ven!</p>
+    </div>
+
+    <div class="block">
+      <h3>Ejercicio: responde en esperanto</h3>
+      <ol class="ex">
+        <li><span class="eo">Kiel vi nomiĝas?</span></li>
+        <li><span class="eo">Kie vi loĝas?</span></li>
+        <li><span class="eo">Ĉu vi ŝatas hundojn?</span></li>
+        <li><span class="eo">Kiom da katoj vi havas?</span> (<span class="eo">havi</span> = tener)</li>
+      </ol>
+      <details><summary>Ver ejemplos de respuesta</summary>
+        <ol><li>Mi nomiĝas Marta.</li><li>Mi loĝas en Teruelo.</li><li>Jes, mi ŝatas hundojn! / Ne, mi ne ŝatas hundojn.</li><li>Mi havas du katojn. / Mi ne havas katon.</li></ol>
+      </details>
+    </div>
+
+    <div class="challenge">
+      <p><b>Reto del día:</b> representa la conversación con alguien de tu familia, cambiando los nombres y la ciudad.</p>
+      <button type="button" class="check" data-day="7" aria-pressed="false">✓ Hecho</button>
+    </div>
+  </section>
+
+  <!-- ============ DIPLOMO ============ -->
+  <section class="diploma" id="diplomo" aria-labelledby="dip-h">
+    <svg class="star" viewBox="0 0 100 100" aria-hidden="true">
+      <polygon class="f-green" points="50,6 61,36 93,37 68,57 77,88 50,70 23,88 32,57 7,37 39,36"/>
+    </svg>
+    <h2 id="dip-h">Gratulon!</h2>
+    <p id="dip-text" class="locked">Marca los siete días como hechos para conseguir tu diploma.</p>
+    <p class="name" id="dip-name"></p>
+    <label for="dip-input">Escribe tu nombre para el diploma</label>
+    <input id="dip-input" type="text" maxlength="40" autocomplete="given-name" placeholder="Via nomo">
+  </section>
+
+  <section class="next" aria-labelledby="next-h">
+    <h2 id="next-h" style="font-size:26px">¿Y ahora qué?</h2>
+    <ul>
+      <li>Escucha canciones: <a href="https://www.youtube.com/playlist?list=PLpnXGNI3v_RFyEdkYMYAh0jugiar2Lr0z" target="_blank" rel="noopener noreferrer">Infankantoj en esperanto</a>.</li>
+      <li>Sigue aprendiendo con <a href="https://es.duolingo.com/course/eo/es/Aprender-esperanto" target="_blank" rel="noopener noreferrer">Duolingo en español</a> o en <a href="https://lernu.net" target="_blank" rel="noopener noreferrer">lernu.net</a>.</li>
+      <li>Lee cuentos: <a href="https://onlinebooks.library.upenn.edu/webbin/gutbook/lookup?num=48900" target="_blank" rel="noopener noreferrer">Tiel do: Rakontoj por malgrandaj infanoj</a>.</li>
+      <li>Busca más recursos para niños en <a href="/">Serĉilo</a>, en la sección <i>Rincón infantil</i>.</li>
+    </ul>
+  </section>
+
+  <footer>Minicurso preparado para <b>Liberanimo Teruel</b> · <span class="eo">Ĝis revido!</span></footer>
+</div>
+
+<script>
+(function () {
+  var KEY_DAYS = 'serchi-minikurso-tagoj';
+  var KEY_NAME = 'serchi-minikurso-nomo';
+  function load(key, fallback) {
+    try { var v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); } catch (e) { return fallback; }
+  }
+  function save(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* storage unavailable: keep in memory */ }
+  }
+
+  var done = load(KEY_DAYS, []);
+  if (!Array.isArray(done)) done = [];
+  var name = load(KEY_NAME, '');
+  if (typeof name !== 'string') name = '';
+
+  var buttons = document.querySelectorAll('.check');
+  var links = document.querySelectorAll('#days a');
+  var progress = document.getElementById('progress');
+  var dipText = document.getElementById('dip-text');
+  var dipName = document.getElementById('dip-name');
+  var input = document.getElementById('dip-input');
+  input.value = name;
+
+  function render() {
+    buttons.forEach(function (b) {
+      var on = done.indexOf(b.dataset.day) !== -1;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? '✓ Hecho' : 'Marcar como hecho';
+    });
+    links.forEach(function (a) { a.classList.toggle('done', done.indexOf(a.dataset.day) !== -1); });
+    var n = done.length;
+    progress.textContent = n === 7
+      ? '¡Has terminado los 7 días! Baja hasta el diploma.'
+      : 'Marca cada día al terminarlo: llevas ' + n + ' de 7.';
+    var complete = n === 7;
+    dipText.classList.toggle('locked', !complete);
+    dipText.textContent = complete
+      ? 'Vi finis la kurson «Esperanto en 7 tagoj». ¡Has terminado el curso!'
+      : 'Marca los siete días como hechos para conseguir tu diploma (llevas ' + n + ' de 7).';
+    dipName.textContent = complete ? input.value.trim() : '';
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var d = b.dataset.day, i = done.indexOf(d);
+      if (i === -1) done.push(d); else done.splice(i, 1);
+      save(KEY_DAYS, done);
+      render();
+    });
+  });
+  input.addEventListener('input', function () { save(KEY_NAME, input.value); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

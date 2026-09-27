@@ -229,6 +229,18 @@ export interface TranslationDictionary {
   peopleSectionTitle: string;
   peopleSectionDesc: string;
   peopleSeeAll: string;
+
+  // Events section
+  eventsSectionTitle: string;
+  eventsSectionDesc: string;
+  eventsSeeAll: string;
+
+  // Kids section
+  kidsSectionTitle: string;
+  kidsSectionDesc: string;
+  kidsSeeAll: string;
+  miniCourseTitle: string;
+  miniCourseDesc: string;
   listenBtn: string;
   nowPlaying: string;
   closePlayer: string;
@@ -337,9 +349,11 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       tools: 'Iloj & Vortaroj',
       literature: 'Literaturo',
       media: 'Aŭdvidaj & Podkastoj',
-      community: 'Komunumo & Eventoj',
+      community: 'Komunumo',
       radio: "Radio",
       people: "Personoj",
+      events: "Eventoj",
+      kids: "Infanoj",
     },
     
     levels: {
@@ -504,6 +518,14 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     peopleSectionTitle: "Famaj esperantistoj",
     peopleSectionDesc: "Verkistoj, sciencistoj kaj aktivuloj kiuj parolis kaj uzis Esperanton.",
     peopleSeeAll: "Ĉiuj personoj",
+    eventsSectionTitle: "Esperanto-eventoj",
+    eventsSectionDesc: "Kongresoj, festivaloj kaj renkontiĝoj kie oni vivas Esperanton.",
+    eventsSeeAll: "Ĉiuj eventoj",
+    kidsSectionTitle: "Angulo por infanoj",
+    kidsSectionDesc: "Rakontoj, kantoj, ludoj kaj kursoj por infanoj kaj iliaj familioj.",
+    kidsSeeAll: "Ĉio por infanoj",
+    miniCourseTitle: "Minikurso: Esperanto en 7 tagoj",
+    miniCourseDesc: "Sep lecionoj kun desegnaĵoj por infanoj kaj familioj (klarigoj en la hispana).",
     listenBtn: "Aŭskulti",
     nowPlaying: "Nun ludas",
     closePlayer: "Fermi ludilon",
@@ -611,9 +633,11 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       tools: 'Herramientas y Diccionarios',
       literature: 'Literatura',
       media: 'Audio, Vídeo y Podcasts',
-      community: 'Comunidad y Eventos',
+      community: 'Comunidad',
       radio: "Radio",
       people: "Personas",
+      events: "Eventos",
+      kids: "Niños",
     },
     
     levels: {
@@ -778,6 +802,14 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     peopleSectionTitle: "Esperantistas célebres",
     peopleSectionDesc: "Escritores, científicos y activistas que hablaron y usaron el esperanto.",
     peopleSeeAll: "Todas las personas",
+    eventsSectionTitle: "Eventos en esperanto",
+    eventsSectionDesc: "Congresos, festivales y encuentros donde se vive en esperanto.",
+    eventsSeeAll: "Todos los eventos",
+    kidsSectionTitle: "Rincón infantil",
+    kidsSectionDesc: "Cuentos, canciones, juegos y cursos para niños y sus familias.",
+    kidsSeeAll: "Todo para niños",
+    miniCourseTitle: "Minicurso: esperanto en 7 días",
+    miniCourseDesc: "Siete lecciones con dibujos para niños y familias.",
     listenBtn: "Escuchar",
     nowPlaying: "Sonando",
     closePlayer: "Cerrar reproductor",
@@ -885,9 +917,11 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       tools: 'Tools & Dictionaries',
       literature: 'Literature',
       media: 'Audio, Video & Podcasts',
-      community: 'Community & Events',
+      community: 'Community',
       radio: "Radio",
       people: "People",
+      events: "Events",
+      kids: "Kids",
     },
     
     levels: {
@@ -1052,6 +1086,14 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     peopleSectionTitle: "Famous Esperantists",
     peopleSectionDesc: "Writers, scientists and activists who spoke and used Esperanto.",
     peopleSeeAll: "All people",
+    eventsSectionTitle: "Esperanto events",
+    eventsSectionDesc: "Congresses, festivals and meetings where Esperanto is lived.",
+    eventsSeeAll: "All events",
+    kidsSectionTitle: "Kids' corner",
+    kidsSectionDesc: "Stories, songs, games and courses for children and their families.",
+    kidsSeeAll: "Everything for kids",
+    miniCourseTitle: "Mini-course: Esperanto in 7 days",
+    miniCourseDesc: "Seven lessons with drawings for children and families (explained in Spanish).",
     listenBtn: "Listen",
     nowPlaying: "Now playing",
     closePlayer: "Close player",

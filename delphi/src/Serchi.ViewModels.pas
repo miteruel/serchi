@@ -43,12 +43,12 @@ type
 
   TEpisodeVM = class
   private
-    FTitle, FAudioUrl, FPublished: string;
+    FTitle, FAudioUrl, FPubDate: string;
   public
-    constructor Create(const ATitle, AAudioUrl, APublished: string);
+    constructor Create(const ATitle, AAudioUrl, APubDate: string);
     property Title: string read FTitle;
     property AudioUrl: string read FAudioUrl;
-    property Published: string read FPublished;
+    property PubDate: string read FPubDate;
   end;
 
   { Global, per-request information used by the layout }
@@ -196,7 +196,7 @@ type
   TSearchVM = class
   private
     FQuery, FDisplayQuery, FStats, FExactPhrase, FAnyWords, FExcludeWords: string;
-    FResults, FPeople: TObjectList<TResourceVM>;
+    FResults, FPeople, FEvents, FKids: TObjectList<TResourceVM>;
     FKnowledge: TKnowledgeVM;
     FTotal: Integer;
     FHasMore: Boolean;
@@ -207,6 +207,8 @@ type
     FLiveQuery: string;
     function GetHasResults: Boolean;
     function GetHasPeople: Boolean;
+    function GetHasEvents: Boolean;
+    function GetHasKids: Boolean;
     function GetHasKnowledge: Boolean;
     function GetHasQuery: Boolean;
   public
@@ -223,6 +225,12 @@ type
     { Home page: famous Esperantists (featured resources of the 'people' category) }
     property People: TObjectList<TResourceVM> read FPeople;
     property HasPeople: Boolean read GetHasPeople;
+    { Home page: main Esperanto events (featured resources of the 'events' category) }
+    property Events: TObjectList<TResourceVM> read FEvents;
+    property HasEvents: Boolean read GetHasEvents;
+    { Home page: kids' corner (featured resources of the 'kids' category) }
+    property Kids: TObjectList<TResourceVM> read FKids;
+    property HasKids: Boolean read GetHasKids;
     property Knowledge: TKnowledgeVM read FKnowledge;
     property HasKnowledge: Boolean read GetHasKnowledge;
     property HasMore: Boolean read FHasMore write FHasMore;
@@ -655,12 +663,12 @@ end;
 
 { TEpisodeVM }
 
-constructor TEpisodeVM.Create(const ATitle, AAudioUrl, APublished: string);
+constructor TEpisodeVM.Create(const ATitle, AAudioUrl, APubDate: string);
 begin
   inherited Create;
   FTitle := ATitle;
   FAudioUrl := AAudioUrl;
-  FPublished := APublished;
+  FPubDate := APubDate;
 end;
 
 { TKnowledgeVM }
@@ -696,6 +704,8 @@ begin
   inherited;
   FResults := TObjectList<TResourceVM>.Create(True);
   FPeople := TObjectList<TResourceVM>.Create(True);
+  FEvents := TObjectList<TResourceVM>.Create(True);
+  FKids := TObjectList<TResourceVM>.Create(True);
   FLevelOptions := TObjectList<TOptionVM>.Create(True);
   FCategoryOptions := TObjectList<TOptionVM>.Create(True);
   FFormatOptions := TObjectList<TOptionVM>.Create(True);
@@ -711,6 +721,8 @@ begin
   FCategoryOptions.Free;
   FLevelOptions.Free;
   FKnowledge.Free;
+  FKids.Free;
+  FEvents.Free;
   FPeople.Free;
   FResults.Free;
   inherited;
@@ -730,6 +742,16 @@ end;
 function TSearchVM.GetHasPeople: Boolean;
 begin
   Result := FPeople.Count > 0;
+end;
+
+function TSearchVM.GetHasEvents: Boolean;
+begin
+  Result := FEvents.Count > 0;
+end;
+
+function TSearchVM.GetHasKids: Boolean;
+begin
+  Result := FKids.Count > 0;
 end;
 
 function TSearchVM.GetHasKnowledge: Boolean;

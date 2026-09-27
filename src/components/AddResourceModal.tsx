@@ -255,7 +255,9 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
     'projects',
     'community',
     'radio',
-    'people'
+    'people',
+    'events',
+    'kids'
   ];
 
   const levelsList: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];

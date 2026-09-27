@@ -12,7 +12,9 @@ export type Category =
   | 'media' 
   | 'community'
   | 'radio'
-  | 'people';
+  | 'people'
+  | 'events'
+  | 'kids';
 
 export type Format = 
   | 'website' 

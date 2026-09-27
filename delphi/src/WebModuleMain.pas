@@ -43,6 +43,7 @@ type
     procedure Render(const ATemplate: string; AModel: TObject);
     procedure Redirect(const AUrl: string);
     procedure SendStatic(const APath: string);
+    procedure SendMiniCourse;
 
     // View model builders
     function ResourceVM(ARes: TResource): TResourceVM;
@@ -284,6 +285,22 @@ begin
   FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
 end;
 
+{ The kids' mini-course is a standalone page shared with the React version
+  (public/minikurso.html in the repository, next to the delphi folder). }
+procedure TWebModuleMain.SendMiniCourse;
+var
+  FileName: string;
+begin
+  FileName := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'public' + PathDelim + 'minikurso.html'));
+  if not TFile.Exists(FileName) then
+  begin
+    SendHtml('Not found', 404);
+    Exit;
+  end;
+  FResponse.ContentType := 'text/html; charset=utf-8';
+  FResponse.ContentStream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
+end;
+
 { ---------------------------------------------------------------------------
   View model builders
   --------------------------------------------------------------------------- }
@@ -306,8 +323,8 @@ end;
 
 procedure TWebModuleMain.FillCategoryOptions(AList: TObjectList<TOptionVM>; const ASelected: string);
 const
-  Cats: array[0..9] of string = ('all', 'courses', 'news', 'projects', 'tools',
-    'literature', 'media', 'community', 'radio', 'people');
+  Cats: array[0..11] of string = ('all', 'courses', 'news', 'projects', 'tools',
+    'literature', 'media', 'community', 'radio', 'people', 'events', 'kids');
 var
   C: string;
 begin
@@ -411,6 +428,20 @@ begin
     for Res in Found do
       if Res.Featured then
         VM.People.Add(ResourceVM(Res));
+    // Esperanto events: featured congresses and meetings
+    Found.Clear;
+    Filters.Category := 'events';
+    Store.Search(Filters, Found);
+    for Res in Found do
+      if Res.Featured then
+        VM.Events.Add(ResourceVM(Res));
+    // Kids' corner: featured resources for children
+    Found.Clear;
+    Filters.Category := 'kids';
+    Store.Search(Filters, Found);
+    for Res in Found do
+      if Res.Featured then
+        VM.Kids.Add(ResourceVM(Res));
     Render('home.html', VM);
   finally
     Found.Free;
@@ -552,7 +583,7 @@ begin
       try
         Episodes := TRadioFeed.LatestEpisodes(Res.StreamUrl);
         for Ep in Episodes do
-          VM.Episodes.Add(TEpisodeVM.Create(Ep.Title, Ep.AudioUrl, Ep.Published));
+          VM.Episodes.Add(TEpisodeVM.Create(Ep.Title, Ep.AudioUrl, Ep.PubDate));
       except
         VM.EpisodesError := True;
       end;
@@ -1146,6 +1177,11 @@ begin
   if Path.StartsWith('/static/') then
   begin
     SendStatic(Path.Substring(Length('/static/')));
+    Exit;
+  end;
+  if (Path = '/minikurso') or (Path = '/minikurso.html') then
+  begin
+    SendMiniCourse;
     Exit;
   end;
 
