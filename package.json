@@ -12,7 +12,9 @@
     "lint": "tsc --noEmit",
     "export:delphi": "tsx scripts/export-delphi-data.ts",
     "db:import": "tsx scripts/db-import.ts",
-    "db:export": "tsx scripts/db-export.ts"
+    "db:export": "tsx scripts/db-export.ts",
+    "forum:import": "tsx scripts/forum-import.ts",
+    "links:check": "tsx scripts/check-links.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

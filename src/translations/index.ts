@@ -266,6 +266,9 @@ export interface TranslationDictionary {
   forumModHelpText: string;
   forumLearnerHelpText: string;
   forumAutoXActiveText: string;
+  forumModeratorKeyPrompt: string;
+  forumModeratorKeyWrong: string;
+  forumSaveError: string;
 }
 
 export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
@@ -553,6 +556,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumModHelpText: '★ Vi havas plenajn rajtojn por moderigi, alpingli, ŝlosi aŭ forigi mesaĝojn.',
     forumLearnerHelpText: 'Partoprenu en diskutoj, demandu gramatikajn dubojn kaj amikiĝu kun aliaj lernantoj.',
     forumAutoXActiveText: 'Ikso-sistemo (cx → ĉ) estas aktiva',
+    forumModeratorKeyPrompt: 'Enskribu la ŝlosilon de moderanto:',
+    forumModeratorKeyWrong: 'La ŝlosilo de moderanto ne estas ĝusta.',
+    forumSaveError: 'Ne eblis konservi la ŝanĝon en la forumo. Bonvolu reprovi.',
   },
 
   es: {
@@ -839,6 +845,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumModHelpText: '★ Tienes permisos completos para moderar, fijar, cerrar o eliminar mensajes.',
     forumLearnerHelpText: 'Participa en debates, plantea dudas gramaticales y haz amigos con otros estudiantes.',
     forumAutoXActiveText: 'El sistema X (cx → ĉ) está activo',
+    forumModeratorKeyPrompt: 'Escribe la clave de moderador:',
+    forumModeratorKeyWrong: 'La clave de moderador no es correcta.',
+    forumSaveError: 'No se pudo guardar el cambio en el foro. Inténtalo de nuevo.',
   },
 
   en: {
@@ -1125,5 +1134,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumModHelpText: '★ You have full permissions to moderate, pin, lock, or delete messages.',
     forumLearnerHelpText: 'Participate in discussions, ask grammar questions, and connect with fellow learners.',
     forumAutoXActiveText: 'X-system (cx → ĉ) is active',
+    forumModeratorKeyPrompt: 'Enter the moderator key:',
+    forumModeratorKeyWrong: 'The moderator key is not correct.',
+    forumSaveError: 'The forum change could not be saved. Please try again.',
   },
 };

@@ -34,6 +34,22 @@ The Express server reads it and exposes it to the React app:
 | POST | `/api/resources` | add one resource (409 if the URL already exists) |
 | POST | `/api/resources/batch` | add several resources, skipping duplicates |
 
+The forum is in the same database: topics, replies and likes are saved there and
+shared by every visitor.
+
+| Method | Route | |
+|---|---|---|
+| GET | `/api/forum` | all topics and replies |
+| POST | `/api/forum/topics` | new topic |
+| POST | `/api/forum/topics/:id/comments` | reply |
+| POST | `/api/forum/topics/:id/like` · `/api/forum/comments/:id/like` | like / unlike |
+| POST | `/api/forum/topics/:id/pin` · `/api/forum/topics/:id/lock` | moderators: pin, lock |
+| DELETE | `/api/forum/topics/:id` · `/api/forum/comments/:id` | moderators: delete |
+
+Visitors post as one of the forum's demo users (learner, teacher or moderator). Set
+`FORUM_MODERATOR_KEY` in `.env.local` so that the moderator role asks for that key;
+without it, anyone can moderate.
+
 Resources added from the web are saved in the database, so every visitor sees them.
 Set `SERCHI_DB=/path/to/file.db` to use another database file (for example, so
 testing does not modify the committed one).
@@ -46,13 +62,21 @@ Scripts:
   comment at the top of [`scripts/db-import.ts`](scripts/db-import.ts)).
 - `npm run db:export -- [--out dir]`: dumps the database to `resources.json` and
   `knowledge.json` (default `data/export/`), handy for reviewing or editing by hand.
+- `npm run forum:import -- [--file forum.json]`: replaces the whole forum with the
+  content of a JSON file (default: the demo forum in
+  [`data/imports/2026-09-foro-inicial.json`](data/imports/2026-09-foro-inicial.json)).
+- `npm run links:check -- [--category radio] [--out report.md]`: opens every URL in
+  the database (links, knowledge panel links and radio feeds) and writes a report of
+  the broken, blocked and redirected ones (default
+  `data/audits/<date>-comprobacion-enlaces.md`). Exits with code 1 if some URL is
+  broken. Behind a proxy, run it with `NODE_USE_ENV_PROXY=1`.
 
 ## Delphi + WebStencils + HTMX version
 
 The [`delphi/`](delphi/README.md) folder contains a server-rendered version of the same
 site built with Delphi WebBroker, WebStencils templates and HTMX. It reads the same
-SQLite database; UI translations and forum seed data are exported to JSON with
-`npm run export:delphi`.
+SQLite database, forum included; UI translations and search synonyms are exported to
+JSON with `npm run export:delphi`.
 
 ## Historia del proyecto
 
@@ -200,12 +224,28 @@ PR y commits correspondientes.
     tocarlo y se cierra al elegir un idioma, al tocar fuera o con Escape. En escritorio
     sigue abriéndose también al pasar el ratón.
 
+19. **Comprobador de enlaces.** `npm run links:check` abre cada URL de la base de datos
+    (enlaces, enlaces de los paneles de conocimiento y fuentes de radio) y escribe un
+    informe en `data/audits/` con los rotos, los que no responden, los que bloquean las
+    visitas automáticas y los que redirigen a otro dominio. No se ha podido ejecutar
+    contra las webs reales desde el entorno de trabajo, que no tiene acceso a internet;
+    se probó con un servidor local que imita cada caso.
+
+20. **Foro en la base de datos.** El foro deja de guardarse en el navegador (React) o en
+    memoria (Delphi): temas, respuestas y «me gusta» se guardan en `data/serchi.db`
+    (tablas `forum_*`) y los ven todos los visitantes. Cada navegador puede dar un solo
+    «me gusta» a cada mensaje. El foro de ejemplo pasa a
+    `data/imports/2026-09-foro-inicial.json` y se carga con `npm run forum:import`. En
+    la versión React, si se define `FORUM_MODERATOR_KEY`, el rol de moderador pide esa
+    clave, ya que ahora sus acciones afectan a todos.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir
   las webs, así que cada enlace se dio por bueno cuando aparecía en resultados reales de
-  búsqueda. Conviene abrirlos de vez en cuando por si alguno deja de funcionar.
+  búsqueda. Para abrirlos de verdad hay que ejecutar `npm run links:check` desde un
+  ordenador con acceso a internet (paso 19); conviene repetirlo de vez en cuando.
 - **Versión Delphi sin compilar:** no se ha compilado todavía con RAD Studio (ver
   [`delphi/README.md`](delphi/README.md)).
-- **Foro sin base de datos:** el foro sigue sin guardarse en la base de datos (en el
-  navegador en la versión React y en memoria en la versión Delphi).
+- **Moderación del foro en Delphi:** la versión Delphi todavía no pide la clave de
+  moderador (`FORUM_MODERATOR_KEY`), así que allí cualquiera puede moderar.

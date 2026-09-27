@@ -5,10 +5,11 @@ Versión del buscador Serĉilo escrita en **Delphi** con **WebBroker**, plantill
 genera en el servidor; HTMX sustituye fragmentos de la página sin recargarla, por lo
 que no hay React, ni paso de *build*, ni estado en el navegador más allá de unas cookies.
 
-Lee los enlaces y los paneles de conocimiento de la **misma base de datos SQLite** que
-la versión React (`data/serchi.db`, en la raíz del repositorio) usando FireDAC. Los
-enlaces que se añaden desde la web se guardan en esa base de datos. Las traducciones
-EO/ES/EN, los sinónimos y el foro de ejemplo se exportan a JSON en `delphi/data/`.
+Lee los enlaces, los paneles de conocimiento y el foro de la **misma base de datos
+SQLite** que la versión React (`data/serchi.db`, en la raíz del repositorio) usando
+FireDAC. Los enlaces que se añaden desde la web y todo lo que se hace en el foro se
+guardan en esa base de datos. Las traducciones EO/ES/EN y los sinónimos se exportan a
+JSON en `delphi/data/`.
 
 ## Requisitos
 
@@ -45,7 +46,7 @@ delphi/
 │   └── Serchi.Gemini.pas      búsqueda en vivo (Gemini + Google Search grounding)
 ├── templates/                 plantillas WebStencils (páginas y fragmentos _*.html)
 ├── static/                    app.js (x-sistemo, copiar enlace, modal), css, icono
-└── data/                      traducciones, sinónimos y foro (JSON generado desde TypeScript)
+└── data/                      traducciones y sinónimos (JSON generado desde TypeScript)
 ```
 
 ## Cómo encajan WebStencils y HTMX
@@ -87,9 +88,12 @@ delphi/
 
 ## Diferencias con la versión React
 
-- Los enlaces añadidos se guardan en SQLite. El foro vive **en memoria del servidor**,
-  se comparte entre usuarios y se pierde al reiniciar. Idioma, rol del foro y
-  favoritos van en cookies.
+- Los enlaces añadidos y el foro se guardan en SQLite. Como con los enlaces, el servidor
+  lee el foro al arrancar y lo mantiene en memoria: si la versión React y la Delphi usan
+  la misma base de datos a la vez, cada una ve los cambios de la otra al reiniciarse.
+  Idioma, rol del foro y favoritos van en cookies.
+- La clave de moderador (`FORUM_MODERATOR_KEY`) solo la pide la versión React: en la
+  versión Delphi cualquiera puede elegir el rol de moderador.
 - El tema claro/oscuro sigue la preferencia del sistema (`prefers-color-scheme`).
 - La búsqueda avanzada es un panel desplegable en lugar de un modal.
 
@@ -97,8 +101,8 @@ delphi/
 
 Los enlaces y paneles se gestionan en `data/serchi.db` (ver `npm run db:import` y
 `npm run db:export` en el README principal). Los JSON de `delphi/data/` se generan
-desde el código TypeScript; después de cambiar `src/data/forumData.ts`,
-`src/translations` o `src/utils/esperanto.ts` ejecuta en la raíz:
+desde el código TypeScript; después de cambiar `src/translations` o
+`src/utils/esperanto.ts` ejecuta en la raíz:
 
 ```bash
 npm run export:delphi

@@ -4,7 +4,8 @@
   Resources and knowledge panels are loaded from the SQLite database shared
   with the Node/React version (data/serchi.db, schema in data/schema.sql) and
   cached in memory for searching; new resources are written to the database.
-  The forum lives in memory (seeded from data/forum.json).
+  The forum (tables forum_*) is loaded the same way and every change to it is
+  written to the database as well.
   Implements the search/ranking algorithm (port of the useMemo block in
   src/App.tsx). Access to mutable state is serialized with Lock/Unlock. }
 
@@ -41,10 +42,10 @@ type
     procedure OpenDatabase(const ADatabase, ASchemaFile: string);
     procedure LoadResources;
     procedure LoadKnowledge;
-    procedure LoadForum(const AFile: string);
+    procedure LoadForum;
     function NextId(const APrefix: string): string;
   public
-    { ADatabase: SQLite file; ADataDir: folder with forum.json and synonyms.json;
+    { ADatabase: SQLite file; ADataDir: folder with synonyms.json;
       ASchemaFile: data/schema.sql, applied if the database has no tables }
     constructor Create(const ADatabase, ASchemaFile, ADataDir: string);
     destructor Destroy; override;
@@ -66,12 +67,16 @@ type
     function UserForRole(const ARole: string): TForumUser;
     function FindTopic(const AId: string): TForumTopic;
     procedure ListTopics(const ACategory, ALevel, AQuery: string; AResults: TList<TForumTopic>);
+    { The author's visitor id likes the new topic, as in the React version }
     function CreateTopic(const AUser: TForumUser; const ATitle, AContent, ACategory,
-      ALevel: string; const ATags: TArray<string>): TForumTopic;
+      ALevel: string; const ATags: TArray<string>; const AVisitor: string): TForumTopic;
     function AddComment(ATopic: TForumTopic; const AUser: TForumUser;
       const AContent: string; AModNote: Boolean): TForumComment;
     procedure ToggleTopicLike(ATopic: TForumTopic; const AVisitor: string);
     procedure ToggleCommentLike(AComment: TForumComment; const AVisitor: string);
+    procedure CountView(ATopic: TForumTopic);
+    { AFlag: pin | lock }
+    procedure ToggleTopicFlag(ATopic: TForumTopic; const AFlag: string);
     procedure DeleteTopic(ATopic: TForumTopic);
     procedure DeleteComment(ATopic: TForumTopic; AComment: TForumComment);
 
@@ -134,6 +139,13 @@ begin
     Result := AFalse;
 end;
 
+{ Current time as stored in the database: ISO 8601 in UTC, like the Node
+  version writes it (so that both sort the same way) }
+function NowIso: string;
+begin
+  Result := DateToISO8601(TTimeZone.Local.ToUniversalTime(Now), True);
+end;
+
 { Removes "-- ..." comment lines from a SQL statement }
 function StripSqlComments(const ASql: string): string;
 var
@@ -187,7 +199,7 @@ begin
   OpenDatabase(ADatabase, ASchemaFile);
   LoadResources;
   LoadKnowledge;
-  LoadForum(TPath.Combine(ADataDir, 'forum.json'));
+  LoadForum;
 end;
 
 destructor TSerchiStore.Destroy;
@@ -391,38 +403,124 @@ begin
   end;
 end;
 
-procedure TSerchiStore.LoadForum(const AFile: string);
+procedure TSerchiStore.LoadForum;
 var
-  Root, Item, CommentsObj: TJSONValue;
-  Pair: TJSONPair;
+  Q: TFDQuery;
+  Users: TDictionary<string, TForumUser>;
+  User: TForumUser;
   Topic: TForumTopic;
   Comment: TForumComment;
-begin
-  Root := ParseJSONFile(AFile);
-  try
-    for Item in (TJSONObject(Root).GetValue('topics') as TJSONArray) do
+  Topics: TDictionary<string, TForumTopic>;
+  Comments: TDictionary<string, TForumComment>;
+
+  function UserOf(const AId: string): TForumUser;
+  begin
+    if not Users.TryGetValue(AId, Result) then
     begin
-      Topic := TForumTopic.FromJSON(Item as TJSONObject);
-      FTopics.Add(Topic);
-      FUsers.AddOrSetValue(Topic.Author.Role, Topic.Author);
+      Result := Default(TForumUser);
+      Result.Id := AId;
+      Result.Name := AId;
+      Result.Role := 'learner';
+      Result.AvatarColor := 'bg-emerald-600';
     end;
-    CommentsObj := TJSONObject(Root).GetValue('comments');
-    if CommentsObj is TJSONObject then
-      for Pair in TJSONObject(CommentsObj) do
+  end;
+
+begin
+  Q := TFDQuery.Create(nil);
+  Users := TDictionary<string, TForumUser>.Create;
+  Topics := TDictionary<string, TForumTopic>.Create;
+  Comments := TDictionary<string, TForumComment>.Create;
+  try
+    Q.Connection := FDB;
+    // user_current goes last, so it is the user a learner posts as
+    Q.Open('SELECT * FROM forum_users ORDER BY id = ''user_current'', id');
+    while not Q.Eof do
+    begin
+      User := Default(TForumUser);
+      User.Id := Q.FieldByName('id').AsString;
+      User.Name := Q.FieldByName('name').AsString;
+      User.Role := Q.FieldByName('role').AsString;
+      User.AvatarColor := Q.FieldByName('avatar_color').AsString;
+      User.LevelBadge := Q.FieldByName('level_badge').AsString;
+      Users.Add(User.Id, User);
+      FUsers.AddOrSetValue(User.Role, User);
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT * FROM forum_topics ORDER BY created_at DESC');
+    while not Q.Eof do
+    begin
+      Topic := TForumTopic.Create;
+      Topic.Id := Q.FieldByName('id').AsString;
+      Topic.Title := Q.FieldByName('title').AsString;
+      Topic.Content := Q.FieldByName('content').AsString;
+      Topic.Author := UserOf(Q.FieldByName('author_id').AsString);
+      Topic.Level := Q.FieldByName('level').AsString;
+      Topic.Category := Q.FieldByName('category').AsString;
+      Topic.CreatedAt := ISO8601ToDate(Q.FieldByName('created_at').AsString, False);
+      Topic.UpdatedAt := ISO8601ToDate(Q.FieldByName('updated_at').AsString, False);
+      Topic.Views := Q.FieldByName('views').AsInteger;
+      Topic.Likes := Q.FieldByName('likes').AsInteger;
+      Topic.IsPinned := Q.FieldByName('is_pinned').AsInteger <> 0;
+      Topic.IsLocked := Q.FieldByName('is_locked').AsInteger <> 0;
+      FTopics.Add(Topic);
+      Topics.Add(Topic.Id, Topic);
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT topic_id, tag FROM forum_topic_tags ORDER BY topic_id, position');
+    while not Q.Eof do
+    begin
+      if Topics.TryGetValue(Q.Fields[0].AsString, Topic) then
+        Topic.Tags := Topic.Tags + [Q.Fields[1].AsString];
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT * FROM forum_comments ORDER BY created_at, rowid');
+    while not Q.Eof do
+    begin
+      if Topics.TryGetValue(Q.FieldByName('topic_id').AsString, Topic) then
       begin
-        Topic := FindTopic(Pair.JsonString.Value);
-        if (Topic = nil) or not (Pair.JsonValue is TJSONArray) then
-          Continue;
-        for Item in TJSONArray(Pair.JsonValue) do
-        begin
-          Comment := TForumComment.FromJSON(Item as TJSONObject);
-          Topic.Comments.Add(Comment);
-          if not FUsers.ContainsKey(Comment.Author.Role) then
-            FUsers.Add(Comment.Author.Role, Comment.Author);
-        end;
+        Comment := TForumComment.Create;
+        Comment.Id := Q.FieldByName('id').AsString;
+        Comment.TopicId := Topic.Id;
+        Comment.Author := UserOf(Q.FieldByName('author_id').AsString);
+        Comment.Content := Q.FieldByName('content').AsString;
+        Comment.CreatedAt := ISO8601ToDate(Q.FieldByName('created_at').AsString, False);
+        Comment.Likes := Q.FieldByName('likes').AsInteger;
+        Comment.IsModeratorNote := Q.FieldByName('is_moderator_note').AsInteger <> 0;
+        Topic.Comments.Add(Comment);
+        Comments.Add(Comment.Id, Comment);
       end;
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT topic_id, visitor_id FROM forum_topic_likes');
+    while not Q.Eof do
+    begin
+      if Topics.TryGetValue(Q.Fields[0].AsString, Topic) then
+        Topic.LikedBy.Add(Q.Fields[1].AsString);
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT comment_id, visitor_id FROM forum_comment_likes');
+    while not Q.Eof do
+    begin
+      if Comments.TryGetValue(Q.Fields[0].AsString, Comment) then
+        Comment.LikedBy.Add(Q.Fields[1].AsString);
+      Q.Next;
+    end;
+    Q.Close;
   finally
-    Root.Free;
+    Comments.Free;
+    Topics.Free;
+    Users.Free;
+    Q.Free;
   end;
 end;
 
@@ -750,71 +848,149 @@ begin
 end;
 
 function TSerchiStore.CreateTopic(const AUser: TForumUser; const ATitle, AContent,
-  ACategory, ALevel: string; const ATags: TArray<string>): TForumTopic;
+  ACategory, ALevel: string; const ATags: TArray<string>; const AVisitor: string): TForumTopic;
+var
+  Stamp: string;
+  I: Integer;
 begin
   Result := TForumTopic.Create;
-  Result.Id := NextId('topic');
-  Result.Title := ATitle;
-  Result.Content := AContent;
-  Result.Author := AUser;
-  Result.Category := ACategory;
-  Result.Level := ALevel;
-  Result.Tags := ATags;
-  Result.CreatedAt := Now;
-  Result.UpdatedAt := Now;
-  Result.Views := 1;
+  try
+    Result.Id := NextId('topic');
+    Result.Title := ATitle;
+    Result.Content := AContent;
+    Result.Author := AUser;
+    Result.Category := ACategory;
+    Result.Level := ALevel;
+    Result.Tags := ATags;
+    Stamp := NowIso;
+    Result.CreatedAt := ISO8601ToDate(Stamp, False);
+    Result.UpdatedAt := Result.CreatedAt;
+    Result.Views := 1;
+    Result.Likes := 1;
+    Result.LikedBy.Add(AVisitor);
+
+    FDB.StartTransaction;
+    try
+      FDB.ExecSQL('INSERT INTO forum_topics (id, title, content, author_id, level, category, ' +
+        'views, likes, created_at, updated_at) VALUES (:id, :title, :content, :author, :level, ' +
+        ':category, 1, 1, :created, :updated)',
+        [Result.Id, ATitle, AContent, AUser.Id, ALevel, ACategory, Stamp, Stamp]);
+      for I := 0 to High(ATags) do
+        FDB.ExecSQL('INSERT INTO forum_topic_tags (topic_id, position, tag) VALUES (:id, :pos, :tag)',
+          [Result.Id, I, ATags[I]]);
+      FDB.ExecSQL('INSERT INTO forum_topic_likes (topic_id, visitor_id) VALUES (:id, :visitor)',
+        [Result.Id, AVisitor]);
+      FDB.Commit;
+    except
+      FDB.Rollback;
+      raise;
+    end;
+  except
+    Result.Free;
+    raise;
+  end;
   FTopics.Insert(0, Result);
 end;
 
 function TSerchiStore.AddComment(ATopic: TForumTopic; const AUser: TForumUser;
   const AContent: string; AModNote: Boolean): TForumComment;
+var
+  Id, Stamp: string;
 begin
+  Id := NextId('comm');
+  Stamp := NowIso;
+  FDB.StartTransaction;
+  try
+    FDB.ExecSQL('INSERT INTO forum_comments (id, topic_id, author_id, content, ' +
+      'is_moderator_note, created_at) VALUES (:id, :topic, :author, :content, :modnote, :created)',
+      [Id, ATopic.Id, AUser.Id, AContent, Ord(AModNote), Stamp]);
+    FDB.ExecSQL('UPDATE forum_topics SET updated_at = :updated WHERE id = :id', [Stamp, ATopic.Id]);
+    FDB.Commit;
+  except
+    FDB.Rollback;
+    raise;
+  end;
   Result := TForumComment.Create;
-  Result.Id := NextId('comm');
+  Result.Id := Id;
   Result.TopicId := ATopic.Id;
   Result.Author := AUser;
   Result.Content := AContent;
-  Result.CreatedAt := Now;
+  Result.CreatedAt := ISO8601ToDate(Stamp, False);
   Result.IsModeratorNote := AModNote;
   ATopic.Comments.Add(Result);
-  ATopic.UpdatedAt := Now;
+  ATopic.UpdatedAt := Result.CreatedAt;
 end;
 
 procedure TSerchiStore.ToggleTopicLike(ATopic: TForumTopic; const AVisitor: string);
 begin
   if ATopic.LikedBy.Contains(AVisitor) then
   begin
+    FDB.ExecSQL('DELETE FROM forum_topic_likes WHERE topic_id = :id AND visitor_id = :visitor',
+      [ATopic.Id, AVisitor]);
     ATopic.LikedBy.Remove(AVisitor);
     ATopic.Likes := Max(0, ATopic.Likes - 1);
   end
   else
   begin
+    FDB.ExecSQL('INSERT OR IGNORE INTO forum_topic_likes (topic_id, visitor_id) VALUES (:id, :visitor)',
+      [ATopic.Id, AVisitor]);
     ATopic.LikedBy.Add(AVisitor);
     Inc(ATopic.Likes);
   end;
+  FDB.ExecSQL('UPDATE forum_topics SET likes = :likes WHERE id = :id', [ATopic.Likes, ATopic.Id]);
 end;
 
 procedure TSerchiStore.ToggleCommentLike(AComment: TForumComment; const AVisitor: string);
 begin
   if AComment.LikedBy.Contains(AVisitor) then
   begin
+    FDB.ExecSQL('DELETE FROM forum_comment_likes WHERE comment_id = :id AND visitor_id = :visitor',
+      [AComment.Id, AVisitor]);
     AComment.LikedBy.Remove(AVisitor);
     AComment.Likes := Max(0, AComment.Likes - 1);
   end
   else
   begin
+    FDB.ExecSQL('INSERT OR IGNORE INTO forum_comment_likes (comment_id, visitor_id) VALUES (:id, :visitor)',
+      [AComment.Id, AVisitor]);
     AComment.LikedBy.Add(AVisitor);
     Inc(AComment.Likes);
+  end;
+  FDB.ExecSQL('UPDATE forum_comments SET likes = :likes WHERE id = :id', [AComment.Likes, AComment.Id]);
+end;
+
+procedure TSerchiStore.CountView(ATopic: TForumTopic);
+begin
+  Inc(ATopic.Views);
+  FDB.ExecSQL('UPDATE forum_topics SET views = :views WHERE id = :id', [ATopic.Views, ATopic.Id]);
+end;
+
+procedure TSerchiStore.ToggleTopicFlag(ATopic: TForumTopic; const AFlag: string);
+begin
+  if AFlag = 'pin' then
+  begin
+    ATopic.IsPinned := not ATopic.IsPinned;
+    FDB.ExecSQL('UPDATE forum_topics SET is_pinned = :value WHERE id = :id',
+      [Ord(ATopic.IsPinned), ATopic.Id]);
+  end
+  else if AFlag = 'lock' then
+  begin
+    ATopic.IsLocked := not ATopic.IsLocked;
+    FDB.ExecSQL('UPDATE forum_topics SET is_locked = :value WHERE id = :id',
+      [Ord(ATopic.IsLocked), ATopic.Id]);
   end;
 end;
 
 procedure TSerchiStore.DeleteTopic(ATopic: TForumTopic);
 begin
+  // Tags, comments and likes go with it (ON DELETE CASCADE)
+  FDB.ExecSQL('DELETE FROM forum_topics WHERE id = :id', [ATopic.Id]);
   FTopics.Remove(ATopic);
 end;
 
 procedure TSerchiStore.DeleteComment(ATopic: TForumTopic; AComment: TForumComment);
 begin
+  FDB.ExecSQL('DELETE FROM forum_comments WHERE id = :id', [AComment.Id]);
   ATopic.Comments.Remove(AComment);
 end;
 
