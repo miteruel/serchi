@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# SQLite temp files and JSON dumps (npm run db:export)
+*.db-journal
+*.db-wal
+*.db-shm
+data/export/

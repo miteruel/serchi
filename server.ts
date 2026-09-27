@@ -4,6 +4,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
+import {
+  insertResources,
+  listKnowledgePanels,
+  listResources,
+  openDatabase,
+  sanitizeResource,
+  type NewResource,
+} from './server/db';
 
 // Load .env.local (as documented in the README) and fall back to .env
 dotenv.config({ path: ['.env.local', '.env'] });
@@ -15,7 +23,57 @@ async function startServer() {
   const app = express();
   const port = process.env.PORT || 3000;
 
-  app.use(express.json());
+  app.use(express.json({ limit: '2mb' }));
+
+  // SQLite database with the resource index and knowledge panels
+  const db = openDatabase();
+
+  app.get('/api/resources', (_req, res) => {
+    res.json(listResources(db));
+  });
+
+  app.get('/api/knowledge', (_req, res) => {
+    res.json(listKnowledgePanels(db));
+  });
+
+  // Add one resource (manual form). 409 if the URL is already indexed.
+  app.post('/api/resources', (req, res) => {
+    let item: NewResource;
+    try {
+      item = sanitizeResource({ ...req.body, id: undefined });
+    } catch (err: any) {
+      return res.status(400).json({ error: err.message });
+    }
+    const { inserted } = insertResources(db, [item], 'user');
+    if (inserted.length === 0) {
+      return res.status(409).json({ error: 'duplicate' });
+    }
+    return res.status(201).json(inserted[0]);
+  });
+
+  // Add several resources (live Google Search crawler). Duplicates are skipped.
+  app.post('/api/resources/batch', (req, res) => {
+    const list = Array.isArray(req.body?.resources) ? req.body.resources : null;
+    if (!list || list.length === 0 || list.length > 100) {
+      return res.status(400).json({ error: 'Expected 1-100 resources' });
+    }
+    const source = req.body?.source === 'user' ? 'user' : 'crawled';
+    const items: NewResource[] = [];
+    let invalid = 0;
+    for (const raw of list) {
+      try {
+        items.push(sanitizeResource({ ...raw, id: undefined }));
+      } catch {
+        invalid++;
+      }
+    }
+    const { inserted, skippedDuplicates } = insertResources(db, items, source);
+    return res.json({
+      inserted,
+      added: inserted.length,
+      skippedDuplicates: skippedDuplicates + invalid,
+    });
+  });
 
   // Initialize Google Gen AI with server-side API key
   const apiKey = process.env.GEMINI_API_KEY || '';

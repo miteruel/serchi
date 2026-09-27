@@ -1063,7 +1063,7 @@ begin
   Res.Format := 'website';
   Res.IsFree := True;
   Res.Tags := ['google', 'web'];
-  if not IsValidUrl(Res.Url) or not Store.AddResource(Res) then
+  if not IsValidUrl(Res.Url) or not Store.AddResource(Res, 'crawled') then
     Res.Free;
   Item := TLiveItemVM.Create(Param('title'), Param('url'), Param('displayUrl'), Snippet,
     Param('level'), Param('category'), T('categories_' + Param('category')), True);

@@ -8,8 +8,7 @@ import {
   Category 
 } from './types';
 import { ForumTopic, ForumComment, ForumUser } from './types/forum';
-import { ESPERANTO_RESOURCES } from './data/resources';
-import { KNOWLEDGE_PANELS } from './data/knowledge';
+import { fetchKnowledgePanels, fetchResources, addResource, addResources } from './api';
 import { 
   INITIAL_FORUM_TOPICS, 
   INITIAL_FORUM_COMMENTS, 
@@ -66,20 +65,10 @@ export default function App() {
     return DEFAULT_SETTINGS;
   });
 
-  // Dynamic resources state (predefined + user/crawler added)
-  const [resources, setResources] = useState<EsperantoResource[]>(() => {
-    try {
-      const stored = localStorage.getItem('sercilo_custom_resources');
-      if (stored) {
-        const custom: EsperantoResource[] = JSON.parse(stored);
-        // Deduplicate against default list
-        const defaultUrls = new Set(ESPERANTO_RESOURCES.map((r) => r.url.toLowerCase().replace(/\/$/, '')));
-        const uniqueCustom = custom.filter((c) => !defaultUrls.has(c.url.toLowerCase().replace(/\/$/, '')));
-        return [...uniqueCustom, ...ESPERANTO_RESOURCES];
-      }
-    } catch {}
-    return ESPERANTO_RESOURCES;
-  });
+  // Resource index and knowledge panels, loaded from the server's SQLite database
+  const [resources, setResources] = useState<EsperantoResource[]>([]);
+  const [knowledgePanels, setKnowledgePanels] = useState<KnowledgePanel[]>([]);
+  const [dataError, setDataError] = useState<string | null>(null);
 
   // Load saved bookmark IDs
   const [savedIds, setSavedIds] = useState<string[]>(() => {
@@ -153,12 +142,37 @@ export default function App() {
     localStorage.setItem('sercilo_saved', JSON.stringify(savedIds));
   }, [savedIds]);
 
-  // Sync custom resources with localStorage
+  // Load resources and knowledge panels from the API. Links that older
+  // versions stored only in this browser are uploaded once to the database.
   useEffect(() => {
-    const defaultIds = new Set(ESPERANTO_RESOURCES.map((r) => r.id));
-    const customList = resources.filter((r) => !defaultIds.has(r.id));
-    localStorage.setItem('sercilo_custom_resources', JSON.stringify(customList));
-  }, [resources]);
+    let cancelled = false;
+    (async () => {
+      try {
+        const legacy = localStorage.getItem('sercilo_custom_resources');
+        if (legacy) {
+          const custom: EsperantoResource[] = JSON.parse(legacy);
+          if (Array.isArray(custom) && custom.length > 0) {
+            await addResources(custom, 'user');
+          }
+          localStorage.removeItem('sercilo_custom_resources');
+        }
+      } catch (err) {
+        console.warn('Could not migrate locally stored resources', err);
+      }
+      try {
+        const [res, kp] = await Promise.all([fetchResources(), fetchKnowledgePanels()]);
+        if (!cancelled) {
+          setResources(res);
+          setKnowledgePanels(kp);
+        }
+      } catch (err: any) {
+        if (!cancelled) setDataError(err.message || String(err));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Sync forum state
   useEffect(() => {
@@ -209,55 +223,27 @@ export default function App() {
     );
   };
 
-  // Add a single new resource with strict anti-duplicate checking
-  const handleAddResource = (item: Omit<EsperantoResource, 'id'>) => {
-    const cleanUrl = item.url.trim().toLowerCase().replace(/\/$/, '');
-    const alreadyExists = resources.some(
-      (r) => r.url.trim().toLowerCase().replace(/\/$/, '') === cleanUrl
-    );
-
-    if (alreadyExists) {
-      return { 
-        success: false, 
-        error: TRANSLATIONS[settings.language].duplicateUrlError 
-      };
+  // Add a single new resource; the server rejects duplicated URLs
+  const handleAddResource = async (item: Omit<EsperantoResource, 'id'>) => {
+    try {
+      const result = await addResource(item);
+      if (result.duplicate) {
+        return { success: false, error: TRANSLATIONS[settings.language].duplicateUrlError };
+      }
+      setResources((prev) => [result.resource!, ...prev]);
+      return { success: true };
+    } catch (err: any) {
+      return { success: false, error: err.message || String(err) };
     }
-
-    const newRes: EsperantoResource = {
-      ...item,
-      id: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-    };
-
-    setResources((prev) => [newRes, ...prev]);
-    return { success: true };
   };
 
   // Batch add multiple resources from Google crawler
-  const handleBatchAddResources = (items: Omit<EsperantoResource, 'id'>[]) => {
-    const existingUrlSet = new Set(resources.map((r) => r.url.trim().toLowerCase().replace(/\/$/, '')));
-    let addedCount = 0;
-    let skippedCount = 0;
-    const newItemsToAdd: EsperantoResource[] = [];
-
-    items.forEach((item) => {
-      const cleanUrl = item.url.trim().toLowerCase().replace(/\/$/, '');
-      if (existingUrlSet.has(cleanUrl)) {
-        skippedCount++;
-      } else {
-        existingUrlSet.add(cleanUrl);
-        addedCount++;
-        newItemsToAdd.push({
-          ...item,
-          id: `crawled-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-        });
-      }
-    });
-
-    if (newItemsToAdd.length > 0) {
-      setResources((prev) => [...newItemsToAdd, ...prev]);
+  const handleBatchAddResources = async (items: Omit<EsperantoResource, 'id'>[]) => {
+    const result = await addResources(items, 'crawled');
+    if (result.inserted.length > 0) {
+      setResources((prev) => [...result.inserted, ...prev]);
     }
-
-    return { added: addedCount, skippedDuplicates: skippedCount };
+    return { added: result.added, skippedDuplicates: result.skippedDuplicates };
   };
 
   // Search execution
@@ -559,7 +545,7 @@ export default function App() {
     let knowledge: KnowledgePanel | null = null;
     if (rawQuery) {
       const normQ = normalizeText(rawQuery);
-      knowledge = KNOWLEDGE_PANELS.find((kp) => 
+      knowledge = knowledgePanels.find((kp) => 
         kp.keywords.some((kw) => normQ.includes(normalizeText(kw)) || normalizeText(kw).includes(normQ))
       ) || null;
     }
@@ -571,7 +557,7 @@ export default function App() {
       searchDurationMs: duration,
       matchedKnowledge: knowledge,
     };
-  }, [filters, resources]);
+  }, [filters, resources, knowledgePanels]);
 
   const savedResourcesList = useMemo(() => {
     return resources.filter((r) => savedIds.includes(r.id));
@@ -615,6 +601,11 @@ export default function App() {
 
       {/* Main View Area */}
       <main className="flex-1 flex flex-col">
+        {dataError && (
+          <div role="alert" className="max-w-3xl mx-auto mt-4 px-4 py-2 rounded-lg bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-200 text-sm">
+            ⚠ {dataError}
+          </div>
+        )}
         {view === 'forum' ? (
           <ForumView
             topics={forumTopics}
@@ -642,6 +633,7 @@ export default function App() {
             onOpenAdvanced={() => setIsAdvancedOpen(true)}
             selectedLevel={filters.level}
             onSelectLevel={(lvl) => setFilters((prev) => ({ ...prev, level: lvl }))}
+            resources={resources}
           />
         ) : (
           <SearchResults

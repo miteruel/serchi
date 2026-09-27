@@ -5,14 +5,15 @@ Versión del buscador Serĉilo escrita en **Delphi** con **WebBroker**, plantill
 genera en el servidor; HTMX sustituye fragmentos de la página sin recargarla, por lo
 que no hay React, ni paso de *build*, ni estado en el navegador más allá de unas cookies.
 
-Usa exactamente los mismos datos que la versión React (300 recursos, paneles de
-conocimiento, foro de ejemplo y las traducciones EO/ES/EN), exportados a JSON en
-`delphi/data/`.
+Lee los enlaces y los paneles de conocimiento de la **misma base de datos SQLite** que
+la versión React (`data/serchi.db`, en la raíz del repositorio) usando FireDAC. Los
+enlaces que se añaden desde la web se guardan en esa base de datos. Las traducciones
+EO/ES/EN, los sinónimos y el foro de ejemplo se exportan a JSON en `delphi/data/`.
 
 ## Requisitos
 
 - Delphi **12.2 Athens** o posterior (la unidad `Web.Stencils` apareció en 12.2).
-- Indy (incluido con Delphi) para el servidor HTTP *standalone*.
+- Indy y FireDAC con el driver SQLite (incluidos con Delphi).
 - Opcional: variable de entorno `GEMINI_API_KEY` para el descubrimiento de enlaces en
   vivo con Gemini + Google Search.
 
@@ -25,6 +26,9 @@ conocimiento, foro de ejemplo y las traducciones EO/ES/EN), exportados a JSON en
 
 El ejecutable busca las carpetas `templates/`, `static/` y `data/` subiendo desde la
 carpeta del `.exe` (p. ej. `Win64\Debug\`), o en la ruta indicada por `SERCHI_HOME`.
+La base de datos se busca en `../data/serchi.db` (junto a `schema.sql`) o en la ruta
+de la variable `SERCHI_DB`. Las versiones Node y Delphi pueden usar el mismo fichero a
+la vez, pero cada una solo ve los enlaces nuevos de la otra al reiniciarse.
 
 ## Estructura
 
@@ -33,7 +37,7 @@ delphi/
 ├── SerchiWeb.dpr              servidor WebBroker standalone (TIdHTTPWebBrokerBridge)
 ├── src/
 │   ├── WebModuleMain.pas/.dfm rutas, cookies, construcción de view models y render
-│   ├── Serchi.Store.pas       índice en memoria, algoritmo de búsqueda/ranking, foro
+│   ├── Serchi.Store.pas       carga desde SQLite (FireDAC), caché en memoria, búsqueda/ranking, foro
 │   ├── Serchi.Models.pas      modelos de dominio + carga desde JSON
 │   ├── Serchi.ViewModels.pas  objetos que leen las plantillas vía RTTI
 │   ├── Serchi.Text.pas        x-sistemo (cx → ĉ), normalización y sinónimos
@@ -41,7 +45,7 @@ delphi/
 │   └── Serchi.Gemini.pas      búsqueda en vivo (Gemini + Google Search grounding)
 ├── templates/                 plantillas WebStencils (páginas y fragmentos _*.html)
 ├── static/                    app.js (x-sistemo, copiar enlace, modal), css, icono
-└── data/                      JSON generado desde el código TypeScript
+└── data/                      traducciones, sinónimos y foro (JSON generado desde TypeScript)
 ```
 
 ## Cómo encajan WebStencils y HTMX
@@ -83,15 +87,18 @@ delphi/
 
 ## Diferencias con la versión React
 
-- El estado (recursos añadidos y foro) vive **en memoria del servidor** y se comparte
-  entre usuarios; se pierde al reiniciar. Idioma, rol del foro y favoritos van en cookies.
+- Los enlaces añadidos se guardan en SQLite. El foro vive **en memoria del servidor**,
+  se comparte entre usuarios y se pierde al reiniciar. Idioma, rol del foro y
+  favoritos van en cookies.
 - El tema claro/oscuro sigue la preferencia del sistema (`prefers-color-scheme`).
 - La búsqueda avanzada es un panel desplegable en lugar de un modal.
 
 ## Actualizar los datos
 
-Los JSON de `data/` se generan desde el código TypeScript; después de cambiar
-`src/data`, `src/translations` o `src/utils/esperanto.ts` ejecuta en la raíz:
+Los enlaces y paneles se gestionan en `data/serchi.db` (ver `npm run db:import` y
+`npm run db:export` en el README principal). Los JSON de `delphi/data/` se generan
+desde el código TypeScript; después de cambiar `src/data/forumData.ts`,
+`src/translations` o `src/utils/esperanto.ts` ejecuta en la raíz:
 
 ```bash
 npm run export:delphi
@@ -105,5 +112,6 @@ npm run export:delphi
   que WebStencils codifica en HTML; comprueba que sigue así en tu versión.
 - El código se escribió sin poder compilarlo con RAD Studio (no hay Delphi en el
   entorno donde se generó). Los puntos más sensibles a la versión son la firma del
-  evento `OnValue` (`TWebModuleMain.ProcessorValue`) y la resolución de rutas de
-  `@Import`/`@LayoutPage`, que se buscan en `templates/`.
+  evento `OnValue` (`TWebModuleMain.ProcessorValue`), la resolución de rutas de
+  `@Import`/`@LayoutPage`, que se buscan en `templates/`, y el acceso a SQLite con
+  FireDAC en `Serchi.Store.pas`.

@@ -10,10 +10,9 @@ import {
   ArrowRight,
   SlidersHorizontal
 } from 'lucide-react';
-import { UserSettings, Level, Category } from '../types';
+import { UserSettings, Level, Category, EsperantoResource } from '../types';
 import { TRANSLATIONS } from '../translations';
 import { convertXSystem } from '../utils/esperanto';
-import { ESPERANTO_RESOURCES } from '../data/resources';
 
 interface SearchHomeProps {
   query: string;
@@ -25,6 +24,7 @@ interface SearchHomeProps {
   onOpenAdvanced: () => void;
   selectedLevel: Level;
   onSelectLevel: (lvl: Level) => void;
+  resources: EsperantoResource[];
 }
 
 export const SearchHome: React.FC<SearchHomeProps> = ({
@@ -37,6 +37,7 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
   onOpenAdvanced,
   selectedLevel,
   onSelectLevel,
+  resources,
 }) => {
   const t = TRANSLATIONS[settings.language];
   const [isFocused, setIsFocused] = useState(false);
@@ -66,7 +67,7 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
     const matches = new Set<string>();
 
     // Suggest matching resource titles
-    ESPERANTO_RESOURCES.forEach((item) => {
+    resources.forEach((item) => {
       if (item.title.toLowerCase().includes(q)) {
         matches.add(item.title);
       }
@@ -78,7 +79,7 @@ export const SearchHome: React.FC<SearchHomeProps> = ({
     });
 
     setSuggestions(Array.from(matches).slice(0, 6));
-  }, [query]);
+  }, [query, resources]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
