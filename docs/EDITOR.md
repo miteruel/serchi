@@ -7,7 +7,8 @@ Guía para los profesores de Liberanimo que crean cursos como el minicurso
 
 Abre **`/editor.html`** en la web (por ejemplo `https://serchi.ejemplo.org/editor.html`)
 y escribe la clave de moderador, la misma del foro (`FORUM_MODERATOR_KEY`). El editor
-solo funciona con la versión Node del servidor.
+solo funciona con la versión Node del servidor. Los cursos publicados se ven en las dos
+versiones, Node y Delphi.
 
 ## Crear un curso
 

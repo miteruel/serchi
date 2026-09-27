@@ -357,8 +357,18 @@ PR y commits correspondientes.
       código).
     - **Grabación:** las palabras de los cursos publicados se pueden grabar en
       `/grabar.html`.
-    - **Versión Delphi:** el editor y los cursos nuevos solo funcionan con la versión
-      Node.
+    - **Versión Delphi:** el editor solo funciona con la versión Node. Los cursos
+      publicados se ven también en la versión Delphi (paso 32).
+
+32. **Cursos y grabaciones en la versión Delphi (fase 1).** La versión Delphi muestra
+    los cursos creados con el editor. `/kursoj` y `/kurso/<dirección>` se generan en la
+    unidad nueva `Serchi.Courses.pas`, una traducción del código de la versión Node, así
+    que las páginas son iguales y usan los mismos `kurso.css` y `kurso.js`. También sirve
+    las imágenes de las lecciones y `/api/audio` con las grabaciones aprobadas, así que
+    los botones 🔊 del minicurso y de los cursos suenan igual que en Node. Solo lee: el
+    editor y la grabadora siguen siendo de la versión Node (fase 2, pendiente). El
+    enlace a la grabadora del minicurso ya no aparece en la versión Delphi. No se ha
+    compilado todavía.
 
 ### Pendiente y limitaciones conocidas
 

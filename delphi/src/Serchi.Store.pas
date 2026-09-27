@@ -35,6 +35,14 @@ type
     function IsEmpty: Boolean;
   end;
 
+  { A published course made with the course editor of the Node version
+    (table courses); its content is JSON, rendered by Serchi.Courses }
+  TCourseInfo = record
+    Slug: string;
+    Lang: string;   // es | en: language of the explanations
+    Title: string;
+  end;
+
   { An object replaced by a reload, freed only after a grace period because a
     request may still be rendering it (resources are used outside Lock) }
   TRetiredObject = record
@@ -99,6 +107,15 @@ type
     procedure ToggleTopicFlag(ATopic: TForumTopic; const AFlag: string);
     procedure DeleteTopic(ATopic: TForumTopic);
     procedure DeleteComment(ATopic: TForumTopic; AComment: TForumComment);
+
+    // Courses and recordings made in the Node version (read only here)
+    function PublishedCourses: TArray<TCourseInfo>;
+    function FindPublishedCourse(const ASlug: string; out ACourse: TCourseInfo;
+      out AContent: string): Boolean;
+    function CourseImage(const AId: string; out AMime: string; out AData: TBytes): Boolean;
+    function ApprovedRecording(const AId: string; out AMime: string; out AData: TBytes): Boolean;
+    { Approved recordings, newest first: Key = word slug, Value = recording id }
+    function ApprovedRecordings: TArray<TPair<string, string>>;
 
     property Knowledge: TObjectList<TKnowledgePanel> read FKnowledge;
   end;
@@ -1067,6 +1084,128 @@ procedure TSerchiStore.DeleteComment(ATopic: TForumTopic; AComment: TForumCommen
 begin
   FDB.ExecSQL('DELETE FROM forum_comments WHERE id = :id', [AComment.Id]);
   ATopic.Comments.Remove(AComment);
+end;
+
+{ Courses and recordings (tables courses, course_images, recordings) }
+
+function TSerchiStore.PublishedCourses: TArray<TCourseInfo>;
+var
+  Q: TFDQuery;
+  C: TCourseInfo;
+  List: TList<TCourseInfo>;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TList<TCourseInfo>.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT slug, lang, title FROM courses WHERE published = 1 ORDER BY title');
+    while not Q.Eof do
+    begin
+      C.Slug := Q.Fields[0].AsString;
+      C.Lang := Q.Fields[1].AsString;
+      C.Title := Q.Fields[2].AsString;
+      List.Add(C);
+      Q.Next;
+    end;
+    Result := List.ToArray;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.FindPublishedCourse(const ASlug: string; out ACourse: TCourseInfo;
+  out AContent: string): Boolean;
+var
+  Q: TFDQuery;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT slug, lang, title, content FROM courses WHERE slug = :slug AND published = 1', [ASlug]);
+    Result := not Q.Eof;
+    if Result then
+    begin
+      ACourse.Slug := Q.Fields[0].AsString;
+      ACourse.Lang := Q.Fields[1].AsString;
+      ACourse.Title := Q.Fields[2].AsString;
+      AContent := Q.Fields[3].AsString;
+    end;
+  finally
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.CourseImage(const AId: string; out AMime: string; out AData: TBytes): Boolean;
+var
+  Q: TFDQuery;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT mime, data FROM course_images WHERE id = :id', [AId]);
+    Result := not Q.Eof;
+    if Result then
+    begin
+      AMime := Q.Fields[0].AsString;
+      AData := Q.Fields[1].AsBytes;
+    end;
+  finally
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.ApprovedRecording(const AId: string; out AMime: string; out AData: TBytes): Boolean;
+var
+  Q: TFDQuery;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FDB;
+    // Pending recordings are only for moderators (Node version)
+    Q.Open('SELECT mime, audio FROM recordings WHERE id = :id AND status = ''approved''', [AId]);
+    Result := not Q.Eof;
+    if Result then
+    begin
+      AMime := Q.Fields[0].AsString;
+      AData := Q.Fields[1].AsBytes;
+    end;
+  finally
+    Q.Free;
+    Unlock;
+  end;
+end;
+
+function TSerchiStore.ApprovedRecordings: TArray<TPair<string, string>>;
+var
+  Q: TFDQuery;
+  List: TList<TPair<string, string>>;
+begin
+  Lock;
+  Q := TFDQuery.Create(nil);
+  List := TList<TPair<string, string>>.Create;
+  try
+    Q.Connection := FDB;
+    Q.Open('SELECT slug, id FROM recordings WHERE status = ''approved'' ' +
+      'ORDER BY reviewed_at DESC, created_at DESC');
+    while not Q.Eof do
+    begin
+      List.Add(TPair<string, string>.Create(Q.Fields[0].AsString, Q.Fields[1].AsString));
+      Q.Next;
+    end;
+    Result := List.ToArray;
+  finally
+    List.Free;
+    Q.Free;
+    Unlock;
+  end;
 end;
 
 end.
