@@ -19,6 +19,7 @@ y actualizaciones. La versión Delphi tiene sus propias instrucciones en
 | `SERCHI_DB` | Ruta del fichero SQLite con enlaces, paneles y foro | `data/serchi.db` |
 | `GEMINI_API_KEY` | Activa la búsqueda en vivo de webs nuevas con Gemini | desactivada |
 | `FORUM_MODERATOR_KEY` | Si se define, el rol de moderador del foro pide esta clave | cualquiera modera |
+| `DOMAIN` | Solo con `docker compose --profile https`: dominio para el certificado HTTPS | — |
 
 Se pueden poner en un fichero `.env.local` (ver [`.env.example`](../.env.example)), que
 nunca se sube al repositorio.
@@ -26,7 +27,54 @@ nunca se sube al repositorio.
 > **Importante:** si la web es pública, define siempre `FORUM_MODERATOR_KEY`. Sin ella
 > cualquiera puede fijar, cerrar o borrar mensajes del foro.
 
-## Opción 1: Docker (recomendada)
+## Opción 1: Docker Compose (recomendada)
+
+El fichero [`compose.yaml`](../compose.yaml) arranca la web y un servicio que hace una
+copia de seguridad de la base de datos cada 24 horas. Opcionalmente arranca también
+[Caddy](https://caddyserver.com/) para servir la web con HTTPS.
+
+```bash
+git clone https://github.com/miteruel/serchi.git
+cd serchi
+cp .env.example .env.local        # y rellena las claves
+docker compose up -d
+```
+
+La web queda en `http://servidor:3000`. Para usar otro puerto, pon `SERCHI_PORT=8080`
+delante del comando o en un fichero `.env`.
+
+**Con HTTPS y dominio propio:**
+1. Apunta el dominio al servidor.
+2. Pon `DOMAIN=serchi.ejemplo.org` en `.env.local`.
+3. Abre los puertos 80 y 443 del servidor.
+4. Arranca con:
+
+```bash
+docker compose --profile https up -d
+```
+
+Caddy consigue y renueva el certificado solo.
+
+**Actualizar a una versión nueva:**
+
+```bash
+git pull
+docker compose up -d --build        # añade --profile https si lo usas
+```
+
+Las copias de seguridad quedan en el volumen, en `/data/backups`, y se guardan las 14
+últimas. Para sacar una copia del servidor:
+
+```bash
+docker compose cp serchi:/data/backups ./backups
+```
+
+Otras órdenes útiles:
+- `docker compose logs -f serchi`: ver lo que pasa en la web;
+- `docker compose down`: pararlo todo sin borrar los datos. Solo `down -v` borraría los
+  volúmenes con la base de datos.
+
+## Opción 2: Docker sin Compose
 
 ```bash
 git clone https://github.com/miteruel/serchi.git
@@ -54,7 +102,7 @@ docker run -d --name serchi --restart unless-stopped \
   -p 3000:3000 -v serchi-data:/data --env-file .env.local serchi
 ```
 
-## Opción 2: Node.js directamente
+## Opción 3: Node.js directamente
 
 ```bash
 git clone https://github.com/miteruel/serchi.git
@@ -111,7 +159,8 @@ serchi.ejemplo.org {
 # Node directamente
 SERCHI_DB=/srv/serchi/serchi.db npm run db:backup -- --out /srv/serchi/backups
 
-# Docker: las copias quedan dentro del volumen, en /data/backups
+# Docker Compose: ya se hacen solas cada 24 horas (servicio backup)
+# Docker sin Compose: las copias quedan dentro del volumen, en /data/backups
 docker exec serchi npx tsx scripts/db-backup.ts --out /data/backups
 ```
 
@@ -135,7 +184,10 @@ que se está usando de verdad:
 
 ```bash
 SERCHI_DB=/srv/serchi/serchi.db npm run db:import -- --resources nuevos.json
-# o con Docker (copia antes el JSON dentro del volumen):
+# con Docker Compose:
+docker compose cp nuevos.json serchi:/data/nuevos.json
+docker compose exec serchi npx tsx scripts/db-import.ts --db /data/serchi.db --resources /data/nuevos.json
+# con Docker sin Compose (copia antes el JSON dentro del volumen):
 docker exec serchi npx tsx scripts/db-import.ts --db /data/serchi.db --resources /data/nuevos.json
 ```
 
