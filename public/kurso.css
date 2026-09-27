@@ -223,6 +223,9 @@
     font-size: 15px; line-height: 1; vertical-align: middle;
   }
   .listen:hover { transform: scale(1.15); }
+  /* Synthetic voice (nobody has recorded it yet): a small robot on the speaker's corner */
+  .listen { position: relative; }
+  .listen .auto { position: absolute; right: -4px; top: -7px; font-size: 10px; color: inherit; }
   .word .listen { margin-right: auto; } /* next to the word, not in the middle of the card */
 
   /* Drawing palette */

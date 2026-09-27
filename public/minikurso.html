@@ -240,6 +240,9 @@
     font-size: 15px; line-height: 1; vertical-align: middle;
   }
   .listen:hover { transform: scale(1.15); }
+  /* Synthetic voice (nobody has recorded it yet): a small robot on the speaker's corner */
+  .listen { position: relative; }
+  .listen .auto { position: absolute; right: -4px; top: -7px; font-size: 10px; color: inherit; }
   .word .listen { margin-right: auto; } /* next to the word, not in the middle of the card */
 
   /* Drawing palette */
@@ -960,6 +963,10 @@
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
   var label = document.documentElement.lang === 'en' ? 'Listen: ' : 'Escuchar: ';
+  // Synthetic voice (public/audio/tts or /api/tts): marked with a small robot
+  var synthetic = document.documentElement.lang === 'en'
+    ? 'automatic voice, nobody has recorded it yet' : 'voz automática, nadie lo ha grabado todavía';
+  function isSynthetic(src) { return src.indexOf('/audio/tts/') === 0 || src.indexOf('/api/tts/') === 0; }
   // Without the server: recorded MP3 files first, then the synthetic voice
   function staticList() {
     var list = function (url) { return fetch(url).then(function (r) { return r.ok ? r.json() : []; }, function () { return []; }); };
@@ -989,7 +996,11 @@
       b.type = 'button';
       b.className = 'listen';
       b.textContent = '🔊';
-      b.setAttribute('aria-label', label + text);
+      b.setAttribute('aria-label', label + text + (isSynthetic(src) ? ' (' + synthetic + ')' : ''));
+      if (isSynthetic(src)) {
+        b.title = synthetic;
+        b.insertAdjacentHTML('beforeend', '<span class="auto" aria-hidden="true">🤖</span>');
+      }
       b.addEventListener('click', function () {
         player.pause();
         player.src = src;
