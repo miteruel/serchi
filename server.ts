@@ -49,6 +49,7 @@ import {
   getRecordingAudio,
   listPendingRecordings,
 } from './server/audio';
+import { fillVoices, getSyntheticAudio } from './server/tts';
 import fs from 'fs';
 import {
   addComment,
@@ -306,6 +307,48 @@ async function startServer() {
     return res.type(rec.mime).send(Buffer.from(rec.audio));
   });
 
+  // Synthetic voice of the editor courses' words (server/tts.ts)
+  app.get('/api/tts/:slug/audio', (req, res) => {
+    const audio = getSyntheticAudio(db, req.params.slug);
+    if (!audio) return res.status(404).json({ error: 'Not found' });
+    res.set('Cache-Control', 'public, max-age=86400');
+    return res.type('audio/mpeg').send(Buffer.from(audio));
+  });
+
+  // Makes the synthetic voice of the published courses' words that lack one,
+  // one run at a time, in the background. Without espeak-ng it only says so once.
+  let voicesRunning = false;
+  let voicesAgain = false;
+  let voicesUnavailable = false;
+  const updateCourseVoices = () => {
+    if (voicesUnavailable) return;
+    if (voicesRunning) {
+      voicesAgain = true;
+      return;
+    }
+    voicesRunning = true;
+    fillVoices(db, publishedCourseTexts(db))
+      .then((made) => {
+        if (made) console.log(`Synthetic voice: ${made} course words`);
+      })
+      .catch((err) => {
+        if (err?.code === 'ENOENT') {
+          voicesUnavailable = true;
+          console.log('Synthetic voice: espeak-ng or lame is not installed, the editor courses have no voice');
+        } else {
+          console.error('Synthetic voice:', err);
+        }
+      })
+      .finally(() => {
+        voicesRunning = false;
+        if (voicesAgain) {
+          voicesAgain = false;
+          updateCourseVoices();
+        }
+      });
+  };
+  updateCourseVoices();
+
   app.get('/api/recordings/pending', (req, res) => {
     if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
     return res.json(listPendingRecordings(db));
@@ -349,12 +392,18 @@ async function startServer() {
     }
     return res.json(listCourses(db, true));
   });
-  app.post('/api/courses', courseRoute((req, res) => res.status(201).json(createCourse(db, req.body || {}))));
+  app.post('/api/courses', courseRoute((req, res) => {
+    res.status(201).json(createCourse(db, req.body || {}));
+    updateCourseVoices();
+  }));
   app.get('/api/courses/:id', courseRoute((req, res) => {
     const course = getCourse(db, req.params.id);
     return course ? res.json(course) : res.status(404).json({ error: 'Not found' });
   }));
-  app.put('/api/courses/:id', courseRoute((req, res) => res.json(updateCourse(db, req.params.id, req.body))));
+  app.put('/api/courses/:id', courseRoute((req, res) => {
+    res.json(updateCourse(db, req.params.id, req.body));
+    updateCourseVoices();
+  }));
   app.delete('/api/courses/:id', courseRoute((req, res) =>
     deleteCourse(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Not found' })));
   app.post(

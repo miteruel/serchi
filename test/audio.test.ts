@@ -28,6 +28,7 @@ import {
   listPendingRecordings,
   synthesizedRecordings,
 } from '../server/audio';
+import { fillVoices, getSyntheticAudio, missingVoices } from '../server/tts';
 
 // Smallest byte strings that look like each container
 const WEBM = Buffer.concat([Buffer.from([0x1a, 0x45, 0xdf, 0xa3]), Buffer.alloc(60, 1)]);
@@ -110,5 +111,30 @@ test('bad recordings and floods are rejected', () => {
   for (let i = 0; i < RECORDING_LIMITS.perVisitorPerDay; i++) send({ audio: MP4 });
   assert.equal(statusOf(() => send({})), 429, 'daily limit per visitor');
   assert.equal(statusOf(() => send({ visitorId: 'visitor-c' })), 0, 'other visitors can still send');
+  db.close();
+});
+
+test('the editor courses get a synthetic voice that human recordings replace', async () => {
+  const db = tempDb();
+  const said: string[] = [];
+  const fake = async (text: string) => {
+    said.push(text);
+    return Buffer.from(`mp3 of ${text}`);
+  };
+  // "Saluton!" is a mini-course word: it already has its file in public/audio/tts
+  assert.equal(await fillVoices(db, ['Saluton!', 'Bonan matenon, Petro!', 'Bonan matenon, Petro!'], fake), 1);
+  assert.deepEqual(said, ['Bonan matenon, Petro!']);
+  assert.equal(missingVoices(db, ['Bonan matenon, Petro!']).size, 0);
+  assert.equal(await fillVoices(db, ['Bonan matenon, Petro!'], fake), 0, 'made only once');
+
+  const slug = 'bonan-matenon-petro';
+  assert.equal(Buffer.from(getSyntheticAudio(db, slug)!).toString(), 'mp3 of Bonan matenon, Petro!');
+  assert.equal(audioMap(db)[slug], `/api/tts/${slug}/audio`);
+  assert.equal(audioMap(db, false)[slug], undefined);
+
+  const words = new Map([[slug, 'Bonan matenon, Petro!']]);
+  const rec = addRecording(db, words, { slug, audio: WEBM, visitorId: 'visitor-c' });
+  approveRecording(db, rec.id);
+  assert.equal(audioMap(db)[slug], `/api/recordings/${rec.id}/audio`);
   db.close();
 });

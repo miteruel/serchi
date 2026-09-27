@@ -12,8 +12,9 @@
  * Three sources of audio, the first one wins for a word:
  *  1. MP3 files committed in public/audio/<slug>.mp3 (see docs/GRABACIONES.md);
  *  2. recordings sent from the "Grabar" page and approved by a moderator;
- *  3. a synthetic voice in public/audio/tts/<slug>.mp3 (npm run audio:tts), so
- *     every word has an example until someone records it.
+ *  3. a synthetic voice, so every word has an example until someone records
+ *     it: public/audio/tts/<slug>.mp3 for the mini-course and the table
+ *     synthetic_audio for the courses made with the editor (server/tts.ts).
  */
 import type { DatabaseSync } from 'node:sqlite';
 import fs from 'fs';
@@ -183,6 +184,9 @@ export function audioMap(db: DatabaseSync, withSynthetic = true): Record<string,
   }
   if (withSynthetic) {
     for (const slug of synthesizedRecordings()) if (!map[slug]) map[slug] = `/audio/tts/${slug}.mp3`;
+    for (const r of db.prepare('SELECT slug FROM synthetic_audio').all() as Row[]) {
+      if (!map[r.slug]) map[r.slug] = `/api/tts/${encodeURIComponent(r.slug)}/audio`;
+    }
   }
   return map;
 }

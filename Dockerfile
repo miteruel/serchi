@@ -6,6 +6,11 @@
 # The database lives in the /data volume, so it survives new versions of the image.
 FROM node:22-slim
 
+# espeak-ng and lame make the synthetic voice of the editor courses (server/tts.ts)
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends espeak-ng lame \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund

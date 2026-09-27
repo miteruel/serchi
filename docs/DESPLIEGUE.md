@@ -91,7 +91,9 @@ La web queda en `http://servidor:3000`.
 La base de datos vive en el volumen `serchi-data` (`/data/serchi.db` dentro del
 contenedor). La primera vez que arranca, el contenedor copia allí la base de datos que
 viene con el repositorio. Después ya no la toca: las altas de enlaces y el foro se
-guardan en el volumen y sobreviven a las actualizaciones.
+guardan en el volumen y sobreviven a las actualizaciones. También la voz sintética de
+las palabras de los cursos del editor, que el servidor crea con espeak-ng (incluido en
+la imagen).
 
 **Actualizar a una versión nueva:**
 

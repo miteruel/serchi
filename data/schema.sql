@@ -173,6 +173,16 @@ CREATE TABLE IF NOT EXISTS recordings (
 CREATE INDEX IF NOT EXISTS idx_recordings_status ON recordings(status, slug);
 CREATE INDEX IF NOT EXISTS idx_recordings_visitor ON recordings(visitor_id, created_at);
 
+-- Synthetic voice (espeak-ng) of the words of the courses made with the
+-- editor, made by the server (server/tts.ts). It only plays when a word has
+-- no human recording. The mini-course words are files in public/audio/tts.
+CREATE TABLE IF NOT EXISTS synthetic_audio (
+  slug       TEXT PRIMARY KEY,         -- word, named as the recordings (e.g. gxis-revido)
+  text       TEXT NOT NULL,
+  audio      BLOB NOT NULL,            -- MP3
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+
 -- Courses made with the course editor (public/editor.html). The content of a
 -- course (lessons, words, exercises...) is a JSON document validated by
 -- server/courses.ts; published courses are shown at /kurso/<slug>.
