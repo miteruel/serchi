@@ -349,6 +349,25 @@ async function startServer() {
   };
   updateCourseVoices();
 
+  // Voice of one word for the course editor: the recording or synthetic voice
+  // it already has, or a synthetic one made now. { url } or 503 without espeak-ng.
+  app.post('/api/tts', async (req, res) => {
+    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    const text = String(req.body?.text || '').trim();
+    const slug = audioSlug(text);
+    if (!slug || text.length > 200) return res.status(400).json({ error: 'Bad text' });
+    const have = audioMap(db)[slug];
+    if (have) return res.json({ url: have });
+    if (voicesUnavailable) return res.status(503).json({ error: 'tts_unavailable' });
+    try {
+      await fillVoices(db, [text]);
+    } catch (err: any) {
+      if (err?.code === 'ENOENT') voicesUnavailable = true;
+      return res.status(503).json({ error: 'tts_unavailable' });
+    }
+    return res.json({ url: `/api/tts/${encodeURIComponent(slug)}/audio` });
+  });
+
   app.get('/api/recordings/pending', (req, res) => {
     if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
     return res.json(listPendingRecordings(db));

@@ -13,7 +13,9 @@ import assert from 'node:assert/strict';
 import fs from 'fs';
 import path from 'path';
 import { ROOT_DIR } from '../server/db';
-import { STANDALONE_PAGES, robotsTxt, sitemapXml, withSiteUrl } from '../server/seo';
+import express from 'express';
+import type { AddressInfo } from 'net';
+import { STANDALONE_PAGES, mountSeo, robotsTxt, sitemapXml, withSiteUrl } from '../server/seo';
 
 const ORIGIN = 'https://serchi.example.org';
 
@@ -37,4 +39,20 @@ test('every page gets absolute canonical and Open Graph addresses', () => {
     assert.match(html, /<meta property="og:image" content="https:\/\/serchi\.example\.org\/og-image\.png"/, `${f}: og:image`);
   }
   assert.ok(fs.existsSync(path.join(ROOT_DIR, 'public', 'og-image.png')), 'og-image.png missing');
+});
+
+test('the standalone pages also answer at their short address', async () => {
+  const app = express();
+  mountSeo(app, path.join(ROOT_DIR, 'public'));
+  const server = app.listen(0);
+  try {
+    const base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+    for (const [from, to] of [['/grabar', '/grabar.html'], ['/editor', '/editor.html'], ['/minikurso?x=1', '/minikurso.html?x=1']]) {
+      const res = await fetch(base + from, { redirect: 'manual' });
+      assert.equal(res.status, 301, from);
+      assert.equal(res.headers.get('location'), to);
+    }
+  } finally {
+    server.close();
+  }
 });

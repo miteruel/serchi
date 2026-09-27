@@ -70,6 +70,10 @@
       .normalize('NFD').replace(/[̀-ͯ]/g, '')
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
+  // Synthetic voice (public/audio/tts or /api/tts): marked with a small robot
+  var synthetic = document.documentElement.lang === 'en'
+    ? 'automatic voice, nobody has recorded it yet' : 'voz automática, nadie lo ha grabado todavía';
+  function isSynthetic(src) { return src.indexOf('/audio/tts/') === 0 || src.indexOf('/api/tts/') === 0; }
   fetch('/api/audio').then(function (r) { return r.ok ? r.json() : {}; }).then(function (have) {
     if (!have || Object.keys(have).length === 0) return;
     var player = new Audio();
@@ -82,7 +86,11 @@
       b.type = 'button';
       b.className = 'listen';
       b.textContent = '🔊';
-      b.setAttribute('aria-label', T.listen + text);
+      b.setAttribute('aria-label', T.listen + text + (isSynthetic(src) ? ' (' + synthetic + ')' : ''));
+      if (isSynthetic(src)) {
+        b.title = synthetic;
+        b.insertAdjacentHTML('beforeend', '<span class="auto" aria-hidden="true">🤖</span>');
+      }
       b.addEventListener('click', function () {
         player.pause();
         player.src = src;

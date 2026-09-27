@@ -63,6 +63,9 @@
   .pic { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
   .pic img { width: 140px; height: 100px; object-fit: contain; background: var(--bg); border-radius: 10px; border: 1px solid var(--line); }
   .help { font-size: 14px; color: var(--muted); }
+  .voices { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; }
+  .voices button { padding: 2px 10px; font-size: 13px; font-weight: 600; border-color: var(--line); color: var(--ink); }
+  .voices button.none { border-style: dashed; color: var(--muted); }
   code { background: var(--green-soft); padding: 0 4px; border-radius: 4px; }
   [hidden] { display: none !important; }
 </style>
@@ -109,7 +112,7 @@
       </div>
       <label>Presentación<textarea id="c-intro" maxlength="3000"></textarea></label>
       <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="c-published" style="width:20px;height:20px"> Publicado (visible en <span id="c-url"></span>)</label>
-      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊 si alguien lo graba. Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
+      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊. Debajo de cada bloque puedes escuchar sus palabras: 🔊 es una grabación, 🔊🤖 la voz automática que suena mientras nadie la graba, y las de borde discontinuo aún no tienen voz (púlsalas para crearla). Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
     </section>
 
     <div id="lessons" style="display:grid;gap:12px;margin-top:12px"></div>
@@ -143,6 +146,73 @@
           return d;
         });
       });
+  }
+
+  // ---- Voices of the words (same rules as courseEsperantoTexts() and audioSlug() on the server) ----
+  var voiceMap = {}, player = new Audio();
+  function loadVoices() {
+    return fetch('/api/audio').then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) { voiceMap = m || {}; }, function () {});
+  }
+  function audioSlug(text) {
+    var x = { 'ĉ': 'cx', 'ĝ': 'gx', 'ĥ': 'hx', 'ĵ': 'jx', 'ŝ': 'sx', 'ŭ': 'ux' };
+    return text.toLowerCase()
+      .replace(/[ĉĝĥĵŝŭ]/g, function (c) { return x[c]; })
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function isSynthetic(url) { return url.indexOf('/audio/tts/') === 0 || url.indexOf('/api/tts/') === 0; }
+  function blockTexts(b) {
+    var out = [];
+    var marked = function (t) { (t || '').replace(/\{\{(.+?)\}\}/g, function (m, w) { out.push(w.trim()); return m; }); };
+    if (b.type === 'words') b.items.forEach(function (w) { out.push(w.eo); });
+    if (b.type === 'dialog') b.lines.forEach(function (w) { out.push(w.eo); });
+    if (b.type === 'text' || b.type === 'rule') marked(b.text);
+    if (b.type === 'exercise') { b.items.forEach(marked); b.answers.forEach(marked); }
+    var seen = {};
+    return out.filter(function (t) { var s = audioSlug(t); if (!s || seen[s]) return false; seen[s] = true; return true; });
+  }
+  function play(url) { player.pause(); player.src = url; player.play().catch(function () {}); }
+  // Row of 🔊 buttons under a block, redrawn while typing
+  function voiceRow(b) {
+    var row = document.createElement('div');
+    row.className = 'voices';
+    var draw = function () {
+      row.innerHTML = '';
+      var texts = blockTexts(b);
+      if (!texts.length) return;
+      var label = document.createElement('span');
+      label.className = 'muted';
+      label.textContent = 'Escuchar:';
+      row.appendChild(label);
+      texts.forEach(function (text) {
+        var slug = audioSlug(text), url = voiceMap[slug];
+        var bt = document.createElement('button');
+        bt.type = 'button';
+        bt.textContent = '🔊' + (url && isSynthetic(url) ? '🤖' : '') + ' ' + text;
+        bt.title = !url ? 'Sin voz todavía: pulsa para crear la voz automática'
+          : isSynthetic(url) ? 'Voz automática (nadie la ha grabado todavía)' : 'Grabación';
+        if (!url) bt.className = 'none';
+        bt.addEventListener('click', function () {
+          if (voiceMap[slug]) return play(voiceMap[slug]);
+          bt.disabled = true;
+          api('POST', '/api/tts', { text: text }).then(function (r) {
+            voiceMap[slug] = r.url;
+            play(r.url);
+            draw();
+          }).catch(function (e) {
+            bt.disabled = false;
+            setStatus(e.status === 503
+              ? 'Este servidor no puede crear voces automáticas (falta espeak-ng; con la versión Delphi, ejecuta npm run audio:tts)'
+              : 'No se pudo crear la voz: ' + e.message, 'err');
+          });
+        });
+        row.appendChild(bt);
+      });
+    };
+    var timer = null;
+    row.redraw = function () { clearTimeout(timer); timer = setTimeout(draw, 400); };
+    draw();
+    return row;
   }
 
   function setStatus(text, cls) { var s = $('status'); s.textContent = text; s.className = 'status ' + (cls || ''); }
@@ -197,6 +267,7 @@
       dirty = false;
       openLessons = {};
       renderCourse();
+      loadVoices().then(renderLessons);
       setStatus(c.published ? 'Publicado' : 'Borrador');
       loadList();
     });
@@ -293,6 +364,9 @@
       g.appendChild(field('Soluciones, una por línea, en el mismo orden', area(b.answers.join('\n'), function (v) { b.answers = linesToList(v); }, 5)));
       box.appendChild(g);
     }
+    var voices = voiceRow(b);
+    box.appendChild(voices);
+    box.addEventListener('input', voices.redraw);
     return box;
   }
 
