@@ -54,7 +54,8 @@ shared by every visitor.
 
 Visitors post as one of the forum's demo users (learner, teacher or moderator). Set
 `FORUM_MODERATOR_KEY` in `.env.local` so that the moderator role asks for that key;
-without it, anyone can moderate.
+without it, anyone can moderate. The Delphi version reads the same environment
+variable.
 
 Resources added from the web are saved in the database, so every visitor sees them.
 Set `SERCHI_DB=/path/to/file.db` to use another database file (for example, so
@@ -254,6 +255,13 @@ PR y commits correspondientes.
     la inglesa cuando la web está en inglés (React en `/minikurso-en.html`, Delphi en
     `/minikurso-en`). El progreso y el diploma se comparten entre las dos versiones.
 
+22. **Clave de moderador en Delphi.** La versión Delphi también pide la clave
+    `FORUM_MODERATOR_KEY` al elegir el rol de moderador, en una página propia
+    (`/moderator`). Si la clave es correcta, guarda en una cookie `HttpOnly` una huella
+    de la clave (un HMAC, nunca la clave en sí) que dura 30 días. Sin esa cookie, el
+    servidor trata al visitante como estudiante aunque tenga el rol de moderador, así que
+    no puede fijar, cerrar ni borrar mensajes.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir
@@ -262,5 +270,3 @@ PR y commits correspondientes.
   ordenador con acceso a internet (paso 19); conviene repetirlo de vez en cuando.
 - **Versión Delphi sin compilar:** no se ha compilado todavía con RAD Studio (ver
   [`delphi/README.md`](delphi/README.md)).
-- **Moderación del foro en Delphi:** la versión Delphi todavía no pide la clave de
-  moderador (`FORUM_MODERATOR_KEY`), así que allí cualquiera puede moderar.
