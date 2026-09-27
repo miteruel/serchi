@@ -1,4 +1,8 @@
-﻿unit Serchi.I18n;
+﻿{ Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text. }
+
+unit Serchi.I18n;
 
 { UI translations loaded from data/translations.json (exported from
   src/translations/index.ts). Nested groups are flattened with "_":
