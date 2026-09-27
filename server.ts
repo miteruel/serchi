@@ -21,6 +21,17 @@ import {
 } from './server/db';
 import { fetchEpisodes } from './server/radio';
 import { mountSeo, siteOrigin, withSiteUrl } from './server/seo';
+import {
+  RECORDING_LIMITS,
+  RecordingError,
+  addRecording,
+  approveRecording,
+  audioMap,
+  courseWords,
+  deleteRecording,
+  getRecordingAudio,
+  listPendingRecordings,
+} from './server/audio';
 import fs from 'fs';
 import {
   addComment,
@@ -213,6 +224,76 @@ async function startServer() {
   app.delete('/api/forum/comments/:id', (req, res) => {
     if (!moderatorOf(req, res)) return;
     return deleteComment(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Comment not found' });
+  });
+
+  // ---- Recordings of the mini-course words (page public/grabar.html) ----
+  //
+  // Visitors send recordings, which wait as pending until a moderator (same
+  // key as the forum: X-Moderator-Key) approves them. The audio is stored in
+  // the database; see server/audio.ts.
+  const words = courseWords();
+  const isModeratorRequest = (req: express.Request) =>
+    !moderatorKey || sameKey(String(req.get('X-Moderator-Key') || ''));
+
+  // What the mini-course plays: { slug: url }
+  app.get('/api/audio', (_req, res) => {
+    res.set('Cache-Control', 'no-cache').json(audioMap(db));
+  });
+
+  app.get('/api/recordings/words', (_req, res) => {
+    const recorded = audioMap(db);
+    res.json({
+      words: [...words].map(([slug, text]) => ({ slug, text, recorded: !!recorded[slug] })),
+      maxSeconds: 10,
+      moderatorKeyRequired: !!moderatorKey,
+    });
+  });
+
+  app.post(
+    '/api/recordings',
+    express.raw({ type: () => true, limit: RECORDING_LIMITS.maxBytes }),
+    (req, res) => {
+      const visitor = visitorOf(req);
+      if (!visitor) return res.status(400).json({ error: 'Missing visitor id' });
+      if (req.query.consent !== '1') return res.status(400).json({ error: 'consent' });
+      try {
+        const saved = addRecording(db, words, {
+          slug: String(req.query.slug || ''),
+          audio: Buffer.isBuffer(req.body) ? req.body : Buffer.alloc(0),
+          visitorId: visitor,
+          name: String(req.query.name || ''),
+        });
+        return res.status(201).json(saved);
+      } catch (err: any) {
+        if (err instanceof RecordingError) return res.status(err.status).json({ error: err.message });
+        throw err;
+      }
+    },
+  );
+
+  // Approved recordings are public; pending ones only for moderators
+  app.get('/api/recordings/:id/audio', (req, res) => {
+    const rec = getRecordingAudio(db, req.params.id);
+    if (!rec || (rec.status !== 'approved' && !isModeratorRequest(req))) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+    res.set('Cache-Control', rec.status === 'approved' ? 'public, max-age=86400' : 'no-store');
+    return res.type(rec.mime).send(Buffer.from(rec.audio));
+  });
+
+  app.get('/api/recordings/pending', (req, res) => {
+    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    return res.json(listPendingRecordings(db));
+  });
+
+  app.post('/api/recordings/:id/approve', (req, res) => {
+    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    return approveRecording(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Not found' });
+  });
+
+  app.delete('/api/recordings/:id', (req, res) => {
+    if (!isModeratorRequest(req)) return res.status(403).json({ error: 'moderator_key' });
+    return deleteRecording(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Not found' });
   });
 
   // Initialize Google Gen AI with server-side API key
