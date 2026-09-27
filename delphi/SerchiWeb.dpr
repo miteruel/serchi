@@ -1,4 +1,8 @@
-﻿program SerchiWeb;
+﻿{ Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text. }
+
+program SerchiWeb;
 
 { Serĉilo - Delphi + WebStencils + HTMX edition.
   Standalone WebBroker console server (Indy). Requires Delphi 12.2+ (WebStencils).

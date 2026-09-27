@@ -1,4 +1,8 @@
-﻿unit Serchi.ViewModels;
+﻿{ Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text. }
+
+unit Serchi.ViewModels;
 
 { View models exposed to the WebStencils templates through AddVar.
   WebStencils reads public properties via RTTI, so every value a template

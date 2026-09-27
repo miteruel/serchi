@@ -1,15 +1,20 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 /**
- * Exports the TypeScript data that is not in the SQLite database (forum seed
- * data, UI translations and search synonyms) to JSON files consumed by the
- * Delphi + WebStencils + HTMX version of Serĉilo (see /delphi). Resources and
- * knowledge panels are read by both versions from data/serchi.db.
+ * Exports the TypeScript data that is not in the SQLite database (UI
+ * translations and search synonyms) to JSON files consumed by the
+ * Delphi + WebStencils + HTMX version of Serĉilo (see /delphi). Resources,
+ * knowledge panels and the forum are read by both versions from data/serchi.db.
  *
  * Usage: npm run export:delphi
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { INITIAL_FORUM_TOPICS, INITIAL_FORUM_COMMENTS } from '../src/data/forumData';
 import { TRANSLATIONS } from '../src/translations';
 import { MULTILINGUAL_SYNONYMS } from '../src/utils/esperanto';
 
@@ -35,6 +40,5 @@ function write(name: string, data: unknown) {
   console.log(`wrote ${path.relative(process.cwd(), file)}`);
 }
 
-write('forum.json', { topics: INITIAL_FORUM_TOPICS, comments: INITIAL_FORUM_COMMENTS });
 write('translations.json', flatten(TRANSLATIONS));
 write('synonyms.json', MULTILINGUAL_SYNONYMS);

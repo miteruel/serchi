@@ -1,4 +1,8 @@
-﻿unit WebModuleMain;
+﻿{ Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text. }
+
+unit WebModuleMain;
 
 { WebBroker module: routes requests, builds view models and renders
   WebStencils templates. HTMX requests (header "HX-Request") receive HTML
@@ -786,7 +790,7 @@ begin
       Redirect('/forum');
       Exit;
     end;
-    Inc(Topic.Views);
+    Store.CountView(Topic);
     VM.SetTopic(TTopicVM.Create(Topic, FLang, FVisitor, CanModerate, True));
     Render('topic.html', VM);
   finally
@@ -818,9 +822,7 @@ begin
     Store.Lock;
     try
       Topic := Store.CreateTopic(CurrentUser, Title, Content, Param('category', 'general'),
-        Param('level', 'all'), Tags.ToArray);
-      Topic.LikedBy.Add(FVisitor);
-      Topic.Likes := 1;
+        Param('level', 'all'), Tags.ToArray, FVisitor);
       Redirect('/forum/topic?id=' + UrlEncode(Topic.Id));
     finally
       Store.Unlock;
@@ -938,10 +940,8 @@ begin
       Redirect('/forum');
       Exit;
     end;
-    if Action = 'pin' then
-      Topic.IsPinned := not Topic.IsPinned
-    else if Action = 'lock' then
-      Topic.IsLocked := not Topic.IsLocked
+    if (Action = 'pin') or (Action = 'lock') then
+      Store.ToggleTopicFlag(Topic, Action)
     else if Action = 'delete' then
     begin
       Store.DeleteTopic(Topic);
@@ -1183,6 +1183,11 @@ begin
   if (Path = '/minikurso') or (Path = '/minikurso.html') then
   begin
     SendPublicPage('minikurso');
+    Exit;
+  end;
+  if (Path = '/minikurso-en') or (Path = '/minikurso-en.html') then
+  begin
+    SendPublicPage('minikurso-en');
     Exit;
   end;
   if (Path = '/historia-aragon') or (Path = '/historia-aragon.html') then

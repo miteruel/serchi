@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 /**
  * Podcast feed reader for stations whose player type is "rss": fetches the
  * feed stored in the database and returns its latest episodes with audio.

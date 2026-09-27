@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   EsperantoResource, 
@@ -8,12 +14,21 @@ import {
   Category 
 } from './types';
 import { ForumTopic, ForumComment, ForumUser } from './types/forum';
-import { fetchKnowledgePanels, fetchResources, addResource, addResources } from './api';
-import { 
-  INITIAL_FORUM_TOPICS, 
-  INITIAL_FORUM_COMMENTS, 
-  CURRENT_MOCK_USERS 
-} from './data/forumData';
+import {
+  fetchKnowledgePanels,
+  fetchResources,
+  addResource,
+  addResources,
+  fetchForum,
+  checkModeratorKey,
+  setModeratorKey,
+  createForumTopic,
+  addForumComment,
+  toggleForumLike,
+  toggleForumTopicFlag,
+  deleteForumItem,
+} from './api';
+import { CURRENT_MOCK_USERS } from './data/forumData';
 import { Header } from './components/Header';
 import { SearchHome } from './components/SearchHome';
 import { SearchResults } from './components/SearchResults';
@@ -82,33 +97,19 @@ export default function App() {
     return ['lernu-net', 'vortaro-piv', 'pasporta-servo'];
   });
 
-  // Forum state: topics & comments with persistence
-  const [forumTopics, setForumTopics] = useState<ForumTopic[]>(() => {
-    try {
-      const stored = localStorage.getItem('sercilo_forum_topics');
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch {}
-    return INITIAL_FORUM_TOPICS;
-  });
+  // Forum topics & comments, stored in the database (see server/forum.ts)
+  const [forumTopics, setForumTopics] = useState<ForumTopic[]>([]);
+  const [forumComments, setForumComments] = useState<Record<string, ForumComment[]>>({});
+  const [moderatorKeyRequired, setModeratorKeyRequired] = useState(false);
 
-  const [forumComments, setForumComments] = useState<Record<string, ForumComment[]>>(() => {
-    try {
-      const stored = localStorage.getItem('sercilo_forum_comments');
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch {}
-    return INITIAL_FORUM_COMMENTS;
-  });
-
-  // Active simulated user in the community
+  // Active simulated user in the community. Acting as moderator may need a
+  // key (FORUM_MODERATOR_KEY on the server), so that role is not restored.
   const [currentUser, setCurrentUser] = useState<ForumUser>(() => {
     try {
       const stored = localStorage.getItem('sercilo_current_user');
       if (stored) {
-        return JSON.parse(stored);
+        const user: ForumUser = JSON.parse(stored);
+        if (user.role !== 'moderator') return user;
       }
     } catch {}
     return CURRENT_MOCK_USERS.meLearner;
@@ -177,14 +178,28 @@ export default function App() {
     };
   }, []);
 
-  // Sync forum state
+  // Load the forum from the API. Older versions kept a private copy of the
+  // forum in this browser; it is not uploaded, just removed.
   useEffect(() => {
-    localStorage.setItem('sercilo_forum_topics', JSON.stringify(forumTopics));
-  }, [forumTopics]);
-
-  useEffect(() => {
-    localStorage.setItem('sercilo_forum_comments', JSON.stringify(forumComments));
-  }, [forumComments]);
+    let cancelled = false;
+    try {
+      localStorage.removeItem('sercilo_forum_topics');
+      localStorage.removeItem('sercilo_forum_comments');
+    } catch {}
+    fetchForum()
+      .then((data) => {
+        if (cancelled) return;
+        setForumTopics(data.topics);
+        setForumComments(data.comments);
+        setModeratorKeyRequired(data.moderatorKeyRequired);
+      })
+      .catch((err) => {
+        if (!cancelled) setDataError(err.message || String(err));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('sercilo_current_user', JSON.stringify(currentUser));
@@ -287,6 +302,37 @@ export default function App() {
     });
   };
 
+  // Forum actions: every change is saved by the server first, then shown
+  const forumAction = async (action: () => Promise<void>) => {
+    try {
+      await action();
+    } catch (err: any) {
+      setDataError(
+        err?.message === 'moderator_key'
+          ? TRANSLATIONS[settings.language].forumModeratorKeyWrong
+          : TRANSLATIONS[settings.language].forumSaveError,
+      );
+    }
+  };
+
+  const patchTopic = (topicId: string, patch: Partial<ForumTopic>) =>
+    setForumTopics((prev) => prev.map((top) => (top.id === topicId ? { ...top, ...patch } : top)));
+
+  // Role switcher: becoming moderator asks for the key when the server needs one
+  const handleChangeUser = async (user: ForumUser) => {
+    if (user.role === 'moderator' && moderatorKeyRequired) {
+      const t = TRANSLATIONS[settings.language];
+      const key = window.prompt(t.forumModeratorKeyPrompt);
+      if (key === null) return;
+      if (!(await checkModeratorKey(key))) {
+        setDataError(t.forumModeratorKeyWrong);
+        return;
+      }
+      setModeratorKey(key);
+    }
+    setCurrentUser(user);
+  };
+
   // Forum actions: Create topic
   const handleCreateTopic = (topicData: {
     title: string;
@@ -294,140 +340,90 @@ export default function App() {
     category: ForumTopic['category'];
     level: Level;
     tags: string[];
-  }) => {
-    const newTopic: ForumTopic = {
-      id: `topic-${Date.now()}`,
-      title: topicData.title,
-      content: topicData.content,
-      author: currentUser,
-      level: topicData.level,
-      category: topicData.category,
-      tags: topicData.tags,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      views: 1,
-      likes: 1,
-      likedByMe: true,
-      repliesCount: 0,
-      isPinned: false,
-      isLocked: false,
-    };
-
-    setForumTopics((prev) => [newTopic, ...prev]);
-    setForumComments((prev) => ({ ...prev, [newTopic.id]: [] }));
-  };
+  }) =>
+    forumAction(async () => {
+      const topic = await createForumTopic(currentUser, topicData);
+      setForumTopics((prev) => [topic, ...prev]);
+      setForumComments((prev) => ({ ...prev, [topic.id]: [] }));
+    });
 
   // Forum actions: Reply / Comment
-  const handleAddComment = (topicId: string, content: string, isModNote = false) => {
-    const newComment: ForumComment = {
-      id: `comm-${Date.now()}`,
-      topicId,
-      author: currentUser,
-      content,
-      createdAt: new Date().toISOString(),
-      likes: 0,
-      isModeratorNote: isModNote,
-    };
-
-    setForumComments((prev) => {
-      const list = prev[topicId] || [];
-      return { ...prev, [topicId]: [...list, newComment] };
+  const handleAddComment = (topicId: string, content: string, isModNote = false) =>
+    forumAction(async () => {
+      const comment = await addForumComment(currentUser, topicId, content, isModNote);
+      setForumComments((prev) => ({ ...prev, [topicId]: [...(prev[topicId] || []), comment] }));
+      setForumTopics((prev) =>
+        prev.map((top) =>
+          top.id === topicId
+            ? { ...top, repliesCount: (top.repliesCount || 0) + 1, updatedAt: comment.createdAt }
+            : top
+        )
+      );
     });
-
-    setForumTopics((prev) =>
-      prev.map((top) =>
-        top.id === topicId
-          ? {
-              ...top,
-              repliesCount: (top.repliesCount || 0) + 1,
-              updatedAt: new Date().toISOString(),
-            }
-          : top
-      )
-    );
-  };
 
   // Forum actions: Like topic
-  const handleToggleTopicLike = (topicId: string) => {
-    setForumTopics((prev) =>
-      prev.map((top) => {
-        if (top.id === topicId) {
-          const liked = !top.likedByMe;
-          return {
-            ...top,
-            likedByMe: liked,
-            likes: liked ? top.likes + 1 : Math.max(0, top.likes - 1),
-          };
-        }
-        return top;
-      })
-    );
-  };
+  const handleToggleTopicLike = (topicId: string) =>
+    forumAction(async () => {
+      patchTopic(topicId, await toggleForumLike('topics', topicId));
+    });
 
   // Forum actions: Like comment
-  const handleToggleCommentLike = (topicId: string, commentId: string) => {
-    setForumComments((prev) => {
-      const list = prev[topicId] || [];
-      const updated = list.map((comm) => {
-        if (comm.id === commentId) {
-          const liked = !comm.likedByMe;
-          return {
-            ...comm,
-            likedByMe: liked,
-            likes: liked ? comm.likes + 1 : Math.max(0, comm.likes - 1),
-          };
-        }
-        return comm;
-      });
-      return { ...prev, [topicId]: updated };
+  const handleToggleCommentLike = (topicId: string, commentId: string) =>
+    forumAction(async () => {
+      const state = await toggleForumLike('comments', commentId);
+      setForumComments((prev) => ({
+        ...prev,
+        [topicId]: (prev[topicId] || []).map((comm) => (comm.id === commentId ? { ...comm, ...state } : comm)),
+      }));
     });
-  };
 
   // Moderator actions: Pin / Unpin
   const handleTogglePinTopic = (topicId: string) => {
     if (currentUser.role !== 'moderator') return;
-    setForumTopics((prev) =>
-      prev.map((top) =>
-        top.id === topicId ? { ...top, isPinned: !top.isPinned } : top
-      )
-    );
+    forumAction(async () => {
+      const topic = await toggleForumTopicFlag(currentUser, topicId, 'pin');
+      patchTopic(topicId, { isPinned: topic.isPinned });
+    });
   };
 
   // Moderator actions: Lock / Unlock
   const handleToggleLockTopic = (topicId: string) => {
     if (currentUser.role !== 'moderator') return;
-    setForumTopics((prev) =>
-      prev.map((top) =>
-        top.id === topicId ? { ...top, isLocked: !top.isLocked } : top
-      )
-    );
+    forumAction(async () => {
+      const topic = await toggleForumTopicFlag(currentUser, topicId, 'lock');
+      patchTopic(topicId, { isLocked: topic.isLocked });
+    });
   };
 
   // Moderator actions: Delete topic
   const handleDeleteTopic = (topicId: string) => {
     if (currentUser.role !== 'moderator') return;
-    setForumTopics((prev) => prev.filter((top) => top.id !== topicId));
-    setForumComments((prev) => {
-      const copy = { ...prev };
-      delete copy[topicId];
-      return copy;
+    forumAction(async () => {
+      await deleteForumItem(currentUser, 'topics', topicId);
+      setForumTopics((prev) => prev.filter((top) => top.id !== topicId));
+      setForumComments((prev) => {
+        const copy = { ...prev };
+        delete copy[topicId];
+        return copy;
+      });
     });
   };
 
   // Moderator actions: Delete comment
   const handleDeleteComment = (topicId: string, commentId: string) => {
     if (currentUser.role !== 'moderator') return;
-    setForumComments((prev) => {
-      const list = prev[topicId] || [];
-      return { ...prev, [topicId]: list.filter((comm) => comm.id !== commentId) };
+    forumAction(async () => {
+      await deleteForumItem(currentUser, 'comments', commentId);
+      setForumComments((prev) => ({
+        ...prev,
+        [topicId]: (prev[topicId] || []).filter((comm) => comm.id !== commentId),
+      }));
+      setForumTopics((prev) =>
+        prev.map((top) =>
+          top.id === topicId ? { ...top, repliesCount: Math.max(0, (top.repliesCount || 1) - 1) } : top
+        )
+      );
     });
-    setForumTopics((prev) =>
-      prev.map((top) =>
-        top.id === topicId
-          ? { ...top, repliesCount: Math.max(0, (top.repliesCount || 1) - 1) }
-          : top
-      )
-    );
   };
 
   // Execute filtering & ranking across the dynamic resources
@@ -614,7 +610,7 @@ export default function App() {
             topics={forumTopics}
             comments={forumComments}
             currentUser={currentUser}
-            onChangeUserRole={setCurrentUser}
+            onChangeUserRole={handleChangeUser}
             onCreateTopic={handleCreateTopic}
             onAddComment={handleAddComment}
             onToggleTopicLike={handleToggleTopicLike}

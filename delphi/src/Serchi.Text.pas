@@ -1,4 +1,8 @@
-﻿unit Serchi.Text;
+﻿{ Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text. }
+
+unit Serchi.Text;
 
 { Esperanto text utilities (port of src/utils/esperanto.ts):
   - X-sistemo conversion (cx -> ĉ, ...)

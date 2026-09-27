@@ -96,3 +96,61 @@ CREATE TABLE IF NOT EXISTS knowledge_links (
   url      TEXT NOT NULL,
   PRIMARY KEY (panel_id, position)
 );
+
+-- Community forum. The authors are the forum's demo users: visitors post as one
+-- of them (learner, teacher or moderator, see the role switcher).
+CREATE TABLE IF NOT EXISTS forum_users (
+  id           TEXT PRIMARY KEY,
+  name         TEXT NOT NULL,
+  role         TEXT NOT NULL CHECK (role IN ('learner','teacher','moderator')),
+  avatar_color TEXT NOT NULL DEFAULT 'bg-emerald-600',  -- Tailwind class
+  level_badge  TEXT
+);
+
+CREATE TABLE IF NOT EXISTS forum_topics (
+  id            TEXT PRIMARY KEY,
+  title         TEXT NOT NULL,
+  content       TEXT NOT NULL,
+  author_id     TEXT NOT NULL REFERENCES forum_users(id),
+  level         TEXT NOT NULL DEFAULT 'all' CHECK (level IN ('all','A1','A2','B1','B2','C1')),
+  category      TEXT NOT NULL DEFAULT 'general' CHECK (category IN ('general','questions','grammar','practice','resources','events')),
+  language_used TEXT CHECK (language_used IN ('eo','es','en','multilingual')),
+  views         INTEGER NOT NULL DEFAULT 0,
+  likes         INTEGER NOT NULL DEFAULT 0,  -- includes the rows in forum_topic_likes
+  is_pinned     INTEGER NOT NULL DEFAULT 0,
+  is_locked     INTEGER NOT NULL DEFAULT 0,
+  created_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  updated_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+
+CREATE TABLE IF NOT EXISTS forum_topic_tags (
+  topic_id TEXT NOT NULL REFERENCES forum_topics(id) ON DELETE CASCADE,
+  position INTEGER NOT NULL,
+  tag      TEXT NOT NULL,
+  PRIMARY KEY (topic_id, position)
+);
+
+CREATE TABLE IF NOT EXISTS forum_comments (
+  id                TEXT PRIMARY KEY,
+  topic_id          TEXT NOT NULL REFERENCES forum_topics(id) ON DELETE CASCADE,
+  author_id         TEXT NOT NULL REFERENCES forum_users(id),
+  content           TEXT NOT NULL,
+  likes             INTEGER NOT NULL DEFAULT 0,  -- includes the rows in forum_comment_likes
+  is_moderator_note INTEGER NOT NULL DEFAULT 0,
+  created_at        TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+CREATE INDEX IF NOT EXISTS idx_forum_comments_topic ON forum_comments(topic_id, created_at);
+
+-- Who liked what, so each visitor can like once and undo it. visitor_id is a
+-- random id kept in the visitor's browser (React) or cookie (Delphi).
+CREATE TABLE IF NOT EXISTS forum_topic_likes (
+  topic_id   TEXT NOT NULL REFERENCES forum_topics(id) ON DELETE CASCADE,
+  visitor_id TEXT NOT NULL,
+  PRIMARY KEY (topic_id, visitor_id)
+);
+
+CREATE TABLE IF NOT EXISTS forum_comment_likes (
+  comment_id TEXT NOT NULL REFERENCES forum_comments(id) ON DELETE CASCADE,
+  visitor_id TEXT NOT NULL,
+  PRIMARY KEY (comment_id, visitor_id)
+);

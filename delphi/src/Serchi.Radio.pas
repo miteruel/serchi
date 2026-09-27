@@ -1,4 +1,8 @@
-﻿unit Serchi.Radio;
+﻿{ Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text. }
+
+unit Serchi.Radio;
 
 { Podcast feed reader for radio stations whose player type is "rss"
   (port of server/radio.ts). Only feed URLs stored in the database are

@@ -1,4 +1,8 @@
-﻿unit Serchi.Gemini;
+﻿{ Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text. }
+
+unit Serchi.Gemini;
 
 { Live web discovery using the Gemini REST API with Google Search grounding
   (port of the /api/live-search endpoint in server.ts). The API key is read

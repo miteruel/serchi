@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 import { Language, Category, Level, Format } from '../types';
 
 export interface TranslationDictionary {
@@ -241,6 +247,8 @@ export interface TranslationDictionary {
   kidsSeeAll: string;
   miniCourseTitle: string;
   miniCourseDesc: string;
+  /** Mini-course page in this language (Spanish for eo and es) */
+  miniCourseHref: string;
   aragonHistoryTitle: string;
   aragonHistoryDesc: string;
   listenBtn: string;
@@ -266,6 +274,9 @@ export interface TranslationDictionary {
   forumModHelpText: string;
   forumLearnerHelpText: string;
   forumAutoXActiveText: string;
+  forumModeratorKeyPrompt: string;
+  forumModeratorKeyWrong: string;
+  forumSaveError: string;
 }
 
 export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
@@ -527,7 +538,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSectionDesc: "Rakontoj, kantoj, ludoj kaj kursoj por infanoj kaj iliaj familioj.",
     kidsSeeAll: "Ĉio por infanoj",
     miniCourseTitle: "Minikurso: Esperanto en 7 tagoj",
-    miniCourseDesc: "Sep lecionoj kun desegnaĵoj por infanoj kaj familioj (klarigoj en la hispana).",
+    miniCourseDesc: "Sep lecionoj kun desegnaĵoj por infanoj kaj familioj (klarigoj en la hispana aŭ la angla).",
+    miniCourseHref: "/minikurso.html",
     aragonHistoryTitle: "Esperanto en Aragono",
     aragonHistoryDesc: "Pli ol jarcento da historio en Zaragozo, Oska kaj Teruelo, de Frateco (1908) ĝis Liberanimo.",
     listenBtn: "Aŭskulti",
@@ -553,6 +565,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumModHelpText: '★ Vi havas plenajn rajtojn por moderigi, alpingli, ŝlosi aŭ forigi mesaĝojn.',
     forumLearnerHelpText: 'Partoprenu en diskutoj, demandu gramatikajn dubojn kaj amikiĝu kun aliaj lernantoj.',
     forumAutoXActiveText: 'Ikso-sistemo (cx → ĉ) estas aktiva',
+    forumModeratorKeyPrompt: 'Enskribu la ŝlosilon de moderanto:',
+    forumModeratorKeyWrong: 'La ŝlosilo de moderanto ne estas ĝusta.',
+    forumSaveError: 'Ne eblis konservi la ŝanĝon en la forumo. Bonvolu reprovi.',
   },
 
   es: {
@@ -814,6 +829,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSeeAll: "Todo para niños",
     miniCourseTitle: "Minicurso: esperanto en 7 días",
     miniCourseDesc: "Siete lecciones con dibujos para niños y familias.",
+    miniCourseHref: "/minikurso.html",
     aragonHistoryTitle: "Historia del esperanto en Aragón",
     aragonHistoryDesc: "Más de un siglo en Zaragoza, Huesca y Teruel, de Frateco (1908) a Liberanimo.",
     listenBtn: "Escuchar",
@@ -839,6 +855,9 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumModHelpText: '★ Tienes permisos completos para moderar, fijar, cerrar o eliminar mensajes.',
     forumLearnerHelpText: 'Participa en debates, plantea dudas gramaticales y haz amigos con otros estudiantes.',
     forumAutoXActiveText: 'El sistema X (cx → ĉ) está activo',
+    forumModeratorKeyPrompt: 'Escribe la clave de moderador:',
+    forumModeratorKeyWrong: 'La clave de moderador no es correcta.',
+    forumSaveError: 'No se pudo guardar el cambio en el foro. Inténtalo de nuevo.',
   },
 
   en: {
@@ -1099,7 +1118,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     kidsSectionDesc: "Stories, songs, games and courses for children and their families.",
     kidsSeeAll: "Everything for kids",
     miniCourseTitle: "Mini-course: Esperanto in 7 days",
-    miniCourseDesc: "Seven lessons with drawings for children and families (explained in Spanish).",
+    miniCourseDesc: "Seven lessons with drawings for children and families.",
+    miniCourseHref: "/minikurso-en.html",
     aragonHistoryTitle: "Esperanto in Aragon",
     aragonHistoryDesc: "Over a century of history in Zaragoza, Huesca and Teruel, from Frateco (1908) to Liberanimo (in Spanish).",
     listenBtn: "Listen",
@@ -1125,5 +1145,8 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     forumModHelpText: '★ You have full permissions to moderate, pin, lock, or delete messages.',
     forumLearnerHelpText: 'Participate in discussions, ask grammar questions, and connect with fellow learners.',
     forumAutoXActiveText: 'X-system (cx → ĉ) is active',
+    forumModeratorKeyPrompt: 'Enter the moderator key:',
+    forumModeratorKeyWrong: 'The moderator key is not correct.',
+    forumSaveError: 'The forum change could not be saved. Please try again.',
   },
 };

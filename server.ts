@@ -1,6 +1,13 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
@@ -13,6 +20,19 @@ import {
   type NewResource,
 } from './server/db';
 import { fetchEpisodes } from './server/radio';
+import {
+  addComment,
+  createTopic,
+  deleteComment,
+  deleteTopic,
+  FORUM_LIMITS,
+  getForumUser,
+  getTopic,
+  listForum,
+  sanitizeTopic,
+  toggleLike,
+  toggleTopicFlag,
+} from './server/forum';
 
 // Load .env.local (as documented in the README) and fall back to .env
 dotenv.config({ path: ['.env.local', '.env'] });
@@ -88,6 +108,107 @@ async function startServer() {
       added: inserted.length,
       skippedDuplicates: skippedDuplicates + invalid,
     });
+  });
+
+  // ---- Community forum (tables forum_* in the database) ----
+  //
+  // Headers sent by the React app:
+  //   X-Visitor-Id     random id kept in the browser, used to count likes once per visitor
+  //   X-Forum-User     id of the demo user the visitor posts as (role switcher)
+  //   X-Moderator-Key  only when FORUM_MODERATOR_KEY is set: acting as moderator requires it
+  const moderatorKey = process.env.FORUM_MODERATOR_KEY || '';
+  const sameKey = (given: string) =>
+    crypto.timingSafeEqual(
+      crypto.createHash('sha256').update(given).digest(),
+      crypto.createHash('sha256').update(moderatorKey).digest(),
+    );
+
+  const visitorOf = (req: express.Request) => {
+    const id = String(req.get('X-Visitor-Id') || '');
+    return /^[A-Za-z0-9-]{8,64}$/.test(id) ? id : '';
+  };
+
+  /** The demo user the visitor acts as, or an error status. */
+  const actorOf = (req: express.Request, res: express.Response) => {
+    const user = getForumUser(db, String(req.get('X-Forum-User') || ''));
+    if (!user) {
+      res.status(400).json({ error: 'Unknown forum user' });
+      return undefined;
+    }
+    if (user.role === 'moderator' && moderatorKey && !sameKey(String(req.get('X-Moderator-Key') || ''))) {
+      res.status(403).json({ error: 'moderator_key' });
+      return undefined;
+    }
+    return user;
+  };
+
+  const moderatorOf = (req: express.Request, res: express.Response) => {
+    const user = actorOf(req, res);
+    if (user && user.role !== 'moderator') {
+      res.status(403).json({ error: 'Moderators only' });
+      return undefined;
+    }
+    return user;
+  };
+
+  app.get('/api/forum', (req, res) => {
+    res.json({ ...listForum(db, visitorOf(req)), moderatorKeyRequired: !!moderatorKey });
+  });
+
+  // Checks a moderator key before the visitor switches to the moderator role
+  app.post('/api/forum/moderator', (req, res) => {
+    if (!moderatorKey || sameKey(String(req.body?.key || ''))) return res.status(204).end();
+    return res.status(403).json({ error: 'moderator_key' });
+  });
+
+  app.post('/api/forum/topics', (req, res) => {
+    const visitor = visitorOf(req);
+    if (!visitor) return res.status(400).json({ error: 'Missing visitor id' });
+    const author = actorOf(req, res);
+    if (!author) return;
+    try {
+      return res.status(201).json(createTopic(db, author, sanitizeTopic(req.body), visitor));
+    } catch (err: any) {
+      return res.status(400).json({ error: err.message });
+    }
+  });
+
+  app.post('/api/forum/topics/:id/comments', (req, res) => {
+    const author = actorOf(req, res);
+    if (!author) return;
+    const topic = getTopic(db, req.params.id, '');
+    if (!topic) return res.status(404).json({ error: 'Topic not found' });
+    const isModerator = author.role === 'moderator';
+    if (topic.isLocked && !isModerator) return res.status(403).json({ error: 'Topic is locked' });
+    const content = String(req.body?.content ?? '').trim();
+    if (!content || content.length > FORUM_LIMITS.content) return res.status(400).json({ error: 'Invalid content' });
+    const comment = addComment(db, topic.id, author, content, isModerator && !!req.body?.isModNote, visitorOf(req));
+    return res.status(201).json(comment);
+  });
+
+  app.post('/api/forum/:kind(topics|comments)/:id/like', (req, res) => {
+    const visitor = visitorOf(req);
+    if (!visitor) return res.status(400).json({ error: 'Missing visitor id' });
+    const result = toggleLike(db, req.params.kind === 'topics' ? 'topic' : 'comment', req.params.id, visitor);
+    return result ? res.json(result) : res.status(404).json({ error: 'Not found' });
+  });
+
+  app.post('/api/forum/topics/:id/:flag(pin|lock)', (req, res) => {
+    if (!moderatorOf(req, res)) return;
+    if (!toggleTopicFlag(db, req.params.id, req.params.flag === 'pin' ? 'is_pinned' : 'is_locked')) {
+      return res.status(404).json({ error: 'Topic not found' });
+    }
+    return res.json(getTopic(db, req.params.id, visitorOf(req)));
+  });
+
+  app.delete('/api/forum/topics/:id', (req, res) => {
+    if (!moderatorOf(req, res)) return;
+    return deleteTopic(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Topic not found' });
+  });
+
+  app.delete('/api/forum/comments/:id', (req, res) => {
+    if (!moderatorOf(req, res)) return;
+    return deleteComment(db, req.params.id) ? res.status(204).end() : res.status(404).json({ error: 'Comment not found' });
   });
 
   // Initialize Google Gen AI with server-side API key
