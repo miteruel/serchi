@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Serĉilo · @t.tagline</title>
+  <title>Serĉilo · @t.tagline · Liberanimo Teruel</title>
+  <meta name="author" content="Liberanimo Teruel">
   <meta name="description" content="@t.tagline">
-  <link rel="icon" href="/static/star.svg" type="image/svg+xml">
+  <link rel="icon" href="/static/logo-liberanimo.jpg" type="image/jpeg">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/htmx.org/dist/htmx.min.js" defer></script>
   <link rel="stylesheet" href="/static/serchi.css">
@@ -16,7 +17,7 @@
   <header class="border-b border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-[#202124]/90 backdrop-blur sticky top-0 z-30">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center gap-4">
       <a href="/" class="flex items-center gap-2 font-bold text-xl shrink-0" title="Serĉilo">
-        <img src="/static/star.svg" alt="" class="w-7 h-7">
+        <img src="/static/logo-liberanimo.jpg" alt="Liberanimo Teruel" class="w-8 h-8 rounded-lg object-contain">
         <span class="hidden sm:inline"><span class="text-emerald-600">Serĉ</span>ilo</span>
       </a>
 
@@ -54,8 +55,12 @@
 
   <footer class="bg-gray-100 dark:bg-[#171717] text-sm text-gray-600 dark:text-gray-400 mt-10">
     <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap gap-x-6 gap-y-2 justify-between">
+      <span class="flex items-center gap-2">
+        <img src="/static/logo-liberanimo.jpg" alt="" class="w-5 h-5 rounded object-contain">
+        <b class="text-gray-800 dark:text-gray-200">@t.ownerNotice</b> · @t.footerNonProfit
+      </span>
       <span>🌍 @t.footerWorldwide · @App.ResourceCount</span>
-      <span>Delphi + WebStencils + HTMX · @App.Year · @t.footerNonProfit</span>
+      <span>© @App.Year Serĉilo · Liberanimo Teruel · Delphi + WebStencils + HTMX</span>
     </div>
   </footer>
 

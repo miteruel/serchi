@@ -26,8 +26,10 @@ export const Footer: React.FC<FooterProps> = ({
             {t.footerWorldwide}
           </span>
         </div>
-        <span className="text-[11px] text-gray-400">
-          {t.footerNonProfit}
+        <span className="flex items-center gap-2 text-[11px] text-gray-400">
+          <img src="/logo-liberanimo.jpg" alt="" className="w-5 h-5 rounded object-contain" />
+          <span className="font-semibold text-gray-600 dark:text-gray-300">{t.ownerNotice}</span>
+          <span>· {t.footerNonProfit}</span>
         </span>
       </div>
 
@@ -85,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({
             {t.settings}
           </button>
           <span className="text-gray-400 dark:text-gray-600">
-            ★ {new Date().getFullYear()} Serĉilo
+            © {new Date().getFullYear()} Serĉilo · Liberanimo Teruel
           </span>
         </div>
 
