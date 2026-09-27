@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# SQLite database is binary; never merge or normalize line endings
+*.db binary

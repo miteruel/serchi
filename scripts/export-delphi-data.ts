@@ -1,15 +1,14 @@
 /**
- * Exports the TypeScript data sources (resources, knowledge panels, forum seed
- * data and UI translations) to JSON files consumed by the Delphi + WebStencils
- * + HTMX version of Serĉilo (see /delphi).
+ * Exports the TypeScript data that is not in the SQLite database (forum seed
+ * data, UI translations and search synonyms) to JSON files consumed by the
+ * Delphi + WebStencils + HTMX version of Serĉilo (see /delphi). Resources and
+ * knowledge panels are read by both versions from data/serchi.db.
  *
  * Usage: npm run export:delphi
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { ESPERANTO_RESOURCES } from '../src/data/resources';
-import { KNOWLEDGE_PANELS } from '../src/data/knowledge';
 import { INITIAL_FORUM_TOPICS, INITIAL_FORUM_COMMENTS } from '../src/data/forumData';
 import { TRANSLATIONS } from '../src/translations';
 import { MULTILINGUAL_SYNONYMS } from '../src/utils/esperanto';
@@ -36,8 +35,6 @@ function write(name: string, data: unknown) {
   console.log(`wrote ${path.relative(process.cwd(), file)}`);
 }
 
-write('resources.json', ESPERANTO_RESOURCES);
-write('knowledge.json', KNOWLEDGE_PANELS);
 write('forum.json', { topics: INITIAL_FORUM_TOPICS, comments: INITIAL_FORUM_COMMENTS });
 write('translations.json', flatten(TRANSLATIONS));
 write('synonyms.json', MULTILINGUAL_SYNONYMS);

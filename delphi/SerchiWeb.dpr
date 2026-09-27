@@ -5,7 +5,9 @@
 
   Usage: SerchiWeb [port]         default port 8080 (or env PORT)
   Env:   GEMINI_API_KEY           enables the live Google Search discovery
-         SERCHI_HOME              folder containing data/, templates/, static/ }
+         SERCHI_HOME              folder containing data/, templates/, static/
+         SERCHI_DB                SQLite database (default: ../data/serchi.db,
+                                  shared with the Node/React version) }
 
 {$APPTYPE CONSOLE}
 
@@ -43,6 +45,18 @@ begin
   Result := GetCurrentDir;
 end;
 
+{ The SQLite database and its schema live in the repository's data/ folder,
+  one level above delphi/. }
+function FindDatabase: string;
+begin
+  Result := GetEnvironmentVariable('SERCHI_DB');
+  if Result <> '' then
+    Exit(TPath.GetFullPath(Result));
+  Result := TPath.GetFullPath(TPath.Combine(AppHome, '..' + PathDelim + 'data' + PathDelim + 'serchi.db'));
+  if not TFile.Exists(Result) and TFile.Exists(TPath.Combine(DataDir, 'serchi.db')) then
+    Result := TPath.Combine(DataDir, 'serchi.db');
+end;
+
 procedure RunServer(APort: Integer);
 var
   Server: TIdHTTPWebBrokerBridge;
@@ -52,7 +66,7 @@ begin
     Server.DefaultPort := APort;
     Server.Active := True;
     Writeln(Format('Serchilo (Delphi + WebStencils + HTMX) listening on http://localhost:%d', [APort]));
-    Writeln(Format('  %d resources loaded from %s', [Store.ResourceCount, DataDir]));
+    Writeln(Format('  %d resources loaded from %s', [Store.ResourceCount, FindDatabase]));
     if GetEnvironmentVariable('GEMINI_API_KEY') = '' then
       Writeln('  GEMINI_API_KEY not set: live Google Search discovery disabled');
     Writeln('Press ENTER to stop.');
@@ -74,7 +88,8 @@ begin
     // whether WebStencils looks next to the current template or in the working dir.
     SetCurrentDir(TemplatesDir);
     I18n := TI18n.Create(TPath.Combine(DataDir, 'translations.json'));
-    Store := TSerchiStore.Create(DataDir);
+    Store := TSerchiStore.Create(FindDatabase,
+      TPath.Combine(ExtractFileDir(FindDatabase), 'schema.sql'), DataDir);
     try
       if WebRequestHandler <> nil then
         WebRequestHandler.WebModuleClass := WebModuleClass;

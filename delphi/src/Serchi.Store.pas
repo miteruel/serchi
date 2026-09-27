@@ -1,15 +1,18 @@
 ﻿unit Serchi.Store;
 
-{ In-memory data store shared by every WebBroker module instance.
-  Holds the curated resource index, knowledge panels and forum state, and
-  implements the search/ranking algorithm (port of the useMemo block in
+{ Data store shared by every WebBroker module instance.
+  Resources and knowledge panels are loaded from the SQLite database shared
+  with the Node/React version (data/serchi.db, schema in data/schema.sql) and
+  cached in memory for searching; new resources are written to the database.
+  The forum lives in memory (seeded from data/forum.json).
+  Implements the search/ranking algorithm (port of the useMemo block in
   src/App.tsx). Access to mutable state is serialized with Lock/Unlock. }
 
 interface
 
 uses
   System.SysUtils, System.Classes, System.Generics.Collections,
-  Serchi.Models;
+  FireDAC.Comp.Client, Serchi.Models;
 
 type
   TSearchFilters = record
@@ -34,12 +37,16 @@ type
     FTopics: TObjectList<TForumTopic>;
     FUsers: TDictionary<string, TForumUser>;
     FSeq: Integer;
-    procedure LoadResources(const AFile: string);
-    procedure LoadKnowledge(const AFile: string);
+    FDB: TFDConnection;
+    procedure OpenDatabase(const ADatabase, ASchemaFile: string);
+    procedure LoadResources;
+    procedure LoadKnowledge;
     procedure LoadForum(const AFile: string);
     function NextId(const APrefix: string): string;
   public
-    constructor Create(const ADataDir: string);
+    { ADatabase: SQLite file; ADataDir: folder with forum.json and synonyms.json;
+      ASchemaFile: data/schema.sql, applied if the database has no tables }
+    constructor Create(const ADatabase, ASchemaFile, ADataDir: string);
     destructor Destroy; override;
 
     procedure Lock;
@@ -50,7 +57,9 @@ type
     function FindResource(const AId: string): TResource;
     function RandomFeatured: TResource;
     function UrlExists(const AUrl: string): Boolean;
-    function AddResource(AResource: TResource): Boolean;
+    { Adds (and persists) a resource; False if its URL is already indexed.
+      ASource: 'user' or 'crawled'. The store takes ownership when True. }
+    function AddResource(AResource: TResource; const ASource: string = 'user'): Boolean;
     function ResourceCount: Integer;
 
     // Forum
@@ -79,7 +88,12 @@ implementation
 
 uses
   System.IOUtils, System.JSON, System.DateUtils, System.Generics.Defaults,
-  System.Math, Serchi.Text;
+  System.Math, System.Variants, Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys.Intf, FireDAC.Phys,
+  FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
+  FireDAC.DApt, FireDAC.ConsoleUI.Wait,
+  Serchi.Text;
 
 type
   TScored = record
@@ -112,6 +126,31 @@ begin
     raise Exception.CreateFmt('Invalid JSON file: %s', [AFile]);
 end;
 
+function IfThenStr(ACondition: Boolean; const ATrue, AFalse: string): string;
+begin
+  if ACondition then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+{ Removes "-- ..." comment lines from a SQL statement }
+function StripSqlComments(const ASql: string): string;
+var
+  Line: string;
+  SB: TStringBuilder;
+begin
+  SB := TStringBuilder.Create;
+  try
+    for Line in ASql.Replace(#13, '').Split([#10]) do
+      if not Line.Trim.StartsWith('--') then
+        SB.Append(Line).Append(#10);
+    Result := SB.ToString;
+  finally
+    SB.Free;
+  end;
+end;
+
 { TSearchFilters }
 
 class function TSearchFilters.Default: TSearchFilters;
@@ -136,7 +175,7 @@ end;
 
 { TSerchiStore }
 
-constructor TSerchiStore.Create(const ADataDir: string);
+constructor TSerchiStore.Create(const ADatabase, ASchemaFile, ADataDir: string);
 begin
   inherited Create;
   FLock := TObject.Create;
@@ -145,13 +184,15 @@ begin
   FTopics := TObjectList<TForumTopic>.Create(True);
   FUsers := TDictionary<string, TForumUser>.Create;
   LoadSynonyms(TPath.Combine(ADataDir, 'synonyms.json'));
-  LoadResources(TPath.Combine(ADataDir, 'resources.json'));
-  LoadKnowledge(TPath.Combine(ADataDir, 'knowledge.json'));
+  OpenDatabase(ADatabase, ASchemaFile);
+  LoadResources;
+  LoadKnowledge;
   LoadForum(TPath.Combine(ADataDir, 'forum.json'));
 end;
 
 destructor TSerchiStore.Destroy;
 begin
+  FDB.Free;
   FUsers.Free;
   FTopics.Free;
   FKnowledge.Free;
@@ -176,29 +217,175 @@ begin
   Result := Format('%s-%d-%d', [APrefix, DateTimeToUnix(Now), FSeq]);
 end;
 
-procedure TSerchiStore.LoadResources(const AFile: string);
+procedure TSerchiStore.OpenDatabase(const ADatabase, ASchemaFile: string);
 var
-  Root, Item: TJSONValue;
+  Statement: string;
 begin
-  Root := ParseJSONFile(AFile);
+  FDB := TFDConnection.Create(nil);
+  FDB.LoginPrompt := False;
+  FDB.DriverName := 'SQLite';
+  FDB.Params.Values['Database'] := ADatabase;
+  FDB.Params.Values['OpenMode'] := 'CreateUTF8';
+  FDB.Params.Values['LockingMode'] := 'Normal';   // let the Node server use the file too
+  FDB.Params.Values['StringFormat'] := 'Unicode';
+  FDB.Params.Values['ForeignKeys'] := 'On';
+  FDB.Open;
+
+  // Create the tables on a new/empty database. Statements in schema.sql are
+  // separated by ";" at the end of a line and are all idempotent.
+  if (ASchemaFile <> '') and TFile.Exists(ASchemaFile) then
+    for Statement in TFile.ReadAllText(ASchemaFile, TEncoding.UTF8).Split([';' + sLineBreak, ';'#10]) do
+      if StripSqlComments(Statement).Trim <> '' then
+        FDB.ExecSQL(Statement);
+end;
+
+procedure TSerchiStore.LoadResources;
+var
+  Q: TFDQuery;
+  ById: TDictionary<string, TResource>;
+  Res: TResource;
+  Lang: string;
+begin
+  Q := TFDQuery.Create(nil);
+  ById := TDictionary<string, TResource>.Create;
   try
-    for Item in (Root as TJSONArray) do
-      FResources.Add(TResource.FromJSON(Item as TJSONObject));
+    Q.Connection := FDB;
+    Q.Open('SELECT * FROM resources ORDER BY position, rowid');
+    while not Q.Eof do
+    begin
+      Res := TResource.Create;
+      Res.Id := Q.FieldByName('id').AsString;
+      Res.Title := Q.FieldByName('title').AsString;
+      Res.Url := Q.FieldByName('url').AsString;
+      Res.DisplayUrl := Q.FieldByName('display_url').AsString;
+      Res.Description.Eo := Q.FieldByName('description_eo').AsString;
+      Res.Description.Es := Q.FieldByName('description_es').AsString;
+      Res.Description.En := Q.FieldByName('description_en').AsString;
+      Res.Category := Q.FieldByName('category').AsString;
+      Res.Level := Q.FieldByName('level').AsString;
+      Res.Format := Q.FieldByName('format').AsString;
+      Res.IsFree := Q.FieldByName('is_free').AsInteger <> 0;
+      Res.Author := Q.FieldByName('author').AsString;
+      Res.Featured := Q.FieldByName('featured').AsInteger <> 0;
+      Res.Year := Q.FieldByName('year').AsString;
+      FResources.Add(Res);
+      ById.Add(Res.Id, Res);
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT resource_id, tag FROM resource_tags ORDER BY resource_id, position');
+    while not Q.Eof do
+    begin
+      if ById.TryGetValue(Q.Fields[0].AsString, Res) then
+        Res.Tags := Res.Tags + [Q.Fields[1].AsString];
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT resource_id, lang FROM resource_languages ORDER BY resource_id, position');
+    while not Q.Eof do
+    begin
+      if ById.TryGetValue(Q.Fields[0].AsString, Res) then
+        Res.Languages := Res.Languages + [Q.Fields[1].AsString];
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT resource_id, lang, text FROM resource_features ORDER BY resource_id, lang, position');
+    while not Q.Eof do
+    begin
+      if ById.TryGetValue(Q.Fields[0].AsString, Res) then
+      begin
+        Lang := Q.Fields[1].AsString;
+        if Lang = 'es' then
+          Res.Features.Es := Res.Features.Es + [Q.Fields[2].AsString]
+        else if Lang = 'en' then
+          Res.Features.En := Res.Features.En + [Q.Fields[2].AsString]
+        else
+          Res.Features.Eo := Res.Features.Eo + [Q.Fields[2].AsString];
+      end;
+      Q.Next;
+    end;
+    Q.Close;
+
+    for Res in FResources do
+      Res.BuildIndex;
   finally
-    Root.Free;
+    ById.Free;
+    Q.Free;
   end;
 end;
 
-procedure TSerchiStore.LoadKnowledge(const AFile: string);
+procedure TSerchiStore.LoadKnowledge;
 var
-  Root, Item: TJSONValue;
+  Q: TFDQuery;
+  ById: TDictionary<string, TKnowledgePanel>;
+  Panel: TKnowledgePanel;
+  Fact: TKnowledgeFact;
+  Link: TKnowledgeLink;
 begin
-  Root := ParseJSONFile(AFile);
+  Q := TFDQuery.Create(nil);
+  ById := TDictionary<string, TKnowledgePanel>.Create;
   try
-    for Item in (Root as TJSONArray) do
-      FKnowledge.Add(TKnowledgePanel.FromJSON(Item as TJSONObject));
+    Q.Connection := FDB;
+    Q.Open('SELECT * FROM knowledge_panels ORDER BY position, id');
+    while not Q.Eof do
+    begin
+      Panel := TKnowledgePanel.Create;
+      Panel.Id := Q.FieldByName('id').AsString;
+      Panel.Title := Q.FieldByName('title').AsString;
+      Panel.Subtitle.Eo := Q.FieldByName('subtitle_eo').AsString;
+      Panel.Subtitle.Es := Q.FieldByName('subtitle_es').AsString;
+      Panel.Subtitle.En := Q.FieldByName('subtitle_en').AsString;
+      Panel.Description.Eo := Q.FieldByName('description_eo').AsString;
+      Panel.Description.Es := Q.FieldByName('description_es').AsString;
+      Panel.Description.En := Q.FieldByName('description_en').AsString;
+      FKnowledge.Add(Panel);
+      ById.Add(Panel.Id, Panel);
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT panel_id, keyword FROM knowledge_keywords ORDER BY panel_id, position');
+    while not Q.Eof do
+    begin
+      if ById.TryGetValue(Q.Fields[0].AsString, Panel) then
+        Panel.Keywords := Panel.Keywords + [Q.Fields[1].AsString];
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT panel_id, label_eo, label_es, label_en, value FROM knowledge_facts ORDER BY panel_id, position');
+    while not Q.Eof do
+    begin
+      if ById.TryGetValue(Q.Fields[0].AsString, Panel) then
+      begin
+        Fact.Label_.Eo := Q.Fields[1].AsString;
+        Fact.Label_.Es := Q.Fields[2].AsString;
+        Fact.Label_.En := Q.Fields[3].AsString;
+        Fact.Value := Q.Fields[4].AsString;
+        Panel.Facts := Panel.Facts + [Fact];
+      end;
+      Q.Next;
+    end;
+    Q.Close;
+
+    Q.Open('SELECT panel_id, title, url FROM knowledge_links ORDER BY panel_id, position');
+    while not Q.Eof do
+    begin
+      if ById.TryGetValue(Q.Fields[0].AsString, Panel) then
+      begin
+        Link.Title := Q.Fields[1].AsString;
+        Link.Url := Q.Fields[2].AsString;
+        Panel.Links := Panel.Links + [Link];
+      end;
+      Q.Next;
+    end;
+    Q.Close;
   finally
-    Root.Free;
+    ById.Free;
+    Q.Free;
   end;
 end;
 
@@ -446,18 +633,49 @@ begin
   end;
 end;
 
-function TSerchiStore.AddResource(AResource: TResource): Boolean;
+function TSerchiStore.AddResource(AResource: TResource; const ASource: string): Boolean;
+var
+  Position, I: Integer;
+  YearValue: Variant;
 begin
   Lock;
   try
     Result := not UrlExists(AResource.Url); // TMonitor is re-entrant
-    if Result then
-    begin
-      if AResource.Id = '' then
-        AResource.Id := NextId('custom');
-      AResource.BuildIndex;
-      FResources.Insert(0, AResource);
+    if not Result then
+      Exit;
+    if AResource.Id = '' then
+      AResource.Id := NextId(IfThenStr(ASource = 'crawled', 'crawled', 'custom'));
+
+    // New additions are listed first, as in the React version
+    Position := FDB.ExecSQLScalar('SELECT COALESCE(MIN(position), 0) - 1 FROM resources');
+    if AResource.Year = '' then
+      YearValue := Null
+    else
+      YearValue := AResource.Year;
+
+    FDB.StartTransaction;
+    try
+      FDB.ExecSQL('INSERT INTO resources (id, title, url, url_key, display_url, ' +
+        'description_eo, description_es, description_en, category, level, format, ' +
+        'is_free, author, featured, year, source, position) ' +
+        'VALUES (:id, :title, :url, :url_key, :display_url, :d_eo, :d_es, :d_en, ' +
+        ':category, :level, :format, :is_free, :author, :featured, :year, :source, :position)',
+        [AResource.Id, AResource.Title, AResource.Url, CleanUrl(AResource.Url),
+         AResource.DisplayUrl, AResource.Description.Eo, AResource.Description.Es,
+         AResource.Description.En, AResource.Category, AResource.Level, AResource.Format,
+         Ord(AResource.IsFree), AResource.Author, Ord(AResource.Featured), YearValue,
+         ASource, Position]);
+      for I := 0 to High(AResource.Tags) do
+        FDB.ExecSQL('INSERT INTO resource_tags (resource_id, position, tag) VALUES (:id, :pos, :tag)',
+          [AResource.Id, I, AResource.Tags[I]]);
+      FDB.Commit;
+    except
+      FDB.Rollback;
+      raise;
     end;
+
+    AResource.BuildIndex;
+    FResources.Insert(0, AResource);
   finally
     Unlock;
   end;

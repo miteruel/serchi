@@ -18,8 +18,8 @@ import { convertXSystem } from '../utils/esperanto';
 interface AddResourceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddResource: (newResource: Omit<EsperantoResource, 'id'>) => { success: boolean; error?: string };
-  onBatchAddResources: (resources: Omit<EsperantoResource, 'id'>[]) => { added: number; skippedDuplicates: number };
+  onAddResource: (newResource: Omit<EsperantoResource, 'id'>) => Promise<{ success: boolean; error?: string }>;
+  onBatchAddResources: (resources: Omit<EsperantoResource, 'id'>[]) => Promise<{ added: number; skippedDuplicates: number }>;
   existingUrls: string[];
   settings: UserSettings;
   initialQuery?: string;
@@ -74,7 +74,7 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
     setStatusMessage(null);
   };
 
-  const handleSingleSubmit = (e: React.FormEvent) => {
+  const handleSingleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!url.trim() || !title.trim() || !desc.trim()) {
@@ -103,7 +103,7 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
       .map((t) => t.trim().toLowerCase())
       .filter(Boolean);
 
-    const result = onAddResource({
+    const result = await onAddResource({
       title: title.trim(),
       url: url.trim(),
       displayUrl,
@@ -207,7 +207,7 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
     );
   };
 
-  const handleImportSelectedCrawled = () => {
+  const handleImportSelectedCrawled = async () => {
     const toImport = crawledResults.filter((r) => r.selected && !r.isDuplicate);
     if (toImport.length === 0) return;
 
@@ -227,7 +227,13 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
       isFree: true,
     }));
 
-    const result = onBatchAddResources(resourcesPayload);
+    let result: { added: number; skippedDuplicates: number };
+    try {
+      result = await onBatchAddResources(resourcesPayload);
+    } catch (err: any) {
+      setStatusMessage({ type: 'error', text: err.message || t.noCrawledFound });
+      return;
+    }
 
     setStatusMessage({
       type: 'success',
