@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 /**
  * Community forum stored in the SQLite database (tables forum_* in
  * data/schema.sql), shared by every visitor.

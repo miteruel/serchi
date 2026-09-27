@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 /**
  * Loads resources (and optionally knowledge panels) from JSON into the SQLite
  * database (data/serchi.db, or SERCHI_DB).

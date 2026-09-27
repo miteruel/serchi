@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 export type Language = 'eo' | 'es' | 'en';
 
 export type Level = 'all' | 'A1' | 'A2' | 'B1' | 'B2' | 'C1';

@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2026 Antonio Alcázar Ruiz (MiTeruel) <mrgarciagarcia@gmail.com>
+  Part of the PluTony project. Licensed under the GNU GPL v3.0 or later;
+  see LICENSE for the full text.
+ */
+
 /**
  * Dumps the SQLite database back to JSON, e.g. to review changes in a diff,
  * make a backup or edit data by hand and re-import it with db:import.
