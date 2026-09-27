@@ -174,6 +174,13 @@ PR y commits correspondientes.
     `<body>` de la página. Ahora esos enlaces cargan la página completa y los estilos de
     ambas páginas están dentro del `<body>`.
 
+15. **Estampa de Teruel y Liberanimo.** El minicurso y la historia de Aragón llevan una
+    ilustración de Teruel: el casco viejo, el Torico con la estrella del escudo (que es
+    también la estrella verde del esperanto), una torre mudéjar con cerámica verde y
+    blanca y los cerros ocres. Va en una tarjeta con el logotipo y el nombre de
+    Liberanimo (*libera animo*, «alma libre»). El logotipo va incrustado en las páginas
+    para que se vea igual en las versiones React y Delphi.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir
