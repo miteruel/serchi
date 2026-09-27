@@ -172,3 +172,27 @@ CREATE TABLE IF NOT EXISTS recordings (
 );
 CREATE INDEX IF NOT EXISTS idx_recordings_status ON recordings(status, slug);
 CREATE INDEX IF NOT EXISTS idx_recordings_visitor ON recordings(visitor_id, created_at);
+
+-- Courses made with the course editor (public/editor.html). The content of a
+-- course (lessons, words, exercises...) is a JSON document validated by
+-- server/courses.ts; published courses are shown at /kurso/<slug>.
+CREATE TABLE IF NOT EXISTS courses (
+  id         TEXT PRIMARY KEY,
+  slug       TEXT NOT NULL UNIQUE,     -- address: /kurso/<slug>
+  lang       TEXT NOT NULL DEFAULT 'es' CHECK (lang IN ('es','en')),  -- language of the explanations
+  title      TEXT NOT NULL,
+  content    TEXT NOT NULL,            -- JSON: see CourseContent in server/courses.ts
+  published  INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+
+-- One picture per lesson, uploaded in the editor
+CREATE TABLE IF NOT EXISTS course_images (
+  id         TEXT PRIMARY KEY,
+  course_id  TEXT NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+  mime       TEXT NOT NULL CHECK (mime IN ('image/png','image/jpeg','image/webp','image/gif')),
+  data       BLOB NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+CREATE INDEX IF NOT EXISTS idx_course_images_course ON course_images(course_id);

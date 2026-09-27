@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Editor de cursos</title>
+<meta name="robots" content="noindex">
+</head>
+<body>
+<style>
+  :root {
+    --bg: #f5f9f4; --surface: #ffffff; --ink: #1f2a33; --muted: #55646b; --line: #d9e5dc;
+    --green: #1e8c4e; --green-soft: #e3f3e8; --red: #c8372d; --sun: #f2b632;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111813; --surface: #1a231c; --ink: #e7efe9; --muted: #a5b4aa; --line: #2c3a30;
+      --green: #4cc27f; --green-soft: #1d3325; --red: #f0806e; --sun: #f5c451;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 "Nunito", "Segoe UI", system-ui, sans-serif; padding: 16px; }
+  .wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 18px; }
+  h1, h2, h3 { margin: 0; line-height: 1.2; }
+  h1 { font-size: 30px; }
+  a { color: var(--green); font-weight: 700; }
+  .top { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+  .muted { color: var(--muted); }
+  .card { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 12px; }
+  label { display: grid; gap: 4px; font-weight: 700; font-size: 14px; }
+  input[type="text"], input[type="password"], textarea, select {
+    font: 16px/1.4 inherit; font-family: inherit; padding: 8px 10px; border-radius: 10px;
+    border: 2px solid var(--line); background: var(--bg); color: var(--ink); width: 100%;
+  }
+  textarea { min-height: 70px; resize: vertical; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  button {
+    font: 800 15px "Nunito", system-ui, sans-serif; cursor: pointer; border-radius: 999px;
+    padding: 7px 14px; border: 2px solid var(--green); background: transparent; color: var(--green);
+  }
+  button.primary { background: var(--green); color: var(--surface); }
+  button.danger { border-color: var(--red); color: var(--red); }
+  button.small { padding: 3px 10px; font-size: 13px; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #3a86c8; outline-offset: 2px; }
+  .toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 8px 0; border-bottom: 2px solid var(--line); }
+  .status { font-weight: 700; }
+  .status.dirty { color: var(--sun); }
+  .status.err { color: var(--red); }
+  .courses { display: flex; flex-wrap: wrap; gap: 8px; }
+  .courses button { color: var(--ink); border-color: var(--line); font-weight: 700; }
+  .courses button.active { background: var(--green); color: var(--surface); border-color: var(--green); }
+  details.lesson { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 12px 16px; }
+  details.lesson > summary { cursor: pointer; font-weight: 800; font-size: 18px; }
+  details.lesson[open] > summary { margin-bottom: 12px; }
+  .lesson-body { display: grid; gap: 12px; }
+  .block { border: 2px dashed var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 8px; }
+  .block-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .block-type { font-weight: 800; color: var(--green); text-transform: uppercase; font-size: 13px; letter-spacing: .06em; }
+  .pic { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .pic img { width: 140px; height: 100px; object-fit: contain; background: var(--bg); border-radius: 10px; border: 1px solid var(--line); }
+  .help { font-size: 14px; color: var(--muted); }
+  code { background: var(--green-soft); padding: 0 4px; border-radius: 4px; }
+  [hidden] { display: none !important; }
+</style>
+<div class="wrap">
+  <nav class="top" aria-label="Navegación"><a href="/">← Serĉilo</a><a href="/kursoj">Cursos publicados</a></nav>
+  <header>
+    <h1>Editor de cursos</h1>
+    <p class="muted">Crea y edita cursos como el minicurso <i>Esperanto en 7 tagoj</i>. Solo para moderadores de Liberanimo (hace falta la clave de moderador).</p>
+  </header>
+
+  <p id="unavailable" class="card status err" hidden>El editor no está disponible en este servidor.</p>
+
+  <section class="card" id="login" hidden>
+    <h2>Clave de moderador</h2>
+    <div class="row"><input type="password" id="key" autocomplete="current-password" style="max-width:280px"><button class="primary" id="key-ok">Entrar</button></div>
+    <p class="status err" id="key-msg"></p>
+  </section>
+
+  <section class="card" id="list" hidden>
+    <h2>Cursos</h2>
+    <div class="courses" id="courses"></div>
+    <div class="grid2">
+      <label>Título del curso nuevo<input type="text" id="new-title" maxlength="120" placeholder="Esperanto por la familio"></label>
+      <label>Explicaciones en<select id="new-lang"><option value="es">español</option><option value="en">inglés</option></select></label>
+    </div>
+    <div class="row"><button id="new-course">＋ Crear curso</button></div>
+  </section>
+
+  <div id="editor" hidden>
+    <div class="toolbar row">
+      <button class="primary" id="save">Guardar</button>
+      <button id="preview">Vista previa</button>
+      <a id="public-link" target="_blank" rel="noopener">Ver publicado</a>
+      <span class="status" id="status" role="status"></span>
+      <span style="flex:1"></span>
+      <button class="danger" id="delete">Borrar curso</button>
+    </div>
+
+    <section class="card" style="margin-top:12px">
+      <div class="grid2">
+        <label>Título<input type="text" id="c-title" maxlength="120"></label>
+        <label>Dirección<input type="text" id="c-slug" maxlength="60"></label>
+        <label>Explicaciones en<select id="c-lang"><option value="es">español</option><option value="en">inglés</option></select></label>
+      </div>
+      <label>Presentación<textarea id="c-intro" maxlength="3000"></textarea></label>
+      <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="c-published" style="width:20px;height:20px"> Publicado (visible en <span id="c-url"></span>)</label>
+      <p class="help">En los textos puedes escribir <code>**negrita**</code> y <code>{{esperanto}}</code>: lo que va entre llaves sale en verde y tiene botón 🔊 si alguien lo graba. Las palabras de los cursos publicados aparecen en la página <a href="/grabar.html">Graba el minicurso</a>.</p>
+    </section>
+
+    <div id="lessons" style="display:grid;gap:12px;margin-top:12px"></div>
+    <div class="row" style="margin-top:12px"><button id="add-lesson">＋ Añadir lección</button></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY_STORE = 'sercilo_moderator_key';
+  var $ = function (id) { return document.getElementById(id); };
+  var course = null, dirty = false, openLessons = {};
+  var BLOCKS = {
+    words: { name: 'Palabras', make: function () { return { type: 'words', title: '', items: [] }; } },
+    text: { name: 'Texto', make: function () { return { type: 'text', title: '', text: '' }; } },
+    rule: { name: 'Regla', make: function () { return { type: 'rule', text: '' }; } },
+    exercise: { name: 'Ejercicio', make: function () { return { type: 'exercise', title: 'Ejercicio', items: [], answers: [] }; } },
+    dialog: { name: 'Diálogo', make: function () { return { type: 'dialog', title: '', lines: [] }; } },
+  };
+
+  // ---- API ----
+  function key() { try { return sessionStorage.getItem(KEY_STORE) || ''; } catch (e) { return ''; } }
+  function api(method, url, body, raw) {
+    var headers = { 'X-Moderator-Key': key() };
+    if (body !== undefined && !raw) headers['Content-Type'] = 'application/json';
+    return fetch(url, { method: method, headers: headers, body: body === undefined ? undefined : raw ? body : JSON.stringify(body) })
+      .then(function (r) {
+        if (r.status === 204) return null;
+        return r.json().catch(function () { return {}; }).then(function (d) {
+          if (!r.ok) { var e = new Error(d.error || ('HTTP ' + r.status)); e.status = r.status; throw e; }
+          return d;
+        });
+      });
+  }
+
+  function setStatus(text, cls) { var s = $('status'); s.textContent = text; s.className = 'status ' + (cls || ''); }
+  function markDirty() { dirty = true; setStatus('Cambios sin guardar', 'dirty'); }
+  window.addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  // ---- Login and course list ----
+  function loadList(selectId) {
+    return api('GET', '/api/courses?all=1').then(function (list) {
+      $('login').hidden = true;
+      $('list').hidden = false;
+      var box = $('courses');
+      box.innerHTML = '';
+      if (!list.length) box.innerHTML = '<span class="muted">Todavía no hay cursos.</span>';
+      list.forEach(function (c) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = c.title + (c.published ? '' : ' (borrador)');
+        if (course && course.id === c.id) b.className = 'active';
+        b.addEventListener('click', function () {
+          if (dirty && !confirm('Hay cambios sin guardar. ¿Abrir otro curso igualmente?')) return;
+          openCourse(c.id);
+        });
+        box.appendChild(b);
+      });
+      if (selectId) openCourse(selectId);
+    }).catch(function (e) {
+      if (e.status === 403) { $('login').hidden = false; $('list').hidden = true; $('editor').hidden = true; if (key()) $('key-msg').textContent = 'La clave no es correcta.'; }
+      else { $('unavailable').hidden = false; }
+    });
+  }
+
+  $('key-ok').addEventListener('click', function () {
+    try { sessionStorage.setItem(KEY_STORE, $('key').value); } catch (e) {}
+    loadList();
+  });
+  $('key').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('key-ok').click(); });
+
+  $('new-course').addEventListener('click', function () {
+    var title = $('new-title').value.trim();
+    if (!title) { $('new-title').focus(); return; }
+    api('POST', '/api/courses', { title: title, lang: $('new-lang').value }).then(function (c) {
+      $('new-title').value = '';
+      loadList(c.id);
+    }).catch(function (e) { alert('No se pudo crear el curso: ' + e.message); });
+  });
+
+  // ---- Course ----
+  function openCourse(id) {
+    api('GET', '/api/courses/' + encodeURIComponent(id)).then(function (c) {
+      course = c;
+      dirty = false;
+      openLessons = {};
+      renderCourse();
+      setStatus(c.published ? 'Publicado' : 'Borrador');
+      loadList();
+    });
+  }
+
+  function bind(el, obj, field) {
+    el.value = obj[field] || '';
+    el.addEventListener('input', function () { obj[field] = el.value; markDirty(); });
+    return el;
+  }
+
+  function renderCourse() {
+    $('editor').hidden = false;
+    $('c-title').value = course.title;
+    $('c-title').oninput = function () { course.title = $('c-title').value; markDirty(); };
+    $('c-slug').value = course.slug;
+    $('c-slug').oninput = function () { course.slug = $('c-slug').value; markDirty(); };
+    $('c-lang').value = course.lang;
+    $('c-lang').onchange = function () { course.lang = $('c-lang').value; markDirty(); };
+    var intro = $('c-intro');
+    intro.value = course.content.intro || '';
+    intro.oninput = function () { course.content.intro = intro.value; markDirty(); };
+    $('c-published').checked = course.published;
+    $('c-published').onchange = function () { course.published = $('c-published').checked; markDirty(); };
+    $('c-url').textContent = '/kurso/' + course.slug;
+    $('public-link').href = '/kurso/' + encodeURIComponent(course.slug);
+    $('public-link').hidden = !course.published;
+    renderLessons();
+  }
+  // ---- Lessons ----
+  function field(labelText, el) {
+    var l = document.createElement('label');
+    l.textContent = labelText;
+    l.appendChild(el);
+    return l;
+  }
+  function input(obj, f, max) { var i = document.createElement('input'); i.type = 'text'; i.maxLength = max || 200; return bind(i, obj, f); }
+  function area(value, onChange, rows) {
+    var t = document.createElement('textarea');
+    t.value = value;
+    if (rows) t.rows = rows;
+    t.addEventListener('input', function () { onChange(t.value); markDirty(); });
+    return t;
+  }
+  function btn(text, cls, onClick) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = text; if (cls) b.className = cls;
+    b.addEventListener('click', onClick);
+    return b;
+  }
+  function move(list, i, d) {
+    var j = i + d;
+    if (j < 0 || j >= list.length) return;
+    var x = list[i]; list[i] = list[j]; list[j] = x;
+    markDirty();
+  }
+  // "esperanto = traducción" lines <-> [{eo, tr}]
+  function pairsToText(list) { return list.map(function (w) { return w.eo + (w.tr ? ' = ' + w.tr : ''); }).join('\n'); }
+  function textToPairs(text) {
+    return text.split('\n').map(function (line) {
+      var i = line.indexOf('=');
+      return i === -1 ? { eo: line.trim(), tr: '' } : { eo: line.slice(0, i).trim(), tr: line.slice(i + 1).trim() };
+    }).filter(function (w) { return w.eo; });
+  }
+  function linesToList(text) { return text.split('\n').map(function (l) { return l.trim(); }); }
+
+  function renderBlock(lesson, bi) {
+    var b = lesson.blocks[bi];
+    var box = document.createElement('div');
+    box.className = 'block';
+    var head = document.createElement('div');
+    head.className = 'block-head';
+    var type = document.createElement('span');
+    type.className = 'block-type';
+    type.textContent = BLOCKS[b.type].name;
+    var tools = document.createElement('div');
+    tools.className = 'row';
+    tools.appendChild(btn('↑', 'small', function () { move(lesson.blocks, bi, -1); renderLessons(); }));
+    tools.appendChild(btn('↓', 'small', function () { move(lesson.blocks, bi, 1); renderLessons(); }));
+    tools.appendChild(btn('✕', 'small danger', function () { if (confirm('¿Quitar este bloque?')) { lesson.blocks.splice(bi, 1); markDirty(); renderLessons(); } }));
+    head.appendChild(type); head.appendChild(tools);
+    box.appendChild(head);
+
+    if (b.type !== 'rule') box.appendChild(field('Título del bloque', input(b, 'title')));
+    if (b.type === 'words') {
+      box.appendChild(field('Palabras, una por línea: esperanto = traducción', area(pairsToText(b.items), function (v) { b.items = textToPairs(v); }, 6)));
+    } else if (b.type === 'dialog') {
+      box.appendChild(field('Frases, una por línea: esperanto = traducción (se alternan los dos personajes)', area(pairsToText(b.lines), function (v) { b.lines = textToPairs(v); }, 6)));
+    } else if (b.type === 'text' || b.type === 'rule') {
+      box.appendChild(field(b.type === 'rule' ? 'Regla (sale destacada)' : 'Texto', area(b.text || '', function (v) { b.text = v; }, 4)));
+    } else if (b.type === 'exercise') {
+      var g = document.createElement('div'); g.className = 'grid2';
+      g.appendChild(field('Preguntas, una por línea', area(b.items.join('\n'), function (v) { b.items = linesToList(v).filter(Boolean); }, 5)));
+      g.appendChild(field('Soluciones, una por línea, en el mismo orden', area(b.answers.join('\n'), function (v) { b.answers = linesToList(v); }, 5)));
+      box.appendChild(g);
+    }
+    return box;
+  }
+
+  function renderLessons() {
+    var box = $('lessons');
+    box.innerHTML = '';
+    course.content.lessons.forEach(function (lesson, li) {
+      var d = document.createElement('details');
+      d.className = 'lesson';
+      d.open = !!openLessons[li];
+      d.addEventListener('toggle', function () { openLessons[li] = d.open; });
+      var sum = document.createElement('summary');
+      var lessonLabel = function () { return 'Día ' + (li + 1) + ' · ' + (lesson.title || '(sin título)'); };
+      sum.textContent = lessonLabel();
+      d.appendChild(sum);
+      var body = document.createElement('div');
+      body.className = 'lesson-body';
+
+      var g = document.createElement('div'); g.className = 'grid2';
+      var t = input(lesson, 'title');
+      t.addEventListener('input', function () { sum.textContent = lessonLabel(); });
+      g.appendChild(field('Título (en esperanto)', t));
+      g.appendChild(field('Subtítulo (qué se aprende)', input(lesson, 'subtitle')));
+      body.appendChild(g);
+
+      // Picture
+      var pic = document.createElement('div'); pic.className = 'pic';
+      if (lesson.image) {
+        var img = document.createElement('img');
+        img.src = '/api/course-images/' + encodeURIComponent(lesson.image);
+        img.alt = '';
+        pic.appendChild(img);
+      }
+      var file = document.createElement('input');
+      file.type = 'file'; file.accept = 'image/png,image/jpeg,image/webp,image/gif';
+      file.addEventListener('change', function () {
+        var f = file.files[0];
+        if (!f) return;
+        if (f.size > 2 * 1024 * 1024) { alert('La imagen ocupa más de 2 MB. Redúcela antes de subirla.'); return; }
+        setStatus('Subiendo imagen…');
+        api('POST', '/api/courses/' + encodeURIComponent(course.id) + '/images', f, true).then(function (r) {
+          lesson.image = r.id;
+          markDirty();
+          renderLessons();
+        }).catch(function (e) { setStatus('No se pudo subir la imagen: ' + e.message, 'err'); });
+      });
+      pic.appendChild(field(lesson.image ? 'Cambiar imagen' : 'Imagen de la lección (PNG, JPEG, WebP o GIF; hasta 2 MB)', file));
+      if (lesson.image) pic.appendChild(btn('Quitar imagen', 'small danger', function () { lesson.image = null; markDirty(); renderLessons(); }));
+      body.appendChild(pic);
+      if (lesson.image) body.appendChild(field('Descripción de la imagen (para quien no la ve)', input(lesson, 'imageAlt')));
+
+      lesson.blocks.forEach(function (b, bi) { body.appendChild(renderBlock(lesson, bi)); });
+
+      var add = document.createElement('div'); add.className = 'row';
+      Object.keys(BLOCKS).forEach(function (type) {
+        add.appendChild(btn('＋ ' + BLOCKS[type].name, 'small', function () { lesson.blocks.push(BLOCKS[type].make()); markDirty(); renderLessons(); }));
+      });
+      body.appendChild(add);
+
+      body.appendChild(field('Reto del día', area(lesson.challenge || '', function (v) { lesson.challenge = v; }, 2)));
+
+      var tools = document.createElement('div'); tools.className = 'row';
+      tools.appendChild(btn('↑ Subir lección', 'small', function () { move(course.content.lessons, li, -1); openLessons = {}; renderLessons(); }));
+      tools.appendChild(btn('↓ Bajar lección', 'small', function () { move(course.content.lessons, li, 1); openLessons = {}; renderLessons(); }));
+      tools.appendChild(btn('✕ Borrar lección', 'small danger', function () {
+        if (!confirm('¿Borrar la lección ' + (li + 1) + '?')) return;
+        course.content.lessons.splice(li, 1); openLessons = {}; markDirty(); renderLessons();
+      }));
+      body.appendChild(tools);
+      d.appendChild(body);
+      box.appendChild(d);
+    });
+  }
+
+  $('add-lesson').addEventListener('click', function () {
+    course.content.lessons.push({ title: '', subtitle: '', image: null, imageAlt: '', blocks: [BLOCKS.words.make()], challenge: '' });
+    openLessons[course.content.lessons.length - 1] = true;
+    markDirty();
+    renderLessons();
+  });
+
+  $('save').addEventListener('click', function () {
+    setStatus('Guardando…');
+    api('PUT', '/api/courses/' + encodeURIComponent(course.id), course).then(function (c) {
+      course = c;
+      dirty = false;
+      var keepOpen = openLessons;
+      renderCourse();
+      openLessons = keepOpen;
+      renderLessons();
+      setStatus('Guardado ✓' + (c.published ? ' · publicado' : ' · borrador'));
+      loadList();
+    }).catch(function (e) { setStatus('No se pudo guardar: ' + e.message, 'err'); });
+  });
+
+  $('preview').addEventListener('click', function () {
+    // Open the window now (inside the click) so pop-up blockers allow it
+    var win = window.open('', '_blank');
+    fetch('/api/courses/' + encodeURIComponent(course.id) + '/preview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Moderator-Key': key() },
+      body: JSON.stringify(course),
+    }).then(function (r) { return r.text(); }).then(function (html) {
+      if (win) { win.document.open(); win.document.write(html); win.document.close(); }
+    });
+  });
+
+  $('delete').addEventListener('click', function () {
+    if (!confirm('¿Borrar el curso «' + course.title + '» con todas sus lecciones e imágenes? No se puede deshacer.')) return;
+    api('DELETE', '/api/courses/' + encodeURIComponent(course.id)).then(function () {
+      course = null; dirty = false;
+      $('editor').hidden = true;
+      loadList();
+    });
+  });
+
+  loadList();
+})();
+</script>
+</body>
+</html>

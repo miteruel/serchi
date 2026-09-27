@@ -205,6 +205,13 @@ La página `/grabar.html` permite grabar con el micrófono las palabras del mini
 - **Versión Delphi:** no tiene grabadora, y en ella el minicurso solo reproduce los
   ficheros MP3 de `public/audio/`.
 
+## Editor de cursos
+
+`/editor.html` permite a los moderadores crear cursos (guía en [EDITOR.md](EDITOR.md)).
+Los cursos y sus imágenes se guardan en las tablas `courses` y `course_images`, así que
+las copias de seguridad los incluyen. Los cursos publicados se ven en `/kurso/<dirección>`
+y en `/kursoj`. Como la grabadora, el editor solo funciona con la versión Node.
+
 ## Versión Node y versión Delphi a la vez
 
 Las dos versiones pueden usar el mismo fichero SQLite. Node lo lee en cada petición,
