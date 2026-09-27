@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   Globe, 
   Moon, 
@@ -49,8 +49,30 @@ export const Header: React.FC<HeaderProps> = ({
     onUpdateSettings({ theme: nextTheme });
   };
 
+  // Language menu: opens on click/tap (touch screens have no hover) and closes on
+  // choosing a language, tapping outside or pressing Escape.
+  const [langOpen, setLangOpen] = useState(false);
+  const langMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!langOpen) return;
+    const onPointerDown = (e: PointerEvent) => {
+      if (langMenuRef.current && !langMenuRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLangOpen(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [langOpen]);
+
   const handleLanguageChange = (lang: Language) => {
     onUpdateSettings({ language: lang });
+    setLangOpen(false);
   };
 
   return (
@@ -177,16 +199,30 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           {/* Language Selector Dropdown */}
-          <div className="relative group">
+          <div className="relative group" ref={langMenuRef}>
             <button
+              type="button"
+              onClick={() => setLangOpen((open) => !open)}
+              aria-haspopup="menu"
+              aria-expanded={langOpen}
               className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 text-xs font-semibold rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer"
               aria-label={t.changeLanguageAria}
             >
               <Globe className="hidden sm:block w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span className="uppercase">{settings.language}</span>
             </button>
-            <div className="absolute right-0 mt-1 w-32 py-1 bg-white dark:bg-[#303134] border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all z-50">
+            <div
+              role="menu"
+              className={`absolute right-0 mt-1 w-32 py-1 bg-white dark:bg-[#303134] border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg transition-all z-50 ${
+                langOpen
+                  ? 'opacity-100 pointer-events-auto'
+                  : 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'
+              }`}
+            >
               <button
+                type="button"
+                role="menuitemradio"
+                aria-checked={settings.language === 'eo'}
                 onClick={() => handleLanguageChange('eo')}
                 className={`w-full px-3 py-1.5 text-left text-xs font-medium flex items-center justify-between ${
                   settings.language === 'eo' ? 'text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50/50 dark:bg-emerald-950/30' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -196,6 +232,9 @@ export const Header: React.FC<HeaderProps> = ({
                 {settings.language === 'eo' && '✓'}
               </button>
               <button
+                type="button"
+                role="menuitemradio"
+                aria-checked={settings.language === 'es'}
                 onClick={() => handleLanguageChange('es')}
                 className={`w-full px-3 py-1.5 text-left text-xs font-medium flex items-center justify-between ${
                   settings.language === 'es' ? 'text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50/50 dark:bg-emerald-950/30' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -205,6 +244,9 @@ export const Header: React.FC<HeaderProps> = ({
                 {settings.language === 'es' && '✓'}
               </button>
               <button
+                type="button"
+                role="menuitemradio"
+                aria-checked={settings.language === 'en'}
                 onClick={() => handleLanguageChange('en')}
                 className={`w-full px-3 py-1.5 text-left text-xs font-medium flex items-center justify-between ${
                   settings.language === 'en' ? 'text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50/50 dark:bg-emerald-950/30' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
