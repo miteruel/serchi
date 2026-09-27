@@ -306,8 +306,8 @@ end;
 
 procedure TWebModuleMain.FillCategoryOptions(AList: TObjectList<TOptionVM>; const ASelected: string);
 const
-  Cats: array[0..8] of string = ('all', 'courses', 'news', 'projects', 'tools',
-    'literature', 'media', 'community', 'radio');
+  Cats: array[0..9] of string = ('all', 'courses', 'news', 'projects', 'tools',
+    'literature', 'media', 'community', 'radio', 'people');
 var
   C: string;
 begin
@@ -404,6 +404,13 @@ begin
     for Res in Found do
       if Res.StreamType <> '' then
         VM.Results.Add(ResourceVM(Res));
+    // Famous Esperantists: featured people
+    Found.Clear;
+    Filters.Category := 'people';
+    Store.Search(Filters, Found);
+    for Res in Found do
+      if Res.Featured then
+        VM.People.Add(ResourceVM(Res));
     Render('home.html', VM);
   finally
     Found.Free;

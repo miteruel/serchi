@@ -11,7 +11,8 @@ export type Category =
   | 'literature' 
   | 'media' 
   | 'community'
-  | 'radio';
+  | 'radio'
+  | 'people';
 
 export type Format = 
   | 'website' 

@@ -196,7 +196,7 @@ type
   TSearchVM = class
   private
     FQuery, FDisplayQuery, FStats, FExactPhrase, FAnyWords, FExcludeWords: string;
-    FResults: TObjectList<TResourceVM>;
+    FResults, FPeople: TObjectList<TResourceVM>;
     FKnowledge: TKnowledgeVM;
     FTotal: Integer;
     FHasMore: Boolean;
@@ -206,6 +206,7 @@ type
     FPopular: TObjectList<TTextVM>;
     FLiveQuery: string;
     function GetHasResults: Boolean;
+    function GetHasPeople: Boolean;
     function GetHasKnowledge: Boolean;
     function GetHasQuery: Boolean;
   public
@@ -219,6 +220,9 @@ type
     property Total: Integer read FTotal write FTotal;
     property Results: TObjectList<TResourceVM> read FResults;
     property HasResults: Boolean read GetHasResults;
+    { Home page: famous Esperantists (featured resources of the 'people' category) }
+    property People: TObjectList<TResourceVM> read FPeople;
+    property HasPeople: Boolean read GetHasPeople;
     property Knowledge: TKnowledgeVM read FKnowledge;
     property HasKnowledge: Boolean read GetHasKnowledge;
     property HasMore: Boolean read FHasMore write FHasMore;
@@ -691,6 +695,7 @@ constructor TSearchVM.Create;
 begin
   inherited;
   FResults := TObjectList<TResourceVM>.Create(True);
+  FPeople := TObjectList<TResourceVM>.Create(True);
   FLevelOptions := TObjectList<TOptionVM>.Create(True);
   FCategoryOptions := TObjectList<TOptionVM>.Create(True);
   FFormatOptions := TObjectList<TOptionVM>.Create(True);
@@ -706,6 +711,7 @@ begin
   FCategoryOptions.Free;
   FLevelOptions.Free;
   FKnowledge.Free;
+  FPeople.Free;
   FResults.Free;
   inherited;
 end;
@@ -719,6 +725,11 @@ end;
 function TSearchVM.GetHasResults: Boolean;
 begin
   Result := FResults.Count > 0;
+end;
+
+function TSearchVM.GetHasPeople: Boolean;
+begin
+  Result := FPeople.Count > 0;
 end;
 
 function TSearchVM.GetHasKnowledge: Boolean;

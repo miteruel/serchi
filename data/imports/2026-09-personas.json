@@ -1,0 +1,635 @@
+[
+  {
+    "title": "L. L. Zamenhof",
+    "url": "https://en.wikipedia.org/wiki/L._L._Zamenhof",
+    "description": {
+      "eo": "Okulkuracisto el Bjalistoko (1859–1917) kiu publikigis Esperanton en 1887.",
+      "es": "Oftalmólogo de Białystok (1859–1917) que publicó el esperanto en 1887.",
+      "en": "Ophthalmologist from Białystok (1859–1917) who published Esperanto in 1887."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "zamenhof",
+      "iniciatinto",
+      "polio"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Lidia Zamenhof",
+    "url": "https://en.wikipedia.org/wiki/Lidia_Zamenhof",
+    "description": {
+      "eo": "Plej juna filino de Zamenhof (1904–1942), instruistino de Esperanto kaj tradukistino; murdita en Treblinka.",
+      "es": "Hija menor de Zamenhof (1904–1942), profesora de esperanto y traductora; asesinada en Treblinka.",
+      "en": "Zamenhof's youngest daughter (1904–1942), Esperanto teacher and translator; murdered at Treblinka."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "zamenhof",
+      "instruistino",
+      "bahaa",
+      "polio"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Julio Belenguer (1868–1927)",
+    "url": "https://bitoteko.esperanto.es/xmlui/handle/11013/5547",
+    "description": {
+      "eo": "Pioniro de Esperanto en Teruelo, naskita en Alcorisa; libro de Serafín Aldecoa pri li en la Bitoteko.",
+      "es": "Pionero del esperanto en Teruel, nacido en Alcorisa, que logró su enseñanza reglada en la ciudad; libro de Serafín Aldecoa sobre él en la Bitoteko.",
+      "en": "Pioneer of Esperanto in Teruel, born in Alcorisa, who got it taught officially in the city; book by Serafín Aldecoa about him in the Bitoteko."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "belenguer",
+      "teruelo",
+      "aragono",
+      "alcorisa",
+      "pioniro"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Julio Baghy",
+    "url": "https://en.wikipedia.org/wiki/Julio_Baghy",
+    "description": {
+      "eo": "Hungara aktoro kaj poeto (1891–1967), unu el la ĉefaj esperantaj verkistoj; aŭtoro de Printempo en aŭtuno.",
+      "es": "Actor y poeta húngaro (1891–1967), uno de los grandes autores en esperanto; autor de Printempo en aŭtuno.",
+      "en": "Hungarian actor and poet (1891–1967), one of the leading Esperanto authors; wrote Printempo en aŭtuno."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "baghy",
+      "hungario",
+      "poeto",
+      "verkisto"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Kálmán Kalocsay",
+    "url": "https://en.wikipedia.org/wiki/K%C3%A1lm%C3%A1n_Kalocsay",
+    "description": {
+      "eo": "Hungara kuracisto kaj poeto (1891–1976); aŭtoro de Mondo kaj Koro kaj kunaŭtoro de Plena Gramatiko de Esperanto.",
+      "es": "Médico y poeta húngaro (1891–1976); autor de Mondo kaj Koro y coautor de la Plena Gramatiko de Esperanto.",
+      "en": "Hungarian doctor and poet (1891–1976); author of Mondo kaj Koro and co-author of Plena Gramatiko de Esperanto."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "kalocsay",
+      "hungario",
+      "poeto",
+      "gramatiko"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Raymond Schwartz",
+    "url": "https://en.wikipedia.org/wiki/Raymond_Schwartz",
+    "description": {
+      "eo": "Franca bankisto kaj humuristo (1894–1973), aŭtoro de poemoj, romanoj kaj kabaretaj skeĉoj en Esperanto.",
+      "es": "Banquero y humorista francés (1894–1973), autor de poemas, novelas y números de cabaret en esperanto.",
+      "en": "French banker and humorist (1894–1973), author of poems, novels and cabaret sketches in Esperanto."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "schwartz",
+      "francio",
+      "humuro",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "William Auld",
+    "url": "https://en.wikipedia.org/wiki/William_Auld",
+    "description": {
+      "eo": "Skota poeto (1924–2006), aŭtoro de La infana raso; kandidato por la Nobel-premio pri literaturo.",
+      "es": "Poeta escocés (1924–2006), autor de La infana raso; propuesto para el Nobel de Literatura.",
+      "en": "Scottish poet (1924–2006), author of La infana raso; nominated for the Nobel Prize in Literature."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "auld",
+      "skotlando",
+      "poeto",
+      "verkisto"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Marjorie Boulton",
+    "url": "https://en.wikipedia.org/wiki/Marjorie_Boulton",
+    "description": {
+      "eo": "Brita verkistino kaj poetino (1924–2017), lernantino de Tolkien kaj C. S. Lewis, aŭtoro de biografio de Zamenhof.",
+      "es": "Escritora y poeta británica (1924–2017), alumna de Tolkien y C. S. Lewis, autora de una biografía de Zamenhof.",
+      "en": "British writer and poet (1924–2017), taught by Tolkien and C. S. Lewis, author of a Zamenhof biography."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "boulton",
+      "britio",
+      "poetino",
+      "verkistino"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Claude Piron",
+    "url": "https://en.wikipedia.org/wiki/Claude_Piron",
+    "description": {
+      "eo": "Svisa psikologo kaj tradukisto de UN kaj OMS (1931–2008); aŭtoro de Gerda malaperis! kaj La bona lingvo.",
+      "es": "Psicólogo suizo y traductor de la ONU y la OMS (1931–2008); autor de Gerda malaperis! y La bona lingvo.",
+      "en": "Swiss psychologist and UN/WHO translator (1931–2008); author of Gerda malaperis! and La bona lingvo."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "piron",
+      "svislando",
+      "psikologo",
+      "verkisto"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Tibor Sekelj",
+    "url": "https://en.wikipedia.org/wiki/Tibor_Sekelj",
+    "description": {
+      "eo": "Esploristo kaj vojaĝanto (1912–1988), aŭtoro de Kumeŭaŭa, la filo de la ĝangalo, tradukita al 17 lingvoj.",
+      "es": "Explorador y viajero (1912–1988), autor de Kumeŭaŭa, la filo de la ĝangalo, traducido a 17 lenguas.",
+      "en": "Explorer and traveller (1912–1988), author of Kumeŭaŭa, la filo de la ĝangalo, translated into 17 languages."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "sekelj",
+      "esploristo",
+      "vojaĝoj",
+      "verkisto"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Reinhard Selten",
+    "url": "https://en.wikipedia.org/wiki/Reinhard_Selten",
+    "description": {
+      "eo": "Germana ekonomikisto (1930–2016), Nobel-premiito pri ekonomiko en 1994 kaj esperantisto ekde 1959.",
+      "es": "Economista alemán (1930–2016), premio Nobel de Economía en 1994 y esperantista desde 1959.",
+      "en": "German economist (1930–2016), 1994 Nobel laureate in economics and Esperanto speaker since 1959."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "selten",
+      "germanio",
+      "nobel-premio",
+      "scienco"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Spomenka Štimec",
+    "url": "https://en.wikipedia.org/wiki/Spomenka_%C5%A0timec",
+    "description": {
+      "eo": "Kroata verkistino (naskita en 1949), membro de la Akademio de Esperanto kaj aŭtoro de romanoj kaj vojaĝlibroj.",
+      "es": "Escritora croata (nacida en 1949), miembro de la Academia de Esperanto y autora de novelas y libros de viajes.",
+      "en": "Croatian writer (born 1949), member of the Academy of Esperanto and author of novels and travel books."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "štimec",
+      "kroatio",
+      "verkistino"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Jorge Camacho",
+    "url": "https://en.wikipedia.org/wiki/Jorge_Camacho_(writer)",
+    "description": {
+      "eo": "Hispana verkisto kaj poeto el Zafra (naskita en 1966), gajninto de la Premio Grabowski.",
+      "es": "Escritor y poeta español de Zafra (nacido en 1966), ganador del premio Grabowski.",
+      "en": "Spanish writer and poet from Zafra (born 1966), winner of the Grabowski Prize."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "camacho",
+      "hispanio",
+      "poeto",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Anna Löwenstein",
+    "url": "https://en.wikipedia.org/wiki/Anna_L%C3%B6wenstein",
+    "description": {
+      "eo": "Brita verkistino kaj instruistino (naskita en 1951), aŭtoro de La ŝtona urbo kaj kunaŭtoro de la kurso de Duolingo.",
+      "es": "Escritora y profesora británica (nacida en 1951), autora de La ŝtona urbo y coautora del curso de Duolingo.",
+      "en": "British writer and teacher (born 1951), author of La ŝtona urbo and co-author of the Duolingo course."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "löwenstein",
+      "britio",
+      "verkistino",
+      "romanoj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Trevor Steele",
+    "url": "https://en.wikipedia.org/wiki/Trevor_Steele",
+    "description": {
+      "eo": "Aŭstralia verkisto (naskita en 1940), aŭtoro de romanoj kiel Flugi kun kakatuoj; iama ĝenerala direktoro de UEA.",
+      "es": "Escritor australiano (nacido en 1940), autor de novelas como Flugi kun kakatuoj; fue director general de la UEA.",
+      "en": "Australian writer (born 1940), author of novels such as Flugi kun kakatuoj; former director general of UEA."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "steele",
+      "aŭstralio",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Hector Hodler",
+    "url": "https://en.wikipedia.org/wiki/Hector_Hodler",
+    "description": {
+      "eo": "Svisa esperantisto (1887–1920), fondinto de UEA kaj de la gazeto Juna Esperantisto.",
+      "es": "Esperantista suizo (1887–1920), fundador de la UEA y de la revista Juna Esperantisto.",
+      "en": "Swiss Esperantist (1887–1920), founder of UEA and of the magazine Juna Esperantisto."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "hodler",
+      "svislando",
+      "uea"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Edmond Privat",
+    "url": "https://en.wikipedia.org/wiki/Edmond_Privat",
+    "description": {
+      "eo": "Svisa historiisto kaj ĵurnalisto (1889–1962), redaktoro de la revuo Esperanto kaj aŭtoro de Vivo de Zamenhof.",
+      "es": "Historiador y periodista suizo (1889–1962), director de la revista Esperanto y autor de Vivo de Zamenhof.",
+      "en": "Swiss historian and journalist (1889–1962), editor of the magazine Esperanto and author of Vivo de Zamenhof."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "privat",
+      "svislando",
+      "uea",
+      "historio"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Antoni Grabowski",
+    "url": "https://en.wikipedia.org/wiki/Antoni_Grabowski",
+    "description": {
+      "eo": "Pola kemia inĝeniero (1857–1921), unu el la unuaj grandaj tradukistoj al Esperanto (Puŝkin, Goethe).",
+      "es": "Ingeniero químico polaco (1857–1921), uno de los primeros grandes traductores al esperanto (Pushkin, Goethe).",
+      "en": "Polish chemical engineer (1857–1921), one of the first great translators into Esperanto (Pushkin, Goethe)."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "grabowski",
+      "polio",
+      "tradukisto",
+      "pioniro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Eugène Lanti",
+    "url": "https://en.wikipedia.org/wiki/Eug%C3%A8ne_Lanti",
+    "description": {
+      "eo": "Franca socialisto kaj verkisto (1879–1947), fondinto de SAT kaj teoriisto de la sennaciismo.",
+      "es": "Socialista y escritor francés (1879–1947), fundador de SAT y teórico del anacionalismo.",
+      "en": "French socialist and writer (1879–1947), founder of SAT and theorist of anationalism."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "lanti",
+      "francio",
+      "sat",
+      "sennaciismo"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Ivo Lapenna",
+    "url": "https://en.wikipedia.org/wiki/Ivo_Lapenna",
+    "description": {
+      "eo": "Profesoro pri juro (1909–1987), prezidanto de UEA (1964–1974) kaj motoro de la Montevidea rezolucio de Unesko en 1954.",
+      "es": "Profesor de Derecho (1909–1987), presidente de la UEA (1964–1974) e impulsor de la resolución de Montevideo de la Unesco (1954).",
+      "en": "Law professor (1909–1987), UEA president (1964–1974) and driving force behind UNESCO's 1954 Montevideo Resolution."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "lapenna",
+      "uea",
+      "unesko",
+      "juro"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Humphrey Tonkin",
+    "url": "https://en.wikipedia.org/wiki/Humphrey_Tonkin",
+    "description": {
+      "eo": "Brit-usona profesoro pri angla literaturo (naskita en 1939), prezidanto de UEA kaj fondinto de la revuo Kontakto.",
+      "es": "Profesor británico-estadounidense de literatura inglesa (nacido en 1939), presidente de la UEA y fundador de la revista Kontakto.",
+      "en": "British-American professor of English (born 1939), UEA president and founder of the magazine Kontakto."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "tonkin",
+      "uea",
+      "usono",
+      "tradukisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Tivadar Soros",
+    "url": "https://en.wikipedia.org/wiki/Tivadar_Soros",
+    "description": {
+      "eo": "Hungara advokato kaj verkisto (1893–1968), fondinto de la eldonejo kaj revuo Literatura Mondo; patro de George Soros.",
+      "es": "Abogado y escritor húngaro (1893–1968), fundador de la editorial y revista Literatura Mondo; padre de George Soros.",
+      "en": "Hungarian lawyer and writer (1893–1968), founder of the Literatura Mondo magazine and publishing house; father of George Soros."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "soros",
+      "hungario",
+      "literatura mondo",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Vasili Eroŝenko",
+    "url": "https://en.wikipedia.org/wiki/Vasili_Eroshenko",
+    "description": {
+      "eo": "Blinda rusa verkisto kaj vojaĝanto (1890–1952) kiu verkis en Esperanto kaj la japana.",
+      "es": "Escritor y viajero ruso ciego (1890–1952) que escribió en esperanto y en japonés.",
+      "en": "Blind Russian writer and traveller (1890–1952) who wrote in Esperanto and Japanese."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "eroŝenko",
+      "rusio",
+      "japanio",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Kenji Miyazawa",
+    "url": "https://en.wikipedia.org/wiki/Kenji_Miyazawa",
+    "description": {
+      "eo": "Japana poeto kaj verkisto de infanliteraturo (1896–1933) kiu lernis Esperanton kaj tradukis al ĝi kelkajn poemojn.",
+      "es": "Poeta y autor japonés de literatura infantil (1896–1933) que aprendió esperanto y tradujo a él algunos de sus poemas.",
+      "en": "Japanese poet and children's author (1896–1933) who learned Esperanto and translated some of his poems into it."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "miyazawa",
+      "japanio",
+      "poeto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Julio Mangada",
+    "url": "https://en.wikipedia.org/wiki/Julio_Mangada",
+    "description": {
+      "eo": "Hispana respublikana militisto (1877–1946), prezidanto de la Hispana Esperanto-Asocio kaj tradukisto de Cervantes.",
+      "es": "Militar republicano español (1877–1946), presidente de la Asociación Española de Esperanto y traductor de Cervantes.",
+      "en": "Spanish Republican officer (1877–1946), president of the Spanish Esperanto Association and translator of Cervantes."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "mangada",
+      "hispanio",
+      "madrido",
+      "tradukisto"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Juan Régulo Pérez",
+    "url": "https://es.wikipedia.org/wiki/Juan_R%C3%A9gulo_P%C3%A9rez",
+    "description": {
+      "eo": "Kanaria profesoro (1914–1993), fondinto de la eldonejo Stafeto, kiu eldonis preskaŭ cent esperantajn titolojn.",
+      "es": "Profesor canario (1914–1993), fundador de la editorial Stafeto, que publicó casi cien títulos en esperanto.",
+      "en": "Canarian professor (1914–1993), founder of the Stafeto publishing house, which issued almost a hundred Esperanto titles."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "régulo",
+      "kanarioj",
+      "stafeto",
+      "eldonisto"
+    ],
+    "isFree": true,
+    "featured": true
+  },
+  {
+    "title": "Frederic Pujulà i Vallès",
+    "url": "https://en.wikipedia.org/wiki/Frederic_Pujul%C3%A0_i_Vall%C3%A8s",
+    "description": {
+      "eo": "Kataluna ĵurnalisto kaj dramisto (1877–1962), kunorganizinto de la 5-a Universala Kongreso en Barcelono (1909).",
+      "es": "Periodista y dramaturgo catalán (1877–1962), coorganizador del 5.º Congreso Universal de Esperanto en Barcelona (1909).",
+      "en": "Catalan journalist and playwright (1877–1962), co-organiser of the 5th World Esperanto Congress in Barcelona (1909)."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "pujulà",
+      "katalunio",
+      "barcelono",
+      "verkisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Vicente Inglada Ors",
+    "url": "https://es.wikipedia.org/wiki/Vicente_Inglada_Ors",
+    "description": {
+      "eo": "Hispana sismologo (1879–1949), redaktoro de La Suno Hispana kaj tradukisto de Jacinto Benavente.",
+      "es": "Sismólogo español (1879–1949), redactor de La Suno Hispana y traductor de Jacinto Benavente al esperanto.",
+      "en": "Spanish seismologist (1879–1949), editor of La Suno Hispana and translator of Jacinto Benavente into Esperanto."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "inglada",
+      "hispanio",
+      "scienco",
+      "tradukisto"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Emilio Gastón Ugarte",
+    "url": "https://es.wikipedia.org/wiki/Emilio_Gast%C3%B3n_Ugarte",
+    "description": {
+      "eo": "Aragona advokato (1877–1925) kiu enkondukis Esperanton en Aragonon kaj kunfondis la asocion Frateco (1908).",
+      "es": "Abogado aragonés (1877–1925) que introdujo el esperanto en Aragón y cofundó la asociación Frateco (1908).",
+      "en": "Aragonese lawyer (1877–1925) who brought Esperanto to Aragon and co-founded the Frateco association (1908)."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "gastón",
+      "aragono",
+      "zaragozo",
+      "frateco"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Emilio Gastón Sanz",
+    "url": "https://es.wikipedia.org/wiki/Emilio_Gast%C3%B3n_Sanz",
+    "description": {
+      "eo": "Aragona advokato kaj politikisto (1935–2018), la unua Justicia de Aragón en demokratio kaj esperantisto.",
+      "es": "Abogado y político aragonés (1935–2018), primer Justicia de Aragón de la democracia y esperantista.",
+      "en": "Aragonese lawyer and politician (1935–2018), first Justicia de Aragón (ombudsman) of the democratic era and an Esperantist."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "gastón",
+      "aragono",
+      "zaragozo",
+      "justicia"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Pedro Ramón y Cajal",
+    "url": "https://es.wikipedia.org/wiki/Pedro_Ram%C3%B3n_y_Cajal",
+    "description": {
+      "eo": "Hispana kuracisto (1854–1950), frato de Santiago Ramón y Cajal kaj kunfondinto de Frateco en Zaragozo.",
+      "es": "Médico español (1854–1950), hermano de Santiago Ramón y Cajal y cofundador de Frateco en Zaragoza.",
+      "en": "Spanish physician (1854–1950), brother of Santiago Ramón y Cajal and co-founder of Frateco in Zaragoza."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "ramón y cajal",
+      "aragono",
+      "zaragozo",
+      "medicino"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Listo de famaj esperantistoj (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/List_of_Esperanto_speakers",
+    "description": {
+      "eo": "Longa listo de konataj personoj kiuj parolis aŭ lernis Esperanton, laŭ landoj kaj fakoj.",
+      "es": "Larga lista de personas conocidas que hablaron o aprendieron esperanto, por países y ámbitos.",
+      "en": "Long list of notable people who spoke or learned Esperanto, by country and field."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "listo",
+      "esperantistoj",
+      "biografioj"
+    ],
+    "isFree": true
+  },
+  {
+    "title": "Listo de esperantlingvaj verkistoj (Vikipedio)",
+    "url": "https://en.wikipedia.org/wiki/List_of_Esperanto-language_writers",
+    "description": {
+      "eo": "Listo de verkistoj kiuj verkis en Esperanto.",
+      "es": "Lista de escritores que han escrito en esperanto.",
+      "en": "List of writers who have written in Esperanto."
+    },
+    "category": "people",
+    "level": "all",
+    "format": "website",
+    "tags": [
+      "listo",
+      "verkistoj",
+      "literaturo"
+    ],
+    "isFree": true
+  }
+]

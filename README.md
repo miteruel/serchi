@@ -122,6 +122,17 @@ PR y commits correspondientes.
    Explodes*) y el club de ajedrez esperantista de Chess.com. La base de datos queda con
    497 enlaces.
 
+10. **Sección de esperantistas célebres.** Nueva categoría *Personas* (`people`, esquema
+    v2 de la base de datos; `server/db.ts` migra solo las bases de datos antiguas) con
+    33 fichas (`data/imports/2026-09-personas.json`): Zamenhof y su hija Lidia, autores
+    como Baghy, Kalocsay, Auld, Marjorie Boulton, Piron o Spomenka Štimec, el Nobel
+    Reinhard Selten, figuras del esperanto en España (Julio Mangada, Juan Régulo Pérez,
+    Vicente Inglada) y en Aragón (Emilio Gastón, Pedro Ramón y Cajal y el turolense
+    Julio Belenguer). La portada muestra las 12 destacadas y al pulsar en una se busca
+    todo lo relacionado con ella. Julio Belenguer, Julio Baghy, William Auld, Claude
+    Piron y Tibor Sekelj tienen además panel de conocimiento. Está también en la versión
+    Delphi. La base de datos queda con 528 enlaces y 10 paneles.
+
 ### Pendiente y limitaciones conocidas
 
 - **Enlaces comprobados solo por búsqueda:** desde el entorno de trabajo no se pueden abrir

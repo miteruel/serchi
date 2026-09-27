@@ -25,11 +25,11 @@ export const ROOT_DIR = path.resolve(__dirname, '..');
 export const DEFAULT_DB_PATH = path.join(ROOT_DIR, 'data', 'serchi.db');
 const SCHEMA_PATH = path.join(ROOT_DIR, 'data', 'schema.sql');
 
-const CATEGORIES: Category[] = ['courses', 'news', 'projects', 'tools', 'literature', 'media', 'community', 'radio'];
+const CATEGORIES: Category[] = ['courses', 'news', 'projects', 'tools', 'literature', 'media', 'community', 'radio', 'people'];
 const STREAM_TYPES: StreamType[] = ['spotify', 'zeno', 'rss', 'audio'];
 
 /** Schema version stored in PRAGMA user_version (see migrate()). */
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 const LEVELS: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];
 const FORMATS: Format[] = ['website', 'app', 'podcast', 'book', 'video', 'forum', 'course', 'tool'];
 const LANGS = ['eo', 'es', 'en'] as const;
@@ -56,34 +56,33 @@ export function openDatabase(file = process.env.SERCHI_DB || DEFAULT_DB_PATH): D
 /**
  * Upgrades a database created with an older schema.
  *  v0 -> v1: adds the 'radio' category and the stream_type/stream_url columns.
- *            SQLite cannot change a CHECK constraint in place, so the
- *            resources table is rebuilt from the CREATE TABLE in schema.sql.
+ *  v1 -> v2: adds the 'people' category (famous Esperanto speakers).
+ *  SQLite cannot change a CHECK constraint in place, so in both cases the
+ *  resources table is rebuilt from the CREATE TABLE in schema.sql.
  */
 function migrate(db: DatabaseSync, schema: string): void {
   const version = (db.prepare('PRAGMA user_version').get() as Row).user_version as number;
   if (version >= SCHEMA_VERSION) return;
 
-  if (version < 1) {
-    const create = schema.match(/CREATE TABLE IF NOT EXISTS resources \([\s\S]*?\n\);/);
-    if (!create) throw new Error('schema.sql: resources table not found');
-    const oldColumns = (db.prepare('PRAGMA table_info(resources)').all() as Row[]).map((c) => c.name as string);
-    const columns = oldColumns.join(', ');
+  const create = schema.match(/CREATE TABLE IF NOT EXISTS resources \([\s\S]*?\n\);/);
+  if (!create) throw new Error('schema.sql: resources table not found');
+  const oldColumns = (db.prepare('PRAGMA table_info(resources)').all() as Row[]).map((c) => c.name as string);
+  const columns = oldColumns.join(', ');
 
-    db.exec('PRAGMA foreign_keys = OFF');
-    db.exec('BEGIN');
-    try {
-      db.exec(create[0].replace('CREATE TABLE IF NOT EXISTS resources', 'CREATE TABLE resources_v1'));
-      db.exec(`INSERT INTO resources_v1 (${columns}) SELECT ${columns} FROM resources`);
-      db.exec('DROP TABLE resources');
-      db.exec('ALTER TABLE resources_v1 RENAME TO resources');
-      db.exec('PRAGMA user_version = 1');
-      db.exec('COMMIT');
-    } catch (err) {
-      db.exec('ROLLBACK');
-      throw err;
-    } finally {
-      db.exec('PRAGMA foreign_keys = ON');
-    }
+  db.exec('PRAGMA foreign_keys = OFF');
+  db.exec('BEGIN');
+  try {
+    db.exec(create[0].replace('CREATE TABLE IF NOT EXISTS resources', 'CREATE TABLE resources_new'));
+    db.exec(`INSERT INTO resources_new (${columns}) SELECT ${columns} FROM resources`);
+    db.exec('DROP TABLE resources');
+    db.exec('ALTER TABLE resources_new RENAME TO resources');
+    db.exec(`PRAGMA user_version = ${SCHEMA_VERSION}`);
+    db.exec('COMMIT');
+  } catch (err) {
+    db.exec('ROLLBACK');
+    throw err;
+  } finally {
+    db.exec('PRAGMA foreign_keys = ON');
   }
 }
 
