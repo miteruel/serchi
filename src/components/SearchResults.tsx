@@ -21,7 +21,9 @@ import {
   Wrench,
   Users,
   Plus,
-  Globe
+  Globe,
+  Radio,
+  Play
 } from 'lucide-react';
 import { 
   EsperantoResource, 
@@ -47,6 +49,7 @@ interface SearchResultsProps {
   savedIds: string[];
   onToggleSave: (id: string) => void;
   onOpenPreview: (resource: EsperantoResource) => void;
+  onPlay: (resource: EsperantoResource) => void;
   onOpenAdvanced: () => void;
   onOpenAddResource?: (query?: string, tab?: 'single' | 'liveCrawler') => void;
 }
@@ -63,6 +66,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
   savedIds,
   onToggleSave,
   onOpenPreview,
+  onPlay,
   onOpenAdvanced,
   onOpenAddResource,
 }) => {
@@ -86,6 +90,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     literature: <BookOpen className="w-3.5 h-3.5" />,
     media: <Headphones className="w-3.5 h-3.5" />,
     community: <Users className="w-3.5 h-3.5" />,
+    radio: <Radio className="w-3.5 h-3.5" />,
   };
 
   const categoriesList: Category[] = [
@@ -96,7 +101,8 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
     'literature',
     'media',
     'projects',
-    'community'
+    'community',
+    'radio'
   ];
 
   const levelsList: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];
@@ -454,6 +460,17 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                         {t.visitSite}
                         <ExternalLink className="w-3 h-3" />
                       </a>
+
+                      {item.stream && (
+                        <button
+                          onClick={() => onPlay(item)}
+                          className="text-white bg-emerald-600 hover:bg-emerald-500 rounded-full px-2.5 py-0.5 font-semibold flex items-center gap-1 transition-colors"
+                          title={t.listenBtn}
+                        >
+                          <Play className="w-3 h-3 fill-current" />
+                          {t.listenBtn}
+                        </button>
+                      )}
 
                       <button
                         onClick={() => onOpenPreview(item)}

@@ -253,7 +253,8 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
     'literature',
     'media',
     'projects',
-    'community'
+    'community',
+    'radio'
   ];
 
   const levelsList: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];

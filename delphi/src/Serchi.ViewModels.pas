@@ -41,6 +41,16 @@ type
     property Url: string read FUrl;
   end;
 
+  TEpisodeVM = class
+  private
+    FTitle, FAudioUrl, FPublished: string;
+  public
+    constructor Create(const ATitle, AAudioUrl, APublished: string);
+    property Title: string read FTitle;
+    property AudioUrl: string read FAudioUrl;
+    property Published: string read FPublished;
+  end;
+
   { Global, per-request information used by the layout }
   TAppVM = class
   private
@@ -100,7 +110,10 @@ type
     FDescription, FCategoryLabel, FLevelLabel, FFormatLabel: string;
     FTags: TObjectList<TTextVM>;
     FFeatures: TObjectList<TTextVM>;
+    FEpisodes: TObjectList<TEpisodeVM>;
+    FEpisodesError: Boolean;
     function GetLanguagesText: string;
+    function GetEmbedUrl: string;
   public
     constructor Create(ARes: TResource; const ALang: string; ASaved: Boolean;
       const ACategoryLabel, ALevelLabel, AFormatLabel: string);
@@ -141,6 +154,27 @@ type
     property Tags: TObjectList<TTextVM> read FTags;
     property Features: TObjectList<TTextVM> read FFeatures;
     property HasFeatures: Boolean read GetHasFeatures;
+    { Online player (radio stations) }
+    function GetHasStream: Boolean;
+    function GetIsSpotify: Boolean;
+    function GetIsZeno: Boolean;
+    function GetIsRss: Boolean;
+    function GetIsAudio: Boolean;
+    function GetStreamUrl: string;
+    function GetHasEpisodes: Boolean;
+    function GetFirstEpisodeUrl: string;
+    property HasStream: Boolean read GetHasStream;
+    property IsSpotify: Boolean read GetIsSpotify;
+    property IsZeno: Boolean read GetIsZeno;
+    property IsRss: Boolean read GetIsRss;
+    property IsAudio: Boolean read GetIsAudio;
+    property StreamUrl: string read GetStreamUrl;
+    { Spotify / Zeno.FM embed player URL derived from the stored page URL }
+    property EmbedUrl: string read GetEmbedUrl;
+    property Episodes: TObjectList<TEpisodeVM> read FEpisodes;
+    property HasEpisodes: Boolean read GetHasEpisodes;
+    property FirstEpisodeUrl: string read GetFirstEpisodeUrl;
+    property EpisodesError: Boolean read FEpisodesError write FEpisodesError;
   end;
 
   TKnowledgeVM = class
@@ -470,10 +504,12 @@ begin
   FFeatures := TObjectList<TTextVM>.Create(True);
   for S in ARes.Features.Get(ALang) do
     FFeatures.Add(TTextVM.Create(S));
+  FEpisodes := TObjectList<TEpisodeVM>.Create(True);
 end;
 
 destructor TResourceVM.Destroy;
 begin
+  FEpisodes.Free;
   FFeatures.Free;
   FTags.Free;
   inherited;
@@ -549,9 +585,78 @@ begin
   Result := FFeatures.Count > 0;
 end;
 
+function TResourceVM.GetHasStream: Boolean;
+begin
+  Result := FRes.StreamType <> '';
+end;
+
+function TResourceVM.GetIsSpotify: Boolean;
+begin
+  Result := FRes.StreamType = 'spotify';
+end;
+
+function TResourceVM.GetIsZeno: Boolean;
+begin
+  Result := FRes.StreamType = 'zeno';
+end;
+
+function TResourceVM.GetIsRss: Boolean;
+begin
+  Result := FRes.StreamType = 'rss';
+end;
+
+function TResourceVM.GetIsAudio: Boolean;
+begin
+  Result := FRes.StreamType = 'audio';
+end;
+
+function TResourceVM.GetStreamUrl: string;
+begin
+  Result := FRes.StreamUrl;
+end;
+
+function TResourceVM.GetEmbedUrl: string;
+var
+  Slug: string;
+begin
+  Result := '';
+  if GetIsSpotify then
+    Result := FRes.StreamUrl.Replace('open.spotify.com/', 'open.spotify.com/embed/')
+  else if GetIsZeno then
+  begin
+    // https://zeno.fm/radio/<slug>/ -> https://zeno.fm/player/<slug>
+    Slug := FRes.StreamUrl.Substring(FRes.StreamUrl.IndexOf('/radio/') + Length('/radio/'));
+    Slug := Slug.Replace('/', '');
+    Result := 'https://zeno.fm/player/' + Slug;
+  end;
+end;
+
+function TResourceVM.GetHasEpisodes: Boolean;
+begin
+  Result := FEpisodes.Count > 0;
+end;
+
+function TResourceVM.GetFirstEpisodeUrl: string;
+begin
+  if FEpisodes.Count > 0 then
+    Result := FEpisodes[0].AudioUrl
+  else
+    Result := '';
+end;
+
 function TResourceVM.GetLanguagesText: string;
 begin
   Result := string.Join(', ', FRes.Languages).ToUpper;
+end;
+
+{ TEpisodeVM }
+
+constructor TEpisodeVM.Create(const ATitle, AAudioUrl, APublished: string);
+begin
+  inherited Create;
+  FTitle := ATitle;
+  FAudioUrl := AAudioUrl;
+  FPublished := APublished;
 end;
 
 { TKnowledgeVM }

@@ -1,7 +1,8 @@
 -- Serĉilo database schema (SQLite 3).
 -- Shared by the Node/React version (server/db.ts) and the Delphi version
 -- (delphi/src/Serchi.Store.pas). Every statement is idempotent so the schema
--- can be applied on every start.
+-- can be applied on every start. Databases created with an older schema are
+-- upgraded by server/db.ts (PRAGMA user_version, currently 1).
 
 PRAGMA foreign_keys = ON;
 
@@ -15,7 +16,7 @@ CREATE TABLE IF NOT EXISTS resources (
   description_eo TEXT NOT NULL DEFAULT '',
   description_es TEXT NOT NULL DEFAULT '',
   description_en TEXT NOT NULL DEFAULT '',
-  category       TEXT NOT NULL CHECK (category IN ('courses','news','projects','tools','literature','media','community')),
+  category       TEXT NOT NULL CHECK (category IN ('courses','news','projects','tools','literature','media','community','radio')),
   level          TEXT NOT NULL DEFAULT 'all' CHECK (level IN ('all','A1','A2','B1','B2','C1')),
   format         TEXT NOT NULL DEFAULT 'website' CHECK (format IN ('website','app','podcast','book','video','forum','course','tool')),
   is_free        INTEGER NOT NULL DEFAULT 1,
@@ -24,6 +25,8 @@ CREATE TABLE IF NOT EXISTS resources (
   year,                                 -- no type: keeps 2015 (number) or '2002-2024' (text) as given
   source         TEXT NOT NULL DEFAULT 'curated' CHECK (source IN ('curated','user','crawled')),
   position       INTEGER NOT NULL DEFAULT 0,  -- display order used as ranking tie-breaker
+  stream_type    TEXT CHECK (stream_type IN ('spotify','zeno','rss','audio')),  -- online player, see src/types
+  stream_url     TEXT,
   created_at     TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
 );
 CREATE INDEX IF NOT EXISTS idx_resources_category ON resources(category);

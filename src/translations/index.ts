@@ -220,6 +220,18 @@ export interface TranslationDictionary {
   footerNonProfit: string;
   ownerNotice: string;
 
+  // Radio section & online player
+  radioSectionTitle: string;
+  radioSectionDesc: string;
+  radioSeeAll: string;
+  listenBtn: string;
+  nowPlaying: string;
+  closePlayer: string;
+  latestEpisodes: string;
+  loadingEpisodes: string;
+  episodesError: string;
+  liveBadge: string;
+
   // Forum Extras
   forumTopicTitleLabel: string;
   forumTopicMessageLabel: string;
@@ -321,6 +333,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       literature: 'Literaturo',
       media: 'Aŭdvidaj & Podkastoj',
       community: 'Komunumo & Eventoj',
+      radio: "Radio",
     },
     
     levels: {
@@ -479,6 +492,16 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     footerWorldwide: 'Tutmonda Esperantujo (Mondo)',
     footerNonProfit: 'Senprofita & Malferma',
     ownerNotice: 'Retejo de Liberanimo Teruel',
+    radioSectionTitle: "Radio en Esperanto",
+    radioSectionDesc: "Aŭskultu rekte staciojn kaj elsendojn en Esperanto el la tuta mondo.",
+    radioSeeAll: "Ĉiuj radiostacioj",
+    listenBtn: "Aŭskulti",
+    nowPlaying: "Nun ludas",
+    closePlayer: "Fermi ludilon",
+    latestEpisodes: "Lastaj elsendoj",
+    loadingEpisodes: "Ŝargante elsendojn…",
+    episodesError: "Ne eblis ŝargi la elsendojn. Provu la retejon de la stacio.",
+    liveBadge: "Rekte",
 
     // Forum Extras
     forumTopicTitleLabel: 'Titolo',
@@ -580,6 +603,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       literature: 'Literatura',
       media: 'Audio, Vídeo y Podcasts',
       community: 'Comunidad y Eventos',
+      radio: "Radio",
     },
     
     levels: {
@@ -738,6 +762,16 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     footerWorldwide: 'Comunidad Mundial del Esperanto (Mundial)',
     footerNonProfit: 'Sin ánimo de lucro y de código abierto',
     ownerNotice: 'Web de Liberanimo Teruel',
+    radioSectionTitle: "Radio en esperanto",
+    radioSectionDesc: "Escucha en directo emisoras y programas en esperanto de todo el mundo.",
+    radioSeeAll: "Todas las emisoras",
+    listenBtn: "Escuchar",
+    nowPlaying: "Sonando",
+    closePlayer: "Cerrar reproductor",
+    latestEpisodes: "Últimas emisiones",
+    loadingEpisodes: "Cargando emisiones…",
+    episodesError: "No se pudieron cargar las emisiones. Prueba en la web de la emisora.",
+    liveBadge: "En directo",
 
     // Forum Extras
     forumTopicTitleLabel: 'Título',
@@ -839,6 +873,7 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
       literature: 'Literature',
       media: 'Audio, Video & Podcasts',
       community: 'Community & Events',
+      radio: "Radio",
     },
     
     levels: {
@@ -997,6 +1032,16 @@ export const TRANSLATIONS: Record<Language, TranslationDictionary> = {
     footerWorldwide: 'Worldwide Esperanto Community (Global)',
     footerNonProfit: 'Non-profit & Open Source',
     ownerNotice: 'Website by Liberanimo Teruel',
+    radioSectionTitle: "Esperanto radio",
+    radioSectionDesc: "Listen live to Esperanto stations and programmes from around the world.",
+    radioSeeAll: "All stations",
+    listenBtn: "Listen",
+    nowPlaying: "Now playing",
+    closePlayer: "Close player",
+    latestEpisodes: "Latest episodes",
+    loadingEpisodes: "Loading episodes…",
+    episodesError: "Couldn't load the episodes. Try the station's website.",
+    liveBadge: "Live",
 
     // Forum Extras
     forumTopicTitleLabel: 'Title',

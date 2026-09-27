@@ -1,7 +1,7 @@
 /**
  * Client for the Serĉilo REST API (server.ts), backed by the SQLite database.
  */
-import { EsperantoResource, KnowledgePanel } from './types';
+import { EsperantoResource, KnowledgePanel, RadioEpisode } from './types';
 
 async function getJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -45,4 +45,10 @@ export async function addResources(
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
   return data;
+}
+
+/** Latest episodes of a station whose player is a podcast feed. */
+export async function fetchEpisodes(resourceId: string): Promise<RadioEpisode[]> {
+  const data = await getJson<{ episodes: RadioEpisode[] }>(`/api/radio/${encodeURIComponent(resourceId)}/episodes`);
+  return data.episodes;
 }

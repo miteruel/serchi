@@ -3,7 +3,8 @@
  *
  * The database file (data/serchi.db by default, or SERCHI_DB) holds the
  * resource index and the knowledge panels. The schema lives in data/schema.sql
- * and is applied on every open, so a missing database is created empty.
+ * and is applied on every open, so a missing database is created empty;
+ * databases created with an older schema are upgraded by migrate().
  */
 import { DatabaseSync } from 'node:sqlite';
 import fs from 'fs';
@@ -15,6 +16,8 @@ import type {
   Format,
   KnowledgePanel,
   Level,
+  ResourceStream,
+  StreamType,
 } from '../src/types';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,7 +25,11 @@ export const ROOT_DIR = path.resolve(__dirname, '..');
 export const DEFAULT_DB_PATH = path.join(ROOT_DIR, 'data', 'serchi.db');
 const SCHEMA_PATH = path.join(ROOT_DIR, 'data', 'schema.sql');
 
-const CATEGORIES: Category[] = ['courses', 'news', 'projects', 'tools', 'literature', 'media', 'community'];
+const CATEGORIES: Category[] = ['courses', 'news', 'projects', 'tools', 'literature', 'media', 'community', 'radio'];
+const STREAM_TYPES: StreamType[] = ['spotify', 'zeno', 'rss', 'audio'];
+
+/** Schema version stored in PRAGMA user_version (see migrate()). */
+const SCHEMA_VERSION = 1;
 const LEVELS: Level[] = ['all', 'A1', 'A2', 'B1', 'B2', 'C1'];
 const FORMATS: Format[] = ['website', 'app', 'podcast', 'book', 'video', 'forum', 'course', 'tool'];
 const LANGS = ['eo', 'es', 'en'] as const;
@@ -38,8 +45,46 @@ export function urlKey(url: string): string {
 export function openDatabase(file = process.env.SERCHI_DB || DEFAULT_DB_PATH): DatabaseSync {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const db = new DatabaseSync(file);
-  db.exec(fs.readFileSync(SCHEMA_PATH, 'utf8'));
+  const schema = fs.readFileSync(SCHEMA_PATH, 'utf8');
+  const isNew = !db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'resources'").get();
+  if (!isNew) migrate(db, schema);
+  db.exec(schema);
+  if (isNew) db.exec(`PRAGMA user_version = ${SCHEMA_VERSION}`);
   return db;
+}
+
+/**
+ * Upgrades a database created with an older schema.
+ *  v0 -> v1: adds the 'radio' category and the stream_type/stream_url columns.
+ *            SQLite cannot change a CHECK constraint in place, so the
+ *            resources table is rebuilt from the CREATE TABLE in schema.sql.
+ */
+function migrate(db: DatabaseSync, schema: string): void {
+  const version = (db.prepare('PRAGMA user_version').get() as Row).user_version as number;
+  if (version >= SCHEMA_VERSION) return;
+
+  if (version < 1) {
+    const create = schema.match(/CREATE TABLE IF NOT EXISTS resources \([\s\S]*?\n\);/);
+    if (!create) throw new Error('schema.sql: resources table not found');
+    const oldColumns = (db.prepare('PRAGMA table_info(resources)').all() as Row[]).map((c) => c.name as string);
+    const columns = oldColumns.join(', ');
+
+    db.exec('PRAGMA foreign_keys = OFF');
+    db.exec('BEGIN');
+    try {
+      db.exec(create[0].replace('CREATE TABLE IF NOT EXISTS resources', 'CREATE TABLE resources_v1'));
+      db.exec(`INSERT INTO resources_v1 (${columns}) SELECT ${columns} FROM resources`);
+      db.exec('DROP TABLE resources');
+      db.exec('ALTER TABLE resources_v1 RENAME TO resources');
+      db.exec('PRAGMA user_version = 1');
+      db.exec('COMMIT');
+    } catch (err) {
+      db.exec('ROLLBACK');
+      throw err;
+    } finally {
+      db.exec('PRAGMA foreign_keys = ON');
+    }
+  }
 }
 
 function groupBy<T extends Record<string, unknown>>(rows: T[], key: keyof T): Map<string, T[]> {
@@ -76,6 +121,7 @@ export function listResources(db: DatabaseSync): EsperantoResource[] {
       format: r.format,
     };
     if (r.author) resource.author = r.author;
+    if (r.stream_type && r.stream_url) resource.stream = { type: r.stream_type, url: r.stream_url };
     if (r.featured) resource.featured = true;
     if (r.year !== null && r.year !== undefined && r.year !== '') resource.year = r.year;
     const l = langs.get(r.id);
@@ -115,6 +161,22 @@ export function listKnowledgePanels(db: DatabaseSync): KnowledgePanel[] {
 
 function pick<T extends string>(value: unknown, allowed: readonly T[], fallback: T): T {
   return allowed.includes(value as T) ? (value as T) : fallback;
+}
+
+/**
+ * Validates a player definition. Spotify and Zeno.FM URLs must be the public
+ * show/station page (the player embed is derived from it).
+ */
+export function sanitizeStream(input: any): ResourceStream | undefined {
+  if (!input) return undefined;
+  const type = pick(input.type, STREAM_TYPES, undefined as unknown as StreamType);
+  const url = String(input.url || '').trim();
+  const valid =
+    (type === 'spotify' && /^https:\/\/open\.spotify\.com\/(show|episode)\/[A-Za-z0-9]+$/.test(url)) ||
+    (type === 'zeno' && /^https:\/\/zeno\.fm\/radio\/[a-z0-9-]+\/?$/.test(url)) ||
+    ((type === 'rss' || type === 'audio') && /^https?:\/\/[^\s]+$/.test(url));
+  if (!valid) throw new Error(`Invalid stream: ${type} ${url}`);
+  return { type, url };
 }
 
 /** Validates and normalizes a resource coming from a client or an import file. */
@@ -159,6 +221,8 @@ export function sanitizeResource(input: any): NewResource {
   if (input?.features && typeof input.features === 'object') {
     resource.features = { eo: list(input.features.eo), es: list(input.features.es), en: list(input.features.en) };
   }
+  const stream = sanitizeStream(input?.stream);
+  if (stream) resource.stream = stream;
   return resource;
 }
 
@@ -175,12 +239,14 @@ export function insertResources(
   db: DatabaseSync,
   items: NewResource[],
   source: ResourceSource,
-): { inserted: EsperantoResource[]; skippedDuplicates: number } {
-  const exists = db.prepare('SELECT 1 FROM resources WHERE url_key = ? OR id = ?');
+  options: { update?: boolean } = {},
+): { inserted: EsperantoResource[]; updated: number; skippedDuplicates: number } {
+  const existing = db.prepare('SELECT id, position, source FROM resources WHERE url_key = ? OR id = ?');
   const insert = db.prepare(`INSERT INTO resources
     (id, title, url, url_key, display_url, description_eo, description_es, description_en,
-     category, level, format, is_free, author, featured, year, source, position)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+     category, level, format, is_free, author, featured, year, source, position, stream_type, stream_url)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+  const remove = db.prepare('DELETE FROM resources WHERE id = ?');
   const insertTag = db.prepare('INSERT INTO resource_tags (resource_id, position, tag) VALUES (?, ?, ?)');
   const insertLang = db.prepare('INSERT INTO resource_languages (resource_id, position, lang) VALUES (?, ?, ?)');
   const insertFeature = db.prepare('INSERT INTO resource_features (resource_id, lang, position, text) VALUES (?, ?, ?, ?)');
@@ -188,37 +254,52 @@ export function insertResources(
 
   const inserted: EsperantoResource[] = [];
   let skippedDuplicates = 0;
+  let updated = 0;
   // User additions are shown before curated ones, like the React version always did
   let position = source === 'curated' ? (bounds.maxPos ?? -1) + 1 : (bounds.minPos ?? 0) - items.length;
 
   db.exec('BEGIN');
   try {
     for (const item of items) {
-      const id = item.id || newResourceId(source === 'crawled' ? 'crawled' : source === 'user' ? 'custom' : 'res');
-      if (exists.get(urlKey(item.url), id)) {
+      let id = item.id || newResourceId(source === 'crawled' ? 'crawled' : source === 'user' ? 'custom' : 'res');
+      let itemPosition = position;
+      let itemSource: ResourceSource = source;
+      const found = existing.get(urlKey(item.url), id) as Row | undefined;
+      if (found && !options.update) {
         skippedDuplicates++;
         continue;
+      }
+      if (found) {
+        // --update: replace the stored resource, keeping its id, order and origin
+        id = found.id;
+        itemPosition = found.position;
+        itemSource = found.source;
+        remove.run(id); // cascades to tags, languages and features
+        updated++;
+      } else {
+        position++;
       }
       insert.run(
         id, item.title, item.url, urlKey(item.url), item.displayUrl,
         item.description.eo, item.description.es, item.description.en,
         item.category, item.level, item.format, item.isFree ? 1 : 0,
         item.author ?? null, item.featured ? 1 : 0,
-        item.year ?? null, source, position++,
+        item.year ?? null, itemSource, itemPosition,
+        item.stream?.type ?? null, item.stream?.url ?? null,
       );
       item.tags.forEach((tag, i) => insertTag.run(id, i, tag));
       item.languages?.forEach((lang, i) => insertLang.run(id, i, lang));
       if (item.features) {
         for (const lang of LANGS) item.features[lang].forEach((text, i) => insertFeature.run(id, lang, i, text));
       }
-      inserted.push({ ...item, id } as EsperantoResource);
+      if (!found) inserted.push({ ...item, id } as EsperantoResource);
     }
     db.exec('COMMIT');
   } catch (err) {
     db.exec('ROLLBACK');
     throw err;
   }
-  return { inserted, skippedDuplicates };
+  return { inserted, updated, skippedDuplicates };
 }
 
 /** Replaces all knowledge panels (used by imports). */

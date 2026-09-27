@@ -6,12 +6,14 @@
  * SQLite, and the one to use for bulk-adding new links.
  *
  *   npm run db:import -- --resources <file.json> [--knowledge <file.json>]
- *                        [--source curated|user|crawled] [--reset] [--db <file.db>]
+ *                        [--source curated|user|crawled] [--update] [--reset] [--db <file.db>]
  *
  *   --resources  JSON array of resources (same shape as EsperantoResource;
  *                "id" is optional and generated when missing)
  *   --knowledge  JSON array of knowledge panels; replaces the existing ones
  *   --source     origin stored with the imported resources (default: curated)
+ *   --update     replace resources whose URL already exists (keeps id and order)
+ *                instead of skipping them
  *   --reset      delete every resource before importing
  *
  * Duplicated URLs (ignoring case and trailing "/") are skipped and reported.
@@ -57,7 +59,7 @@ function readJsonArray(file: string): any[] {
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.resources && !args.knowledge) {
-  console.error('Usage: npm run db:import -- --resources <file.json> [--knowledge <file.json>] [--source curated|user|crawled] [--reset] [--db <file.db>]');
+  console.error('Usage: npm run db:import -- --resources <file.json> [--knowledge <file.json>] [--source curated|user|crawled] [--update] [--reset] [--db <file.db>]');
   process.exit(1);
 }
 
@@ -83,8 +85,8 @@ if (typeof args.resources === 'string') {
     db.exec('DELETE FROM resources');
     console.log('Deleted all existing resources (--reset)');
   }
-  const { inserted, skippedDuplicates } = insertResources(db, items, source);
-  console.log(`Resources: ${inserted.length} imported, ${skippedDuplicates} duplicates skipped`);
+  const { inserted, updated, skippedDuplicates } = insertResources(db, items, source, { update: !!args.update });
+  console.log(`Resources: ${inserted.length} imported, ${updated} updated, ${skippedDuplicates} duplicates skipped`);
 }
 
 if (typeof args.knowledge === 'string') {

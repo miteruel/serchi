@@ -1,0 +1,49 @@
+@* Player bar content, loaded into #player with hx-get="/player?id=..." *@
+<div class="bg-white/95 dark:bg-[#292a2d]/95 backdrop-blur border-t border-gray-200 dark:border-gray-700 shadow-lg">
+  <div class="max-w-5xl mx-auto px-4 py-3">
+    <div class="flex items-center gap-3 mb-2">
+      <span class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">📻</span>
+      <div class="min-w-0 flex-1">
+        <p class="text-[11px] uppercase tracking-wide text-emerald-700 dark:text-emerald-400 font-semibold">
+          @t.nowPlaying
+          @if Model.IsZeno {<span class="ml-2 text-red-600">● @t.liveBadge</span>}
+        </p>
+        <p class="font-semibold truncate">@Model.Title</p>
+      </div>
+      <a href="@Model.Url" target="_blank" rel="noopener" hx-boost="false" class="hidden sm:inline text-xs text-gray-500 hover:text-emerald-700">@Model.DisplayUrl ↗</a>
+      <button type="button" data-close-player class="w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="@t.closePlayer" title="@t.closePlayer">✕</button>
+    </div>
+
+    @if Model.IsSpotify {
+    <iframe src="@Model.EmbedUrl" title="@Model.Title" class="w-full rounded-xl border-0" height="152"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    }
+    @if Model.IsZeno {
+    <iframe src="@Model.EmbedUrl" title="@Model.Title" class="w-full rounded-xl border-0" height="110"
+            allow="autoplay" loading="lazy"></iframe>
+    }
+    @if Model.IsAudio {
+    <audio src="@Model.StreamUrl" controls autoplay class="w-full"></audio>
+    }
+    @if Model.IsRss {
+      @if Model.HasEpisodes {
+      <audio id="player-audio" src="@Model.FirstEpisodeUrl" controls autoplay class="w-full"></audio>
+      <details class="mt-1 text-sm">
+        <summary class="cursor-pointer text-gray-600 dark:text-gray-400">@t.latestEpisodes</summary>
+        <ul class="mt-1 max-h-40 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800">
+          @ForEach (var ep in Model.Episodes) {
+          <li>
+            <button type="button" data-episode="@ep.AudioUrl" class="w-full text-left px-2 py-1.5 flex gap-2 hover:bg-gray-50 dark:hover:bg-gray-800">
+              <span>▶</span><span class="truncate flex-1">@ep.Title</span><span class="text-xs text-gray-400">@ep.Published</span>
+            </button>
+          </li>
+          }
+        </ul>
+      </details>
+      }
+      @if Model.EpisodesError {
+      <p class="text-sm text-red-600">@t.episodesError</p>
+      }
+    }
+  </div>
+</div>
