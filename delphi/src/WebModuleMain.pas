@@ -53,7 +53,7 @@ type
     procedure SendCourseIndex(AStatus: Integer = 200);
     procedure SendCoursePage(const ASlug: string);
     procedure SendAudioMap;
-    function AudioMap: TJSONObject;
+    function AudioMap(AWithSynthetic: Boolean = True): TJSONObject;
 
     // JSON API of the course editor and the recorder (public/editor.html,
     // public/grabar.html), as in server.ts. True when APath was handled.
@@ -374,8 +374,10 @@ end;
 
 { What the mini-course and the courses play, as /api/audio in the Node version:
   a JSON object from word slug to URL. MP3 files in public/audio first, then
-  the newest approved recording of each word. }
-function TWebModuleMain.AudioMap: TJSONObject;
+  the newest approved recording of each word, then the synthetic voice of
+  public/audio/tts (left out with AWithSynthetic = False, to know which words
+  still need a real voice). }
+function TWebModuleMain.AudioMap(AWithSynthetic: Boolean): TJSONObject;
 var
   AudioDir, FileName, Slug: string;
   Rec: TPair<string, string>;
@@ -392,6 +394,14 @@ begin
   for Rec in Store.ApprovedRecordings do
     if Result.GetValue(Rec.Key) = nil then
       Result.AddPair(Rec.Key, '/api/recordings/' + TNetEncoding.URL.Encode(Rec.Value) + '/audio');
+  AudioDir := TPath.Combine(AudioDir, 'tts');
+  if AWithSynthetic and TDirectory.Exists(AudioDir) then
+    for FileName in TDirectory.GetFiles(AudioDir, '*.mp3') do
+    begin
+      Slug := TPath.GetFileNameWithoutExtension(FileName);
+      if Result.GetValue(Slug) = nil then
+        Result.AddPair(Slug, '/audio/tts/' + Slug + '.mp3');
+    end;
 end;
 
 procedure TWebModuleMain.SendAudioMap;
@@ -1063,7 +1073,7 @@ begin
   begin
     if (Length(Seg) = 4) and (Seg[3] = 'words') and (Method = 'GET') then
     begin
-      Map := AudioMap;
+      Map := AudioMap(False); // the synthetic voice still asks for a real one
       Obj := TJSONObject.Create;
       try
         Words := TJSONArray.Create;

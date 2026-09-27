@@ -266,7 +266,7 @@ async function startServer() {
   });
 
   app.get('/api/recordings/words', (_req, res) => {
-    const recorded = audioMap(db);
+    const recorded = audioMap(db, false); // the synthetic voice still asks for a real one
     res.json({
       words: [...recordableWords()].map(([slug, text]) => ({ slug, text, recorded: !!recorded[slug] })),
       maxSeconds: 10,

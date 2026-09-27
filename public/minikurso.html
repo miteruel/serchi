@@ -960,10 +960,13 @@
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
   var label = document.documentElement.lang === 'en' ? 'Listen: ' : 'Escuchar: ';
+  // Without the server: recorded MP3 files first, then the synthetic voice
   function staticList() {
-    return fetch('/audio/index.json').then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+    var list = function (url) { return fetch(url).then(function (r) { return r.ok ? r.json() : []; }, function () { return []; }); };
+    return Promise.all([list('/audio/index.json'), list('/audio/tts/index.json')]).then(function (lists) {
       var map = {};
-      if (Array.isArray(list)) list.forEach(function (s) { map[s] = '/audio/' + s + '.mp3'; });
+      if (Array.isArray(lists[1])) lists[1].forEach(function (s) { map[s] = '/audio/tts/' + s + '.mp3'; });
+      if (Array.isArray(lists[0])) lists[0].forEach(function (s) { map[s] = '/audio/' + s + '.mp3'; });
       return map;
     });
   }
