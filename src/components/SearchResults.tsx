@@ -459,7 +459,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                     )}
 
                     {/* Quick action buttons row */}
-                    <div className="flex items-center gap-3 mt-3 pt-2 border-t border-gray-100 dark:border-gray-800/60 text-xs">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-3 pt-2 border-t border-gray-100 dark:border-gray-800/60 text-xs">
                       <a
                         href={item.url}
                         target={settings.openInNewTab ? '_blank' : '_self'}
