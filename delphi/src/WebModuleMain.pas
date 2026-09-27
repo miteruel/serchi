@@ -1063,6 +1063,40 @@ begin
     SendAudioMap;
     Exit;
   end;
+  // Voice of one word for the course editor: the recording or synthetic voice
+  // it already has. The Delphi version cannot make new ones (npm run audio:tts)
+  if (APath = '/api/tts') and (Method = 'POST') then
+  begin
+    if ModeratorOnly then
+    begin
+      Body := RequestJson;
+      Map := AudioMap;
+      try
+        Text := '';
+        if Body is TJSONObject then
+          Text := TJSONObject(Body).GetValue<string>('text', '').Trim;
+        Slug := AudioSlug(Text);
+        if (Slug = '') or (Length(Text) > 200) then
+          SendApiError(400, 'Bad text')
+        else if Map.GetValue(Slug) <> nil then
+        begin
+          Obj := TJSONObject.Create;
+          try
+            Obj.AddPair('url', Map.GetValue<string>(Slug));
+            SendJson(Obj.ToJSON);
+          finally
+            Obj.Free;
+          end;
+        end
+        else
+          SendApiError(503, 'tts_unavailable');
+      finally
+        Map.Free;
+        Body.Free;
+      end;
+    end;
+    Exit;
+  end;
   // Synthetic voice of the editor courses' words
   if (Length(Seg) = 5) and (Seg[2] = 'tts') and (Seg[4] = 'audio') then
   begin
